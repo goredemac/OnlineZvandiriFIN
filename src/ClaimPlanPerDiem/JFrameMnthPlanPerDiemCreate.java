@@ -3192,7 +3192,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelActTo = new javax.swing.JLabel();
         jDateChooserDialogActivityDateTo = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
-        jTextFieldMiscAmt = new javax.swing.JTextField();
         jCheckBoxDialogMiscWk1 = new javax.swing.JCheckBox();
         jTextNumDays = new javax.swing.JTextField();
         jTextFieldWk1Misc = new javax.swing.JTextField();
@@ -3205,6 +3204,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelRequestionTotalWk1 = new javax.swing.JLabel();
         jLabel$Wk1 = new javax.swing.JLabel();
         jLabelTotalAmt = new javax.swing.JLabel();
+        jTextFieldMiscAmt = new javax.swing.JTextField();
         jComboBudSubCode = new javax.swing.JComboBox<>();
         jLabelBudSubCode = new javax.swing.JLabel();
         jLabelWk1DialogJustification = new javax.swing.JLabel();
@@ -4031,14 +4031,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(null);
 
-        jTextFieldMiscAmt.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldMiscAmtKeyTyped(evt);
-            }
-        });
-        jPanel2.add(jTextFieldMiscAmt);
-        jTextFieldMiscAmt.setBounds(160, 140, 70, 25);
-
         jCheckBoxDialogMiscWk1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jCheckBoxDialogMiscWk1.setText("Miscellaneous");
         jCheckBoxDialogMiscWk1.addActionListener(new java.awt.event.ActionListener() {
@@ -4063,7 +4055,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jTextFieldWk1Misc);
-        jTextFieldWk1Misc.setBounds(10, 140, 110, 25);
+        jTextFieldWk1Misc.setBounds(10, 140, 110, 30);
 
         jLabelNumDaysWk1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelNumDaysWk1.setText("No. Of Days");
@@ -4077,6 +4069,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jPanel2.add(jLabelUnitCostWk1);
         jLabelUnitCostWk1.setBounds(10, 10, 110, 25);
 
+        jLabelWk1Misc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabelWk1Misc.setText("Miscellaneous Desc");
         jPanel2.add(jLabelWk1Misc);
         jLabelWk1Misc.setBounds(10, 120, 160, 25);
@@ -4110,16 +4103,32 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelRequestionTotalWk1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelRequestionTotalWk1.setText("Total per Person");
         jPanel2.add(jLabelRequestionTotalWk1);
-        jLabelRequestionTotalWk1.setBounds(10, 180, 120, 25);
+        jLabelRequestionTotalWk1.setBounds(10, 190, 120, 25);
 
         jLabel$Wk1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel$Wk1.setText("$");
         jPanel2.add(jLabel$Wk1);
-        jLabel$Wk1.setBounds(140, 180, 20, 25);
+        jLabel$Wk1.setBounds(140, 190, 20, 25);
 
         jLabelTotalAmt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jLabelTotalAmt);
-        jLabelTotalAmt.setBounds(160, 180, 80, 25);
+        jLabelTotalAmt.setBounds(160, 190, 80, 25);
+
+        jTextFieldMiscAmt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldMiscAmtActionPerformed(evt);
+            }
+        });
+        jTextFieldMiscAmt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldMiscAmtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldMiscAmtKeyReleased(evt);
+            }
+        });
+        jPanel2.add(jTextFieldMiscAmt);
+        jTextFieldMiscAmt.setBounds(160, 140, 70, 30);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(540, 290, 290, 220);
@@ -7270,6 +7279,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             jTextFieldWk1Misc.setVisible(true);
             jLabelWk1MiscAmt$.setVisible(true);
             jTextFieldMiscAmt.setVisible(true);
+            jTextFieldMiscAmt.setEditable(true);
         } else {
             jLabelWk1Misc.setVisible(false);
             jTextFieldWk1Misc.setVisible(false);
@@ -7335,7 +7345,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         if ("Incidental".equals(jComboBudSubCode.getSelectedItem().toString())) {
             jTextUnitCost.setEditable(false);
-             jTextUnitCost.setEditable(false);
+            jTextUnitCost.setEditable(false);
             jTextUnitCost.setText(incidentalAll);
             computeDaysWk1();
             calcBudTot();
@@ -7348,10 +7358,18 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextUnitCostKeyPressed
 
-    private void jTextFieldMiscAmtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMiscAmtKeyTyped
+    private void jTextFieldMiscAmtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMiscAmtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldMiscAmtActionPerformed
+
+    private void jTextFieldMiscAmtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMiscAmtKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldMiscAmtKeyPressed
+
+    private void jTextFieldMiscAmtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMiscAmtKeyReleased
         computeDaysWk1();
         calcBudTot();
-    }//GEN-LAST:event_jTextFieldMiscAmtKeyTyped
+    }//GEN-LAST:event_jTextFieldMiscAmtKeyReleased
 
     /**
      * @param args the command line arguments
