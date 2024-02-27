@@ -2835,7 +2835,7 @@ public class JFrameMain extends javax.swing.JFrame {
 
         jLabelDisVision.setText("Our vision is to expand our Zvandiri model to 20 countries by 2030 to deliver health, happiness and hope to 1 million young people living with HIV.");
         jPanel2.add(jLabelDisVision);
-        jLabelDisVision.setBounds(50, 240, 700, 30);
+        jLabelDisVision.setBounds(50, 240, 790, 50);
 
         jLabelMissionStat1.setText("Health, Happiness and Hope for young people living with HIV.");
         jPanel2.add(jLabelMissionStat1);

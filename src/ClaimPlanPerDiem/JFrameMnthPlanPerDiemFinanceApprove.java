@@ -6,7 +6,6 @@
 package ClaimPlanPerDiem;
 
 import ClaimPlanPerDiem.JFrameMnthPlanPerDiemEdit;
-import ClaimPlanPerDiem.JFrameMnthPlanPerDiemCreate;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;

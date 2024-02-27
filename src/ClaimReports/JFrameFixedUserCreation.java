@@ -5,6 +5,7 @@
  */
 package ClaimReports;
 
+import ClaimPlanPerDiem.JFrameMnthPlanPerDiemCreate;
 import ClaimAppendix1.*;
 import ClaimAppendix2.*;
 import ClaimPlan.*;
