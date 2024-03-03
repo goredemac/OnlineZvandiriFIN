@@ -100,7 +100,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     long noOfFinDays4 = 0;
     long noOfFinDays5 = 0;
     LocalDate minDateWk1, maxDateWk1, minDateWk2, maxDateWk2, minDateWk3, maxDateWk3, minDateWk4, maxDateWk4, minDateWk5, maxDateWk5;
-    Date minDateComWk1, maxDateComWk1, minDateComWk2, maxDateComWk2, minDateComWk3, maxDateComWk3, minDateComWk4, maxDateComWk4, minDateComWk5, maxDateComWk5;
+    Date minDateComWk1, maxDateComWk1, minDateComWk2, maxDateComWk2, minDateComWk3, maxDateComWk3, minDateComWk4, maxDateComWk4,
+            minDateComWk5, maxDateComWk5;
     ZoneId zoneId = ZoneId.systemDefault();
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -117,7 +118,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             duplicateUser2Count, duplicateUser3Count, duplicateUser4Count, duplicateUser5Count, usrGrp,
             planWk, empNamNum1, empNam1, empNamNum2, empNam2, empNamNum3, empNam3, empNamNum4,
             empNam4, planDate, SupNamSend, branchCode, prjCode, taskCode, donorCode, grantCode, accCode, prjProgCode, donor, budLine, subBudLine,
-            donorName, accCodeName, prjCodeName, prjProgCodeName, budLineName, budcode,
+            donorName, accCodeName, prjCodeName, prjProgCodeName, budLineName, budcode, taskDonor,
             staffName1, staffName2,
             staffName3, staffName4, lastDateofMonth;
     /*To Change*/
@@ -168,6 +169,22 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTableWk1Activities.getColumnModel().getColumn(11).setMaxWidth(0);
         jTableWk1Activities.getColumnModel().getColumn(18).setMinWidth(0);
         jTableWk1Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(18).setMaxWidth(0);
         jTableDocAttWk1Main.getColumnModel().getColumn(2).setMinWidth(0);
         jTableDocAttWk1Main.getColumnModel().getColumn(2).setMaxWidth(0);
         try {
@@ -181,7 +198,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         showTime();
         computerName();
         jLabelEmp.setText(usrLogNam);
-//        jLabelEmp.setVisible(false);
+        jLabelEmp.setVisible(false);
         findUser();
         allowanceRate();
         findUserGrp();
@@ -196,6 +213,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTextAttDocName.setEditable(false);
         jTextAttDocNameWk1Main.setEditable(false);
         jTextAttDocPath.setVisible(false);
+        jPanelAddStaff.setVisible(false);
         jTextAttDocPathWk1Main.setVisible(false);
         jTextAttDocPathWk2Main.setVisible(false);
         jTextAttDocPathWk3Main.setVisible(false);
@@ -212,18 +230,17 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelLineDate3.setText(tH.internetDate);
         jLabelLineDate4.setText(tH.internetDate);
 
-        if (!"National Office".equals(jLabelDistrict.getText())) {
-            jTabbedPane1.setTitleAt(0, "Month Plan");
-            jTabbedPane1.setEnabledAt(1, false);
-            jTabbedPane1.setTitleAt(1, "");
-            jTabbedPane1.setEnabledAt(2, false);
-            jTabbedPane1.setTitleAt(2, "");
-            jTabbedPane1.setEnabledAt(3, false);
-            jTabbedPane1.setTitleAt(3, "");
-            jTabbedPane1.setEnabledAt(4, false);
-            jTabbedPane1.setTitleAt(4, "");
-        }
-
+//        if (!"National Office".equals(jLabelDistrict.getText())) {
+//            jTabbedPane1.setTitleAt(0, "Month Plan");
+//            jTabbedPane1.setEnabledAt(1, false);
+//            jTabbedPane1.setTitleAt(1, "");
+//            jTabbedPane1.setEnabledAt(2, false);
+//            jTabbedPane1.setTitleAt(2, "");
+//            jTabbedPane1.setEnabledAt(3, false);
+//            jTabbedPane1.setTitleAt(3, "");
+//            jTabbedPane1.setEnabledAt(4, false);
+//            jTabbedPane1.setTitleAt(4, "");
+//        }
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
             jMenuItemUserCreate.setEnabled(false);
@@ -1157,7 +1174,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         accCode = taskPartsAccCode[0];
         accCodeName = taskPartsAccCode[1];
 
-        String taskDonor = jComboDonor.getSelectedItem().toString();
+        taskDonor = jComboDonor.getSelectedItem().toString();
         String taskPartsDonor[] = taskDonor.split(" ", 2);
         donor = taskPartsDonor[0];
         donorName = taskPartsDonor[1];
@@ -1986,31 +2003,33 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                         WkRTDinner = Wk1Dinner;
 
                     }
-                    
-                    if ((!"D036 CDC-Zim-TTECH".equals(jComboDonor.getSelectedItem().toString()))
-                    || (!"D032 ZHI".equals(jComboDonor.getSelectedItem().toString()))
-                    || (!"D022 CDC".equals(jComboDonor.getSelectedItem().toString()))){
-                        prjProgCodeName="";
-                        prjProgCode="";
+
+                    if ((!"D036 CDC-Zim-TTECH".equals(taskDonor))
+                            && (!"D032 ZHI".equals(taskDonor))
+                            && (!"D022 CDC".equals(taskDonor))) {
+                        String donorName = jComboDonor.getSelectedItem().toString();
+                        prjProgCodeName = "";
+                        prjProgCode = "";
+
                     }
 
                     if ("Y".equals(wk1Site)) {
                         if (modelWk1.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
 
                             modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
-                                prjProgCode,prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
                                 WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
                                 jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
 
-                        } else if (modelWk1.getRowCount() > 0) {
+                        } else if ((modelWk1.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
                             LocalDate endWk = LocalDate.of(yearT, monT, dayT);
                             Calendar c = Calendar.getInstance();
                             Date startDate = jDateChooserDialogActivityDateFrom.getDate();
                             for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
                                 c.setTime(startDate);
 
-                                modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
-                                    prjProgCode,prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                modelWk1.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
                                     Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
                                     jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
                                 c.add(Calendar.DAY_OF_MONTH, 1);
@@ -2018,14 +2037,14 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
                             }
 
-                            modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
-                                prjProgCode,prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                            modelWk1.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
                                 Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
                                 jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
 
-                        } else {
+                        } else if ((modelWk1.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
                             modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
-                                prjProgCode,prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
                                 Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
                                 jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
 
@@ -2039,8 +2058,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                             for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
                                 c.setTime(startDate);
 
-                                modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
-                                    prjProgCode,prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                modelWk1.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
                                     Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
                                     jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
                                 c.add(Calendar.DAY_OF_MONTH, 1);
@@ -2048,8 +2067,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
                             }
 
-                            modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
-                                prjProgCode,prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                            modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
                                 WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
                                 jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
                         }
@@ -2058,285 +2077,263 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
                     }
 
-//                    if ("Y".equals(wk2Site)) {
-//                        if (modelWk2.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
-//
-//                            modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
-//                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                        } else if (modelWk2.getRowCount() > 0) {
-//                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
-//                            Calendar c = Calendar.getInstance();
-//                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-//                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
-//                                c.setTime(startDate);
-//
-//                                modelWk2.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                    jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                    jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                                c.add(Calendar.DAY_OF_MONTH, 1);
-//                                startDate = c.getTime();
-//
-//                            }
-//
-//                            modelWk2.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                        } else {
-//                            modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                            Calendar c = Calendar.getInstance();
-//                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-//
-//                            c.setTime(startDate);
-//                            c.add(Calendar.DATE, 1);
-//                            startDate = c.getTime();
-//
-//                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-//                                c.setTime(startDate);
-//
-//                                modelWk2.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                    jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                    jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                                c.add(Calendar.DAY_OF_MONTH, 1);
-//                                startDate = c.getTime();
-//
-//                            }
-//
-//                            modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
-//                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                        }
-//                        addItem();
-//                        resetField();
-//
-//                    }
-//
-//                    if ("Y".equals(wk3Site)) {
-//                        if (modelWk3.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
-//
-//                            modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
-//                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                        } else if (modelWk3.getRowCount() > 0) {
-//                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
-//                            Calendar c = Calendar.getInstance();
-//                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-//                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
-//                                c.setTime(startDate);
-//
-//                                modelWk3.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                    jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                    jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                                c.add(Calendar.DAY_OF_MONTH, 1);
-//                                startDate = c.getTime();
-//
-//                            }
-//
-//                            modelWk3.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                        } else {
-//                            modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                            Calendar c = Calendar.getInstance();
-//                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-//
-//                            c.setTime(startDate);
-//                            c.add(Calendar.DATE, 1);
-//                            startDate = c.getTime();
-//
-//                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-//                                c.setTime(startDate);
-//
-//                                modelWk3.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                    jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                    jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                                c.add(Calendar.DAY_OF_MONTH, 1);
-//                                startDate = c.getTime();
-//
-//                            }
-//
-//                            modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
-//                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                        }
-//                        addItem();
-//                        resetField();
-//
-//                    }
-//
-//                    if ("Y".equals(wk4Site)) {
-//                        if (modelWk4.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
-//
-//                            modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
-//                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                        } else if (modelWk4.getRowCount() > 0) {
-//                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
-//                            Calendar c = Calendar.getInstance();
-//                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-//                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
-//                                c.setTime(startDate);
-//
-//                                modelWk4.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                    jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                    jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                                c.add(Calendar.DAY_OF_MONTH, 1);
-//                                startDate = c.getTime();
-//
-//                            }
-//
-//                            modelWk4.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                        } else {
-//                            modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                            Calendar c = Calendar.getInstance();
-//                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-//
-//                            c.setTime(startDate);
-//                            c.add(Calendar.DATE, 1);
-//                            startDate = c.getTime();
-//
-//                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-//                                c.setTime(startDate);
-//
-//                                modelWk4.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                    jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                    jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                                c.add(Calendar.DAY_OF_MONTH, 1);
-//                                startDate = c.getTime();
-//
-//                            }
-//
-//                            modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
-//                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                        }
-//                        addItem();
-//                        resetField();
-//
-//                    }
-//
-//                    if ("Y".equals(wk5Site)) {
-//                        if (modelWk5.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
-//
-//                            modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
-//                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                        } else if (modelWk5.getRowCount() > 0) {
-//                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
-//                            Calendar c = Calendar.getInstance();
-//                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-//                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
-//                                c.setTime(startDate);
-//
-//                                modelWk5.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                    jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                    jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                                c.add(Calendar.DAY_OF_MONTH, 1);
-//                                startDate = c.getTime();
-//
-//                            }
-//
-//                            modelWk5.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                        } else {
-//                            modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//
-//                            Calendar c = Calendar.getInstance();
-//                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-//
-//                            c.setTime(startDate);
-//                            c.add(Calendar.DATE, 1);
-//                            startDate = c.getTime();
-//
-//                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-//                                c.setTime(startDate);
-//
-//                                modelWk5.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-//                                    jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                    jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-//                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                                c.add(Calendar.DAY_OF_MONTH, 1);
-//                                startDate = c.getTime();
-//
-//                            }
-//
-//                            modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), branchCode, prjCode, taskCode,
-//                                jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-//                                jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
-//                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-//                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-//                        }
-//                        addItem();
-//                        resetField();
-//
-//                    }
+                    if ("Y".equals(wk2Site)) {
+                        if (modelWk2.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
+
+                            modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk2.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
+                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk2.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk2.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk2.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
+                            modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                            c.setTime(startDate);
+                            c.add(Calendar.DATE, 1);
+                            startDate = c.getTime();
+
+                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk2.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                        }
+                        addItem();
+                        resetField();
+
+                    }
+
+                    if ("Y".equals(wk3Site)) {
+                        if (modelWk3.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
+
+                            modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk3.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
+                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk3.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk3.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk3.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
+                            modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                            c.setTime(startDate);
+                            c.add(Calendar.DATE, 1);
+                            startDate = c.getTime();
+
+                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk3.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                        }
+                        addItem();
+                        resetField();
+
+                    }
+
+                    if ("Y".equals(wk4Site)) {
+                        if (modelWk4.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
+
+                            modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk4.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
+                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk4.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk4.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk4.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
+                            modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                            c.setTime(startDate);
+                            c.add(Calendar.DATE, 1);
+                            startDate = c.getTime();
+
+                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk4.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                        }
+                        addItem();
+                        resetField();
+
+                    }
+
+                    if ("Y".equals(wk5Site)) {
+                        if (modelWk5.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
+
+                            modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk5.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
+                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk5.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk5.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk5.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
+                            modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                            c.setTime(startDate);
+                            c.add(Calendar.DATE, 1);
+                            startDate = c.getTime();
+
+                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk5.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                        }
+                        addItem();
+                        resetField();
+
+                    }
+
+                  
                 }
 
             } catch (Exception e) {
@@ -2924,6 +2921,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelWk1MiscAmt.setVisible(false);
         jTextFieldWk1MiscAmt.setVisible(false);
         jTextFieldWk1MiscAmt.setText("");
+        jTextFieldDialogWkSite.setText("");
 
     }
 
@@ -2936,6 +2934,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         if ((selectedOption == JOptionPane.NO_OPTION)) {
 
             jDialogWk1.setVisible(false);
+        } else {
+            addStaff();
         }
 
     }
@@ -2960,6 +2960,19 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTextAttDocNameWk5Main.setText("");
         jTextAttDocPathWk5Main.setText("");
 
+    }
+
+    void addStaff() {
+        try {
+            System.out.println("hh " + modelAttWk1Main.getRowCount());
+            if (modelWk1.getRowCount() > 0) {
+                jPanelAddStaff.setVisible(true);
+            } else {
+                jPanelAddStaff.setVisible(false);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     void addFileAtt() {
@@ -3254,11 +3267,12 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTextAreaWk1DialogJustification = new javax.swing.JTextArea();
         jLabelWk1DialogActivityDesc = new javax.swing.JLabel();
         jTextFieldWk1DialogActivityDesc = new javax.swing.JTextField();
-        jLabelRemain1 = new javax.swing.JLabel();
+        jLabelJustfy = new javax.swing.JLabel();
         jLabelPrjCodeProgramming = new javax.swing.JLabel();
         jComboProjectCodeProgramming = new javax.swing.JComboBox<>();
         jLabelRemain = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jPanelAddStaff = new javax.swing.JPanel();
+        jCheckAddStaff = new javax.swing.JCheckBox();
         jDialogWaitingEmail = new javax.swing.JDialog();
         buttonGroupAcc = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -3271,7 +3285,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jButtonWk1AddActivity = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneWk1 = new javax.swing.JScrollPane();
         jTableWk1Activities = new javax.swing.JTable();
         jLabelLogo1 = new javax.swing.JLabel();
         jButtonWk1DelActivity = new javax.swing.JButton();
@@ -3318,8 +3332,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelLineTime1 = new javax.swing.JLabel();
         jLabelLineLogNam1 = new javax.swing.JLabel();
         jLabelHeaderGen7 = new javax.swing.JLabel();
-        jScrollPane11 = new javax.swing.JScrollPane();
-        jTableWk2Activities = new javax.swing.JTable();
         jPanelDooAttWk2Main = new javax.swing.JPanel();
         jPanelAttachWk1Main1 = new javax.swing.JPanel();
         jLabelConfirmationWk2Main = new javax.swing.JLabel();
@@ -3332,6 +3344,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTableDocAttWk2Main = new javax.swing.JTable();
         jTextAttDocPathWk2Main = new javax.swing.JTextField();
         jPanelSave1 = new javax.swing.JPanel();
+        jScrollPaneWk2 = new javax.swing.JScrollPane();
+        jTableWk2Activities = new javax.swing.JTable();
         jPanelWkThree = new javax.swing.JPanel();
         jLabelWkDuration2 = new javax.swing.JLabel();
         jDateChooserWk3From = new com.toedter.calendar.JDateChooser();
@@ -3348,8 +3362,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelLineTime2 = new javax.swing.JLabel();
         jLabelLineDate2 = new javax.swing.JLabel();
         jLabelHeaderGen8 = new javax.swing.JLabel();
-        jScrollPaneWk3 = new javax.swing.JScrollPane();
-        jTableWk3Activities = new javax.swing.JTable();
         jPanelDooAttWk3Main = new javax.swing.JPanel();
         jPanelAttachWk3Main = new javax.swing.JPanel();
         jLabelConfirmationWk3Main = new javax.swing.JLabel();
@@ -3362,6 +3374,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTableDocAttWk3Main = new javax.swing.JTable();
         jTextAttDocPathWk3Main = new javax.swing.JTextField();
         jPanelSave2 = new javax.swing.JPanel();
+        jScrollPaneWk3 = new javax.swing.JScrollPane();
+        jTableWk3Activities = new javax.swing.JTable();
         jPanelWkFour = new javax.swing.JPanel();
         jLabelWkDuration4 = new javax.swing.JLabel();
         jDateChooserWk4From = new com.toedter.calendar.JDateChooser();
@@ -3378,8 +3392,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelLineTime3 = new javax.swing.JLabel();
         jLabelLineDate3 = new javax.swing.JLabel();
         jLabelHeaderGen9 = new javax.swing.JLabel();
-        jScrollPane23 = new javax.swing.JScrollPane();
-        jTableWk4Activities = new javax.swing.JTable();
         jTextAttDocPathWk4Main = new javax.swing.JTextField();
         jPanelDooAttWk4Main = new javax.swing.JPanel();
         jPanelAttachWk4Main = new javax.swing.JPanel();
@@ -3392,6 +3404,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jScrollPaneWk4Att = new javax.swing.JScrollPane();
         jTableDocAttWk4Main = new javax.swing.JTable();
         jPanelSave3 = new javax.swing.JPanel();
+        jScrollPaneWk4 = new javax.swing.JScrollPane();
+        jTableWk4Activities = new javax.swing.JTable();
         jPanelWkFive = new javax.swing.JPanel();
         jLabelWkDuration5 = new javax.swing.JLabel();
         jDateChooserWk5From = new com.toedter.calendar.JDateChooser();
@@ -3408,8 +3422,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelLineTime4 = new javax.swing.JLabel();
         jLabelLineDate4 = new javax.swing.JLabel();
         jLabelHeaderGen10 = new javax.swing.JLabel();
-        jScrollPane24 = new javax.swing.JScrollPane();
-        jTableWk5Activities = new javax.swing.JTable();
         jPanelDooAttWk5Main = new javax.swing.JPanel();
         jPanelAttachWk5Main = new javax.swing.JPanel();
         jLabelConfirmationWk5Main = new javax.swing.JLabel();
@@ -3422,6 +3434,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTableDocAttWk5Main = new javax.swing.JTable();
         jTextAttDocPathWk5Main = new javax.swing.JTextField();
         jPanelSave4 = new javax.swing.JPanel();
+        jScrollPaneWk5 = new javax.swing.JScrollPane();
+        jTableWk5Activities = new javax.swing.JTable();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuNew = new javax.swing.JMenu();
@@ -3691,7 +3705,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabel10.setText("4.");
         jPanelActivity.add(jLabel10);
-        jLabel10.setBounds(540, 260, 20, 30);
+        jLabel10.setBounds(530, 300, 20, 30);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanelActivity.add(jSeparator3);
@@ -3705,19 +3719,19 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelWk1DialogStaffName.setText("Staff Details");
         jPanelActivity.add(jLabelWk1DialogStaffName);
-        jLabelWk1DialogStaffName.setBounds(540, 110, 130, 30);
+        jLabelWk1DialogStaffName.setBounds(530, 150, 130, 30);
 
         jLabelWk1DialogStaffName1.setText("1.");
         jPanelActivity.add(jLabelWk1DialogStaffName1);
-        jLabelWk1DialogStaffName1.setBounds(540, 140, 20, 30);
+        jLabelWk1DialogStaffName1.setBounds(530, 180, 20, 30);
 
         jLabelWk1DialogStaffName2.setText("2.");
         jPanelActivity.add(jLabelWk1DialogStaffName2);
-        jLabelWk1DialogStaffName2.setBounds(540, 180, 20, 30);
+        jLabelWk1DialogStaffName2.setBounds(530, 220, 20, 30);
 
         jLabel17.setText("3.");
         jPanelActivity.add(jLabel17);
-        jLabel17.setBounds(540, 220, 20, 30);
+        jLabel17.setBounds(530, 260, 20, 30);
 
         jTextFieldWk1DialogStaffName4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3735,7 +3749,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jTextFieldWk1DialogStaffName4);
-        jTextFieldWk1DialogStaffName4.setBounds(560, 260, 220, 30);
+        jTextFieldWk1DialogStaffName4.setBounds(550, 300, 220, 30);
 
         jTextFieldWk1DialogStaffName1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3753,7 +3767,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jTextFieldWk1DialogStaffName1);
-        jTextFieldWk1DialogStaffName1.setBounds(560, 140, 220, 30);
+        jTextFieldWk1DialogStaffName1.setBounds(550, 180, 220, 30);
 
         jTextFieldWk1DialogStaffName2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3766,7 +3780,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jTextFieldWk1DialogStaffName2);
-        jTextFieldWk1DialogStaffName2.setBounds(560, 180, 220, 30);
+        jTextFieldWk1DialogStaffName2.setBounds(550, 220, 220, 30);
 
         jTextFieldWk1DialogStaffName3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3779,7 +3793,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jTextFieldWk1DialogStaffName3);
-        jTextFieldWk1DialogStaffName3.setBounds(560, 220, 220, 30);
+        jTextFieldWk1DialogStaffName3.setBounds(550, 260, 220, 30);
 
         jButtonDialogWk1Reset.setText("Reset");
         jButtonDialogWk1Reset.addActionListener(new java.awt.event.ActionListener() {
@@ -3788,7 +3802,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jButtonDialogWk1Reset);
-        jButtonDialogWk1Reset.setBounds(660, 540, 70, 30);
+        jButtonDialogWk1Reset.setBounds(660, 580, 70, 30);
 
         jButtonDialogWk1Add.setText("Add Activity");
         jButtonDialogWk1Add.addActionListener(new java.awt.event.ActionListener() {
@@ -3797,19 +3811,19 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jButtonDialogWk1Add);
-        jButtonDialogWk1Add.setBounds(540, 540, 100, 30);
+        jButtonDialogWk1Add.setBounds(540, 580, 100, 30);
 
         jCheckBoxDialogWk1BrkFast.setText(" Breakfast");
         jPanelActivity.add(jCheckBoxDialogWk1BrkFast);
-        jCheckBoxDialogWk1BrkFast.setBounds(550, 310, 90, 21);
+        jCheckBoxDialogWk1BrkFast.setBounds(540, 350, 90, 21);
 
         jCheckBoxDialogWk1Lunch.setText("Lunch");
         jPanelActivity.add(jCheckBoxDialogWk1Lunch);
-        jCheckBoxDialogWk1Lunch.setBounds(670, 310, 80, 21);
+        jCheckBoxDialogWk1Lunch.setBounds(660, 350, 80, 21);
 
         jCheckBoxDialogWk1Dinner.setText(" Dinner");
         jPanelActivity.add(jCheckBoxDialogWk1Dinner);
-        jCheckBoxDialogWk1Dinner.setBounds(550, 350, 90, 21);
+        jCheckBoxDialogWk1Dinner.setBounds(540, 390, 90, 21);
 
         jCheckBoxDialogWk1Misc.setText("Miscellaneous");
         jCheckBoxDialogWk1Misc.addActionListener(new java.awt.event.ActionListener() {
@@ -3818,15 +3832,15 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jCheckBoxDialogWk1Misc);
-        jCheckBoxDialogWk1Misc.setBounds(550, 430, 110, 21);
+        jCheckBoxDialogWk1Misc.setBounds(540, 470, 110, 21);
 
         jCheckBoxDialogWk1Inc.setText("Incidental");
         jPanelActivity.add(jCheckBoxDialogWk1Inc);
-        jCheckBoxDialogWk1Inc.setBounds(550, 390, 110, 21);
+        jCheckBoxDialogWk1Inc.setBounds(540, 430, 110, 21);
 
         jLabelWk1Misc.setText("Miscellaneous Desc");
         jPanelActivity.add(jLabelWk1Misc);
-        jLabelWk1Misc.setBounds(560, 450, 160, 30);
+        jLabelWk1Misc.setBounds(540, 490, 160, 30);
 
         jTextFieldWk1Misc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -3834,7 +3848,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jTextFieldWk1Misc);
-        jTextFieldWk1Misc.setBounds(560, 480, 110, 30);
+        jTextFieldWk1Misc.setBounds(540, 520, 110, 30);
 
         jButtonDialogWk1Close.setText("Close");
         jButtonDialogWk1Close.addActionListener(new java.awt.event.ActionListener() {
@@ -3843,13 +3857,13 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jButtonDialogWk1Close);
-        jButtonDialogWk1Close.setBounds(740, 540, 70, 30);
+        jButtonDialogWk1Close.setBounds(740, 580, 70, 30);
 
         jLabelWk1MiscAmt.setText("$");
         jPanelActivity.add(jLabelWk1MiscAmt);
-        jLabelWk1MiscAmt.setBounds(690, 480, 30, 30);
+        jLabelWk1MiscAmt.setBounds(670, 520, 30, 30);
         jPanelActivity.add(jTextFieldWk1MiscAmt);
-        jTextFieldWk1MiscAmt.setBounds(730, 480, 70, 30);
+        jTextFieldWk1MiscAmt.setBounds(710, 520, 70, 30);
 
         jLabelWk1Name4Del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
         jLabelWk1Name4Del.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3858,7 +3872,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jLabelWk1Name4Del);
-        jLabelWk1Name4Del.setBounds(780, 260, 30, 30);
+        jLabelWk1Name4Del.setBounds(770, 300, 30, 30);
 
         jLabelWk1Name1Del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
         jLabelWk1Name1Del.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3867,7 +3881,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jLabelWk1Name1Del);
-        jLabelWk1Name1Del.setBounds(780, 140, 30, 30);
+        jLabelWk1Name1Del.setBounds(770, 180, 30, 30);
 
         jLabelWk1Name2Del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
         jLabelWk1Name2Del.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3876,7 +3890,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jLabelWk1Name2Del);
-        jLabelWk1Name2Del.setBounds(780, 180, 30, 30);
+        jLabelWk1Name2Del.setBounds(770, 220, 30, 30);
 
         jLabelWk1Name3Del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
         jLabelWk1Name3Del.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3885,7 +3899,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jLabelWk1Name3Del);
-        jLabelWk1Name3Del.setBounds(780, 220, 30, 30);
+        jLabelWk1Name3Del.setBounds(770, 260, 30, 30);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(null);
@@ -3906,7 +3920,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jCheckBoxNoAcc.setBounds(0, 80, 130, 21);
 
         jPanelActivity.add(jPanel2);
-        jPanel2.setBounds(680, 350, 130, 100);
+        jPanel2.setBounds(670, 390, 130, 100);
 
         jPanelDepartureDetails.setBackground(new java.awt.Color(255, 255, 255));
         jPanelDepartureDetails.setLayout(null);
@@ -4018,10 +4032,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTableDocAtt);
 
         jPanelDooAtt.add(jScrollPane3);
-        jScrollPane3.setBounds(280, 0, 240, 110);
+        jScrollPane3.setBounds(280, 0, 230, 110);
 
         jPanelActivity.add(jPanelDooAtt);
-        jPanelDooAtt.setBounds(10, 580, 520, 110);
+        jPanelDooAtt.setBounds(10, 580, 510, 110);
 
         jTextAttDocPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4143,9 +4157,9 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jPanelActivityInfo.add(jTextFieldWk1DialogActivityDesc);
         jTextFieldWk1DialogActivityDesc.setBounds(10, 320, 490, 30);
 
-        jLabelRemain1.setText("Justification for Choice of Activity ");
-        jPanelActivityInfo.add(jLabelRemain1);
-        jLabelRemain1.setBounds(10, 350, 495, 20);
+        jLabelJustfy.setText("Justification for Choice of Activity ");
+        jPanelActivityInfo.add(jLabelJustfy);
+        jLabelJustfy.setBounds(10, 350, 200, 20);
 
         jLabelPrjCodeProgramming.setText("Project Code (Programming)");
         jPanelActivityInfo.add(jLabelPrjCodeProgramming);
@@ -4166,19 +4180,22 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelRemain.setFont(new java.awt.Font("Tahoma", 3, 9)); // NOI18N
         jPanelActivityInfo.add(jLabelRemain);
-        jLabelRemain.setBounds(200, 300, 300, 20);
+        jLabelRemain.setBounds(280, 350, 210, 20);
 
         jPanelActivity.add(jPanelActivityInfo);
         jPanelActivityInfo.setBounds(10, 110, 510, 450);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanelActivity.add(jButton1);
-        jButton1.setBounds(710, 110, 71, 21);
+        jPanelAddStaff.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelAddStaff.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanelAddStaff.setLayout(null);
+
+        jCheckAddStaff.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jCheckAddStaff.setText(" Additional Staff");
+        jPanelAddStaff.add(jCheckAddStaff);
+        jCheckAddStaff.setBounds(10, 5, 220, 21);
+
+        jPanelActivity.add(jPanelAddStaff);
+        jPanelAddStaff.setBounds(530, 120, 320, 30);
 
         javax.swing.GroupLayout jDialogWk1Layout = new javax.swing.GroupLayout(jDialogWk1.getContentPane());
         jDialogWk1.getContentPane().setLayout(jDialogWk1Layout);
@@ -4271,10 +4288,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableWk1Activities);
+        jScrollPaneWk1.setViewportView(jTableWk1Activities);
 
-        jPanelWkOne.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 220, 1290, 310);
+        jPanelWkOne.add(jScrollPaneWk1);
+        jScrollPaneWk1.setBounds(30, 220, 1290, 310);
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkOne.add(jLabelLogo1);
@@ -4437,7 +4454,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelWkOne.add(jTextAttDocPathWk1Main);
-        jTextAttDocPathWk1Main.setBounds(210, 650, 230, 25);
+        jTextAttDocPathWk1Main.setBounds(210, 670, 230, 25);
 
         jPanelSave.setBackground(new java.awt.Color(255, 255, 255));
         jPanelSave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -4508,7 +4525,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkTwo.add(jLabelLogo2);
-        jLabelLogo2.setBounds(10, 10, 220, 100);
+        jLabelLogo2.setBounds(10, 10, 220, 110);
 
         jButtonWk2DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk2DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -4544,27 +4561,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelHeaderGen7.setText("MONTHLY  PLAN ");
         jPanelWkTwo.add(jLabelHeaderGen7);
         jLabelHeaderGen7.setBounds(450, 40, 420, 40);
-
-        jTableWk2Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane11.setViewportView(jTableWk2Activities);
-
-        jPanelWkTwo.add(jScrollPane11);
-        jScrollPane11.setBounds(30, 220, 1290, 310);
 
         jPanelDooAttWk2Main.setBackground(new java.awt.Color(255, 255, 255));
         jPanelDooAttWk2Main.setLayout(null);
@@ -4666,6 +4662,27 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jPanelWkTwo.add(jPanelSave1);
         jPanelSave1.setBounds(765, 530, 555, 140);
 
+        jTableWk2Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk2.setViewportView(jTableWk2Activities);
+
+        jPanelWkTwo.add(jScrollPaneWk2);
+        jScrollPaneWk2.setBounds(30, 220, 1290, 310);
+
         jTabbedPane1.addTab("Week Two", jPanelWkTwo);
 
         jPanelWkThree.setBackground(new java.awt.Color(29, 109, 222));
@@ -4711,7 +4728,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelLogo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkThree.add(jLabelLogo3);
-        jLabelLogo3.setBounds(10, 10, 220, 100);
+        jLabelLogo3.setBounds(10, 10, 220, 110);
 
         jButtonWk3DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk3DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -4751,27 +4768,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelHeaderGen8.setText("MONTHLY  PLAN ");
         jPanelWkThree.add(jLabelHeaderGen8);
         jLabelHeaderGen8.setBounds(450, 40, 420, 40);
-
-        jTableWk3Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPaneWk3.setViewportView(jTableWk3Activities);
-
-        jPanelWkThree.add(jScrollPaneWk3);
-        jScrollPaneWk3.setBounds(30, 220, 1290, 310);
 
         jPanelDooAttWk3Main.setBackground(new java.awt.Color(255, 255, 255));
         jPanelDooAttWk3Main.setLayout(null);
@@ -4873,6 +4869,27 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jPanelWkThree.add(jPanelSave2);
         jPanelSave2.setBounds(765, 530, 555, 140);
 
+        jTableWk3Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk3.setViewportView(jTableWk3Activities);
+
+        jPanelWkThree.add(jScrollPaneWk3);
+        jScrollPaneWk3.setBounds(30, 220, 1290, 310);
+
         jTabbedPane1.addTab("Week Three", jPanelWkThree);
 
         jPanelWkFour.setBackground(new java.awt.Color(255, 204, 204));
@@ -4958,27 +4975,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelHeaderGen9.setText("MONTHLY  PLAN ");
         jPanelWkFour.add(jLabelHeaderGen9);
         jLabelHeaderGen9.setBounds(450, 40, 420, 40);
-
-        jTableWk4Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane23.setViewportView(jTableWk4Activities);
-
-        jPanelWkFour.add(jScrollPane23);
-        jScrollPane23.setBounds(30, 220, 1290, 310);
 
         jTextAttDocPathWk4Main.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -5080,6 +5076,27 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jPanelWkFour.add(jPanelSave3);
         jPanelSave3.setBounds(765, 530, 555, 140);
 
+        jTableWk4Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk4.setViewportView(jTableWk4Activities);
+
+        jPanelWkFour.add(jScrollPaneWk4);
+        jScrollPaneWk4.setBounds(30, 220, 1290, 310);
+
         jTabbedPane1.addTab("Week Four", jPanelWkFour);
 
         jPanelWkFive.setBackground(new java.awt.Color(204, 204, 255));
@@ -5165,27 +5182,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelHeaderGen10.setText("MONTHLY  PLAN ");
         jPanelWkFive.add(jLabelHeaderGen10);
         jLabelHeaderGen10.setBounds(450, 40, 420, 40);
-
-        jTableWk5Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane24.setViewportView(jTableWk5Activities);
-
-        jPanelWkFive.add(jScrollPane24);
-        jScrollPane24.setBounds(30, 220, 1290, 310);
 
         jPanelDooAttWk5Main.setBackground(new java.awt.Color(255, 255, 255));
         jPanelDooAttWk5Main.setLayout(null);
@@ -5286,6 +5282,27 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jPanelSave4.setLayout(null);
         jPanelWkFive.add(jPanelSave4);
         jPanelSave4.setBounds(765, 530, 555, 140);
+
+        jTableWk5Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk5.setViewportView(jTableWk5Activities);
+
+        jPanelWkFive.add(jScrollPaneWk5);
+        jScrollPaneWk5.setBounds(30, 220, 1290, 310);
 
         jTabbedPane1.addTab("Week Five", jPanelWkFive);
 
@@ -5776,33 +5793,35 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                 jDateChooserWk1To.setDate(null);
                 jDateChooserWk1From.requestFocusInWindow();
                 jDateChooserWk1From.setFocusable(true);
-            } else if (("National Office".equals(jLabelDistrict.getText())) && (noOfDaysBetweenWk1 > 7)) {
+            } else if (noOfDaysBetweenWk1 > 7) {
                 JOptionPane.showMessageDialog(this, "Weekly Plan days cannot be more than seven(7) days here",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 jDateChooserWk1From.setDate(null);
                 jDateChooserWk1To.setDate(null);
                 jDateChooserWk1From.requestFocusInWindow();
                 jDateChooserWk1From.setFocusable(true);
-            } else if ((!"National Office".equals(jLabelDistrict.getText())) && (lastDateofMonth.compareTo(formatter.format(jDateChooserWk1To.getDate())) < 0)) {
-                JOptionPane.showMessageDialog(this, "Activity date cannot be greater than last day of the month.Please check your dates");
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-            } else {
+            } //            else if ((!"National Office".equals(jLabelDistrict.getText())) && (lastDateofMonth.compareTo(formatter.format(jDateChooserWk1To.getDate())) < 0)) {
+            //                JOptionPane.showMessageDialog(this, "Activity date cannot be greater than last day of the month.Please check your dates");
+            //                jDateChooserWk1From.requestFocusInWindow();
+            //                jDateChooserWk1From.setFocusable(true);
+            //            } 
+            else {
                 wk1Site = "Y";
                 wk2Site = "N";
                 wk3Site = "N";
                 wk4Site = "N";
                 wk5Site = "N";
 
-                if (("National Office".equals(jLabelDistrict.getText()))) {
-                    jDialogWk1.setTitle("Per Diem Week 1");
-                } else {
-                    jDialogWk1.setTitle("Month Per Diem ");
-                }
+//                if (("National Office".equals(jLabelDistrict.getText()))) {
+                jDialogWk1.setTitle("Per Diem Week 1");
+//                } else {
+//                    jDialogWk1.setTitle("Month Per Diem ");
+//                }
                 resetField();
                 refreshAttFields();
                 modelAtt.setRowCount(0);
                 jDialogWk1.setVisible(true);
+                addStaff();
 
             }
         } catch (Exception e) {
@@ -6294,6 +6313,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         addFileAttToTabWk1Main();
         budCreate();
         addWkItmLine();
+
 
     }//GEN-LAST:event_jButtonDialogWk1AddActionPerformed
 
@@ -7337,12 +7357,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboProjectCodeProgrammingActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        budCreate();
-        modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
-            prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText()});
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -7641,7 +7655,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupAcc;
     private cambodia.raven.Time departTime;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancelFacility;
     private javax.swing.JButton jButtonDialogWk1Add;
     private javax.swing.JButton jButtonDialogWk1Close;
@@ -7676,6 +7689,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     private javax.swing.JButton jButtonWk5AddActivity;
     private javax.swing.JButton jButtonWk5DelActivity;
     private javax.swing.JButton jButtonWk5Delete;
+    private javax.swing.JCheckBox jCheckAddStaff;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccProved;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccUnProved;
     private javax.swing.JCheckBox jCheckBoxDialogWk1BrkFast;
@@ -7741,6 +7755,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelHeaderGen7;
     private javax.swing.JLabel jLabelHeaderGen8;
     private javax.swing.JLabel jLabelHeaderGen9;
+    private javax.swing.JLabel jLabelJustfy;
     private javax.swing.JLabel jLabelLineDate;
     private javax.swing.JLabel jLabelLineDate1;
     private javax.swing.JLabel jLabelLineDate2;
@@ -7771,7 +7786,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelRef;
     private javax.swing.JLabel jLabelRefNum;
     private javax.swing.JLabel jLabelRemain;
-    private javax.swing.JLabel jLabelRemain1;
     private javax.swing.JLabel jLabelSerial;
     private javax.swing.JLabel jLabelWk1DialogActivityDesc;
     private javax.swing.JLabel jLabelWk1DialogStaffName;
@@ -7836,6 +7850,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelActivity;
     private javax.swing.JPanel jPanelActivityInfo;
+    private javax.swing.JPanel jPanelAddStaff;
     private javax.swing.JPanel jPanelAttach;
     private javax.swing.JPanel jPanelAttachWk1Main;
     private javax.swing.JPanel jPanelAttachWk1Main1;
@@ -7860,17 +7875,17 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelWkOne;
     private javax.swing.JPanel jPanelWkThree;
     private javax.swing.JPanel jPanelWkTwo;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane23;
-    private javax.swing.JScrollPane jScrollPane24;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPaneWk1;
     private javax.swing.JScrollPane jScrollPaneWk1Att;
+    private javax.swing.JScrollPane jScrollPaneWk2;
     private javax.swing.JScrollPane jScrollPaneWk2Att;
     private javax.swing.JScrollPane jScrollPaneWk3;
     private javax.swing.JScrollPane jScrollPaneWk3Att;
+    private javax.swing.JScrollPane jScrollPaneWk4;
     private javax.swing.JScrollPane jScrollPaneWk4Att;
+    private javax.swing.JScrollPane jScrollPaneWk5;
     private javax.swing.JScrollPane jScrollPaneWk5Att;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
