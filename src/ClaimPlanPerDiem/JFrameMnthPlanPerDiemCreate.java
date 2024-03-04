@@ -165,28 +165,82 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTableDocAtt.getColumnModel().getColumn(0).setMaxWidth(0);
         jTableDocAtt.getColumnModel().getColumn(2).setMinWidth(0);
         jTableDocAtt.getColumnModel().getColumn(2).setMaxWidth(0);
+
+        jTableWk1Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk2Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk3Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk1Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(10).setMaxWidth(0);
         jTableWk1Activities.getColumnModel().getColumn(11).setMinWidth(0);
         jTableWk1Activities.getColumnModel().getColumn(11).setMaxWidth(0);
         jTableWk1Activities.getColumnModel().getColumn(18).setMinWidth(0);
         jTableWk1Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(10).setMaxWidth(0);
         jTableWk2Activities.getColumnModel().getColumn(11).setMinWidth(0);
         jTableWk2Activities.getColumnModel().getColumn(11).setMaxWidth(0);
         jTableWk2Activities.getColumnModel().getColumn(18).setMinWidth(0);
         jTableWk2Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(10).setMaxWidth(0);
         jTableWk3Activities.getColumnModel().getColumn(11).setMinWidth(0);
         jTableWk3Activities.getColumnModel().getColumn(11).setMaxWidth(0);
         jTableWk3Activities.getColumnModel().getColumn(18).setMinWidth(0);
         jTableWk3Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(10).setMaxWidth(0);
         jTableWk4Activities.getColumnModel().getColumn(11).setMinWidth(0);
         jTableWk4Activities.getColumnModel().getColumn(11).setMaxWidth(0);
         jTableWk4Activities.getColumnModel().getColumn(18).setMinWidth(0);
         jTableWk4Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(10).setMaxWidth(0);
         jTableWk5Activities.getColumnModel().getColumn(11).setMinWidth(0);
         jTableWk5Activities.getColumnModel().getColumn(11).setMaxWidth(0);
         jTableWk5Activities.getColumnModel().getColumn(18).setMinWidth(0);
         jTableWk5Activities.getColumnModel().getColumn(18).setMaxWidth(0);
         jTableDocAttWk1Main.getColumnModel().getColumn(2).setMinWidth(0);
         jTableDocAttWk1Main.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableDocAttWk2Main.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableDocAttWk2Main.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableDocAttWk3Main.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableDocAttWk3Main.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableDocAttWk4Main.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableDocAttWk4Main.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableDocAttWk5Main.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableDocAttWk5Main.getColumnModel().getColumn(2).setMaxWidth(0);
         try {
             // showDate();
             tH.intShowDate();
@@ -221,8 +275,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTextAttDocPathWk5Main.setVisible(false);
         jLabelPrjCodeProgramming.setVisible(false);
         jComboProjectCodeProgramming.setVisible(false);
-        jMenuItemSubmit.setVisible(false);
-        jSeparator13.setVisible(false);
+
         findUserGrp();
         jLabelLineDate.setText(tH.internetDate);
         jLabelLineDate1.setText(tH.internetDate);
@@ -724,19 +777,18 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "<html> Plan Ref No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
                     + "</b> successfully registered.</html>");
 
-            jDialogWaitingEmail.setVisible(true);
-
-            String mailMsg = "<html><body> Dear " + supNam + "<br><br><b>"
-                    + jLabelLineLogNam.getText() + "</b> has submitted a plan for your review and approval.<br><br>"
-                    + "Please check your Finance System inbox and action<br><br> Kind Regards <br><br>"
-                    + " Finance Management System </body></html>";
-
-            String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Approval.";
-
-            emSend.sendMail(MailMsgTitle, supUsrMail, mailMsg, "");
-
-            jDialogWaitingEmail.setVisible(false);
-
+//            jDialogWaitingEmail.setVisible(true);
+//
+//            String mailMsg = "<html><body> Dear " + supNam + "<br><br><b>"
+//                    + jLabelLineLogNam.getText() + "</b> has submitted a plan for your review and approval.<br><br>"
+//                    + "Please check your Finance System inbox and action<br><br> Kind Regards <br><br>"
+//                    + " Finance Management System </body></html>";
+//
+//            String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Approval.";
+//
+//            emSend.sendMail(MailMsgTitle, supUsrMail, mailMsg, "");
+//
+//            jDialogWaitingEmail.setVisible(false);
             JOptionPane.showMessageDialog(this, "An email has been sent to " + supNam + " for processing.");
             new JFrameMnthPlanPerDiemCreate(jLabelEmp.getText()).setVisible(true);
             setVisible(false);
@@ -1362,8 +1414,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     void UsrRecUpd() {
 
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk1Activities.getValueAt(i, 15).toString()))) {
-                usrRecNam = jTableWk1Activities.getValueAt(i, 15).toString();
+            if (!("".equals(jTableWk1Activities.getValueAt(i, 19).toString()))) {
+                usrRecNam = jTableWk1Activities.getValueAt(i, 19).toString();
                 actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "1";
                 usrActType = "Per Diem";
@@ -1372,8 +1424,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk1Activities.getValueAt(i, 16).toString()))) {
-                usrRecNam = jTableWk1Activities.getValueAt(i, 16).toString();
+            if (!("".equals(jTableWk1Activities.getValueAt(i, 20).toString()))) {
+                usrRecNam = jTableWk1Activities.getValueAt(i, 20).toString();
                 actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "1";
                 usrActType = "Per Diem";
@@ -1382,8 +1434,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk1Activities.getValueAt(i, 17).toString()))) {
-                usrRecNam = jTableWk1Activities.getValueAt(i, 17).toString();
+            if (!("".equals(jTableWk1Activities.getValueAt(i, 21).toString()))) {
+                usrRecNam = jTableWk1Activities.getValueAt(i, 21).toString();
                 actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "1";
                 usrActType = "Per Diem";
@@ -1391,8 +1443,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk1Activities.getValueAt(i, 18).toString()))) {
-                usrRecNam = jTableWk1Activities.getValueAt(i, 18).toString();
+            if (!("".equals(jTableWk1Activities.getValueAt(i, 22).toString()))) {
+                usrRecNam = jTableWk1Activities.getValueAt(i, 22).toString();
                 actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "1";
                 usrActType = "Per Diem";
@@ -1401,8 +1453,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk2Activities.getValueAt(i, 15).toString()))) {
-                usrRecNam = jTableWk2Activities.getValueAt(i, 15).toString();
+            if (!("".equals(jTableWk2Activities.getValueAt(i, 19).toString()))) {
+                usrRecNam = jTableWk2Activities.getValueAt(i, 19).toString();
                 actDate = jTableWk2Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "2";
                 usrActType = "Per Diem";
@@ -1411,8 +1463,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk2Activities.getValueAt(i, 16).toString()))) {
-                usrRecNam = jTableWk2Activities.getValueAt(i, 16).toString();
+            if (!("".equals(jTableWk2Activities.getValueAt(i, 20).toString()))) {
+                usrRecNam = jTableWk2Activities.getValueAt(i, 20).toString();
                 actDate = jTableWk2Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "2";
                 usrActType = "Per Diem";
@@ -1420,8 +1472,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk2Activities.getValueAt(i, 17).toString()))) {
-                usrRecNam = jTableWk2Activities.getValueAt(i, 17).toString();
+            if (!("".equals(jTableWk2Activities.getValueAt(i, 21).toString()))) {
+                usrRecNam = jTableWk2Activities.getValueAt(i, 21).toString();
                 actDate = jTableWk2Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "2";
                 usrActType = "Per Diem";
@@ -1429,8 +1481,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk2Activities.getValueAt(i, 18).toString()))) {
-                usrRecNam = jTableWk2Activities.getValueAt(i, 18).toString();
+            if (!("".equals(jTableWk2Activities.getValueAt(i, 22).toString()))) {
+                usrRecNam = jTableWk2Activities.getValueAt(i, 22).toString();
                 actDate = jTableWk2Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "2";
                 usrActType = "Per Diem";
@@ -1439,8 +1491,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk3Activities.getValueAt(i, 15).toString()))) {
-                usrRecNam = jTableWk3Activities.getValueAt(i, 15).toString();
+            if (!("".equals(jTableWk3Activities.getValueAt(i, 19).toString()))) {
+                usrRecNam = jTableWk3Activities.getValueAt(i, 19).toString();
                 actDate = jTableWk3Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "3";
                 usrActType = "Per Diem";
@@ -1449,8 +1501,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk3Activities.getValueAt(i, 16).toString()))) {
-                usrRecNam = jTableWk3Activities.getValueAt(i, 16).toString();
+            if (!("".equals(jTableWk3Activities.getValueAt(i, 20).toString()))) {
+                usrRecNam = jTableWk3Activities.getValueAt(i, 20).toString();
                 actDate = jTableWk3Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "3";
                 usrActType = "Per Diem";
@@ -1458,8 +1510,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk3Activities.getValueAt(i, 17).toString()))) {
-                usrRecNam = jTableWk3Activities.getValueAt(i, 17).toString();
+            if (!("".equals(jTableWk3Activities.getValueAt(i, 21).toString()))) {
+                usrRecNam = jTableWk3Activities.getValueAt(i, 21).toString();
                 actDate = jTableWk3Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "3";
                 usrActType = "Per Diem";
@@ -1467,8 +1519,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk3Activities.getValueAt(i, 18).toString()))) {
-                usrRecNam = jTableWk3Activities.getValueAt(i, 18).toString();
+            if (!("".equals(jTableWk3Activities.getValueAt(i, 22).toString()))) {
+                usrRecNam = jTableWk3Activities.getValueAt(i, 22).toString();
                 actDate = jTableWk3Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "3";
                 usrActType = "Per Diem";
@@ -1477,8 +1529,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk4Activities.getValueAt(i, 15).toString()))) {
-                usrRecNam = jTableWk4Activities.getValueAt(i, 15).toString();
+            if (!("".equals(jTableWk4Activities.getValueAt(i, 19).toString()))) {
+                usrRecNam = jTableWk4Activities.getValueAt(i, 19).toString();
                 actDate = jTableWk4Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "4";
                 usrActType = "Per Diem";
@@ -1487,8 +1539,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk4Activities.getValueAt(i, 16).toString()))) {
-                usrRecNam = jTableWk4Activities.getValueAt(i, 16).toString();
+            if (!("".equals(jTableWk4Activities.getValueAt(i, 20).toString()))) {
+                usrRecNam = jTableWk4Activities.getValueAt(i, 20).toString();
                 actDate = jTableWk4Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "4";
                 usrActType = "Per Diem";
@@ -1497,8 +1549,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk4Activities.getValueAt(i, 17).toString()))) {
-                usrRecNam = jTableWk4Activities.getValueAt(i, 17).toString();
+            if (!("".equals(jTableWk4Activities.getValueAt(i, 21).toString()))) {
+                usrRecNam = jTableWk4Activities.getValueAt(i, 21).toString();
                 actDate = jTableWk4Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "4";
                 usrActType = "Per Diem";
@@ -1506,8 +1558,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk4Activities.getValueAt(i, 18).toString()))) {
-                usrRecNam = jTableWk4Activities.getValueAt(i, 18).toString();
+            if (!("".equals(jTableWk4Activities.getValueAt(i, 22).toString()))) {
+                usrRecNam = jTableWk4Activities.getValueAt(i, 22).toString();
                 actDate = jTableWk4Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "4";
                 usrActType = "Per Diem";
@@ -1516,8 +1568,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk5Activities.getValueAt(i, 15).toString()))) {
-                usrRecNam = jTableWk5Activities.getValueAt(i, 15).toString();
+            if (!("".equals(jTableWk5Activities.getValueAt(i, 19).toString()))) {
+                usrRecNam = jTableWk5Activities.getValueAt(i, 19).toString();
                 actDate = jTableWk5Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "5";
                 usrActType = "Per Diem";
@@ -1526,8 +1578,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk5Activities.getValueAt(i, 16).toString()))) {
-                usrRecNam = jTableWk5Activities.getValueAt(i, 16).toString();
+            if (!("".equals(jTableWk5Activities.getValueAt(i, 20).toString()))) {
+                usrRecNam = jTableWk5Activities.getValueAt(i, 20).toString();
                 actDate = jTableWk5Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "5";
                 usrActType = "Per Diem";
@@ -1535,8 +1587,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk5Activities.getValueAt(i, 17).toString()))) {
-                usrRecNam = jTableWk5Activities.getValueAt(i, 17).toString();
+            if (!("".equals(jTableWk5Activities.getValueAt(i, 21).toString()))) {
+                usrRecNam = jTableWk5Activities.getValueAt(i, 21).toString();
                 actDate = jTableWk5Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "5";
                 usrActType = "Per Diem";
@@ -1544,8 +1596,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            if (!("".equals(jTableWk5Activities.getValueAt(i, 18).toString()))) {
-                usrRecNam = jTableWk5Activities.getValueAt(i, 18).toString();
+            if (!("".equals(jTableWk5Activities.getValueAt(i, 22).toString()))) {
+                usrRecNam = jTableWk5Activities.getValueAt(i, 22).toString();
                 actDate = jTableWk5Activities.getValueAt(i, 0).toString();
                 UsrRecWk = "5";
                 usrActType = "Per Diem";
@@ -1708,11 +1760,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
 
                 String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst1 = conn.prepareStatement(sqlwk1plan);
                 pst1.setString(1, "P");
@@ -1725,21 +1773,25 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                 pst1.setString(8, jTableWk1Activities.getValueAt(i, 4).toString());
                 pst1.setString(9, jTableWk1Activities.getValueAt(i, 5).toString());
                 pst1.setString(10, jTableWk1Activities.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableWk1Activities.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableWk1Activities.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableWk1Activities.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableWk1Activities.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableWk1Activities.getValueAt(i, 11).toString());
+                pst1.setString(11, jTableWk1Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk1Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk1Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk1Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk1Activities.getValueAt(i, 11).toString()));
                 pst1.setString(16, String.valueOf(jTableWk1Activities.getValueAt(i, 12).toString()));
                 pst1.setString(17, String.valueOf(jTableWk1Activities.getValueAt(i, 13).toString()));
                 pst1.setString(18, String.valueOf(jTableWk1Activities.getValueAt(i, 14).toString()));
                 pst1.setString(19, jTableWk1Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableWk1Activities.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableWk1Activities.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableWk1Activities.getValueAt(i, 18).toString());
-                pst1.setString(23, "1");
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(20, String.valueOf(jTableWk1Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk1Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk1Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk1Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk1Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk1Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk1Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, "1");
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -2012,6 +2064,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                         prjProgCode = "";
 
                     }
+
+                    addFileAttToTabWk1Main();
 
                     if ("Y".equals(wk1Site)) {
                         if (modelWk1.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
@@ -2333,7 +2387,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
                     }
 
-                  
                 }
 
             } catch (Exception e) {
@@ -2353,14 +2406,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
 
-                String sqlWk2plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk2plan);
+                pst1 = conn.prepareStatement(sqlwk1plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
@@ -2371,21 +2420,25 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                 pst1.setString(8, jTableWk2Activities.getValueAt(i, 4).toString());
                 pst1.setString(9, jTableWk2Activities.getValueAt(i, 5).toString());
                 pst1.setString(10, jTableWk2Activities.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableWk2Activities.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableWk2Activities.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableWk2Activities.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableWk2Activities.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableWk2Activities.getValueAt(i, 11).toString());
+                pst1.setString(11, jTableWk2Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk2Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk2Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk2Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk2Activities.getValueAt(i, 11).toString()));
                 pst1.setString(16, String.valueOf(jTableWk2Activities.getValueAt(i, 12).toString()));
                 pst1.setString(17, String.valueOf(jTableWk2Activities.getValueAt(i, 13).toString()));
                 pst1.setString(18, String.valueOf(jTableWk2Activities.getValueAt(i, 14).toString()));
                 pst1.setString(19, jTableWk2Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableWk2Activities.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableWk2Activities.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableWk2Activities.getValueAt(i, 18).toString());
-                pst1.setString(23, "1");
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(20, String.valueOf(jTableWk2Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk2Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk2Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk2Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk2Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk2Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk2Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, "1");
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -2405,14 +2458,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
 
-                String sqlWk3plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk3plan);
+                pst1 = conn.prepareStatement(sqlwk1plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
@@ -2423,21 +2472,25 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                 pst1.setString(8, jTableWk3Activities.getValueAt(i, 4).toString());
                 pst1.setString(9, jTableWk3Activities.getValueAt(i, 5).toString());
                 pst1.setString(10, jTableWk3Activities.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableWk3Activities.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableWk3Activities.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableWk3Activities.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableWk3Activities.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableWk3Activities.getValueAt(i, 11).toString());
+                pst1.setString(11, jTableWk3Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk3Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk3Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk3Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk3Activities.getValueAt(i, 11).toString()));
                 pst1.setString(16, String.valueOf(jTableWk3Activities.getValueAt(i, 12).toString()));
                 pst1.setString(17, String.valueOf(jTableWk3Activities.getValueAt(i, 13).toString()));
                 pst1.setString(18, String.valueOf(jTableWk3Activities.getValueAt(i, 14).toString()));
                 pst1.setString(19, jTableWk3Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableWk3Activities.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableWk3Activities.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableWk3Activities.getValueAt(i, 18).toString());
-                pst1.setString(23, "1");
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(20, String.valueOf(jTableWk3Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk3Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk3Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk3Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk3Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk3Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk3Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, "1");
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -2457,14 +2510,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
 
-                String sqlWk4plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk4plan);
+                pst1 = conn.prepareStatement(sqlwk1plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
@@ -2475,21 +2524,25 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                 pst1.setString(8, jTableWk4Activities.getValueAt(i, 4).toString());
                 pst1.setString(9, jTableWk4Activities.getValueAt(i, 5).toString());
                 pst1.setString(10, jTableWk4Activities.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableWk4Activities.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableWk4Activities.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableWk4Activities.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableWk4Activities.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableWk4Activities.getValueAt(i, 11).toString());
+                pst1.setString(11, jTableWk4Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk4Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk4Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk4Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk4Activities.getValueAt(i, 11).toString()));
                 pst1.setString(16, String.valueOf(jTableWk4Activities.getValueAt(i, 12).toString()));
                 pst1.setString(17, String.valueOf(jTableWk4Activities.getValueAt(i, 13).toString()));
                 pst1.setString(18, String.valueOf(jTableWk4Activities.getValueAt(i, 14).toString()));
                 pst1.setString(19, jTableWk4Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableWk4Activities.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableWk4Activities.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableWk4Activities.getValueAt(i, 18).toString());
-                pst1.setString(23, "1");
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(20, String.valueOf(jTableWk4Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk4Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk4Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk4Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk4Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk4Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk4Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, "1");
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -2509,14 +2562,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
 
-                String sqlWk5plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk5plan);
+                pst1 = conn.prepareStatement(sqlwk1plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
@@ -2527,21 +2576,25 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                 pst1.setString(8, jTableWk5Activities.getValueAt(i, 4).toString());
                 pst1.setString(9, jTableWk5Activities.getValueAt(i, 5).toString());
                 pst1.setString(10, jTableWk5Activities.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableWk5Activities.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableWk5Activities.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableWk5Activities.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableWk5Activities.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableWk5Activities.getValueAt(i, 11).toString());
+                pst1.setString(11, jTableWk5Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk5Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk5Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk5Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk5Activities.getValueAt(i, 11).toString()));
                 pst1.setString(16, String.valueOf(jTableWk5Activities.getValueAt(i, 12).toString()));
                 pst1.setString(17, String.valueOf(jTableWk5Activities.getValueAt(i, 13).toString()));
                 pst1.setString(18, String.valueOf(jTableWk5Activities.getValueAt(i, 14).toString()));
                 pst1.setString(19, jTableWk5Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableWk5Activities.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableWk5Activities.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableWk5Activities.getValueAt(i, 18).toString());
-                pst1.setString(23, "1");
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(20, String.valueOf(jTableWk5Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk5Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk5Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk5Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk5Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk5Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk5Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, "1");
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -2886,6 +2939,31 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             pst = conn.prepareStatement(sqlDelPlanUsrRec);
             pst.executeUpdate();
 
+            String sqlDelDocWK1 = "delete [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk1] where REF_NUM ='" + newPlanRefNum + "'";
+
+            pst = conn.prepareStatement(sqlDelDocWK1);
+            pst.executeUpdate();
+
+            String sqlDelDocWK2 = "delete [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk2] where REF_NUM ='" + newPlanRefNum + "'";
+
+            pst = conn.prepareStatement(sqlDelDocWK2);
+            pst.executeUpdate();
+
+            String sqlDelDocWK3 = "delete [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk3] where REF_NUM ='" + newPlanRefNum + "'";
+
+            pst = conn.prepareStatement(sqlDelDocWK3);
+            pst.executeUpdate();
+
+            String sqlDelDocWK4 = "delete [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk4] where REF_NUM ='" + newPlanRefNum + "'";
+
+            pst = conn.prepareStatement(sqlDelDocWK4);
+            pst.executeUpdate();
+
+            String sqlDelDocWK5 = "delete [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk5] where REF_NUM ='" + newPlanRefNum + "'";
+
+            pst = conn.prepareStatement(sqlDelDocWK5);
+            pst.executeUpdate();
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -3127,6 +3205,177 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
     }
 
+    void regCheck() {
+        try {
+            System.out.println("runn1");
+            countPlanAct = 0;
+            countPlanPeriod = 0;
+            countWk1 = 0;
+            countWk2 = 0;
+            countWk3 = 0;
+            countWk4 = 0;
+            countWk5 = 0;
+            System.out.println("runn2");
+
+            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk1Activities.getRowCount() > 0) {
+                finDayCalcWk1();
+                minDateComWk1 = Date.from(minDateWk1.atStartOfDay(zoneId).toInstant());
+                maxDateComWk1 = Date.from(maxDateWk1.atStartOfDay(zoneId).toInstant());
+
+            }
+
+            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk2Activities.getRowCount() > 0) {
+                finDayCalcWk2();
+                minDateComWk2 = Date.from(minDateWk2.atStartOfDay(zoneId).toInstant());
+                maxDateComWk2 = Date.from(maxDateWk2.atStartOfDay(zoneId).toInstant());
+
+            }
+            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk3Activities.getRowCount() > 0) {
+                finDayCalcWk3();
+                minDateComWk3 = Date.from(minDateWk3.atStartOfDay(zoneId).toInstant());
+                maxDateComWk3 = Date.from(maxDateWk3.atStartOfDay(zoneId).toInstant());
+
+            }
+            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk4Activities.getRowCount() > 0) {
+                finDayCalcWk4();
+                minDateComWk4 = Date.from(minDateWk4.atStartOfDay(zoneId).toInstant());
+                maxDateComWk4 = Date.from(maxDateWk4.atStartOfDay(zoneId).toInstant());
+
+            }
+            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk5Activities.getRowCount() > 0) {
+                finDayCalcWk5();
+                minDateComWk5 = Date.from(minDateWk5.atStartOfDay(zoneId).toInstant());
+                maxDateComWk5 = Date.from(maxDateWk5.atStartOfDay(zoneId).toInstant());
+
+            }
+            System.out.println("runn3");
+            if (jTableWk1Activities.getRowCount() == 0 && jTableWk2Activities.getRowCount() == 0
+                    && jTableWk3Activities.getRowCount() == 0 && jTableWk4Activities.getRowCount() == 0
+                    && jTableWk5Activities.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "At least one activity should be completed.");
+                jTabbedPane1.setSelectedIndex(0);
+                jDateChooserWk1From.requestFocusInWindow();
+                jDateChooserWk1From.setFocusable(true);
+
+            } else if ((jDateChooserWk1From.getDate() == null) || (jDateChooserWk1To.getDate() == null)) {
+                JOptionPane.showMessageDialog(this, "Date for week 1 cannot be blank. Please check your dates");
+                jDateChooserWk1From.requestFocusInWindow();
+                jDateChooserWk1From.setFocusable(true);
+            } else if (noOfFinDays1 > 7) {
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 1 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk1From.setDate(null);
+                jDateChooserWk1To.setDate(null);
+                jDateChooserWk1From.requestFocusInWindow();
+                jDateChooserWk1From.setFocusable(true);
+            } else if (((jDateChooserWk2From.getDate() == null) || (jDateChooserWk2To.getDate() == null)) && noOfFinDays2 > 0) {
+                JOptionPane.showMessageDialog(this, "Date for week 2 cannot be blank. Please check your dates");
+                jDateChooserWk2From.requestFocusInWindow();
+                jDateChooserWk2From.setFocusable(true);
+            } else if (noOfFinDays2 > 7) {
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 2 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk2From.setDate(null);
+                jDateChooserWk2To.setDate(null);
+                jDateChooserWk2From.requestFocusInWindow();
+                jDateChooserWk2From.setFocusable(true);
+            } else if (((jDateChooserWk3From.getDate() == null) || (jDateChooserWk3To.getDate() == null)) && noOfFinDays3 > 0) {
+                JOptionPane.showMessageDialog(this, "Date for week 3 cannot be blank. Please check your dates");
+                jDateChooserWk3From.requestFocusInWindow();
+                jDateChooserWk3From.setFocusable(true);
+            } else if (noOfFinDays3 > 7) {
+
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 3 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk3From.setDate(null);
+                jDateChooserWk3To.setDate(null);
+                jDateChooserWk3From.requestFocusInWindow();
+                jDateChooserWk3From.setFocusable(true);
+            } else if (((jDateChooserWk4From.getDate() == null) || (jDateChooserWk4To.getDate() == null)) && noOfFinDays4 > 0) {
+                JOptionPane.showMessageDialog(this, "Date for week 4 cannot be blank. Please check your dates");
+                jDateChooserWk4From.requestFocusInWindow();
+                jDateChooserWk4From.setFocusable(true);
+            } else if (noOfFinDays4 > 7) {
+
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 4 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk4From.setDate(null);
+                jDateChooserWk4To.setDate(null);
+                jDateChooserWk4From.requestFocusInWindow();
+                jDateChooserWk4From.setFocusable(true);
+            } else if (((jDateChooserWk5From.getDate() == null) || (jDateChooserWk5To.getDate() == null)) && noOfFinDays5 > 0) {
+                JOptionPane.showMessageDialog(this, "Date for week 5 cannot be blank. Please check your dates");
+                jDateChooserWk5From.requestFocusInWindow();
+                jDateChooserWk5From.setFocusable(true);
+            } else if (noOfFinDays5 > 7) {
+
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 5 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk5From.setDate(null);
+                jDateChooserWk5To.setDate(null);
+                jDateChooserWk5From.requestFocusInWindow();
+                jDateChooserWk5From.setFocusable(true);
+            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk1Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk1From.getDate()).compareTo(formatter.format(minDateComWk1)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 1 cannot be lower than start date.Please check your dates");
+                jDateChooserWk1From.requestFocusInWindow();
+                jDateChooserWk1From.setFocusable(true);
+
+            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk1Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk1To.getDate()).compareTo(formatter.format(maxDateComWk1)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 1 cannot be greater than end date.Please check your dates");
+                jDateChooserWk1To.requestFocusInWindow();
+                jDateChooserWk1To.setFocusable(true);
+
+            } else if ("National Office".equals(jLabelDistrict.getText()) && jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2From.getDate()).compareTo(formatter.format(minDateComWk2)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 2 cannot be lower than start date.Please check your dates");
+                jDateChooserWk2From.requestFocusInWindow();
+                jDateChooserWk2From.setFocusable(true);
+
+            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2To.getDate()).compareTo(formatter.format(maxDateComWk2)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 2 cannot be greater than end date.Please check your dates");
+                jDateChooserWk2To.requestFocusInWindow();
+                jDateChooserWk2To.setFocusable(true);
+
+            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3From.getDate()).compareTo(formatter.format(minDateComWk3)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 3 cannot be lower than start date.Please check your dates");
+                jDateChooserWk3From.requestFocusInWindow();
+                jDateChooserWk3From.setFocusable(true);
+
+            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3To.getDate()).compareTo(formatter.format(maxDateComWk3)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 3 cannot be greater than end date.Please check your dates");
+                jDateChooserWk3To.requestFocusInWindow();
+                jDateChooserWk3To.setFocusable(true);
+
+            } else if ((!"National Office".equals(jLabelDistrict.getText())) && jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4From.getDate()).compareTo(formatter.format(minDateComWk4)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 4 cannot be lower than start date.Please check your dates");
+                jDateChooserWk4From.requestFocusInWindow();
+                jDateChooserWk4From.setFocusable(true);
+
+            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4To.getDate()).compareTo(formatter.format(maxDateComWk4)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 4 cannot be greater than end date.Please check your dates");
+                jDateChooserWk4To.requestFocusInWindow();
+                jDateChooserWk4To.setFocusable(true);
+
+            } else if ((!"National Office".equals(jLabelDistrict.getText())) && jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5From.getDate()).compareTo(formatter.format(minDateComWk5)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 5cannot be lower than start date.Please check your dates");
+                jDateChooserWk5From.requestFocusInWindow();
+                jDateChooserWk5From.setFocusable(true);
+
+            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5To.getDate()).compareTo(formatter.format(maxDateComWk5)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 5 cannot be greater than end date.Please check your dates");
+                jDateChooserWk5To.requestFocusInWindow();
+                jDateChooserWk5To.setFocusable(true);
+
+            } else {
+
+                saveRec();
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     void saveRec() {
         try {
             jMenuItemSubmit.setEnabled(false);
@@ -3314,8 +3563,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTableDocAttWk1Main = new javax.swing.JTable();
         jTextAttDocPathWk1Main = new javax.swing.JTextField();
         jPanelSave = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonSave = new javax.swing.JButton();
         jPanelWkTwo = new javax.swing.JPanel();
         jLabelWkDuration1 = new javax.swing.JLabel();
         jDateChooserWk2From = new com.toedter.calendar.JDateChooser();
@@ -4170,11 +4417,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                 jComboProjectCodeProgrammingMouseClicked(evt);
             }
         });
-        jComboProjectCodeProgramming.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboProjectCodeProgrammingActionPerformed(evt);
-            }
-        });
         jPanelActivityInfo.add(jComboProjectCodeProgramming);
         jComboProjectCodeProgramming.setBounds(10, 170, 495, 30);
 
@@ -4183,7 +4425,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelRemain.setBounds(280, 350, 210, 20);
 
         jPanelActivity.add(jPanelActivityInfo);
-        jPanelActivityInfo.setBounds(10, 110, 510, 450);
+        jPanelActivityInfo.setBounds(0, 110, 510, 450);
 
         jPanelAddStaff.setBackground(new java.awt.Color(255, 255, 255));
         jPanelAddStaff.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -4459,26 +4701,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jPanelSave.setBackground(new java.awt.Color(255, 255, 255));
         jPanelSave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jPanelSave.setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Record Validation");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanelSave.add(jLabel1);
-        jLabel1.setBounds(170, 10, 190, 20);
-
-        jButtonSave.setBackground(new java.awt.Color(0, 153, 0));
-        jButtonSave.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonSave.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonSave.setText("Submit");
-        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveActionPerformed(evt);
-            }
-        });
-        jPanelSave.add(jButtonSave);
-        jButtonSave.setBounds(180, 51, 170, 50);
-
         jPanelWkOne.add(jPanelSave);
         jPanelSave.setBounds(765, 530, 555, 140);
 
@@ -5971,206 +6193,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jMenuItemSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSubmitActionPerformed
-        try {
-            countPlanAct = 0;
-            countPlanPeriod = 0;
-            countWk1 = 0;
-            countWk2 = 0;
-            countWk3 = 0;
-            countWk4 = 0;
-            countWk5 = 0;
-
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk1Activities.getRowCount() > 0) {
-                finDayCalcWk1();
-                minDateComWk1 = Date.from(minDateWk1.atStartOfDay(zoneId).toInstant());
-                maxDateComWk1 = Date.from(maxDateWk1.atStartOfDay(zoneId).toInstant());
-
-            }
-
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk2Activities.getRowCount() > 0) {
-                finDayCalcWk2();
-                minDateComWk2 = Date.from(minDateWk2.atStartOfDay(zoneId).toInstant());
-                maxDateComWk2 = Date.from(maxDateWk2.atStartOfDay(zoneId).toInstant());
-
-            }
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk3Activities.getRowCount() > 0) {
-                finDayCalcWk3();
-                minDateComWk3 = Date.from(minDateWk3.atStartOfDay(zoneId).toInstant());
-                maxDateComWk3 = Date.from(maxDateWk3.atStartOfDay(zoneId).toInstant());
-
-            }
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk4Activities.getRowCount() > 0) {
-                finDayCalcWk4();
-                minDateComWk4 = Date.from(minDateWk4.atStartOfDay(zoneId).toInstant());
-                maxDateComWk4 = Date.from(maxDateWk4.atStartOfDay(zoneId).toInstant());
-
-            }
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk5Activities.getRowCount() > 0) {
-                finDayCalcWk5();
-                minDateComWk5 = Date.from(minDateWk5.atStartOfDay(zoneId).toInstant());
-                maxDateComWk5 = Date.from(maxDateWk5.atStartOfDay(zoneId).toInstant());
-
-            }
-
-            if (jTableWk1Activities.getRowCount() == 0 && jTableWk2Activities.getRowCount() == 0
-                    && jTableWk3Activities.getRowCount() == 0 && jTableWk4Activities.getRowCount() == 0
-                    && jTableWk5Activities.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "At least one activity should be completed.");
-                jTabbedPane1.setSelectedIndex(0);
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-
-            } else if ((jDateChooserWk1From.getDate() == null) || (jDateChooserWk1To.getDate() == null)) {
-                JOptionPane.showMessageDialog(this, "Date for week 1 cannot be blank. Please check your dates");
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-            } else if (noOfFinDays1 > 7) {
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 1 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk1From.setDate(null);
-                jDateChooserWk1To.setDate(null);
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-            } else if (((jDateChooserWk2From.getDate() == null) || (jDateChooserWk2To.getDate() == null)) && noOfFinDays2 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 2 cannot be blank. Please check your dates");
-                jDateChooserWk2From.requestFocusInWindow();
-                jDateChooserWk2From.setFocusable(true);
-            } else if (noOfFinDays2 > 7) {
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 2 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk2From.setDate(null);
-                jDateChooserWk2To.setDate(null);
-                jDateChooserWk2From.requestFocusInWindow();
-                jDateChooserWk2From.setFocusable(true);
-            } else if (((jDateChooserWk3From.getDate() == null) || (jDateChooserWk3To.getDate() == null)) && noOfFinDays3 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 3 cannot be blank. Please check your dates");
-                jDateChooserWk3From.requestFocusInWindow();
-                jDateChooserWk3From.setFocusable(true);
-            } else if (noOfFinDays3 > 7) {
-
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 3 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk3From.setDate(null);
-                jDateChooserWk3To.setDate(null);
-                jDateChooserWk3From.requestFocusInWindow();
-                jDateChooserWk3From.setFocusable(true);
-            } else if (((jDateChooserWk4From.getDate() == null) || (jDateChooserWk4To.getDate() == null)) && noOfFinDays4 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 4 cannot be blank. Please check your dates");
-                jDateChooserWk4From.requestFocusInWindow();
-                jDateChooserWk4From.setFocusable(true);
-            } else if (noOfFinDays4 > 7) {
-
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 4 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk4From.setDate(null);
-                jDateChooserWk4To.setDate(null);
-                jDateChooserWk4From.requestFocusInWindow();
-                jDateChooserWk4From.setFocusable(true);
-            } else if (((jDateChooserWk5From.getDate() == null) || (jDateChooserWk5To.getDate() == null)) && noOfFinDays5 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 5 cannot be blank. Please check your dates");
-                jDateChooserWk5From.requestFocusInWindow();
-                jDateChooserWk5From.setFocusable(true);
-            } else if (noOfFinDays5 > 7) {
-
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 5 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk5From.setDate(null);
-                jDateChooserWk5To.setDate(null);
-                jDateChooserWk5From.requestFocusInWindow();
-                jDateChooserWk5From.setFocusable(true);
-            } else if (jTableWk1Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk1From.getDate()).compareTo(formatter.format(minDateComWk1)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 1 cannot be lower than start date.Please check your dates");
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-
-            } else if (jTableWk1Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk1To.getDate()).compareTo(formatter.format(maxDateComWk1)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 1 cannot be greater than end date.Please check your dates");
-                jDateChooserWk1To.requestFocusInWindow();
-                jDateChooserWk1To.setFocusable(true);
-
-            } else if (jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2From.getDate()).compareTo(formatter.format(minDateComWk2)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 2 cannot be lower than start date.Please check your dates");
-                jDateChooserWk2From.requestFocusInWindow();
-                jDateChooserWk2From.setFocusable(true);
-
-            } else if (jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2To.getDate()).compareTo(formatter.format(maxDateComWk2)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 2 cannot be greater than end date.Please check your dates");
-                jDateChooserWk2To.requestFocusInWindow();
-                jDateChooserWk2To.setFocusable(true);
-
-            } else if (jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3From.getDate()).compareTo(formatter.format(minDateComWk3)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 3 cannot be lower than start date.Please check your dates");
-                jDateChooserWk3From.requestFocusInWindow();
-                jDateChooserWk3From.setFocusable(true);
-
-            } else if (jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3To.getDate()).compareTo(formatter.format(maxDateComWk3)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 3 cannot be greater than end date.Please check your dates");
-                jDateChooserWk3To.requestFocusInWindow();
-                jDateChooserWk3To.setFocusable(true);
-
-            } else if (jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4From.getDate()).compareTo(formatter.format(minDateComWk4)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 4 cannot be lower than start date.Please check your dates");
-                jDateChooserWk4From.requestFocusInWindow();
-                jDateChooserWk4From.setFocusable(true);
-
-            } else if (jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4To.getDate()).compareTo(formatter.format(maxDateComWk4)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 4 cannot be greater than end date.Please check your dates");
-                jDateChooserWk4To.requestFocusInWindow();
-                jDateChooserWk4To.setFocusable(true);
-
-            } else if (jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5From.getDate()).compareTo(formatter.format(minDateComWk5)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 5cannot be lower than start date.Please check your dates");
-                jDateChooserWk5From.requestFocusInWindow();
-                jDateChooserWk5From.setFocusable(true);
-
-            } else if (jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5To.getDate()).compareTo(formatter.format(maxDateComWk5)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 5 cannot be greater than end date.Please check your dates");
-                jDateChooserWk5To.requestFocusInWindow();
-                jDateChooserWk5To.setFocusable(true);
-
-            } else {
-//                jMenuItemSubmit.setEnabled(false);
-//                jDialogWaiting.setVisible(true);
-//                SerialCheck();
-//                RefNumAllocation();
-//
-//                if (maxPlanRefNum > newPlanRefNum) {
-//                    JOptionPane.showMessageDialog(null, "<html> Registration failure. "
-//                            + "Registration falure can be caused by slow network speeds.<br><br> "
-//                            + "Please try again. If the problem persist contact IT.</html>");
-//                } else {
-//                    createWk1Plan();
-//                    createWk2Plan();
-//                    createWk3Plan();
-//                    createWk4Plan();
-//                    createWk5Plan();
-//                    createWkPlanPeriod();
-//                    createWkPlanAction();
-//                    createWkPlanCreator();
-//                    UsrRecUpd();
-//                    getRegDet();
-//                    jDialogWaiting.setVisible(false);
-//                    if ((countWk1 == 0 && countWk2 == 0 && countWk3 == 0 && countWk4 == 0 && countWk5 == 0)
-//                            || countPlanAct == 0 || countPlanPeriod == 0) {
-//                        JOptionPane.showMessageDialog(null, "<html> Registration failure. "
-//                                + "Registration falure can be caused by slow network speeds.MIR.<br><br> "
-//                                + "Please try again. If the problem persist contact IT.</html>");
-//                        regRB();
-//                    } else {
-//                        refNumUpdate();
-//                    }
-//
-//                }
-//                jMenuItemSubmit.setEnabled(true);
-
-                saveRec();
-
-            }
-
-            /*To Change*/
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        regCheck();
     }//GEN-LAST:event_jMenuItemSubmitActionPerformed
 
     private void jComboFacilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboFacilityMouseReleased
@@ -6310,7 +6333,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDialogWk1ResetActionPerformed
 
     private void jButtonDialogWk1AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDialogWk1AddActionPerformed
-        addFileAttToTabWk1Main();
+//        addFileAttToTabWk1Main();
         budCreate();
         addWkItmLine();
 
@@ -6861,177 +6884,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         deleteFileAttWk1Main();
     }//GEN-LAST:event_jButtonWk1DeleteActionPerformed
 
-    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        try {
-            System.out.println("runn1");
-            countPlanAct = 0;
-            countPlanPeriod = 0;
-            countWk1 = 0;
-            countWk2 = 0;
-            countWk3 = 0;
-            countWk4 = 0;
-            countWk5 = 0;
-            System.out.println("runn2");
-
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk1Activities.getRowCount() > 0) {
-                finDayCalcWk1();
-                minDateComWk1 = Date.from(minDateWk1.atStartOfDay(zoneId).toInstant());
-                maxDateComWk1 = Date.from(maxDateWk1.atStartOfDay(zoneId).toInstant());
-
-            }
-
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk2Activities.getRowCount() > 0) {
-                finDayCalcWk2();
-                minDateComWk2 = Date.from(minDateWk2.atStartOfDay(zoneId).toInstant());
-                maxDateComWk2 = Date.from(maxDateWk2.atStartOfDay(zoneId).toInstant());
-
-            }
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk3Activities.getRowCount() > 0) {
-                finDayCalcWk3();
-                minDateComWk3 = Date.from(minDateWk3.atStartOfDay(zoneId).toInstant());
-                maxDateComWk3 = Date.from(maxDateWk3.atStartOfDay(zoneId).toInstant());
-
-            }
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk4Activities.getRowCount() > 0) {
-                finDayCalcWk4();
-                minDateComWk4 = Date.from(minDateWk4.atStartOfDay(zoneId).toInstant());
-                maxDateComWk4 = Date.from(maxDateWk4.atStartOfDay(zoneId).toInstant());
-
-            }
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk5Activities.getRowCount() > 0) {
-                finDayCalcWk5();
-                minDateComWk5 = Date.from(minDateWk5.atStartOfDay(zoneId).toInstant());
-                maxDateComWk5 = Date.from(maxDateWk5.atStartOfDay(zoneId).toInstant());
-
-            }
-            System.out.println("runn3");
-            if (jTableWk1Activities.getRowCount() == 0 && jTableWk2Activities.getRowCount() == 0
-                    && jTableWk3Activities.getRowCount() == 0 && jTableWk4Activities.getRowCount() == 0
-                    && jTableWk5Activities.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "At least one activity should be completed.");
-                jTabbedPane1.setSelectedIndex(0);
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-
-            } else if ((jDateChooserWk1From.getDate() == null) || (jDateChooserWk1To.getDate() == null)) {
-                JOptionPane.showMessageDialog(this, "Date for week 1 cannot be blank. Please check your dates");
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-            } else if (noOfFinDays1 > 7) {
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 1 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk1From.setDate(null);
-                jDateChooserWk1To.setDate(null);
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-            } else if (((jDateChooserWk2From.getDate() == null) || (jDateChooserWk2To.getDate() == null)) && noOfFinDays2 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 2 cannot be blank. Please check your dates");
-                jDateChooserWk2From.requestFocusInWindow();
-                jDateChooserWk2From.setFocusable(true);
-            } else if (noOfFinDays2 > 7) {
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 2 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk2From.setDate(null);
-                jDateChooserWk2To.setDate(null);
-                jDateChooserWk2From.requestFocusInWindow();
-                jDateChooserWk2From.setFocusable(true);
-            } else if (((jDateChooserWk3From.getDate() == null) || (jDateChooserWk3To.getDate() == null)) && noOfFinDays3 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 3 cannot be blank. Please check your dates");
-                jDateChooserWk3From.requestFocusInWindow();
-                jDateChooserWk3From.setFocusable(true);
-            } else if (noOfFinDays3 > 7) {
-
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 3 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk3From.setDate(null);
-                jDateChooserWk3To.setDate(null);
-                jDateChooserWk3From.requestFocusInWindow();
-                jDateChooserWk3From.setFocusable(true);
-            } else if (((jDateChooserWk4From.getDate() == null) || (jDateChooserWk4To.getDate() == null)) && noOfFinDays4 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 4 cannot be blank. Please check your dates");
-                jDateChooserWk4From.requestFocusInWindow();
-                jDateChooserWk4From.setFocusable(true);
-            } else if (noOfFinDays4 > 7) {
-
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 4 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk4From.setDate(null);
-                jDateChooserWk4To.setDate(null);
-                jDateChooserWk4From.requestFocusInWindow();
-                jDateChooserWk4From.setFocusable(true);
-            } else if (((jDateChooserWk5From.getDate() == null) || (jDateChooserWk5To.getDate() == null)) && noOfFinDays5 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 5 cannot be blank. Please check your dates");
-                jDateChooserWk5From.requestFocusInWindow();
-                jDateChooserWk5From.setFocusable(true);
-            } else if (noOfFinDays5 > 7) {
-
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 5 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk5From.setDate(null);
-                jDateChooserWk5To.setDate(null);
-                jDateChooserWk5From.requestFocusInWindow();
-                jDateChooserWk5From.setFocusable(true);
-            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk1Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk1From.getDate()).compareTo(formatter.format(minDateComWk1)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 1 cannot be lower than start date.Please check your dates");
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-
-            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk1Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk1To.getDate()).compareTo(formatter.format(maxDateComWk1)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 1 cannot be greater than end date.Please check your dates");
-                jDateChooserWk1To.requestFocusInWindow();
-                jDateChooserWk1To.setFocusable(true);
-
-            } else if ("National Office".equals(jLabelDistrict.getText()) && jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2From.getDate()).compareTo(formatter.format(minDateComWk2)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 2 cannot be lower than start date.Please check your dates");
-                jDateChooserWk2From.requestFocusInWindow();
-                jDateChooserWk2From.setFocusable(true);
-
-            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2To.getDate()).compareTo(formatter.format(maxDateComWk2)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 2 cannot be greater than end date.Please check your dates");
-                jDateChooserWk2To.requestFocusInWindow();
-                jDateChooserWk2To.setFocusable(true);
-
-            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3From.getDate()).compareTo(formatter.format(minDateComWk3)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 3 cannot be lower than start date.Please check your dates");
-                jDateChooserWk3From.requestFocusInWindow();
-                jDateChooserWk3From.setFocusable(true);
-
-            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3To.getDate()).compareTo(formatter.format(maxDateComWk3)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 3 cannot be greater than end date.Please check your dates");
-                jDateChooserWk3To.requestFocusInWindow();
-                jDateChooserWk3To.setFocusable(true);
-
-            } else if ((!"National Office".equals(jLabelDistrict.getText())) && jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4From.getDate()).compareTo(formatter.format(minDateComWk4)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 4 cannot be lower than start date.Please check your dates");
-                jDateChooserWk4From.requestFocusInWindow();
-                jDateChooserWk4From.setFocusable(true);
-
-            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4To.getDate()).compareTo(formatter.format(maxDateComWk4)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 4 cannot be greater than end date.Please check your dates");
-                jDateChooserWk4To.requestFocusInWindow();
-                jDateChooserWk4To.setFocusable(true);
-
-            } else if ((!"National Office".equals(jLabelDistrict.getText())) && jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5From.getDate()).compareTo(formatter.format(minDateComWk5)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 5cannot be lower than start date.Please check your dates");
-                jDateChooserWk5From.requestFocusInWindow();
-                jDateChooserWk5From.setFocusable(true);
-
-            } else if (("National Office".equals(jLabelDistrict.getText())) && jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5To.getDate()).compareTo(formatter.format(maxDateComWk5)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 5 cannot be greater than end date.Please check your dates");
-                jDateChooserWk5To.requestFocusInWindow();
-                jDateChooserWk5To.setFocusable(true);
-
-            } else {
-                System.out.println("runn");
-                saveRec();
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jButtonSaveActionPerformed
-
     private void jTextAttDocDescWk2MainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAttDocDescWk2MainActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextAttDocDescWk2MainActionPerformed
@@ -7353,10 +7205,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboProjectCodeProgrammingMouseClicked
 
-    private void jComboProjectCodeProgrammingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProjectCodeProgrammingActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboProjectCodeProgrammingActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -7661,7 +7509,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     private javax.swing.JButton jButtonDialogWk1Reset;
     private javax.swing.JButton jButtonOk1;
     private javax.swing.JButton jButtonOkFacility;
-    private javax.swing.JButton jButtonSave;
     private javax.swing.JButton jButtonSearch1;
     private javax.swing.JButton jButtonSelectFile;
     private javax.swing.JButton jButtonSelectFileWk1Main;
@@ -7725,7 +7572,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     private javax.swing.JDialog jDialogWaitingEmail;
     private javax.swing.JDialog jDialogWk1;
     private javax.swing.JLabel jLabeAccountCode;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel4;
