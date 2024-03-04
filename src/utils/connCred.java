@@ -20,8 +20,8 @@ public class connCred {
     public String usrNFin = "appfin";
     public String usrPFin = "542ytDYvynv$TVYb";
     public String usrNHR = "apphr";
-    public String FinMailUsrN = "zvandiriFin@zvandiri.org";
-    public String FinMailUsrP = "Raf41629";
+    public String FinMailUsrN = "zvandirifin@zvandiri.org";
+    public String FinMailUsrP = "Finance@2024";
 //    public String usrPHR = "782HjrAP%xMBx7Azy";
 //    public String HRmailUsrN = "zvandiriHR@zvandiri.org";
     public String HRmailUsrN = "zvandiriHR@zvandiri.org";

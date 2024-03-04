@@ -777,18 +777,18 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "<html> Plan Ref No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
                     + "</b> successfully registered.</html>");
 
-//            jDialogWaitingEmail.setVisible(true);
-//
-//            String mailMsg = "<html><body> Dear " + supNam + "<br><br><b>"
-//                    + jLabelLineLogNam.getText() + "</b> has submitted a plan for your review and approval.<br><br>"
-//                    + "Please check your Finance System inbox and action<br><br> Kind Regards <br><br>"
-//                    + " Finance Management System </body></html>";
-//
-//            String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Approval.";
-//
-//            emSend.sendMail(MailMsgTitle, supUsrMail, mailMsg, "");
-//
-//            jDialogWaitingEmail.setVisible(false);
+            jDialogWaitingEmail.setVisible(true);
+
+            String mailMsg = "<html><body> Dear " + supNam + "<br><br><b>"
+                    + jLabelLineLogNam.getText() + "</b> has submitted a plan for your review and approval.<br><br>"
+                    + "Please check your Finance System inbox and action<br><br> Kind Regards <br><br>"
+                    + " Finance Management System </body></html>";
+
+            String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Approval.";
+
+            emSend.sendMail(MailMsgTitle, supUsrMail, mailMsg, "");
+
+            jDialogWaitingEmail.setVisible(false);
             JOptionPane.showMessageDialog(this, "An email has been sent to " + supNam + " for processing.");
             new JFrameMnthPlanPerDiemCreate(jLabelEmp.getText()).setVisible(true);
             setVisible(false);
@@ -2887,8 +2887,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             }
 
-            System.out.println("weeks " + countWk1 + " " + countWk2 + " " + countWk3 + " " + countWk4 + " " + countWk5
-                    + " peirod " + countPlanPeriod + " planAct " + countPlanAct);
+          
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -4537,7 +4536,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkOne.add(jLabelLogo1);
-        jLabelLogo1.setBounds(10, 10, 220, 100);
+        jLabelLogo1.setBounds(10, 5, 220, 115);
 
         jButtonWk1DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk1DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -4747,7 +4746,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkTwo.add(jLabelLogo2);
-        jLabelLogo2.setBounds(10, 10, 220, 110);
+        jLabelLogo2.setBounds(5, 10, 220, 115);
 
         jButtonWk2DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk2DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -4950,7 +4949,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelLogo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkThree.add(jLabelLogo3);
-        jLabelLogo3.setBounds(10, 10, 220, 110);
+        jLabelLogo3.setBounds(5, 10, 220, 115);
 
         jButtonWk3DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk3DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -5157,7 +5156,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelLogo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkFour.add(jLabelLogo4);
-        jLabelLogo4.setBounds(10, 10, 220, 100);
+        jLabelLogo4.setBounds(5, 10, 220, 115);
 
         jButtonWk4DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk4DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -5364,7 +5363,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelLogo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkFive.add(jLabelLogo5);
-        jLabelLogo5.setBounds(10, 10, 220, 100);
+        jLabelLogo5.setBounds(5, 10, 220, 115);
 
         jButtonWk5DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk5DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
