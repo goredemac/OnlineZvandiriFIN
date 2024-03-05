@@ -1250,8 +1250,14 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         budcode = accCode + "/ZW/" + donor + "/" + prjCode + "/" + grantCode + "/" + budLine + "/" + subBudLine + "/NAT1";
 
+          String taskBudCode = budcode;
+        String taskPartsBudCode[] = taskBudCode.split("/", 5);
+        String budCodeStr = taskPartsBudCode[3];
+        
+        
 //        System.out.println("Budcode " + accCode + "/ZW/" + donor + "/" + prjCode + "/" + grantCode + "/" + budLine + "/" + subBudLine + "/NAT1" + "  " + accCodeName);
         System.out.println("kvll " + budcode);
+        System.out.println("kvllgg " + budCodeStr);
     }
 
     void allowanceRate() {
@@ -2406,10 +2412,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
 
-                String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
+                String sqlwk2plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
                         + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlwk1plan);
+                pst1 = conn.prepareStatement(sqlwk2plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
@@ -2458,10 +2464,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
 
-                String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
+                String sqlwk3plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
                         + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlwk1plan);
+                pst1 = conn.prepareStatement(sqlwk3plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
@@ -2510,10 +2516,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
 
-                String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
+                String sqlwk4plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
                         + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlwk1plan);
+                pst1 = conn.prepareStatement(sqlwk4plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
@@ -2562,10 +2568,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
 
-                String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
+                String sqlwk5plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
                         + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlwk1plan);
+                pst1 = conn.prepareStatement(sqlwk5plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
@@ -3521,6 +3527,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelRemain = new javax.swing.JLabel();
         jPanelAddStaff = new javax.swing.JPanel();
         jCheckAddStaff = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
         jDialogWaitingEmail = new javax.swing.JDialog();
         buttonGroupAcc = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -4437,6 +4444,15 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jPanelActivity.add(jPanelAddStaff);
         jPanelAddStaff.setBounds(530, 120, 320, 30);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanelActivity.add(jButton1);
+        jButton1.setBounds(580, 10, 71, 21);
 
         javax.swing.GroupLayout jDialogWk1Layout = new javax.swing.GroupLayout(jDialogWk1.getContentPane());
         jDialogWk1.getContentPane().setLayout(jDialogWk1Layout);
@@ -7204,6 +7220,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboProjectCodeProgrammingMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        budCreate();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -7502,6 +7522,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupAcc;
     private cambodia.raven.Time departTime;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancelFacility;
     private javax.swing.JButton jButtonDialogWk1Add;
     private javax.swing.JButton jButtonDialogWk1Close;

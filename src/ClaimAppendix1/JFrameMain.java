@@ -192,7 +192,7 @@ public class JFrameMain extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-              if ("usrGenSp".equals(usrGrp)) {
+            if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemAccMgrRev.setEnabled(false);
@@ -2646,7 +2646,7 @@ public class JFrameMain extends javax.swing.JFrame {
         );
 
         jDialogPleaseWait.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        jDialogPleaseWait.setTitle("                    Retrieving  requeeted iinformation.  Please Wait.");
+        jDialogPleaseWait.setTitle("                    Retrieving  requested iinformation.  Please Wait.");
         jDialogPleaseWait.setAlwaysOnTop(true);
         jDialogPleaseWait.setBackground(new java.awt.Color(51, 255, 51));
         jDialogPleaseWait.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -3586,8 +3586,10 @@ public class JFrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemPlanSupApprovalActionPerformed
 
     private void jMenuItemPlanFinApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanFinApprovalActionPerformed
+        jDialogPleaseWait.setVisible(true);
         new JFrameMnthFinanceList(jLabelEmp.getText()).setVisible(true);
         setVisible(false);
+        jDialogPleaseWait.setVisible(false);
     }//GEN-LAST:event_jMenuItemPlanFinApprovalActionPerformed
 
     private void jMenuItemPlanHODApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanHODApprovalActionPerformed

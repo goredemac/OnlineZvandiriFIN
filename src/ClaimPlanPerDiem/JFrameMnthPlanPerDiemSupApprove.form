@@ -1030,7 +1030,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="5" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1238,51 +1238,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="30" y="240" width="1290" height="310"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="jTableWk1Activities">
-                  <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="20" rowCount="0">
-                        <Column editable="false" title="Item No" type="java.lang.Object"/>
-                        <Column editable="false" title="Date" type="java.lang.Object"/>
-                        <Column editable="false" title="Branch" type="java.lang.Object"/>
-                        <Column editable="false" title="Project Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Task Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
-                        <Column editable="false" title="Activity" type="java.lang.Object"/>
-                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
-                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
-                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
-                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
-                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
-                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableWk1ActivitiesMouseClicked"/>
-                  </Events>
-                </Component>
-              </SubComponents>
-            </Container>
             <Container class="javax.swing.JPanel" name="jPanelAttDocWk1">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1413,6 +1368,51 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Container class="javax.swing.JScrollPane" name="jScrollPaneWk6">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="30" y="240" width="1290" height="310"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="jTableWk1Activities">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="23" rowCount="0">
+                        <Column editable="false" title="Date" type="java.lang.Object"/>
+                        <Column editable="false" title="Account Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Donor" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code GL" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Name Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Line" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
+                        <Column editable="false" title="Activity" type="java.lang.Object"/>
+                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
+                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
+                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
+                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
+                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
+                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelWkTwo">
@@ -1485,7 +1485,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="10" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1581,51 +1581,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane11">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="30" y="230" width="1290" height="310"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="jTableWk2Activities">
-                  <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="20" rowCount="0">
-                        <Column editable="false" title="Item No" type="java.lang.Object"/>
-                        <Column editable="false" title="Date" type="java.lang.Object"/>
-                        <Column editable="false" title="Branch" type="java.lang.Object"/>
-                        <Column editable="false" title="Project Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Task Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
-                        <Column editable="false" title="Activity" type="java.lang.Object"/>
-                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
-                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
-                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
-                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
-                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
-                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableWk2ActivitiesMouseClicked"/>
-                  </Events>
-                </Component>
-              </SubComponents>
-            </Container>
             <Container class="javax.swing.JPanel" name="jPanelAttDocWk2">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1711,6 +1666,51 @@
                 <Property name="useNullLayout" type="boolean" value="true"/>
               </Layout>
             </Container>
+            <Container class="javax.swing.JScrollPane" name="jScrollPaneWk7">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="30" y="240" width="1290" height="305"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="jTableWk2Activities">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="23" rowCount="0">
+                        <Column editable="false" title="Date" type="java.lang.Object"/>
+                        <Column editable="false" title="Account Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Donor" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code GL" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Name Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Line" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
+                        <Column editable="false" title="Activity" type="java.lang.Object"/>
+                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
+                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
+                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
+                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
+                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
+                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelWkThree">
@@ -1789,7 +1789,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="10" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1897,51 +1897,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane3">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="30" y="240" width="1290" height="310"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="jTableWk3Activities">
-                  <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="20" rowCount="0">
-                        <Column editable="false" title="Item No" type="java.lang.Object"/>
-                        <Column editable="false" title="Date" type="java.lang.Object"/>
-                        <Column editable="false" title="Branch" type="java.lang.Object"/>
-                        <Column editable="false" title="Project Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Task Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
-                        <Column editable="false" title="Activity" type="java.lang.Object"/>
-                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
-                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
-                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
-                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
-                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
-                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableWk3ActivitiesMouseClicked"/>
-                  </Events>
-                </Component>
-              </SubComponents>
-            </Container>
             <Container class="javax.swing.JPanel" name="jPanelAttDocWk3">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -2027,6 +1982,51 @@
                 <Property name="useNullLayout" type="boolean" value="true"/>
               </Layout>
             </Container>
+            <Container class="javax.swing.JScrollPane" name="jScrollPaneWk8">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="30" y="240" width="1290" height="305"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="jTableWk3Activities">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="23" rowCount="0">
+                        <Column editable="false" title="Date" type="java.lang.Object"/>
+                        <Column editable="false" title="Account Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Donor" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code GL" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Name Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Line" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
+                        <Column editable="false" title="Activity" type="java.lang.Object"/>
+                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
+                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
+                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
+                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
+                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
+                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelWkFour">
@@ -2105,7 +2105,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="10" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -2213,51 +2213,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane5">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="30" y="240" width="1290" height="310"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="jTableWk4Activities">
-                  <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="20" rowCount="0">
-                        <Column editable="false" title="Item No" type="java.lang.Object"/>
-                        <Column editable="false" title="Date" type="java.lang.Object"/>
-                        <Column editable="false" title="Branch" type="java.lang.Object"/>
-                        <Column editable="false" title="Project Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Task Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
-                        <Column editable="false" title="Activity" type="java.lang.Object"/>
-                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
-                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
-                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
-                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
-                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
-                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableWk4ActivitiesMouseClicked"/>
-                  </Events>
-                </Component>
-              </SubComponents>
-            </Container>
             <Container class="javax.swing.JPanel" name="jPanelAttDocWk4">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -2268,7 +2223,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="30" y="545" width="920" height="120"/>
+                  <AbsoluteConstraints x="30" y="550" width="920" height="125"/>
                 </Constraint>
               </Constraints>
 
@@ -2335,13 +2290,58 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="950" y="545" width="370" height="120"/>
+                  <AbsoluteConstraints x="950" y="550" width="370" height="120"/>
                 </Constraint>
               </Constraints>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
                 <Property name="useNullLayout" type="boolean" value="true"/>
               </Layout>
+            </Container>
+            <Container class="javax.swing.JScrollPane" name="jScrollPaneWk9">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="30" y="240" width="1290" height="305"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="jTableWk4Activities">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="23" rowCount="0">
+                        <Column editable="false" title="Date" type="java.lang.Object"/>
+                        <Column editable="false" title="Account Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Donor" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code GL" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Name Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Line" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
+                        <Column editable="false" title="Activity" type="java.lang.Object"/>
+                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
+                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
+                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
+                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
+                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
+                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
             </Container>
           </SubComponents>
         </Container>
@@ -2421,7 +2421,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="10" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -2529,51 +2529,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane9">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="30" y="240" width="1290" height="310"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="jTableWk5Activities">
-                  <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="20" rowCount="0">
-                        <Column editable="false" title="Item No" type="java.lang.Object"/>
-                        <Column editable="false" title="Date" type="java.lang.Object"/>
-                        <Column editable="false" title="Branch" type="java.lang.Object"/>
-                        <Column editable="false" title="Project Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Task Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
-                        <Column editable="false" title="Activity" type="java.lang.Object"/>
-                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
-                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
-                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
-                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
-                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
-                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
-                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
-                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableWk5ActivitiesMouseClicked"/>
-                  </Events>
-                </Component>
-              </SubComponents>
-            </Container>
             <Container class="javax.swing.JPanel" name="jPanelAttDocWk5">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -2584,7 +2539,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="30" y="545" width="920" height="120"/>
+                  <AbsoluteConstraints x="30" y="550" width="920" height="120"/>
                 </Constraint>
               </Constraints>
 
@@ -2651,13 +2606,58 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="950" y="545" width="370" height="120"/>
+                  <AbsoluteConstraints x="950" y="550" width="370" height="120"/>
                 </Constraint>
               </Constraints>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
                 <Property name="useNullLayout" type="boolean" value="true"/>
               </Layout>
+            </Container>
+            <Container class="javax.swing.JScrollPane" name="jScrollPaneWk10">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="30" y="240" width="1290" height="305"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="jTableWk5Activities">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="23" rowCount="0">
+                        <Column editable="false" title="Date" type="java.lang.Object"/>
+                        <Column editable="false" title="Account Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Donor" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code GL" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Name Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Line" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
+                        <Column editable="false" title="Activity" type="java.lang.Object"/>
+                        <Column editable="false" title="Justification for Choice of Activity " type="java.lang.Object"/>
+                        <Column editable="false" title="Breakfast" type="java.lang.Object"/>
+                        <Column editable="false" title="Lunch" type="java.lang.Object"/>
+                        <Column editable="false" title="Dinner" type="java.lang.Object"/>
+                        <Column editable="false" title="Incidental" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Desc" type="java.lang.Object"/>
+                        <Column editable="false" title="Misc Amt" type="java.lang.Object"/>
+                        <Column editable="false" title="Unproved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Proved Acc" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 1" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 2" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 3" type="java.lang.Object"/>
+                        <Column editable="false" title="Staff Member 4" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
             </Container>
           </SubComponents>
         </Container>
@@ -2694,7 +2694,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="10" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -2835,7 +2835,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="10" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
