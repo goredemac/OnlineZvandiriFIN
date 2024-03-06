@@ -137,6 +137,7 @@ public class JFrameMain extends javax.swing.JFrame {
 
             while (r.next()) {
 
+                System.out.println("ff "+r.getString(1));
                 jLabelGenLogNam.setText(r.getString(1));
                 empOff = r.getString(2);
                 dialogEmpNam = r.getString(1);
@@ -1612,7 +1613,7 @@ public class JFrameMain extends javax.swing.JFrame {
         jLabelEmp = new javax.swing.JLabel();
         jLabelGenDate = new javax.swing.JLabel();
         jLabelGenTime = new javax.swing.JLabel();
-        jLabelGenLogNam1 = new javax.swing.JLabel();
+        jLabelGenLogged = new javax.swing.JLabel();
         jLabelGenLogNam = new javax.swing.JLabel();
         jLabelPEPFARpic = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
@@ -2873,11 +2874,11 @@ public class JFrameMain extends javax.swing.JFrame {
         jPanel2.add(jLabelGenTime);
         jLabelGenTime.setBounds(1240, 0, 100, 30);
 
-        jLabelGenLogNam1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelGenLogNam1.setForeground(new java.awt.Color(0, 102, 102));
-        jLabelGenLogNam1.setText("Logged In");
-        jPanel2.add(jLabelGenLogNam1);
-        jLabelGenLogNam1.setBounds(1070, 40, 100, 30);
+        jLabelGenLogged.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelGenLogged.setForeground(new java.awt.Color(0, 102, 102));
+        jLabelGenLogged.setText("Logged In");
+        jPanel2.add(jLabelGenLogged);
+        jLabelGenLogged.setBounds(1070, 40, 100, 30);
 
         jLabelGenLogNam.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelGenLogNam.setForeground(new java.awt.Color(0, 102, 102));
@@ -3812,7 +3813,7 @@ public class JFrameMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEmpNum1;
     private javax.swing.JLabel jLabelGenDate;
     private javax.swing.JLabel jLabelGenLogNam;
-    private javax.swing.JLabel jLabelGenLogNam1;
+    private javax.swing.JLabel jLabelGenLogged;
     private javax.swing.JLabel jLabelGenTime;
     private javax.swing.JLabel jLabelHeadView;
     private javax.swing.JLabel jLabelHeadViewCollect;

@@ -119,8 +119,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             planWk, empNamNum1, empNam1, empNamNum2, empNam2, empNamNum3, empNam3, empNamNum4,
             empNam4, planDate, SupNamSend, branchCode, prjCode, taskCode, donorCode, grantCode, accCode, prjProgCode, donor, budLine, subBudLine,
             donorName, accCodeName, prjCodeName, prjProgCodeName, budLineName, budcode, taskDonor,
-            staffName1, staffName2,
-            staffName3, staffName4, lastDateofMonth;
+            staffName1, staffName2, staffName3, staffName4, lastDateofMonth;
     /*To Change*/
     PreparedStatement pst1 = null;
     PreparedStatement pst = null;
@@ -3047,7 +3046,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
     void addStaff() {
         try {
-            System.out.println("hh " + modelAttWk1Main.getRowCount());
+        
             if (modelWk1.getRowCount() > 0) {
                 jPanelAddStaff.setVisible(true);
             } else {
@@ -3527,7 +3526,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jLabelRemain = new javax.swing.JLabel();
         jPanelAddStaff = new javax.swing.JPanel();
         jCheckAddStaff = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
         jDialogWaitingEmail = new javax.swing.JDialog();
         buttonGroupAcc = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -4444,15 +4442,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jPanelActivity.add(jPanelAddStaff);
         jPanelAddStaff.setBounds(530, 120, 320, 30);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanelActivity.add(jButton1);
-        jButton1.setBounds(580, 10, 71, 21);
 
         javax.swing.GroupLayout jDialogWk1Layout = new javax.swing.GroupLayout(jDialogWk1.getContentPane());
         jDialogWk1.getContentPane().setLayout(jDialogWk1Layout);
@@ -7220,10 +7209,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboProjectCodeProgrammingMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        budCreate();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -7522,7 +7507,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupAcc;
     private cambodia.raven.Time departTime;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancelFacility;
     private javax.swing.JButton jButtonDialogWk1Add;
     private javax.swing.JButton jButtonDialogWk1Close;

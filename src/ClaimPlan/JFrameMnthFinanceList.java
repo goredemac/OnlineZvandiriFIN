@@ -337,12 +337,12 @@ public class JFrameMnthFinanceList extends javax.swing.JFrame {
                     + "[ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] where EMP_NUM ='"+jLabelEmp.getText()+"')");
 
             while (r.next()) {
-                prjlist.add(r.getString(1));
+                prjlist.add("'"+r.getString(1)+"'");
                 
             }
 
             finPrjList = String.join(",", prjlist);
-
+            System.out.println("fff "+finPrjList);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -396,9 +396,7 @@ public class JFrameMnthFinanceList extends javax.swing.JFrame {
                     + "from [ClaimsAppSysZvandiri].[dbo].[PlanActTab]where  SEND_TO_EMP_NUM = 'FINANCE' "
                     + "and ACT_REC_STA = 'A' and DOC_STATUS  in ('ApprovedSup') ) "
                     + "and concat(DONOR,PRJ_CODE_GL) in  "
-                    + "(SELECT concat(DONOR_DESC,PRJ_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] "
-                    + "where concat(DONOR_CODE,PRJ_CODE) in (SELECT concat(DONOR_CODE,PRJ_CODE_GL) "
-                    + "FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] where EMP_NUM ='"+jLabelEmp.getText()+"'))) order by 1");
+                    + "("+finPrjList+")) order by 1");
 
             ResultSet r = st.getResultSet();
 

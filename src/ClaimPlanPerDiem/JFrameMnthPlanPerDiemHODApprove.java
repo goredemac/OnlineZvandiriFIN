@@ -39,6 +39,8 @@ import ClaimPlan.JFrameMnthReqGenList;
 import ClaimPlan.JFrameMnthSupList;
 import ClaimPlan.JFrameMnthViewList;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.timeHost;
@@ -72,10 +74,11 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
             actNextVer, actVer, createEmpNum, createUsrMail, HODUsrNam, HODUsrEmail, HODUsrEmpNum,
             docNextVerExpire, usrGrp, supNam, supEmpNum, supUsrMail,
             incidentalAll, unProvedAll, SearchRef, createUsrNam, usrMail, action, status, minDate,
-            todayDate, sendToExpire, logUsrNum;
+            todayDate, sendToExpire, logUsrNum,travelMailList;
     PreparedStatement pst = null;
     PreparedStatement pst1 = null;
     int itmNum = 1;
+    List<String> list = new ArrayList<>();
 //    int logUsrNum = 0;
 
     /**
@@ -120,8 +123,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabelEmp.setText(usrLogNam);
         jLabelEmp.setVisible(false);
         jLabelRefNum.setText(SearchRef);
-        jMenuItemSupSubmit.setVisible(false);
-        jSeparator15.setVisible(false);
+
         getYear();
         fetchdataWk1();
         fetchdataWk2();
@@ -132,33 +134,100 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         fetchAttDoc(SearchRef);
         findCreator();
         findUserGrp();
+        findUserTravel();
         jTabbedPaneMain.setEnabledAt(5, false);
         if (jTextAreaPrevComments.getText().trim().length() == 0) {
             jTabbedPaneMain.setEnabledAt(6, false);
         }
-        jTableWk1Activities.getColumnModel().getColumn(0).setMinWidth(0);
-        jTableWk1Activities.getColumnModel().getColumn(0).setMaxWidth(0);
-        jTableWk2Activities.getColumnModel().getColumn(0).setMinWidth(0);
-        jTableWk2Activities.getColumnModel().getColumn(0).setMaxWidth(0);
-        jTableWk3Activities.getColumnModel().getColumn(0).setMinWidth(0);
-        jTableWk3Activities.getColumnModel().getColumn(0).setMaxWidth(0);
-        jTableWk4Activities.getColumnModel().getColumn(0).setMinWidth(0);
-        jTableWk4Activities.getColumnModel().getColumn(0).setMaxWidth(0);
-        jTableWk5Activities.getColumnModel().getColumn(0).setMinWidth(0);
-        jTableWk5Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk1Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk2Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk3Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
 
-        if (!"National Office".equals(jLabelDistrict.getText())) {
-            jTabbedPaneMain.setTitleAt(0, "Month Plan");
-            jTabbedPaneMain.setEnabledAt(1, false);
-            jTabbedPaneMain.setTitleAt(1, "");
-            jTabbedPaneMain.setEnabledAt(2, false);
-            jTabbedPaneMain.setTitleAt(2, "");
-            jTabbedPaneMain.setEnabledAt(3, false);
-            jTabbedPaneMain.setTitleAt(3, "");
-            jTabbedPaneMain.setEnabledAt(4, false);
-            jTabbedPaneMain.setTitleAt(4, "");
-        }
+        jTableWk1Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(18).setMaxWidth(0);
 
+        jTableDocAttWk1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk2.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk2.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk3.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk3.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk4.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk4.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk5.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk5.getColumnModel().getColumn(0).setMaxWidth(0);
+
+//        if (!"National Office".equals(jLabelDistrict.getText())) {
+//            jTabbedPaneMain.setTitleAt(0, "Month Plan");
+//            jTabbedPaneMain.setEnabledAt(1, false);
+//            jTabbedPaneMain.setTitleAt(1, "");
+//            jTabbedPaneMain.setEnabledAt(2, false);
+//            jTabbedPaneMain.setTitleAt(2, "");
+//            jTabbedPaneMain.setEnabledAt(3, false);
+//            jTabbedPaneMain.setTitleAt(3, "");
+//            jTabbedPaneMain.setEnabledAt(4, false);
+//            jTabbedPaneMain.setTitleAt(4, "");
+//        }
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
@@ -261,7 +330,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -484,7 +553,8 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         }
     }
 
-    void findProject(String prjCode) {
+    void findUserTravel() {
+
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -492,77 +562,20 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
 
-            ResultSet r = st.executeQuery("SELECT concat(PROJ_ID,' ',PROJ_NAME) "
-                    + "FROM [HRLeaveSysZvandiri].[dbo].[ProjectTab] "
-                    + " where PROJ_ID='" + prjCode + "'order by 1");
+            ResultSet r = st.executeQuery("SELECT EMP_MAIL FROM [ClaimsAppSysZvandiri].[dbo].[EmpDetTab] "
+                    + "where EMP_NAM in (SELECT distinct EMP_NAM FROM [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] "
+                    + "where PLAN_REF_NUM = " + SearchRef + " )");
 
             while (r.next()) {
-
-                jLabelPrjNameDet.setText(r.getString(1));
-
+                list.add(r.getString(1));
+                System.out.println("list " + r.getString(1));
             }
 
-            conn.close();
+            travelMailList = String.join(",", list);
+            System.out.println("fin list " + travelMailList);
         } catch (Exception e) {
-            System.out.println();
+            System.out.println(e);
         }
-    }
-
-    void findTask(String taskCode) {
-        try {
-
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
-            Statement st = conn.createStatement();
-
-            ResultSet r = st.executeQuery("SELECT concat(PRJ_TASK_CODE,' ',TASK_DESC)  "
-                    + "FROM [HRLeaveSysZvandiri].[dbo].[ProjectTaskTab]  "
-                    + "where PRJ_TASK_CODE ='" + taskCode + "' order by 1");
-
-            while (r.next()) {
-
-                jLabelPrjTaskDet.setText(r.getString(1));
-
-            }
-
-            conn.close();
-        } catch (Exception e) {
-            System.out.println();
-        }
-    }
-
-    void resetField() {
-
-        jLabelActWk1Date.setText("");
-        jLabelPrjNameDet.setText("");
-        jLabelPrjTaskDet.setText("");
-        jTextFieldDialogWk1Site.setText("");
-        jTextFieldWk1DialogActivityDesc.setText("");
-        jTextAreaWk1DialogJustification.setText("");
-        jTextFieldWk1DialogStaffName1.setText("");
-        jTextFieldWk1DialogStaffName2.setText("");
-        jTextFieldWk1DialogStaffName3.setText("");
-        jTextFieldWk1DialogStaffName4.setText("");
-        jCheckBoxDialogWk1BrkFast.setEnabled(true);
-        jCheckBoxDialogWk1Dinner.setEnabled(true);
-        jCheckBoxDialogWk1AccProved.setEnabled(true);
-        jCheckBoxDialogWk1Inc.setEnabled(true);
-        jCheckBoxDialogWk1Misc.setEnabled(true);
-        jCheckBoxDialogWk1BrkFast.setSelected(false);
-        jCheckBoxDialogWk1Lunch.setSelected(false);
-        jCheckBoxDialogWk1Dinner.setSelected(false);
-        jCheckBoxDialogWk1AccProved.setSelected(false);
-        jCheckBoxDialogWk1Inc.setSelected(false);
-        jCheckBoxDialogWk1Misc.setSelected(false);
-        jCheckBoxDialogWk1AccUnProved.setSelected(true);
-        jCheckBoxDialogWk1AccProved.setSelected(false);
-        jTextFieldWk1Misc.setVisible(false);
-        jLabelWk1Misc.setVisible(false);
-        jTextFieldWk1Misc.setText("");
-        jLabelWk1MiscAmt.setVisible(false);
-        jTextFieldWk1MiscAmt.setVisible(false);
-        jTextFieldWk1MiscAmt.setText("");
 
     }
 
@@ -1103,10 +1116,10 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
+                modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
@@ -1136,10 +1149,10 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
+                modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
@@ -1168,10 +1181,10 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
+                modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
@@ -1201,10 +1214,10 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk4.insertRow(modelWk4.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
+                modelWk4.insertRow(modelWk4.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
@@ -1234,15 +1247,128 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
+                modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
             if (modelWk5.getRowCount() == 0) {
                 jTabbedPaneMain.setEnabledAt(4, false);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    void regCheck() {
+        try {
+
+            jMenuItemSupSubmit.setEnabled(false);
+            if ((("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString()))
+                    || ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())))
+                    && "".equals(jTextAreaComments.getText())) {
+                JOptionPane.showMessageDialog(this, "<html><b>Comments Tab cannot be blank.Please record comments.</html>");
+                jTabbedPaneMain.setSelectedIndex(3);
+                jTextAreaComments.requestFocusInWindow();
+                jTextAreaComments.setFocusable(true);
+                jMenuItemSupSubmit.setEnabled(true);
+            } else if ("Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
+                jMenuItemSupSubmit.setEnabled(false);
+                updatePrevRecord();
+                updateWk1Plan();
+                updateWk2Plan();
+                updateWk3Plan();
+                updateWk4Plan();
+                updateWk5Plan();
+                updateWkPlanPeriod();
+                WkPlanActionApproved();
+                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
+                        + "</b> successfully updated.</html>");
+                jDialogWaitingEmail.setVisible(true);
+
+                String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br> HOD <b>"
+                        + jLabelLineLogNam.getText() + "</b>  has approved plan reference No. <b>" + jLabelSerial.getText() + " "
+                        + "" + jLabelRefNum.getText() + "</b>.<br><br>Please proceed to request your per diem.<br><br>"
+                        + " Kind Regards <br><br>"
+                        + " Finance Management System </body></html>";
+
+                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Approval. ";
+
+                emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, travelMailList);
+
+                jDialogWaitingEmail.setVisible(false);
+
+                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>Finance</b> with status.</html>");
+
+                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
+                setVisible(false);
+
+            } else if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
+                // jDialogAmendReqComments.setVisible(true);
+                jMenuItemSupSubmit.setEnabled(false);
+                updatePrevRecord();
+                updateWk1Plan();
+                updateWk2Plan();
+                updateWk3Plan();
+                updateWk4Plan();
+                updateWk5Plan();
+                updateWkPlanPeriod();
+                WkPlanActionAmendRequest();
+                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
+                        + "</b> successfully updated.</html>");
+
+                jDialogWaitingEmail.setVisible(true);
+
+                String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br> HOD <b>"
+                        + jLabelLineLogNam.getText() + "</b>  has requested that you ammend"
+                        + " plan reference No. <b>" + jLabelSerial.getText() + " "
+                        + "" + jLabelRefNum.getText() + "</b>.<br><br>"
+                        + "<b>Finance Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
+                        + "Please check your Finance System inbox and action.<br><br> Kind Regards <br><br>"
+                        + " Finance Management System </body></html>";
+
+                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Amendment Required.";
+
+                emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
+
+                jDialogWaitingEmail.setVisible(false);
+
+                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
+
+                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
+                setVisible(false);
+
+            } else if ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
+                updatePrevRecord();
+                updateWk1Plan();
+                updateWk2Plan();
+                updateWk3Plan();
+                updateWkPlanPeriod();
+                WkPlanActionDisApproved();
+                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
+                        + "</b> successfully updated.</html>");
+                jDialogWaitingEmail.setVisible(true);
+
+                String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br>"
+                        + "HOD <b>"
+                        + jLabelLineLogNam.getText() + "</b> has rejected your"
+                        + " plan reference No. <b>" + jLabelSerial.getText() + " "
+                        + "" + jLabelRefNum.getText() + "</b>.<br><br>"
+                        + "<b>Supervisor Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
+                        + " Finance Management System </body></html>";
+
+                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Rejected.";
+
+                emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
+
+                jDialogWaitingEmail.setVisible(false);
+                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
+
+                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
+                setVisible(false);
             }
 
         } catch (Exception e) {
@@ -1312,47 +1438,47 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
             for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
 
                 String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst1 = conn.prepareStatement(sqlwk1plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
-                pst1.setString(3, jTableWk1Activities.getValueAt(i, 0).toString());
-                pst1.setString(4, jTableWk1Activities.getValueAt(i, 1).toString());
-                pst1.setString(5, jTableWk1Activities.getValueAt(i, 2).toString());
-                pst1.setString(6, jTableWk1Activities.getValueAt(i, 3).toString());
-                pst1.setString(7, jTableWk1Activities.getValueAt(i, 4).toString());
-                pst1.setString(8, jTableWk1Activities.getValueAt(i, 5).toString());
-                pst1.setString(9, jTableWk1Activities.getValueAt(i, 6).toString());
-                pst1.setString(10, jTableWk1Activities.getValueAt(i, 7).toString());
-                pst1.setString(11, String.valueOf(jTableWk1Activities.getValueAt(i, 8).toString()));
-                pst1.setString(12, String.valueOf(jTableWk1Activities.getValueAt(i, 9).toString()));
-                pst1.setString(13, String.valueOf(jTableWk1Activities.getValueAt(i, 10).toString()));
-                pst1.setString(14, String.valueOf(jTableWk1Activities.getValueAt(i, 11).toString()));
-                pst1.setString(15, jTableWk1Activities.getValueAt(i, 12).toString());
-                pst1.setString(16, String.valueOf(jTableWk1Activities.getValueAt(i, 13).toString()));
-                pst1.setString(17, String.valueOf(jTableWk1Activities.getValueAt(i, 14).toString()));
-                pst1.setString(18, String.valueOf(jTableWk1Activities.getValueAt(i, 15).toString()));
-                pst1.setString(19, jTableWk1Activities.getValueAt(i, 16).toString());
-                pst1.setString(20, jTableWk1Activities.getValueAt(i, 17).toString());
-                pst1.setString(21, jTableWk1Activities.getValueAt(i, 18).toString());
-                pst1.setString(22, jTableWk1Activities.getValueAt(i, 19).toString());
+                pst1.setString(3, Integer.toString(itmNum));
+                pst1.setString(4, jTableWk1Activities.getValueAt(i, 0).toString());
+                pst1.setString(5, jTableWk1Activities.getValueAt(i, 1).toString());
+                pst1.setString(6, jTableWk1Activities.getValueAt(i, 2).toString());
+                pst1.setString(7, jTableWk1Activities.getValueAt(i, 3).toString());
+                pst1.setString(8, jTableWk1Activities.getValueAt(i, 4).toString());
+                pst1.setString(9, jTableWk1Activities.getValueAt(i, 5).toString());
+                pst1.setString(10, jTableWk1Activities.getValueAt(i, 6).toString());
+                pst1.setString(11, jTableWk1Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk1Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk1Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk1Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk1Activities.getValueAt(i, 11).toString()));
+                pst1.setString(16, String.valueOf(jTableWk1Activities.getValueAt(i, 12).toString()));
+                pst1.setString(17, String.valueOf(jTableWk1Activities.getValueAt(i, 13).toString()));
+                pst1.setString(18, String.valueOf(jTableWk1Activities.getValueAt(i, 14).toString()));
+                pst1.setString(19, jTableWk1Activities.getValueAt(i, 15).toString());
+                pst1.setString(20, String.valueOf(jTableWk1Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk1Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk1Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk1Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk1Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk1Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk1Activities.getValueAt(i, 22).toString());
                 if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
-                    pst1.setString(23, actNextVer);
-                    pst1.setString(24, docVer);
-                    pst1.setString(25, "A");
+                    pst1.setString(27, actNextVer);
+                    pst1.setString(28, docVer);
+                    pst1.setString(29, "A");
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "A");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "C");
                 }
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1372,48 +1498,48 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
 
-                String sqlWk2plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk2plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk2plan);
+                pst1 = conn.prepareStatement(sqlwk2plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
-                pst1.setString(3, jTableWk2Activities.getValueAt(i, 0).toString());
-                pst1.setString(4, jTableWk2Activities.getValueAt(i, 1).toString());
-                pst1.setString(5, jTableWk2Activities.getValueAt(i, 2).toString());
-                pst1.setString(6, jTableWk2Activities.getValueAt(i, 3).toString());
-                pst1.setString(7, jTableWk2Activities.getValueAt(i, 4).toString());
-                pst1.setString(8, jTableWk2Activities.getValueAt(i, 5).toString());
-                pst1.setString(9, jTableWk2Activities.getValueAt(i, 6).toString());
-                pst1.setString(10, jTableWk2Activities.getValueAt(i, 7).toString());
-                pst1.setString(11, String.valueOf(jTableWk2Activities.getValueAt(i, 8).toString()));
-                pst1.setString(12, String.valueOf(jTableWk2Activities.getValueAt(i, 9).toString()));
-                pst1.setString(13, String.valueOf(jTableWk2Activities.getValueAt(i, 10).toString()));
-                pst1.setString(14, String.valueOf(jTableWk2Activities.getValueAt(i, 11).toString()));
-                pst1.setString(15, jTableWk2Activities.getValueAt(i, 12).toString());
-                pst1.setString(16, String.valueOf(jTableWk2Activities.getValueAt(i, 13).toString()));
-                pst1.setString(17, String.valueOf(jTableWk2Activities.getValueAt(i, 14).toString()));
-                pst1.setString(18, String.valueOf(jTableWk2Activities.getValueAt(i, 15).toString()));
-                pst1.setString(19, jTableWk2Activities.getValueAt(i, 16).toString());
-                pst1.setString(20, jTableWk2Activities.getValueAt(i, 17).toString());
-                pst1.setString(21, jTableWk2Activities.getValueAt(i, 18).toString());
-                pst1.setString(22, jTableWk2Activities.getValueAt(i, 19).toString());
+                pst1.setString(3, Integer.toString(itmNum));
+                pst1.setString(4, jTableWk2Activities.getValueAt(i, 0).toString());
+                pst1.setString(5, jTableWk2Activities.getValueAt(i, 1).toString());
+                pst1.setString(6, jTableWk2Activities.getValueAt(i, 2).toString());
+                pst1.setString(7, jTableWk2Activities.getValueAt(i, 3).toString());
+                pst1.setString(8, jTableWk2Activities.getValueAt(i, 4).toString());
+                pst1.setString(9, jTableWk2Activities.getValueAt(i, 5).toString());
+                pst1.setString(10, jTableWk2Activities.getValueAt(i, 6).toString());
+                pst1.setString(11, jTableWk2Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk2Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk2Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk2Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk2Activities.getValueAt(i, 11).toString()));
+                pst1.setString(16, String.valueOf(jTableWk2Activities.getValueAt(i, 12).toString()));
+                pst1.setString(17, String.valueOf(jTableWk2Activities.getValueAt(i, 13).toString()));
+                pst1.setString(18, String.valueOf(jTableWk2Activities.getValueAt(i, 14).toString()));
+                pst1.setString(19, jTableWk2Activities.getValueAt(i, 15).toString());
+                pst1.setString(20, String.valueOf(jTableWk2Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk2Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk2Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk2Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk2Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk2Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk2Activities.getValueAt(i, 22).toString());
                 if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
-                    pst1.setString(23, actNextVer);
-                    pst1.setString(24, docVer);
-                    pst1.setString(25, "A");
+                    pst1.setString(27, actNextVer);
+                    pst1.setString(28, docVer);
+                    pst1.setString(29, "A");
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "A");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "C");
                 }
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1433,48 +1559,48 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
 
-                String sqlWk3plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk3plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk3plan);
+                pst1 = conn.prepareStatement(sqlwk3plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
-                pst1.setString(3, jTableWk3Activities.getValueAt(i, 0).toString());
-                pst1.setString(4, jTableWk3Activities.getValueAt(i, 1).toString());
-                pst1.setString(5, jTableWk3Activities.getValueAt(i, 2).toString());
-                pst1.setString(6, jTableWk3Activities.getValueAt(i, 3).toString());
-                pst1.setString(7, jTableWk3Activities.getValueAt(i, 4).toString());
-                pst1.setString(8, jTableWk3Activities.getValueAt(i, 5).toString());
-                pst1.setString(9, jTableWk3Activities.getValueAt(i, 6).toString());
-                pst1.setString(10, jTableWk3Activities.getValueAt(i, 7).toString());
-                pst1.setString(11, String.valueOf(jTableWk3Activities.getValueAt(i, 8).toString()));
-                pst1.setString(12, String.valueOf(jTableWk3Activities.getValueAt(i, 9).toString()));
-                pst1.setString(13, String.valueOf(jTableWk3Activities.getValueAt(i, 10).toString()));
-                pst1.setString(14, String.valueOf(jTableWk3Activities.getValueAt(i, 11).toString()));
-                pst1.setString(15, jTableWk3Activities.getValueAt(i, 12).toString());
-                pst1.setString(16, String.valueOf(jTableWk3Activities.getValueAt(i, 13).toString()));
-                pst1.setString(17, String.valueOf(jTableWk3Activities.getValueAt(i, 14).toString()));
-                pst1.setString(18, String.valueOf(jTableWk3Activities.getValueAt(i, 15).toString()));
-                pst1.setString(19, jTableWk3Activities.getValueAt(i, 16).toString());
-                pst1.setString(20, jTableWk3Activities.getValueAt(i, 17).toString());
-                pst1.setString(21, jTableWk3Activities.getValueAt(i, 18).toString());
-                pst1.setString(22, jTableWk3Activities.getValueAt(i, 19).toString());
+                pst1.setString(3, Integer.toString(itmNum));
+                pst1.setString(4, jTableWk3Activities.getValueAt(i, 0).toString());
+                pst1.setString(5, jTableWk3Activities.getValueAt(i, 1).toString());
+                pst1.setString(6, jTableWk3Activities.getValueAt(i, 2).toString());
+                pst1.setString(7, jTableWk3Activities.getValueAt(i, 3).toString());
+                pst1.setString(8, jTableWk3Activities.getValueAt(i, 4).toString());
+                pst1.setString(9, jTableWk3Activities.getValueAt(i, 5).toString());
+                pst1.setString(10, jTableWk3Activities.getValueAt(i, 6).toString());
+                pst1.setString(11, jTableWk3Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk3Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk3Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk3Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk3Activities.getValueAt(i, 11).toString()));
+                pst1.setString(16, String.valueOf(jTableWk3Activities.getValueAt(i, 12).toString()));
+                pst1.setString(17, String.valueOf(jTableWk3Activities.getValueAt(i, 13).toString()));
+                pst1.setString(18, String.valueOf(jTableWk3Activities.getValueAt(i, 14).toString()));
+                pst1.setString(19, jTableWk3Activities.getValueAt(i, 15).toString());
+                pst1.setString(20, String.valueOf(jTableWk3Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk3Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk3Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk3Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk3Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk3Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk3Activities.getValueAt(i, 22).toString());
                 if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
-                    pst1.setString(23, actNextVer);
-                    pst1.setString(24, docVer);
-                    pst1.setString(25, "A");
+                    pst1.setString(27, actNextVer);
+                    pst1.setString(28, docVer);
+                    pst1.setString(29, "A");
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "A");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "C");
                 }
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1494,48 +1620,48 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
 
-                String sqlWk4plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk4plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk4plan);
+                pst1 = conn.prepareStatement(sqlwk4plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
-                pst1.setString(3, jTableWk4Activities.getValueAt(i, 0).toString());
-                pst1.setString(4, jTableWk4Activities.getValueAt(i, 1).toString());
-                pst1.setString(5, jTableWk4Activities.getValueAt(i, 2).toString());
-                pst1.setString(6, jTableWk4Activities.getValueAt(i, 3).toString());
-                pst1.setString(7, jTableWk4Activities.getValueAt(i, 4).toString());
-                pst1.setString(8, jTableWk4Activities.getValueAt(i, 5).toString());
-                pst1.setString(9, jTableWk4Activities.getValueAt(i, 6).toString());
-                pst1.setString(10, jTableWk4Activities.getValueAt(i, 7).toString());
-                pst1.setString(11, String.valueOf(jTableWk4Activities.getValueAt(i, 8).toString()));
-                pst1.setString(12, String.valueOf(jTableWk4Activities.getValueAt(i, 9).toString()));
-                pst1.setString(13, String.valueOf(jTableWk4Activities.getValueAt(i, 10).toString()));
-                pst1.setString(14, String.valueOf(jTableWk4Activities.getValueAt(i, 11).toString()));
-                pst1.setString(15, jTableWk4Activities.getValueAt(i, 12).toString());
-                pst1.setString(16, String.valueOf(jTableWk4Activities.getValueAt(i, 13).toString()));
-                pst1.setString(17, String.valueOf(jTableWk4Activities.getValueAt(i, 14).toString()));
-                pst1.setString(18, String.valueOf(jTableWk4Activities.getValueAt(i, 15).toString()));
-                pst1.setString(19, jTableWk4Activities.getValueAt(i, 16).toString());
-                pst1.setString(20, jTableWk4Activities.getValueAt(i, 17).toString());
-                pst1.setString(21, jTableWk4Activities.getValueAt(i, 18).toString());
-                pst1.setString(22, jTableWk4Activities.getValueAt(i, 19).toString());
+                pst1.setString(3, Integer.toString(itmNum));
+                pst1.setString(4, jTableWk4Activities.getValueAt(i, 0).toString());
+                pst1.setString(5, jTableWk4Activities.getValueAt(i, 1).toString());
+                pst1.setString(6, jTableWk4Activities.getValueAt(i, 2).toString());
+                pst1.setString(7, jTableWk4Activities.getValueAt(i, 3).toString());
+                pst1.setString(8, jTableWk4Activities.getValueAt(i, 4).toString());
+                pst1.setString(9, jTableWk4Activities.getValueAt(i, 5).toString());
+                pst1.setString(10, jTableWk4Activities.getValueAt(i, 6).toString());
+                pst1.setString(11, jTableWk4Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk4Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk4Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk4Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk4Activities.getValueAt(i, 11).toString()));
+                pst1.setString(16, String.valueOf(jTableWk4Activities.getValueAt(i, 12).toString()));
+                pst1.setString(17, String.valueOf(jTableWk4Activities.getValueAt(i, 13).toString()));
+                pst1.setString(18, String.valueOf(jTableWk4Activities.getValueAt(i, 14).toString()));
+                pst1.setString(19, jTableWk4Activities.getValueAt(i, 15).toString());
+                pst1.setString(20, String.valueOf(jTableWk4Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk4Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk4Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk4Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk4Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk4Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk4Activities.getValueAt(i, 22).toString());
                 if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
-                    pst1.setString(23, actNextVer);
-                    pst1.setString(24, docVer);
-                    pst1.setString(25, "A");
+                    pst1.setString(27, actNextVer);
+                    pst1.setString(28, docVer);
+                    pst1.setString(29, "A");
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "A");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "C");
                 }
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1555,48 +1681,48 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
 
-                String sqlWk5plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk5plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk5plan);
+                pst1 = conn.prepareStatement(sqlwk5plan);
                 pst1.setString(1, "P");
                 pst1.setString(2, jLabelRefNum.getText());
-                pst1.setString(3, jTableWk5Activities.getValueAt(i, 0).toString());
-                pst1.setString(4, jTableWk5Activities.getValueAt(i, 1).toString());
-                pst1.setString(5, jTableWk5Activities.getValueAt(i, 2).toString());
-                pst1.setString(6, jTableWk5Activities.getValueAt(i, 3).toString());
-                pst1.setString(7, jTableWk5Activities.getValueAt(i, 4).toString());
-                pst1.setString(8, jTableWk5Activities.getValueAt(i, 5).toString());
-                pst1.setString(9, jTableWk5Activities.getValueAt(i, 6).toString());
-                pst1.setString(10, jTableWk5Activities.getValueAt(i, 7).toString());
-                pst1.setString(11, String.valueOf(jTableWk5Activities.getValueAt(i, 8).toString()));
-                pst1.setString(12, String.valueOf(jTableWk5Activities.getValueAt(i, 9).toString()));
-                pst1.setString(13, String.valueOf(jTableWk5Activities.getValueAt(i, 10).toString()));
-                pst1.setString(14, String.valueOf(jTableWk5Activities.getValueAt(i, 11).toString()));
-                pst1.setString(15, jTableWk5Activities.getValueAt(i, 12).toString());
-                pst1.setString(16, String.valueOf(jTableWk5Activities.getValueAt(i, 13).toString()));
-                pst1.setString(17, String.valueOf(jTableWk5Activities.getValueAt(i, 14).toString()));
-                pst1.setString(18, String.valueOf(jTableWk5Activities.getValueAt(i, 15).toString()));
-                pst1.setString(19, jTableWk5Activities.getValueAt(i, 16).toString());
-                pst1.setString(20, jTableWk5Activities.getValueAt(i, 17).toString());
-                pst1.setString(21, jTableWk5Activities.getValueAt(i, 18).toString());
-                pst1.setString(22, jTableWk5Activities.getValueAt(i, 19).toString());
+                pst1.setString(3, Integer.toString(itmNum));
+                pst1.setString(4, jTableWk5Activities.getValueAt(i, 0).toString());
+                pst1.setString(5, jTableWk5Activities.getValueAt(i, 1).toString());
+                pst1.setString(6, jTableWk5Activities.getValueAt(i, 2).toString());
+                pst1.setString(7, jTableWk5Activities.getValueAt(i, 3).toString());
+                pst1.setString(8, jTableWk5Activities.getValueAt(i, 4).toString());
+                pst1.setString(9, jTableWk5Activities.getValueAt(i, 5).toString());
+                pst1.setString(10, jTableWk5Activities.getValueAt(i, 6).toString());
+                pst1.setString(11, jTableWk5Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk5Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk5Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk5Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk5Activities.getValueAt(i, 11).toString()));
+                pst1.setString(16, String.valueOf(jTableWk5Activities.getValueAt(i, 12).toString()));
+                pst1.setString(17, String.valueOf(jTableWk5Activities.getValueAt(i, 13).toString()));
+                pst1.setString(18, String.valueOf(jTableWk5Activities.getValueAt(i, 14).toString()));
+                pst1.setString(19, jTableWk5Activities.getValueAt(i, 15).toString());
+                pst1.setString(20, String.valueOf(jTableWk5Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk5Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk5Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk5Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk5Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk5Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk5Activities.getValueAt(i, 22).toString());
                 if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
-                    pst1.setString(23, actNextVer);
-                    pst1.setString(24, docVer);
-                    pst1.setString(25, "A");
+                    pst1.setString(27, actNextVer);
+                    pst1.setString(28, docVer);
+                    pst1.setString(29, "A");
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "A");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
-                    pst1.setString(23, "1");
-                    pst1.setString(24, docNextVer);
-                    pst1.setString(25, "C");
+                    pst1.setString(27, "1");
+                    pst1.setString(28, docNextVer);
+                    pst1.setString(29, "C");
                 }
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1883,15 +2009,13 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabelSerial = new javax.swing.JLabel();
         jLabelRefNum = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableWk1Activities = new javax.swing.JTable();
         jPanelAttDocWk1 = new javax.swing.JPanel();
         jScrollPaneWk1 = new javax.swing.JScrollPane();
         jTableDocAttWk1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jButtonSave = new javax.swing.JButton();
+        jScrollPaneWk6 = new javax.swing.JScrollPane();
+        jTableWk1Activities = new javax.swing.JTable();
         jPanelWkTwo = new javax.swing.JPanel();
         jLabelWkDuration1 = new javax.swing.JLabel();
         jLabelWk1From1 = new javax.swing.JLabel();
@@ -1907,13 +2031,13 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabelLineLogNam1 = new javax.swing.JLabel();
         jLabelHeaderGen7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane11 = new javax.swing.JScrollPane();
-        jTableWk2Activities = new javax.swing.JTable();
         jPanelAttDocWk2 = new javax.swing.JPanel();
         jScrollPaneWk2 = new javax.swing.JScrollPane();
         jTableDocAttWk2 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jPanelWk2 = new javax.swing.JPanel();
+        jScrollPaneWk7 = new javax.swing.JScrollPane();
+        jTableWk2Activities = new javax.swing.JTable();
         jPanelWkThree = new javax.swing.JPanel();
         jLabelWkDuration2 = new javax.swing.JLabel();
         jLabelWk3From = new javax.swing.JLabel();
@@ -1929,13 +2053,13 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabelLineTime2 = new javax.swing.JLabel();
         jLabelHeaderGen4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTableWk3Activities = new javax.swing.JTable();
         jPanelAttDocWk3 = new javax.swing.JPanel();
         jScrollPaneWk3 = new javax.swing.JScrollPane();
         jTableDocAttWk3 = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jPanelWk3 = new javax.swing.JPanel();
+        jScrollPaneWk8 = new javax.swing.JScrollPane();
+        jTableWk3Activities = new javax.swing.JTable();
         jPanelWkFour = new javax.swing.JPanel();
         jLabelWkDuration3 = new javax.swing.JLabel();
         jLabelWk4From = new javax.swing.JLabel();
@@ -1951,13 +2075,13 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabelLineTime5 = new javax.swing.JLabel();
         jLabelHeaderGen5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTableWk4Activities = new javax.swing.JTable();
         jPanelAttDocWk4 = new javax.swing.JPanel();
         jScrollPaneWk4 = new javax.swing.JScrollPane();
         jTableDocAttWk4 = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         jPanelWk4 = new javax.swing.JPanel();
+        jScrollPaneWk9 = new javax.swing.JScrollPane();
+        jTableWk4Activities = new javax.swing.JTable();
         jPanelWkFive = new javax.swing.JPanel();
         jLabelWkDuration4 = new javax.swing.JLabel();
         jLabelWk5From = new javax.swing.JLabel();
@@ -1973,13 +2097,13 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabelLineTime6 = new javax.swing.JLabel();
         jLabelHeaderGen10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        jTableWk5Activities = new javax.swing.JTable();
         jPanelAttDocWk5 = new javax.swing.JPanel();
         jScrollPaneWk5 = new javax.swing.JScrollPane();
         jTableDocAttWk5 = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         jPanelWk5 = new javax.swing.JPanel();
+        jScrollPaneWk10 = new javax.swing.JScrollPane();
+        jTableWk5Activities = new javax.swing.JTable();
         jPanelWkComments = new javax.swing.JPanel();
         jSeparator35 = new javax.swing.JSeparator();
         jLabelLogo4 = new javax.swing.JLabel();
@@ -2405,7 +2529,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkOne.add(jLabelLogo1);
-        jLabelLogo1.setBounds(10, 10, 220, 100);
+        jLabelLogo1.setBounds(10, 5, 220, 115);
 
         jLabelProvince1.setText("Province");
         jLabelProvince1.setMinimumSize(new java.awt.Dimension(130, 130));
@@ -2481,32 +2605,6 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jPanelWkOne.add(jLabel1);
         jLabel1.setBounds(30, 225, 150, 15);
 
-        jTableWk1Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableWk1Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk1ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableWk1Activities);
-
-        jPanelWkOne.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 240, 1290, 310);
-
         jPanelAttDocWk1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanelAttDocWk1.setLayout(null);
 
@@ -2550,28 +2648,29 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jPanel4.setLayout(null);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Record Validation");
-        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel4.add(jLabel4);
-        jLabel4.setBounds(90, 10, 190, 20);
-
-        jButtonSave.setBackground(new java.awt.Color(0, 153, 0));
-        jButtonSave.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonSave.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonSave.setText("Submit");
-        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButtonSave);
-        jButtonSave.setBounds(100, 50, 170, 50);
-
         jPanelWkOne.add(jPanel4);
         jPanel4.setBounds(950, 550, 370, 120);
+
+        jTableWk1Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk6.setViewportView(jTableWk1Activities);
+
+        jPanelWkOne.add(jScrollPaneWk6);
+        jScrollPaneWk6.setBounds(30, 240, 1290, 310);
 
         jTabbedPaneMain.addTab("Week One", jPanelWkOne);
 
@@ -2596,7 +2695,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
         jLabelLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkTwo.add(jLabelLogo2);
-        jLabelLogo2.setBounds(10, 10, 220, 100);
+        jLabelLogo2.setBounds(10, 10, 220, 115);
         jPanelWkTwo.add(jLabelWk2DateTo);
         jLabelWk2DateTo.setBounds(440, 160, 100, 30);
         jPanelWkTwo.add(jLabelWk2DateFrom);
@@ -2629,32 +2728,6 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabel3.setText("PLANNED ACTIVITIES");
         jPanelWkTwo.add(jLabel3);
         jLabel3.setBounds(30, 210, 150, 15);
-
-        jTableWk2Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableWk2Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk2ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane11.setViewportView(jTableWk2Activities);
-
-        jPanelWkTwo.add(jScrollPane11);
-        jScrollPane11.setBounds(30, 230, 1290, 310);
 
         jPanelAttDocWk2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanelAttDocWk2.setLayout(null);
@@ -2702,6 +2775,27 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jPanelWkTwo.add(jPanelWk2);
         jPanelWk2.setBounds(950, 545, 370, 120);
 
+        jTableWk2Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk7.setViewportView(jTableWk2Activities);
+
+        jPanelWkTwo.add(jScrollPaneWk7);
+        jScrollPaneWk7.setBounds(30, 240, 1290, 305);
+
         jTabbedPaneMain.addTab("Week Two", jPanelWkTwo);
 
         jPanelWkThree.setBackground(new java.awt.Color(29, 109, 222));
@@ -2727,7 +2821,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
         jLabelLogo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkThree.add(jLabelLogo3);
-        jLabelLogo3.setBounds(10, 10, 220, 100);
+        jLabelLogo3.setBounds(10, 10, 220, 115);
         jPanelWkThree.add(jLabelWk3DateTo);
         jLabelWk3DateTo.setBounds(440, 160, 100, 30);
         jPanelWkThree.add(jLabelWk3DateFrom);
@@ -2764,32 +2858,6 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabel5.setText("PLANNED ACTIVITIES");
         jPanelWkThree.add(jLabel5);
         jLabel5.setBounds(30, 210, 150, 15);
-
-        jTableWk3Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableWk3Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk3ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jTableWk3Activities);
-
-        jPanelWkThree.add(jScrollPane3);
-        jScrollPane3.setBounds(30, 230, 1290, 310);
 
         jPanelAttDocWk3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanelAttDocWk3.setLayout(null);
@@ -2837,6 +2905,27 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jPanelWkThree.add(jPanelWk3);
         jPanelWk3.setBounds(950, 550, 370, 120);
 
+        jTableWk3Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk8.setViewportView(jTableWk3Activities);
+
+        jPanelWkThree.add(jScrollPaneWk8);
+        jScrollPaneWk8.setBounds(30, 240, 1290, 305);
+
         jTabbedPaneMain.addTab("Week Three", jPanelWkThree);
 
         jPanelWkFour.setBackground(new java.awt.Color(255, 204, 204));
@@ -2862,7 +2951,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
         jLabelLogo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkFour.add(jLabelLogo6);
-        jLabelLogo6.setBounds(10, 10, 220, 100);
+        jLabelLogo6.setBounds(10, 10, 220, 115);
         jPanelWkFour.add(jLabelWk4DateTo);
         jLabelWk4DateTo.setBounds(440, 160, 100, 30);
         jPanelWkFour.add(jLabelWk4DateFrom);
@@ -2899,32 +2988,6 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabel7.setText("PLANNED ACTIVITIES");
         jPanelWkFour.add(jLabel7);
         jLabel7.setBounds(30, 210, 150, 15);
-
-        jTableWk4Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableWk4Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk4ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane5.setViewportView(jTableWk4Activities);
-
-        jPanelWkFour.add(jScrollPane5);
-        jScrollPane5.setBounds(30, 230, 1290, 310);
 
         jPanelAttDocWk4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanelAttDocWk4.setLayout(null);
@@ -2972,6 +3035,27 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jPanelWkFour.add(jPanelWk4);
         jPanelWk4.setBounds(950, 545, 370, 120);
 
+        jTableWk4Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk9.setViewportView(jTableWk4Activities);
+
+        jPanelWkFour.add(jScrollPaneWk9);
+        jScrollPaneWk9.setBounds(30, 240, 1290, 305);
+
         jTabbedPaneMain.addTab("Week Four", jPanelWkFour);
 
         jPanelWkFive.setBackground(new java.awt.Color(204, 204, 255));
@@ -2997,7 +3081,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
         jLabelLogo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkFive.add(jLabelLogo7);
-        jLabelLogo7.setBounds(10, 10, 220, 100);
+        jLabelLogo7.setBounds(10, 10, 220, 115);
         jPanelWkFive.add(jLabelWk5DateTo);
         jLabelWk5DateTo.setBounds(440, 160, 100, 30);
         jPanelWkFive.add(jLabelWk5DateFrom);
@@ -3034,32 +3118,6 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jLabel9.setText("PLANNED ACTIVITIES");
         jPanelWkFive.add(jLabel9);
         jLabel9.setBounds(30, 210, 150, 15);
-
-        jTableWk5Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableWk5Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk5ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane9.setViewportView(jTableWk5Activities);
-
-        jPanelWkFive.add(jScrollPane9);
-        jScrollPane9.setBounds(30, 230, 1290, 310);
 
         jPanelAttDocWk5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanelAttDocWk5.setLayout(null);
@@ -3106,6 +3164,27 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         jPanelWk5.setLayout(null);
         jPanelWkFive.add(jPanelWk5);
         jPanelWk5.setBounds(950, 545, 370, 120);
+
+        jTableWk5Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk10.setViewportView(jTableWk5Activities);
+
+        jPanelWkFive.add(jScrollPaneWk10);
+        jScrollPaneWk10.setBounds(30, 240, 1290, 305);
 
         jTabbedPaneMain.addTab("Week Five", jPanelWkFive);
 
@@ -3478,7 +3557,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-       
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jButtonAmmendDialogOk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAmmendDialogOk1ActionPerformed
@@ -3520,630 +3599,6 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
             jTabbedPaneMain.setEnabledAt(5, false);
         }
     }//GEN-LAST:event_jComboSupApprovalActionPerformed
-
-    private void jTableWk1ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk1ActivitiesMouseClicked
-        if (evt.getClickCount() == 2) {
-            resetField();
-            int row = jTableWk1Activities.getSelectedRow();
-
-            int col1 = 1;
-            int col3 = 3;
-            int col4 = 4;
-            int col5 = 5;
-            int col6 = 6;
-            int col7 = 7;
-            int col8 = 8;
-            int col9 = 9;
-            int col10 = 10;
-            int col11 = 11;
-            int col12 = 12;
-            int col13 = 13;
-            int col14 = 14;
-            int col15 = 15;
-            int col16 = 16;
-            int col17 = 17;
-            int col18 = 18;
-            int col19 = 19;
-
-            Object id1 = jTableWk1Activities.getValueAt(row, col1);
-            Object id2 = jTableWk1Activities.getValueAt(row, col3);
-            Object id3 = jTableWk1Activities.getValueAt(row, col4);
-            Object id4 = jTableWk1Activities.getValueAt(row, col5);
-            Object id5 = jTableWk1Activities.getValueAt(row, col6);
-            Object id6 = jTableWk1Activities.getValueAt(row, col7);
-            Object id7 = jTableWk1Activities.getValueAt(row, col8);
-            Object id8 = jTableWk1Activities.getValueAt(row, col9);
-            Object id9 = jTableWk1Activities.getValueAt(row, col10);
-            Object id10 = jTableWk1Activities.getValueAt(row, col11);
-            Object id11 = jTableWk1Activities.getValueAt(row, col12);
-            Object id12 = jTableWk1Activities.getValueAt(row, col13);
-            Object id13 = jTableWk1Activities.getValueAt(row, col14);
-            Object id14 = jTableWk1Activities.getValueAt(row, col15);
-            Object id15 = jTableWk1Activities.getValueAt(row, col16);
-            Object id16 = jTableWk1Activities.getValueAt(row, col17);
-            Object id17 = jTableWk1Activities.getValueAt(row, col18);
-            Object id18 = jTableWk1Activities.getValueAt(row, col19);
-
-            jLabelActWk1Date.setText(id1.toString());
-//            jLabelPrjNameDet.setText(id2.toString());
-//            jLabelPrjTaskDet.setText(id3.toString());
-            jTextFieldDialogWk1Site.setText(id4.toString());
-            jTextFieldWk1DialogActivityDesc.setText(id5.toString());
-            jTextAreaWk1DialogJustification.setText(id6.toString());
-//            jTextFieldWk1DialogStaffName1
-//            jLabelStaff.setText(id7.toString());
-
-            if ((Double.parseDouble(id7.toString())) > 0) {
-                jCheckBoxDialogWk1BrkFast.setSelected(true);
-            }
-            if ((Double.parseDouble(id8.toString())) > 0) {
-                jCheckBoxDialogWk1Lunch.setSelected(true);
-            }
-            if ((Double.parseDouble(id9.toString())) > 0) {
-                jCheckBoxDialogWk1Dinner.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id10.toString())) > 0) {
-                jCheckBoxDialogWk1Inc.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id12.toString())) > 0) {
-                jCheckBoxDialogWk1Misc.setSelected(true);
-                jTextFieldWk1Misc.setText(id11.toString());
-                jTextFieldWk1MiscAmt.setText(id12.toString());
-            }
-
-            if ((Double.parseDouble(id13.toString())) > 0) {
-                jCheckBoxDialogWk1AccUnProved.setSelected(true);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-                jCheckBoxNoAcc.setSelected(false);
-
-            }
-            if ((Double.parseDouble(id14.toString())) > 0) {
-                jCheckBoxDialogWk1AccProved.setSelected(true);
-                jCheckBoxNoAcc.setSelected(false);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-
-            }
-            if (((Double.parseDouble(id13.toString())) == 0) && ((Double.parseDouble(id14.toString())) == 0)) {
-                jCheckBoxNoAcc.setSelected(true);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-
-            }
-            jTextFieldWk1DialogStaffName1.setText(id15.toString());
-            jTextFieldWk1DialogStaffName2.setText(id16.toString());
-            jTextFieldWk1DialogStaffName3.setText(id17.toString());
-            jTextFieldWk1DialogStaffName4.setText(id18.toString());
-
-            jDialogWk1.setVisible(true);
-            findProject(id2.toString());
-            findTask(id3.toString());
-            if (("National Office".equals(jLabelDistrict.getText()))) {
-                jDialogWk1.setTitle("Per Diem Week 1");
-            } else {
-                jDialogWk1.setTitle("Month Per Diem ");
-            }
-            jTextAreaWk1DialogJustification.setLineWrap(true);
-            jTextAreaWk1DialogJustification.setWrapStyleWord(true);
-            jTextFieldDialogWk1Site.setEditable(false);
-            jTextFieldWk1DialogActivityDesc.setEditable(false);
-            jTextAreaWk1DialogJustification.setEditable(false);
-            jTextFieldWk1DialogStaffName1.setEditable(false);
-            jTextFieldWk1DialogStaffName2.setEditable(false);
-            jTextFieldWk1DialogStaffName3.setEditable(false);
-            jTextFieldWk1DialogStaffName4.setEditable(false);
-            jTextFieldWk1Misc.setEditable(false);
-            jTextFieldWk1MiscAmt.setEditable(false);
-            jCheckBoxDialogWk1BrkFast.setEnabled(false);
-            jCheckBoxDialogWk1Lunch.setEnabled(false);
-            jCheckBoxDialogWk1Dinner.setEnabled(false);
-            jCheckBoxDialogWk1Inc.setEnabled(false);
-            jCheckBoxDialogWk1AccUnProved.setEnabled(false);
-            jCheckBoxDialogWk1AccProved.setEnabled(false);
-            jCheckBoxNoAcc.setEnabled(false);
-            jCheckBoxDialogWk1Misc.setEnabled(false);
-
-        }
-    }//GEN-LAST:event_jTableWk1ActivitiesMouseClicked
-
-    private void jTableWk2ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk2ActivitiesMouseClicked
-        if (evt.getClickCount() == 2) {
-            resetField();
-            int row = jTableWk2Activities.getSelectedRow();
-
-            int col1 = 1;
-            int col3 = 3;
-            int col4 = 4;
-            int col5 = 5;
-            int col6 = 6;
-            int col7 = 7;
-            int col8 = 8;
-            int col9 = 9;
-            int col10 = 10;
-            int col11 = 11;
-            int col12 = 12;
-            int col13 = 13;
-            int col14 = 14;
-            int col15 = 15;
-            int col16 = 16;
-            int col17 = 17;
-            int col18 = 18;
-            int col19 = 19;
-
-            Object id1 = jTableWk2Activities.getValueAt(row, col1);
-            Object id2 = jTableWk2Activities.getValueAt(row, col3);
-            Object id3 = jTableWk2Activities.getValueAt(row, col4);
-            Object id4 = jTableWk2Activities.getValueAt(row, col5);
-            Object id5 = jTableWk2Activities.getValueAt(row, col6);
-            Object id6 = jTableWk2Activities.getValueAt(row, col7);
-            Object id7 = jTableWk2Activities.getValueAt(row, col8);
-            Object id8 = jTableWk2Activities.getValueAt(row, col9);
-            Object id9 = jTableWk2Activities.getValueAt(row, col10);
-            Object id10 = jTableWk2Activities.getValueAt(row, col11);
-            Object id11 = jTableWk2Activities.getValueAt(row, col12);
-            Object id12 = jTableWk2Activities.getValueAt(row, col13);
-            Object id13 = jTableWk2Activities.getValueAt(row, col14);
-            Object id14 = jTableWk2Activities.getValueAt(row, col15);
-            Object id15 = jTableWk2Activities.getValueAt(row, col16);
-            Object id16 = jTableWk2Activities.getValueAt(row, col17);
-            Object id17 = jTableWk2Activities.getValueAt(row, col18);
-            Object id18 = jTableWk2Activities.getValueAt(row, col19);
-
-            jLabelActWk1Date.setText(id1.toString());
-//            jLabelPrjNameDet.setText(id2.toString());
-//            jLabelPrjTaskDet.setText(id3.toString());
-            jTextFieldDialogWk1Site.setText(id4.toString());
-            jTextFieldWk1DialogActivityDesc.setText(id5.toString());
-            jTextAreaWk1DialogJustification.setText(id6.toString());
-//            jTextFieldWk1DialogStaffName1
-//            jLabelStaff.setText(id7.toString());
-
-            if ((Double.parseDouble(id7.toString())) > 0) {
-                jCheckBoxDialogWk1BrkFast.setSelected(true);
-            }
-            if ((Double.parseDouble(id8.toString())) > 0) {
-                jCheckBoxDialogWk1Lunch.setSelected(true);
-            }
-            if ((Double.parseDouble(id9.toString())) > 0) {
-                jCheckBoxDialogWk1Dinner.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id10.toString())) > 0) {
-                jCheckBoxDialogWk1Inc.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id12.toString())) > 0) {
-                jCheckBoxDialogWk1Misc.setSelected(true);
-                jTextFieldWk1Misc.setText(id11.toString());
-                jTextFieldWk1MiscAmt.setText(id12.toString());
-            }
-
-            if ((Double.parseDouble(id13.toString())) > 0) {
-                jCheckBoxDialogWk1AccUnProved.setSelected(true);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-                jCheckBoxNoAcc.setSelected(false);
-
-            }
-            if ((Double.parseDouble(id14.toString())) > 0) {
-                jCheckBoxDialogWk1AccProved.setSelected(true);
-                jCheckBoxNoAcc.setSelected(false);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-
-            }
-            if (((Double.parseDouble(id13.toString())) == 0) && ((Double.parseDouble(id14.toString())) == 0)) {
-                jCheckBoxNoAcc.setSelected(true);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-
-            }
-            jTextFieldWk1DialogStaffName1.setText(id15.toString());
-            jTextFieldWk1DialogStaffName2.setText(id16.toString());
-            jTextFieldWk1DialogStaffName3.setText(id17.toString());
-            jTextFieldWk1DialogStaffName4.setText(id18.toString());
-
-            jDialogWk1.setVisible(true);
-            findProject(id2.toString());
-            findTask(id3.toString());
-
-            jDialogWk1.setTitle("Per Diem Week 2");
-
-            jTextAreaWk1DialogJustification.setLineWrap(true);
-            jTextAreaWk1DialogJustification.setWrapStyleWord(true);
-            jTextFieldDialogWk1Site.setEditable(false);
-            jTextFieldWk1DialogActivityDesc.setEditable(false);
-            jTextAreaWk1DialogJustification.setEditable(false);
-            jTextFieldWk1DialogStaffName1.setEditable(false);
-            jTextFieldWk1DialogStaffName2.setEditable(false);
-            jTextFieldWk1DialogStaffName3.setEditable(false);
-            jTextFieldWk1DialogStaffName4.setEditable(false);
-            jTextFieldWk1Misc.setEditable(false);
-            jTextFieldWk1MiscAmt.setEditable(false);
-            jCheckBoxDialogWk1BrkFast.setEnabled(false);
-            jCheckBoxDialogWk1Lunch.setEnabled(false);
-            jCheckBoxDialogWk1Dinner.setEnabled(false);
-            jCheckBoxDialogWk1Inc.setEnabled(false);
-            jCheckBoxDialogWk1AccUnProved.setEnabled(false);
-            jCheckBoxDialogWk1AccProved.setEnabled(false);
-            jCheckBoxNoAcc.setEnabled(false);
-            jCheckBoxDialogWk1Misc.setEnabled(false);
-
-        }
-    }//GEN-LAST:event_jTableWk2ActivitiesMouseClicked
-
-    private void jTableWk3ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk3ActivitiesMouseClicked
-        if (evt.getClickCount() == 2) {
-            resetField();
-            int row = jTableWk3Activities.getSelectedRow();
-
-            int col1 = 1;
-            int col3 = 3;
-            int col4 = 4;
-            int col5 = 5;
-            int col6 = 6;
-            int col7 = 7;
-            int col8 = 8;
-            int col9 = 9;
-            int col10 = 10;
-            int col11 = 11;
-            int col12 = 12;
-            int col13 = 13;
-            int col14 = 14;
-            int col15 = 15;
-            int col16 = 16;
-            int col17 = 17;
-            int col18 = 18;
-            int col19 = 19;
-
-            Object id1 = jTableWk3Activities.getValueAt(row, col1);
-            Object id2 = jTableWk3Activities.getValueAt(row, col3);
-            Object id3 = jTableWk3Activities.getValueAt(row, col4);
-            Object id4 = jTableWk3Activities.getValueAt(row, col5);
-            Object id5 = jTableWk3Activities.getValueAt(row, col6);
-            Object id6 = jTableWk3Activities.getValueAt(row, col7);
-            Object id7 = jTableWk3Activities.getValueAt(row, col8);
-            Object id8 = jTableWk3Activities.getValueAt(row, col9);
-            Object id9 = jTableWk3Activities.getValueAt(row, col10);
-            Object id10 = jTableWk3Activities.getValueAt(row, col11);
-            Object id11 = jTableWk3Activities.getValueAt(row, col12);
-            Object id12 = jTableWk3Activities.getValueAt(row, col13);
-            Object id13 = jTableWk3Activities.getValueAt(row, col14);
-            Object id14 = jTableWk3Activities.getValueAt(row, col15);
-            Object id15 = jTableWk3Activities.getValueAt(row, col16);
-            Object id16 = jTableWk3Activities.getValueAt(row, col17);
-            Object id17 = jTableWk3Activities.getValueAt(row, col18);
-            Object id18 = jTableWk3Activities.getValueAt(row, col19);
-
-            jLabelActWk1Date.setText(id1.toString());
-//            jLabelPrjNameDet.setText(id2.toString());
-//            jLabelPrjTaskDet.setText(id3.toString());
-            jTextFieldDialogWk1Site.setText(id4.toString());
-            jTextFieldWk1DialogActivityDesc.setText(id5.toString());
-            jTextAreaWk1DialogJustification.setText(id6.toString());
-//            jTextFieldWk1DialogStaffName1
-//            jLabelStaff.setText(id7.toString());
-
-            if ((Double.parseDouble(id7.toString())) > 0) {
-                jCheckBoxDialogWk1BrkFast.setSelected(true);
-            }
-            if ((Double.parseDouble(id8.toString())) > 0) {
-                jCheckBoxDialogWk1Lunch.setSelected(true);
-            }
-            if ((Double.parseDouble(id9.toString())) > 0) {
-                jCheckBoxDialogWk1Dinner.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id10.toString())) > 0) {
-                jCheckBoxDialogWk1Inc.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id12.toString())) > 0) {
-                jCheckBoxDialogWk1Misc.setSelected(true);
-                jTextFieldWk1Misc.setText(id11.toString());
-                jTextFieldWk1MiscAmt.setText(id12.toString());
-            }
-
-            if ((Double.parseDouble(id13.toString())) > 0) {
-                jCheckBoxDialogWk1AccUnProved.setSelected(true);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-                jCheckBoxNoAcc.setSelected(false);
-
-            }
-            if ((Double.parseDouble(id14.toString())) > 0) {
-                jCheckBoxDialogWk1AccProved.setSelected(true);
-                jCheckBoxNoAcc.setSelected(false);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-
-            }
-            if (((Double.parseDouble(id13.toString())) == 0) && ((Double.parseDouble(id14.toString())) == 0)) {
-                jCheckBoxNoAcc.setSelected(true);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-
-            }
-            jTextFieldWk1DialogStaffName1.setText(id15.toString());
-            jTextFieldWk1DialogStaffName2.setText(id16.toString());
-            jTextFieldWk1DialogStaffName3.setText(id17.toString());
-            jTextFieldWk1DialogStaffName4.setText(id18.toString());
-
-            jDialogWk1.setVisible(true);
-            findProject(id2.toString());
-            findTask(id3.toString());
-
-            jDialogWk1.setTitle("Per Diem Week 3");
-
-            jTextAreaWk1DialogJustification.setLineWrap(true);
-            jTextAreaWk1DialogJustification.setWrapStyleWord(true);
-            jTextFieldDialogWk1Site.setEditable(false);
-            jTextFieldWk1DialogActivityDesc.setEditable(false);
-            jTextAreaWk1DialogJustification.setEditable(false);
-            jTextFieldWk1DialogStaffName1.setEditable(false);
-            jTextFieldWk1DialogStaffName2.setEditable(false);
-            jTextFieldWk1DialogStaffName3.setEditable(false);
-            jTextFieldWk1DialogStaffName4.setEditable(false);
-            jTextFieldWk1Misc.setEditable(false);
-            jTextFieldWk1MiscAmt.setEditable(false);
-            jCheckBoxDialogWk1BrkFast.setEnabled(false);
-            jCheckBoxDialogWk1Lunch.setEnabled(false);
-            jCheckBoxDialogWk1Dinner.setEnabled(false);
-            jCheckBoxDialogWk1Inc.setEnabled(false);
-            jCheckBoxDialogWk1AccUnProved.setEnabled(false);
-            jCheckBoxDialogWk1AccProved.setEnabled(false);
-            jCheckBoxNoAcc.setEnabled(false);
-            jCheckBoxDialogWk1Misc.setEnabled(false);
-
-        }
-    }//GEN-LAST:event_jTableWk3ActivitiesMouseClicked
-
-    private void jTableWk4ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk4ActivitiesMouseClicked
-        if (evt.getClickCount() == 2) {
-            resetField();
-            int row = jTableWk4Activities.getSelectedRow();
-
-            int col1 = 1;
-            int col3 = 3;
-            int col4 = 4;
-            int col5 = 5;
-            int col6 = 6;
-            int col7 = 7;
-            int col8 = 8;
-            int col9 = 9;
-            int col10 = 10;
-            int col11 = 11;
-            int col12 = 12;
-            int col13 = 13;
-            int col14 = 14;
-            int col15 = 15;
-            int col16 = 16;
-            int col17 = 17;
-            int col18 = 18;
-            int col19 = 19;
-
-            Object id1 = jTableWk4Activities.getValueAt(row, col1);
-            Object id2 = jTableWk4Activities.getValueAt(row, col3);
-            Object id3 = jTableWk4Activities.getValueAt(row, col4);
-            Object id4 = jTableWk4Activities.getValueAt(row, col5);
-            Object id5 = jTableWk4Activities.getValueAt(row, col6);
-            Object id6 = jTableWk4Activities.getValueAt(row, col7);
-            Object id7 = jTableWk4Activities.getValueAt(row, col8);
-            Object id8 = jTableWk4Activities.getValueAt(row, col9);
-            Object id9 = jTableWk4Activities.getValueAt(row, col10);
-            Object id10 = jTableWk4Activities.getValueAt(row, col11);
-            Object id11 = jTableWk4Activities.getValueAt(row, col12);
-            Object id12 = jTableWk4Activities.getValueAt(row, col13);
-            Object id13 = jTableWk4Activities.getValueAt(row, col14);
-            Object id14 = jTableWk4Activities.getValueAt(row, col15);
-            Object id15 = jTableWk4Activities.getValueAt(row, col16);
-            Object id16 = jTableWk4Activities.getValueAt(row, col17);
-            Object id17 = jTableWk4Activities.getValueAt(row, col18);
-            Object id18 = jTableWk4Activities.getValueAt(row, col19);
-
-            jLabelActWk1Date.setText(id1.toString());
-//            jLabelPrjNameDet.setText(id2.toString());
-//            jLabelPrjTaskDet.setText(id3.toString());
-            jTextFieldDialogWk1Site.setText(id4.toString());
-            jTextFieldWk1DialogActivityDesc.setText(id5.toString());
-            jTextAreaWk1DialogJustification.setText(id6.toString());
-//            jTextFieldWk1DialogStaffName1
-//            jLabelStaff.setText(id7.toString());
-
-            if ((Double.parseDouble(id7.toString())) > 0) {
-                jCheckBoxDialogWk1BrkFast.setSelected(true);
-            }
-            if ((Double.parseDouble(id8.toString())) > 0) {
-                jCheckBoxDialogWk1Lunch.setSelected(true);
-            }
-            if ((Double.parseDouble(id9.toString())) > 0) {
-                jCheckBoxDialogWk1Dinner.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id10.toString())) > 0) {
-                jCheckBoxDialogWk1Inc.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id12.toString())) > 0) {
-                jCheckBoxDialogWk1Misc.setSelected(true);
-                jTextFieldWk1Misc.setText(id11.toString());
-                jTextFieldWk1MiscAmt.setText(id12.toString());
-            }
-
-            if ((Double.parseDouble(id13.toString())) > 0) {
-                jCheckBoxDialogWk1AccUnProved.setSelected(true);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-                jCheckBoxNoAcc.setSelected(false);
-
-            }
-            if ((Double.parseDouble(id14.toString())) > 0) {
-                jCheckBoxDialogWk1AccProved.setSelected(true);
-                jCheckBoxNoAcc.setSelected(false);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-
-            }
-            if (((Double.parseDouble(id13.toString())) == 0) && ((Double.parseDouble(id14.toString())) == 0)) {
-                jCheckBoxNoAcc.setSelected(true);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-
-            }
-
-            jTextFieldWk1DialogStaffName1.setText(id15.toString());
-            jTextFieldWk1DialogStaffName2.setText(id16.toString());
-            jTextFieldWk1DialogStaffName3.setText(id17.toString());
-            jTextFieldWk1DialogStaffName4.setText(id18.toString());
-
-            jDialogWk1.setVisible(true);
-            findProject(id2.toString());
-            findTask(id3.toString());
-
-            jDialogWk1.setTitle("Per Diem Week 4");
-
-            jTextAreaWk1DialogJustification.setLineWrap(true);
-            jTextAreaWk1DialogJustification.setWrapStyleWord(true);
-            jTextFieldDialogWk1Site.setEditable(false);
-            jTextFieldWk1DialogActivityDesc.setEditable(false);
-            jTextAreaWk1DialogJustification.setEditable(false);
-            jTextFieldWk1DialogStaffName1.setEditable(false);
-            jTextFieldWk1DialogStaffName2.setEditable(false);
-            jTextFieldWk1DialogStaffName3.setEditable(false);
-            jTextFieldWk1DialogStaffName4.setEditable(false);
-            jTextFieldWk1Misc.setEditable(false);
-            jTextFieldWk1MiscAmt.setEditable(false);
-            jCheckBoxDialogWk1BrkFast.setEnabled(false);
-            jCheckBoxDialogWk1Lunch.setEnabled(false);
-            jCheckBoxDialogWk1Dinner.setEnabled(false);
-            jCheckBoxDialogWk1Inc.setEnabled(false);
-            jCheckBoxDialogWk1AccUnProved.setEnabled(false);
-            jCheckBoxDialogWk1AccProved.setEnabled(false);
-            jCheckBoxNoAcc.setEnabled(false);
-            jCheckBoxDialogWk1Misc.setEnabled(false);
-
-        }
-    }//GEN-LAST:event_jTableWk4ActivitiesMouseClicked
-
-    private void jTableWk5ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk5ActivitiesMouseClicked
-        if (evt.getClickCount() == 2) {
-            resetField();
-            int row = jTableWk5Activities.getSelectedRow();
-
-            int col1 = 1;
-            int col3 = 3;
-            int col4 = 4;
-            int col5 = 5;
-            int col6 = 6;
-            int col7 = 7;
-            int col8 = 8;
-            int col9 = 9;
-            int col10 = 10;
-            int col11 = 11;
-            int col12 = 12;
-            int col13 = 13;
-            int col14 = 14;
-            int col15 = 15;
-            int col16 = 16;
-            int col17 = 17;
-            int col18 = 18;
-            int col19 = 19;
-
-            Object id1 = jTableWk5Activities.getValueAt(row, col1);
-            Object id2 = jTableWk5Activities.getValueAt(row, col3);
-            Object id3 = jTableWk5Activities.getValueAt(row, col4);
-            Object id4 = jTableWk5Activities.getValueAt(row, col5);
-            Object id5 = jTableWk5Activities.getValueAt(row, col6);
-            Object id6 = jTableWk5Activities.getValueAt(row, col7);
-            Object id7 = jTableWk5Activities.getValueAt(row, col8);
-            Object id8 = jTableWk5Activities.getValueAt(row, col9);
-            Object id9 = jTableWk5Activities.getValueAt(row, col10);
-            Object id10 = jTableWk5Activities.getValueAt(row, col11);
-            Object id11 = jTableWk5Activities.getValueAt(row, col12);
-            Object id12 = jTableWk5Activities.getValueAt(row, col13);
-            Object id13 = jTableWk5Activities.getValueAt(row, col14);
-            Object id14 = jTableWk5Activities.getValueAt(row, col15);
-            Object id15 = jTableWk5Activities.getValueAt(row, col16);
-            Object id16 = jTableWk5Activities.getValueAt(row, col17);
-            Object id17 = jTableWk5Activities.getValueAt(row, col18);
-            Object id18 = jTableWk5Activities.getValueAt(row, col19);
-
-            jLabelActWk1Date.setText(id1.toString());
-//            jLabelPrjNameDet.setText(id2.toString());
-//            jLabelPrjTaskDet.setText(id3.toString());
-            jTextFieldDialogWk1Site.setText(id4.toString());
-            jTextFieldWk1DialogActivityDesc.setText(id5.toString());
-            jTextAreaWk1DialogJustification.setText(id6.toString());
-//            jTextFieldWk1DialogStaffName1
-//            jLabelStaff.setText(id7.toString());
-
-            if ((Double.parseDouble(id7.toString())) > 0) {
-                jCheckBoxDialogWk1BrkFast.setSelected(true);
-            }
-            if ((Double.parseDouble(id8.toString())) > 0) {
-                jCheckBoxDialogWk1Lunch.setSelected(true);
-            }
-            if ((Double.parseDouble(id9.toString())) > 0) {
-                jCheckBoxDialogWk1Dinner.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id10.toString())) > 0) {
-                jCheckBoxDialogWk1Inc.setSelected(true);
-            }
-
-            if ((Double.parseDouble(id12.toString())) > 0) {
-                jCheckBoxDialogWk1Misc.setSelected(true);
-                jTextFieldWk1Misc.setText(id11.toString());
-                jTextFieldWk1MiscAmt.setText(id12.toString());
-            }
-
-            if ((Double.parseDouble(id13.toString())) > 0) {
-                jCheckBoxDialogWk1AccUnProved.setSelected(true);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-                jCheckBoxNoAcc.setSelected(false);
-
-            }
-            if ((Double.parseDouble(id14.toString())) > 0) {
-                jCheckBoxDialogWk1AccProved.setSelected(true);
-                jCheckBoxNoAcc.setSelected(false);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-
-            }
-            if (((Double.parseDouble(id13.toString())) == 0) && ((Double.parseDouble(id14.toString())) == 0)) {
-                jCheckBoxNoAcc.setSelected(true);
-                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-                jCheckBoxDialogWk1AccProved.setSelected(false);
-
-            }
-
-            jTextFieldWk1DialogStaffName1.setText(id15.toString());
-            jTextFieldWk1DialogStaffName2.setText(id16.toString());
-            jTextFieldWk1DialogStaffName3.setText(id17.toString());
-            jTextFieldWk1DialogStaffName4.setText(id18.toString());
-
-            jDialogWk1.setVisible(true);
-            findProject(id2.toString());
-            findTask(id3.toString());
-
-            jDialogWk1.setTitle("Per Diem Week 5");
-
-            jTextAreaWk1DialogJustification.setLineWrap(true);
-            jTextAreaWk1DialogJustification.setWrapStyleWord(true);
-            jTextFieldDialogWk1Site.setEditable(false);
-            jTextFieldWk1DialogActivityDesc.setEditable(false);
-            jTextAreaWk1DialogJustification.setEditable(false);
-            jTextFieldWk1DialogStaffName1.setEditable(false);
-            jTextFieldWk1DialogStaffName2.setEditable(false);
-            jTextFieldWk1DialogStaffName3.setEditable(false);
-            jTextFieldWk1DialogStaffName4.setEditable(false);
-            jTextFieldWk1Misc.setEditable(false);
-            jTextFieldWk1MiscAmt.setEditable(false);
-            jCheckBoxDialogWk1BrkFast.setEnabled(false);
-            jCheckBoxDialogWk1Lunch.setEnabled(false);
-            jCheckBoxDialogWk1Dinner.setEnabled(false);
-            jCheckBoxDialogWk1Inc.setEnabled(false);
-            jCheckBoxDialogWk1AccUnProved.setEnabled(false);
-            jCheckBoxDialogWk1AccProved.setEnabled(false);
-            jCheckBoxNoAcc.setEnabled(false);
-            jCheckBoxDialogWk1Misc.setEnabled(false);
-
-        }
-    }//GEN-LAST:event_jTableWk5ActivitiesMouseClicked
 
     private void jTextFieldDialogWk1SiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDialogWk1SiteMouseClicked
 
@@ -4338,110 +3793,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemUserProfUpdActionPerformed
 
     private void jMenuItemSupSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSupSubmitActionPerformed
-        jMenuItemSupSubmit.setEnabled(false);
-        if ((("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString()))
-                || ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())))
-                && "".equals(jTextAreaComments.getText())) {
-            JOptionPane.showMessageDialog(this, "<html><b>Comments Tab cannot be blank.Please record comments.</html>");
-            jTabbedPaneMain.setSelectedIndex(3);
-            jTextAreaComments.requestFocusInWindow();
-            jTextAreaComments.setFocusable(true);
-            jMenuItemSupSubmit.setEnabled(true);
-        } else if ("Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
-            jMenuItemSupSubmit.setEnabled(false);
-            updatePrevRecord();
-            updateWk1Plan();
-            updateWk2Plan();
-            updateWk3Plan();
-            updateWk4Plan();
-            updateWk5Plan();
-            updateWkPlanPeriod();
-            WkPlanActionApproved();
-            JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
-                    + "</b> successfully updated.</html>");
-            jDialogWaitingEmail.setVisible(true);
-
-            String mailMsg = "<html><body> Dear Finance Team <br><br> HOD <b>"
-                    + jLabelLineLogNam.getText() + "</b>  has approved plan reference No. <b>" + jLabelSerial.getText() + " "
-                    + "" + jLabelRefNum.getText() + "</b>.<br><br>Please check your Finance System inbox and process.<br><br>"
-                    + " Kind Regards <br><br>"
-                    + " Finance Management System </body></html>";
-
-            String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Approval. ";
-
-            emSend.sendMail(MailMsgTitle, c.FinGrpMail, mailMsg, createUsrMail);
-
-            jDialogWaitingEmail.setVisible(false);
-
-            JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>Finance</b> with status.</html>");
-
-            new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
-            setVisible(false);
-
-        } else if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
-            // jDialogAmendReqComments.setVisible(true);
-            jMenuItemSupSubmit.setEnabled(false);
-            updatePrevRecord();
-            updateWk1Plan();
-            updateWk2Plan();
-            updateWk3Plan();
-            updateWk4Plan();
-            updateWk5Plan();
-            updateWkPlanPeriod();
-            WkPlanActionAmendRequest();
-            JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
-                    + "</b> successfully updated.</html>");
-
-            jDialogWaitingEmail.setVisible(true);
-
-            String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br> HOD <b>"
-                    + jLabelLineLogNam.getText() + "</b>  has requested that you ammend"
-                    + " plan reference No. <b>" + jLabelSerial.getText() + " "
-                    + "" + jLabelRefNum.getText() + "</b>.<br><br>"
-                    + "<b>Finance Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
-                    + "Please check your Finance System inbox and action.<br><br> Kind Regards <br><br>"
-                    + " Finance Management System </body></html>";
-
-            String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Amendment Required.";
-
-            emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
-
-            jDialogWaitingEmail.setVisible(false);
-
-            JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
-
-            new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
-            setVisible(false);
-
-        } else if ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
-            updatePrevRecord();
-            updateWk1Plan();
-            updateWk2Plan();
-            updateWk3Plan();
-            updateWkPlanPeriod();
-            WkPlanActionDisApproved();
-            JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
-                    + "</b> successfully updated.</html>");
-            jDialogWaitingEmail.setVisible(true);
-
-            String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br>"
-                    + "HOD <b>"
-                    + jLabelLineLogNam.getText() + "</b> has rejected your"
-                    + " plan reference No. <b>" + jLabelSerial.getText() + " "
-                    + "" + jLabelRefNum.getText() + "</b>.<br><br>"
-                    + "<b>Supervisor Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
-                    + " Finance Management System </body></html>";
-
-            String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Rejected.";
-
-            emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
-
-            jDialogWaitingEmail.setVisible(false);
-            JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
-
-            new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
-            setVisible(false);
-        }
+        regCheck();
     }//GEN-LAST:event_jMenuItemSupSubmitActionPerformed
 
     private void jTableDocAttWk4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk4MouseClicked
@@ -4593,119 +3945,6 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
     private void jTableDocAttWk1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk1MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_jTableDocAttWk1MouseEntered
-
-    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        try {
-
-            jMenuItemSupSubmit.setEnabled(false);
-            if ((("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString()))
-                    || ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())))
-                    && "".equals(jTextAreaComments.getText())) {
-                JOptionPane.showMessageDialog(this, "<html><b>Comments Tab cannot be blank.Please record comments.</html>");
-                jTabbedPaneMain.setSelectedIndex(3);
-                jTextAreaComments.requestFocusInWindow();
-                jTextAreaComments.setFocusable(true);
-                jMenuItemSupSubmit.setEnabled(true);
-            } else if ("Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
-                jMenuItemSupSubmit.setEnabled(false);
-                updatePrevRecord();
-                updateWk1Plan();
-                updateWk2Plan();
-                updateWk3Plan();
-                updateWk4Plan();
-                updateWk5Plan();
-                updateWkPlanPeriod();
-                WkPlanActionApproved();
-                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
-                        + "</b> successfully updated.</html>");
-                jDialogWaitingEmail.setVisible(true);
-
-                String mailMsg = "<html><body> Dear Finance Team <br><br> HOD <b>"
-                        + jLabelLineLogNam.getText() + "</b>  has approved plan reference No. <b>" + jLabelSerial.getText() + " "
-                        + "" + jLabelRefNum.getText() + "</b>.<br><br>Please check your Finance System inbox and process.<br><br>"
-                        + " Kind Regards <br><br>"
-                        + " Finance Management System </body></html>";
-
-                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Approval. ";
-
-                emSend.sendMail(MailMsgTitle, c.FinGrpMail, mailMsg, createUsrMail);
-
-                jDialogWaitingEmail.setVisible(false);
-
-                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>Finance</b> with status.</html>");
-
-                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
-                setVisible(false);
-
-            } else if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
-                // jDialogAmendReqComments.setVisible(true);
-                jMenuItemSupSubmit.setEnabled(false);
-                updatePrevRecord();
-                updateWk1Plan();
-                updateWk2Plan();
-                updateWk3Plan();
-                updateWk4Plan();
-                updateWk5Plan();
-                updateWkPlanPeriod();
-                WkPlanActionAmendRequest();
-                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
-                        + "</b> successfully updated.</html>");
-
-                jDialogWaitingEmail.setVisible(true);
-
-                String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br> HOD <b>"
-                        + jLabelLineLogNam.getText() + "</b>  has requested that you ammend"
-                        + " plan reference No. <b>" + jLabelSerial.getText() + " "
-                        + "" + jLabelRefNum.getText() + "</b>.<br><br>"
-                        + "<b>Finance Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
-                        + "Please check your Finance System inbox and action.<br><br> Kind Regards <br><br>"
-                        + " Finance Management System </body></html>";
-
-                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Amendment Required.";
-
-                emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
-
-                jDialogWaitingEmail.setVisible(false);
-
-                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
-
-                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
-                setVisible(false);
-
-            } else if ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
-                updatePrevRecord();
-                updateWk1Plan();
-                updateWk2Plan();
-                updateWk3Plan();
-                updateWkPlanPeriod();
-                WkPlanActionDisApproved();
-                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
-                        + "</b> successfully updated.</html>");
-                jDialogWaitingEmail.setVisible(true);
-
-                String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br>"
-                        + "HOD <b>"
-                        + jLabelLineLogNam.getText() + "</b> has rejected your"
-                        + " plan reference No. <b>" + jLabelSerial.getText() + " "
-                        + "" + jLabelRefNum.getText() + "</b>.<br><br>"
-                        + "<b>Supervisor Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
-                        + " Finance Management System </body></html>";
-
-                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Rejected.";
-
-                emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
-
-                jDialogWaitingEmail.setVisible(false);
-                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
-
-                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
-                setVisible(false);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jButtonSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -4875,7 +4114,6 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAmmendDialogOk1;
-    private javax.swing.JButton jButtonSave;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccProved;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccUnProved;
     private javax.swing.JCheckBox jCheckBoxDialogWk1BrkFast;
@@ -4895,7 +4133,6 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -5048,19 +4285,19 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelWkPrevComments;
     private javax.swing.JPanel jPanelWkThree;
     private javax.swing.JPanel jPanelWkTwo;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JScrollPane jScrollPaneWk1;
+    private javax.swing.JScrollPane jScrollPaneWk10;
     private javax.swing.JScrollPane jScrollPaneWk2;
     private javax.swing.JScrollPane jScrollPaneWk3;
     private javax.swing.JScrollPane jScrollPaneWk4;
     private javax.swing.JScrollPane jScrollPaneWk5;
+    private javax.swing.JScrollPane jScrollPaneWk6;
+    private javax.swing.JScrollPane jScrollPaneWk7;
+    private javax.swing.JScrollPane jScrollPaneWk8;
+    private javax.swing.JScrollPane jScrollPaneWk9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;

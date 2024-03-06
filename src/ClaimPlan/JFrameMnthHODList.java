@@ -21,7 +21,9 @@ import ClaimReports.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import utils.expirePlan;
@@ -38,7 +40,7 @@ public class JFrameMnthHODList extends javax.swing.JFrame {
     connCred c = new connCred();
     expirePlan exp = new expirePlan();
     finMail mail = new finMail();
-    String provNam, usrGrp, logUsrProv, ref, refStatus, refVer;
+    String provNam, usrGrp, logUsrProv, ref, refStatus, refVer, HODPrjList;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     int existPerDiemCount = 0;
     int existPrevPerDiemCount = 0;
@@ -63,18 +65,18 @@ public class JFrameMnthHODList extends javax.swing.JFrame {
         findUserProv();
         findUser();
         findUserGrp();
+        getProjList();
         fetchdata();
         jTableProvList.getColumnModel().getColumn(14).setMinWidth(0);
         jTableProvList.getColumnModel().getColumn(14).setMaxWidth(0);
-        
+
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
 
-       
     }
 
-      void findUserGrp() {
+    void findUserGrp() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -89,7 +91,7 @@ public class JFrameMnthHODList extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -284,8 +286,7 @@ public class JFrameMnthHODList extends javax.swing.JFrame {
 
             //                 conn.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Failed to Connect to Database (Province).Try Again", "Error Connection", JOptionPane.WARNING_MESSAGE);
-            System.exit(0);
+            System.out.println(e);
         }
     }
 
@@ -321,6 +322,32 @@ public class JFrameMnthHODList extends javax.swing.JFrame {
         }
     }
 
+    void getProjList() {
+        try {
+
+            List<String> prjlist = new ArrayList<>();
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+            ResultSet r = st.executeQuery("SELECT concat(DONOR_DESC,PRJ_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] "
+                    + "where concat(DONOR_CODE,PRJ_CODE) in (SELECT concat(DONOR_CODE,PRJ_CODE_GL) FROM "
+                    + "[ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] where EMP_NUM ='" + jLabelEmp.getText() + "')");
+
+            while (r.next()) {
+                prjlist.add("'" + r.getString(1) + "'");
+
+            }
+
+            HODPrjList = String.join(",", prjlist);
+            System.out.println("fff " + HODPrjList);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     void showTime() {
         new Timer(0, new ActionListener() {
             @Override
@@ -353,13 +380,22 @@ public class JFrameMnthHODList extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
-            st.executeQuery("SELECT distinct a.PLAN_REF_NUM,DISTRICT,Wk1_PLAN_START_DATE,Wk1_PLAN_END_DATE,\n"
-                    + "Wk2_PLAN_START_DATE,Wk2_PLAN_END_DATE,Wk3_PLAN_START_DATE,\n"
-                    + "Wk3_PLAN_END_DATE,Wk4_PLAN_START_DATE,Wk4_PLAN_END_DATE,"
-                    + "Wk5_PLAN_START_DATE,Wk5_PLAN_END_DATE,USR_ACTION,ACTIONED_BY_NAM,b.DOC_VER FROM [ClaimsAppSysZvandiri].[dbo].[PlanPeriodTab] a \n"
-                    + "join [ClaimsAppSysZvandiri].[dbo].[PlanActTab] b on a.PLAN_REF_NUM=b.PLAN_REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA and a.ACT_VER = b.ACT_VER \n"
-                    + "where  b.SEND_TO_EMP_NUM = '" + jLabelEmp.getText() + "'  and a.ACT_REC_STA = 'A' and b.DOC_STATUS "
-                    + "in ('ApprovedFin') order by 1");
+           st.executeQuery("SELECT distinct a.PLAN_REF_NUM,DISTRICT,"
+                    + "Wk1_PLAN_START_DATE,Wk1_PLAN_END_DATE, Wk2_PLAN_START_DATE,"
+                    + "Wk2_PLAN_END_DATE,Wk3_PLAN_START_DATE, Wk3_PLAN_END_DATE,"
+                    + "Wk4_PLAN_START_DATE,Wk4_PLAN_END_DATE, Wk5_PLAN_START_DATE,"
+                    + "Wk5_PLAN_END_DATE,USR_ACTION,ACTIONED_BY_NAM,b.DOC_VER FROM "
+                    + "[ClaimsAppSysZvandiri].[dbo].[PlanPeriodTab] a join "
+                    + "[ClaimsAppSysZvandiri].[dbo].[PlanActTab] b on a.PLAN_REF_NUM=b.PLAN_REF_NUM "
+                    + "and a.ACT_REC_STA = b.ACT_REC_STA and a.ACT_VER = b.ACT_VER where "
+                    + " a.ACT_REC_STA = 'A' and "
+                    + "b.DOC_STATUS in ('ApprovedFin') and a.PLAN_REF_NUM in "
+                    + "(SELECT distinct PLAN_REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab]"
+                    + " where ACT_REC_STA ='A' and PLAN_REF_NUM in (SELECT distinct PLAN_REF_NUM "
+                    + "from [ClaimsAppSysZvandiri].[dbo].[PlanActTab]where  ACT_REC_STA = 'A' "
+                   + "and DOC_STATUS  in ('ApprovedFin') ) "
+                    + "and concat(DONOR,PRJ_CODE_GL) in  "
+                    + "("+HODPrjList+")) order by 1");
 
             ResultSet r = st.getResultSet();
 
@@ -893,7 +929,7 @@ public class JFrameMnthHODList extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableProvListMouseClicked
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-        
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jMenuItemPlanPerDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanPerDiemActionPerformed

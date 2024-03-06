@@ -129,8 +129,7 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
         jLabelEmp.setText(usrLogNam);
         jLabelEmp.setVisible(false);
         jLabelRefNum.setText(SearchRef);
-        jMenuItemSupSubmit.setVisible(false);
-        jSeparator15.setVisible(false);
+        
         getYear();
         fetchdataWk1();
         fetchdataWk2();
@@ -1396,6 +1395,125 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
         }
     }
 
+    void regCheck() {
+        try {
+
+            jMenuItemSupSubmit.setEnabled(false);
+            if ((("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString()))
+                    || ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())))
+                    && "".equals(jTextAreaComments.getText())) {
+                JOptionPane.showMessageDialog(this, "<html><b>Comments Tab cannot be blank.Please record comments.</html>");
+                jTabbedPaneMain.setSelectedIndex(3);
+                jTextAreaComments.requestFocusInWindow();
+                jTextAreaComments.setFocusable(true);
+                jMenuItemSupSubmit.setEnabled(true);
+            } else if ("Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
+                jMenuItemSupSubmit.setEnabled(false);
+                updatePrevRecord();
+                updateWk1Plan();
+                updateWk2Plan();
+                updateWk3Plan();
+                updateWk4Plan();
+                updateWk5Plan();
+                updateWkPlanPeriod();
+                WkPlanActionApproved();
+                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
+                        + "</b> successfully updated.</html>");
+
+                jDialogWaitingEmail.setVisible(true);
+
+                String mailMsg = "<html><body> Dear Finance Team <br><br>"
+                        + "Supervisor <b>"
+                        + jLabelLineLogNam.getText() + "</b> has approved plan reference No. <b>" + jLabelSerial.getText() + " "
+                        + "" + jLabelRefNum.getText() + "</b>, and the plan requires your approval.<br><br>"
+                        + "Please check your Finance System inbox and action.<br><br> Kind Regards <br><br>"
+                        + " Finance Management System </body></html>";
+
+                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Approval.";
+
+                emSend.sendMail(MailMsgTitle, finAppMailList, mailMsg, createUsrMail);
+
+                jDialogWaitingEmail.setVisible(false);
+
+                JOptionPane.showMessageDialog(this, "<html> An email has been sent to <b>Finance</b> for processing.</html>");
+
+                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
+                setVisible(false);
+
+            } else if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
+                // jDialogAmendReqComments.setVisible(true);
+                jMenuItemSupSubmit.setEnabled(false);
+
+                updatePrevRecord();
+                updateWk1Plan();
+                updateWk2Plan();
+                updateWk3Plan();
+                updateWk4Plan();
+                updateWk5Plan();
+                updateWkPlanPeriod();
+                WkPlanActionAmendRequest();
+                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
+                        + "</b> successfully updated.</html>");
+
+                jDialogWaitingEmail.setVisible(true);
+
+                String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br>"
+                        + "Supervisor <b>"
+                        + jLabelLineLogNam.getText() + "</b> has requested that you ammend"
+                        + " plan reference No. <b>" + jLabelSerial.getText() + " "
+                        + "" + jLabelRefNum.getText() + "</b>.<br><br>"
+                        + "<b>Supervisor Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
+                        + "Please check your Finance System inbox and action.<br><br> Kind Regards <br><br>"
+                        + " Finance Management System </body></html>";
+
+                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Amendment Required.";
+
+                emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
+
+                jDialogWaitingEmail.setVisible(false);
+
+                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
+
+                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
+                setVisible(false);
+
+            } else if ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
+                updatePrevRecord();
+                updateWk1Plan();
+                updateWk2Plan();
+                updateWk3Plan();
+                updateWkPlanPeriod();
+                WkPlanActionDisApproved();
+                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
+                        + "</b> successfully updated.</html>");
+
+                jDialogWaitingEmail.setVisible(true);
+
+                String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br>"
+                        + "Supervisor <b>"
+                        + jLabelLineLogNam.getText() + "</b> has rejected your"
+                        + " plan reference No. <b>" + jLabelSerial.getText() + " "
+                        + "" + jLabelRefNum.getText() + "</b>.<br><br>"
+                        + "<b>Supervisor Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
+                        + " Finance Management System </body></html>";
+
+                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Rejected.";
+
+                emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
+
+                jDialogWaitingEmail.setVisible(false);
+
+                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
+
+                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
+                setVisible(false);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     void updatePrevRecord() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -1701,7 +1819,7 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
 
-              String sqlwk5plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
+                String sqlwk5plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
                         + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst1 = conn.prepareStatement(sqlwk5plan);
@@ -2072,8 +2190,6 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
         jTableDocAttWk1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jButtonSave = new javax.swing.JButton();
         jScrollPaneWk6 = new javax.swing.JScrollPane();
         jTableWk1Activities = new javax.swing.JTable();
         jPanelWkTwo = new javax.swing.JPanel();
@@ -2707,26 +2823,6 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jPanel4.setLayout(null);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Record Validation");
-        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel4.add(jLabel4);
-        jLabel4.setBounds(90, 10, 190, 20);
-
-        jButtonSave.setBackground(new java.awt.Color(0, 153, 0));
-        jButtonSave.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonSave.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonSave.setText("Submit");
-        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButtonSave);
-        jButtonSave.setBounds(100, 50, 170, 50);
-
         jPanelWkOne.add(jPanel4);
         jPanel4.setBounds(950, 550, 370, 120);
 
@@ -3375,6 +3471,7 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
         });
 
         jMenuNew.setText("New");
+        jMenuNew.setPreferredSize(new java.awt.Dimension(155, 24));
 
         jMenuItemPlanPerDiem.setText("Plan - Per Diems");
         jMenuItemPlanPerDiem.addActionListener(new java.awt.event.ActionListener() {
@@ -3865,7 +3962,7 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemUserProfUpdActionPerformed
 
     private void jMenuItemSupSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSupSubmitActionPerformed
-
+        regCheck();
     }//GEN-LAST:event_jMenuItemSupSubmitActionPerformed
 
     private void jTableDocAttWk1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk1MouseClicked
@@ -3897,125 +3994,6 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
     private void jTableDocAttWk1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk1MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_jTableDocAttWk1MouseEntered
-
-    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        try {
-
-            jButtonSave.setEnabled(false);
-            if ((("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString()))
-                    || ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())))
-                    && "".equals(jTextAreaComments.getText())) {
-                JOptionPane.showMessageDialog(this, "<html><b>Comments Tab cannot be blank.Please record comments.</html>");
-                jTabbedPaneMain.setSelectedIndex(3);
-                jTextAreaComments.requestFocusInWindow();
-                jTextAreaComments.setFocusable(true);
-                jButtonSave.setEnabled(true);
-            } else if ("Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
-                jButtonSave.setEnabled(false);
-                updatePrevRecord();
-                updateWk1Plan();
-                updateWk2Plan();
-                updateWk3Plan();
-                updateWk4Plan();
-                updateWk5Plan();
-                updateWkPlanPeriod();
-                WkPlanActionApproved();
-                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
-                        + "</b> successfully updated.</html>");
-
-                jDialogWaitingEmail.setVisible(true);
-
-                String mailMsg = "<html><body> Dear Finance Team <br><br>"
-                        + "Supervisor <b>"
-                        + jLabelLineLogNam.getText() + "</b> has approved plan reference No. <b>" + jLabelSerial.getText() + " "
-                        + "" + jLabelRefNum.getText() + "</b>, and the plan requires your approval.<br><br>"
-                        + "Please check your Finance System inbox and action.<br><br> Kind Regards <br><br>"
-                        + " Finance Management System </body></html>";
-
-                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Approval.";
-
-                emSend.sendMail(MailMsgTitle, finAppMailList, mailMsg, createUsrMail);
-
-                jDialogWaitingEmail.setVisible(false);
-
-                JOptionPane.showMessageDialog(this, "<html> An email has been sent to <b>Finance</b> for processing.</html>");
-
-                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
-                setVisible(false);
-
-            } else if ("Request Amendment".equals(jComboSupApproval.getSelectedItem().toString())) {
-                // jDialogAmendReqComments.setVisible(true);
-                jButtonSave.setEnabled(false);
-
-                updatePrevRecord();
-                updateWk1Plan();
-                updateWk2Plan();
-                updateWk3Plan();
-                updateWk4Plan();
-                updateWk5Plan();
-                updateWkPlanPeriod();
-                WkPlanActionAmendRequest();
-                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
-                        + "</b> successfully updated.</html>");
-
-                jDialogWaitingEmail.setVisible(true);
-
-                String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br>"
-                        + "Supervisor <b>"
-                        + jLabelLineLogNam.getText() + "</b> has requested that you ammend"
-                        + " plan reference No. <b>" + jLabelSerial.getText() + " "
-                        + "" + jLabelRefNum.getText() + "</b>.<br><br>"
-                        + "<b>Supervisor Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
-                        + "Please check your Finance System inbox and action.<br><br> Kind Regards <br><br>"
-                        + " Finance Management System </body></html>";
-
-                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Amendment Required.";
-
-                emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
-
-                jDialogWaitingEmail.setVisible(false);
-
-                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
-
-                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
-                setVisible(false);
-
-            } else if ("Not Approved".equals(jComboSupApproval.getSelectedItem().toString())) {
-                updatePrevRecord();
-                updateWk1Plan();
-                updateWk2Plan();
-                updateWk3Plan();
-                updateWkPlanPeriod();
-                WkPlanActionDisApproved();
-                JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b>" + jLabelSerial.getText() + " " + jLabelRefNum.getText()
-                        + "</b> successfully updated.</html>");
-
-                jDialogWaitingEmail.setVisible(true);
-
-                String mailMsg = "<html><body> Dear " + createUsrNam + " <br><br>"
-                        + "Supervisor <b>"
-                        + jLabelLineLogNam.getText() + "</b> has rejected your"
-                        + " plan reference No. <b>" + jLabelSerial.getText() + " "
-                        + "" + jLabelRefNum.getText() + "</b>.<br><br>"
-                        + "<b>Supervisor Comments</b><br>" + jTextAreaComments.getText() + "<br><br>"
-                        + " Finance Management System </body></html>";
-
-                String MailMsgTitle = "Plan Reference No. " + jLabelSerial.getText() + " " + jLabelRefNum.getText() + "  Rejected.";
-
-                emSend.sendMail(MailMsgTitle, createUsrMail, mailMsg, "");
-
-                jDialogWaitingEmail.setVisible(false);
-
-                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>" + createUsrNam + "</b> with status.</html>");
-
-                new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
-                setVisible(false);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jTableDocAttWk2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk2MouseClicked
         if (evt.getClickCount() == 2) {
@@ -4209,7 +4187,6 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAmmendDialogOk1;
-    private javax.swing.JButton jButtonSave;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccProved;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccUnProved;
     private javax.swing.JCheckBox jCheckBoxDialogWk1BrkFast;
@@ -4229,7 +4206,6 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

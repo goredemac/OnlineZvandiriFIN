@@ -74,7 +74,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     List<String> listFetchWk3 = new ArrayList<>();
     List<String> listFetchWk4 = new ArrayList<>();
     List<String> listFetchWk5 = new ArrayList<>();
-    DefaultTableModel modelWk1, modelWk2, modelWk3, modelWk4, modelWk5,
+    DefaultTableModel modelWk1, modelWk2, modelWk3, modelWk4, modelWk5, modelAtt,
             modelAttWk1Main, modelAttWk2Main, modelAttWk3Main, modelAttWk4Main, modelAttWk5Main;
     LocalDate minDateWk1, maxDateWk1, minDateWk2, maxDateWk2, minDateWk3, maxDateWk3, minDateWk4, maxDateWk4, minDateWk5, maxDateWk5;
     Date minDateComWk1, maxDateComWk1, minDateComWk2, maxDateComWk2, minDateComWk3, maxDateComWk3, minDateComWk4, maxDateComWk4, minDateComWk5, maxDateComWk5;
@@ -116,7 +116,9 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     String breakfastAll, lunchAll, lunchNPAll, lunchPAll, dinnerAll, usrGrp, supNam, supUsrMail,
             incidentalAll, unProvedAll, provedAll, date1, date2, usrnam, docVer, actVer, actNextVer, editName, planStatus,
             sendToProvMgr, provMgrMail, usrRecNam, UsrRecWk, actDate, SupNamSend, usrActType, staffName1, staffName2,
-            staffName3, staffName4, branchCode, prjCode, taskCode, lastDateofMonth, createUsrNam, supEmpNum, fetchStringWk1, fetchStringWk2, fetchStringWk3, fetchStringWk4, fetchStringWk5;
+            staffName3, staffName4, branchCode, prjCode, taskCode, lastDateofMonth, createUsrNam, supEmpNum, fetchStringWk1,
+            fetchStringWk2, fetchStringWk3, fetchStringWk4, fetchStringWk5, donorName, donorCode, accCodeName,
+            prjCodeName, prjProgCodeName, budLineName, budcode, taskDonor, donor, accCode, prjProgCode, budLine, subBudLine, grantCode;
     PreparedStatement pst1 = null;
     PreparedStatement pst = null;
     int itmNum = 1;
@@ -138,16 +140,17 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
     public JFrameMnthPlanPerDiemEdit(String usrLogNam) {
         initComponents();
-        modelWk1 = (DefaultTableModel) jTableActivitiesWk1.getModel();
+        modelWk1 = (DefaultTableModel) jTableWk1Activities.getModel();
         modelWk2 = (DefaultTableModel) jTableWk2Activities.getModel();
         modelWk3 = (DefaultTableModel) jTableWk3Activities.getModel();
         modelWk4 = (DefaultTableModel) jTableWk4Activities.getModel();
         modelWk5 = (DefaultTableModel) jTableWk5Activities.getModel();
-        modelAttWk1Main = (DefaultTableModel) jTableDocAttMainWk1.getModel();
-        modelAttWk2Main = (DefaultTableModel) jTableDocAttMainWk2.getModel();
-        modelAttWk3Main = (DefaultTableModel) jTableDocAttMainWk3.getModel();
-        modelAttWk4Main = (DefaultTableModel) jTableDocAttMainWk4.getModel();
-        modelAttWk5Main = (DefaultTableModel) jTableDocAttMainWk5.getModel();
+        modelAtt = (DefaultTableModel) jTableDocAtt.getModel();
+        modelAttWk1Main = (DefaultTableModel) jTableDocAttWk1.getModel();
+        modelAttWk2Main = (DefaultTableModel) jTableDocAttWk2.getModel();
+        modelAttWk3Main = (DefaultTableModel) jTableDocAttWk3.getModel();
+        modelAttWk4Main = (DefaultTableModel) jTableDocAttWk4.getModel();
+        modelAttWk5Main = (DefaultTableModel) jTableDocAttWk5.getModel();
         findProvince();
 
         try {
@@ -174,11 +177,101 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelLineDate2.setText(tH.internetDate);
         jLabelLineDate3.setText(tH.internetDate);
         jLabelLineDate4.setText(tH.internetDate);
+        jTableWk1Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk2Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk3Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk1Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+
+        jTableDocAttWk1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk2.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk2.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk3.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk3.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk4.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk4.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk5.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk5.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        jTableDocAttWk1.getColumnModel().getColumn(3).setMinWidth(0);
+        jTableDocAttWk1.getColumnModel().getColumn(3).setMaxWidth(0);
+        jTableDocAttWk2.getColumnModel().getColumn(3).setMinWidth(0);
+        jTableDocAttWk2.getColumnModel().getColumn(3).setMaxWidth(0);
+        jTableDocAttWk3.getColumnModel().getColumn(3).setMinWidth(0);
+        jTableDocAttWk3.getColumnModel().getColumn(3).setMaxWidth(0);
+        jTableDocAttWk4.getColumnModel().getColumn(3).setMinWidth(0);
+        jTableDocAttWk4.getColumnModel().getColumn(3).setMaxWidth(0);
+        jTableDocAttWk5.getColumnModel().getColumn(3).setMinWidth(0);
+        jTableDocAttWk5.getColumnModel().getColumn(3).setMaxWidth(0);
 
         findUser();
         findUserGrp();
         getYear();
-        findProject();
+        findAccCode();
+        findDonorCode();
+        findGrantBud();
+        findPrjProgCode();
 
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
@@ -245,7 +338,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -514,27 +607,27 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Plan number is invalid or cannot be editted.",
                         "Invalid Reference Number", JOptionPane.WARNING_MESSAGE);
             }
-            if (!"National Office".equals(jLabelDistrict.getText())) {
-                jTabbedPaneMain.setTitleAt(0, "Month Plan");
-                jTabbedPaneMain.setEnabledAt(1, false);
-                jTabbedPaneMain.setTitleAt(1, "");
-                jTabbedPaneMain.setEnabledAt(2, false);
-                jTabbedPaneMain.setTitleAt(2, "");
-                jTabbedPaneMain.setEnabledAt(3, false);
-                jTabbedPaneMain.setTitleAt(3, "");
-                jTabbedPaneMain.setEnabledAt(4, false);
-                jTabbedPaneMain.setTitleAt(4, "");
-            } else {
-                jTabbedPaneMain.setTitleAt(0, "Week One");
-                jTabbedPaneMain.setEnabledAt(1, true);
-                jTabbedPaneMain.setTitleAt(1, "Week Two");
-                jTabbedPaneMain.setEnabledAt(2, true);
-                jTabbedPaneMain.setTitleAt(2, "Week Three");
-                jTabbedPaneMain.setEnabledAt(3, true);
-                jTabbedPaneMain.setTitleAt(3, "Week Four");
-                jTabbedPaneMain.setEnabledAt(4, true);
-                jTabbedPaneMain.setTitleAt(4, "Week Five");
-            }
+//            if (!"National Office".equals(jLabelDistrict.getText())) {
+//                jTabbedPaneMain.setTitleAt(0, "Month Plan");
+//                jTabbedPaneMain.setEnabledAt(1, false);
+//                jTabbedPaneMain.setTitleAt(1, "");
+//                jTabbedPaneMain.setEnabledAt(2, false);
+//                jTabbedPaneMain.setTitleAt(2, "");
+//                jTabbedPaneMain.setEnabledAt(3, false);
+//                jTabbedPaneMain.setTitleAt(3, "");
+//                jTabbedPaneMain.setEnabledAt(4, false);
+//                jTabbedPaneMain.setTitleAt(4, "");
+//            } else {
+//                jTabbedPaneMain.setTitleAt(0, "Week One");
+//                jTabbedPaneMain.setEnabledAt(1, true);
+//                jTabbedPaneMain.setTitleAt(1, "Week Two");
+//                jTabbedPaneMain.setEnabledAt(2, true);
+//                jTabbedPaneMain.setTitleAt(2, "Week Three");
+//                jTabbedPaneMain.setEnabledAt(3, true);
+//                jTabbedPaneMain.setTitleAt(3, "Week Four");
+//                jTabbedPaneMain.setEnabledAt(4, true);
+//                jTabbedPaneMain.setTitleAt(4, "Week Five");
+//            }
             allowanceRate();
         } catch (Exception e) {
             System.out.println(e);
@@ -573,84 +666,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jDialogFacility.setVisible(true);
     }
 
-    void findProject() {
-        try {
-
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
-            Statement st = conn.createStatement();
-            Statement st1 = conn.createStatement();
-            Statement st3 = conn.createStatement();
-            Statement st4 = conn.createStatement();
-            Statement st5 = conn.createStatement();
-
-            jComboProjectName.setSelectedIndex(-1);
-
-            ResultSet r = st.executeQuery("SELECT concat(PROJ_ID,' ',PROJ_NAME) "
-                    + "FROM [HRLeaveSysZvandiri].[dbo].[ProjectTab] order by 1");
-
-            while (r.next()) {
-
-                jComboProjectName.addItem(r.getString(1));
-
-            }
-
-            conn.close();
-        } catch (Exception e) {
-            System.out.println();
-        }
-    }
-
-    void findTask(String prjCode) {
-        try {
-
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
-            Statement st = conn.createStatement();
-
-            jComboProjectTask.setSelectedIndex(-1);
-
-            ResultSet r = st.executeQuery("SELECT concat(PRJ_TASK_CODE,' ',TASK_DESC)  "
-                    + "FROM [HRLeaveSysZvandiri].[dbo].[ProjectTaskTab]  "
-                    + "where PRJ_CODE ='" + prjCode + "' order by 1");
-
-            while (r.next()) {
-
-                jComboProjectTask.addItem(r.getString(1));
-
-            }
-
-            conn.close();
-        } catch (Exception e) {
-            System.out.println();
-        }
-    }
-
-    void findBranch(String taskCode) {
-        try {
-
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
-            Statement st = conn.createStatement();
-
-            ResultSet r = st.executeQuery("SELECT distinct BRANCH  FROM [ClaimsAppSysZvandiri].[dbo].[BudCodeTab] "
-                    + "where PRJ_TASK_CODE ='" + taskCode + "' order by 1");
-
-            while (r.next()) {
-
-                branchCode = r.getString(1);
-
-            }
-
-            conn.close();
-        } catch (Exception e) {
-            System.out.println();
-        }
-    }
-
     void findLastMonthDay() {
         try {
             Date today = jDateChooserWk1From.getDate();
@@ -680,7 +695,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
             Statement st1 = conn.createStatement();
 
-            if (jTableActivitiesWk1.getRowCount() > 0) {
+            if (jTableWk1Activities.getRowCount() > 0) {
 
                 st1.executeQuery("SELECT distinct max(ACT_VER),max(ACT_VER) + 1  FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] "
                         + "where PLAN_REF_NUM =" + jTextRefNum.getText() + " and DOC_VER =1");
@@ -748,39 +763,65 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
     }
 
+    void budCreate() {
+        String taskAccCode = jComboAccountCode.getSelectedItem().toString();
+        String taskPartsAccCode[] = taskAccCode.split(" ", 2);
+        accCode = taskPartsAccCode[0];
+        accCodeName = taskPartsAccCode[1];
+
+        taskDonor = jComboDonor.getSelectedItem().toString();
+        String taskPartsDonor[] = taskDonor.split(" ", 2);
+        donor = taskPartsDonor[0];
+        donorName = taskPartsDonor[1];
+
+        String taskPrjCode = jComboProjectCodeGL.getSelectedItem().toString();
+        String taskPartsPrjCode[] = taskPrjCode.split(" ", 2);
+        prjCode = taskPartsPrjCode[0];
+        prjCodeName = taskPartsPrjCode[1];
+
+        String taskPrjCodeProg = jComboProjectCodeProgramming.getSelectedItem().toString();
+        String taskPartsPrjCodeProg[] = taskPrjCodeProg.split(" ", 2);
+        prjProgCode = taskPartsPrjCodeProg[0];
+        prjProgCodeName = taskPartsPrjCodeProg[1];
+
+        String taskBudLine = jComboBudMainCode.getSelectedItem().toString();
+        String taskPartsBudLine[] = taskBudLine.split(" ", 2);
+        budLine = taskPartsBudLine[0];
+        budLineName = taskPartsBudLine[1];
+
+        subBudLine = "S071";
+
+        budcode = accCode + "/ZW/" + donor + "/" + prjCode + "/" + grantCode + "/" + budLine + "/" + subBudLine + "/NAT1";
+
+        String taskBudCode = budcode;
+        String taskPartsBudCode[] = taskBudCode.split("/", 5);
+        String budCodeStr = taskPartsBudCode[3];
+
+//        System.out.println("Budcode " + accCode + "/ZW/" + donor + "/" + prjCode + "/" + grantCode + "/" + budLine + "/" + subBudLine + "/NAT1" + "  " + accCodeName);
+        System.out.println("kvll " + budcode);
+        System.out.println("kvllgg " + budCodeStr);
+    }
+
     void allowanceRate() {
         try {
-            String rateCat;
-            if ("National Office".equals(jLabelDistrict.getText())) {
-                rateCat = "A";
-            } else {
-                rateCat = "B";
-            }
-
-            System.out.println("cat " + rateCat);
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             Statement st = conn.createStatement();
 
-            ResultSet r = st.executeQuery("SELECT Breakfast,Lunch,Dinner,Incidental,"
-                    + "Proved_Acc ,Unproved_Acc FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAllowanceTab] "
-                    + "where RateOrg = 'ZimTTECH' and RateStatus ='" + rateCat + "'");
+            ResultSet r = st.executeQuery("SELECT Lunch,Dinner,Incidental,Unproved_Accommodation "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAllowanceTab] ");
 
             while (r.next()) {
 
-                breakfastAll = r.getString(1);
-                lunchAll = r.getString(2);
-                dinnerAll = r.getString(3);
-                incidentalAll = r.getString(4);
-                provedAll = r.getString(5);
-                unProvedAll = r.getString(6);
-
-                System.out.println("dine " + dinnerAll);
+                lunchAll = r.getString(1);
+                dinnerAll = r.getString(2);
+                incidentalAll = r.getString(3);
+                unProvedAll = r.getString(4);
 
             }
-            conn.close();
+            //                 conn.close();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -797,39 +838,39 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             pst = conn.prepareStatement(sql1);
             pst.executeUpdate();
 
-            for (int i = 0; i < jTableActivitiesWk1.getRowCount(); i++) {
-                if (!("".equals(jTableActivitiesWk1.getValueAt(i, 15).toString()))) {
-                    usrRecNam = jTableActivitiesWk1.getValueAt(i, 15).toString();
-                    actDate = jTableActivitiesWk1.getValueAt(i, 0).toString();
+            for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
+                if (!("".equals(jTableWk1Activities.getValueAt(i, 15).toString()))) {
+                    usrRecNam = jTableWk1Activities.getValueAt(i, 15).toString();
+                    actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "1";
                     usrActType = "Per Diem";
                     WkUsrRecUpd();
                 }
             }
 
-            for (int i = 0; i < jTableActivitiesWk1.getRowCount(); i++) {
-                if (!("".equals(jTableActivitiesWk1.getValueAt(i, 16).toString()))) {
-                    usrRecNam = jTableActivitiesWk1.getValueAt(i, 16).toString();
-                    actDate = jTableActivitiesWk1.getValueAt(i, 0).toString();
+            for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
+                if (!("".equals(jTableWk1Activities.getValueAt(i, 16).toString()))) {
+                    usrRecNam = jTableWk1Activities.getValueAt(i, 16).toString();
+                    actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "1";
                     usrActType = "Per Diem";
                     WkUsrRecUpd();
                 }
             }
 
-            for (int i = 0; i < jTableActivitiesWk1.getRowCount(); i++) {
-                if (!("".equals(jTableActivitiesWk1.getValueAt(i, 17).toString()))) {
-                    usrRecNam = jTableActivitiesWk1.getValueAt(i, 17).toString();
-                    actDate = jTableActivitiesWk1.getValueAt(i, 0).toString();
+            for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
+                if (!("".equals(jTableWk1Activities.getValueAt(i, 17).toString()))) {
+                    usrRecNam = jTableWk1Activities.getValueAt(i, 17).toString();
+                    actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "1";
                     usrActType = "Per Diem";
                     WkUsrRecUpd();
                 }
             }
-            for (int i = 0; i < jTableActivitiesWk1.getRowCount(); i++) {
-                if (!("".equals(jTableActivitiesWk1.getValueAt(i, 18).toString()))) {
-                    usrRecNam = jTableActivitiesWk1.getValueAt(i, 18).toString();
-                    actDate = jTableActivitiesWk1.getValueAt(i, 0).toString();
+            for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
+                if (!("".equals(jTableWk1Activities.getValueAt(i, 18).toString()))) {
+                    usrRecNam = jTableWk1Activities.getValueAt(i, 18).toString();
+                    actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "1";
                     usrActType = "Per Diem";
                     WkUsrRecUpd();
@@ -1024,41 +1065,41 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
-            for (int i = 0; i < jTableActivitiesWk1.getRowCount(); i++) {
+            for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
 
                 String sqlwk1plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst1 = conn.prepareStatement(sqlwk1plan);
                 pst1.setString(1, "P");
-                pst1.setString(2, jTextRefNum.getText());
+                pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
-                pst1.setString(4, jTableActivitiesWk1.getValueAt(i, 0).toString());
-                pst1.setString(5, jTableActivitiesWk1.getValueAt(i, 1).toString());
-                pst1.setString(6, jTableActivitiesWk1.getValueAt(i, 2).toString());
-                pst1.setString(7, jTableActivitiesWk1.getValueAt(i, 3).toString());
-                pst1.setString(8, jTableActivitiesWk1.getValueAt(i, 4).toString());
-                pst1.setString(9, jTableActivitiesWk1.getValueAt(i, 5).toString());
-                pst1.setString(10, jTableActivitiesWk1.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableActivitiesWk1.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableActivitiesWk1.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableActivitiesWk1.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableActivitiesWk1.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableActivitiesWk1.getValueAt(i, 11).toString());
-                pst1.setString(16, String.valueOf(jTableActivitiesWk1.getValueAt(i, 12).toString()));
-                pst1.setString(17, String.valueOf(jTableActivitiesWk1.getValueAt(i, 13).toString()));
-                pst1.setString(18, String.valueOf(jTableActivitiesWk1.getValueAt(i, 14).toString()));
-                pst1.setString(19, jTableActivitiesWk1.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableActivitiesWk1.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableActivitiesWk1.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableActivitiesWk1.getValueAt(i, 18).toString());
-                pst1.setString(23, actNextVer);
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(4, jTableWk1Activities.getValueAt(i, 0).toString());
+                pst1.setString(5, jTableWk1Activities.getValueAt(i, 1).toString());
+                pst1.setString(6, jTableWk1Activities.getValueAt(i, 2).toString());
+                pst1.setString(7, jTableWk1Activities.getValueAt(i, 3).toString());
+                pst1.setString(8, jTableWk1Activities.getValueAt(i, 4).toString());
+                pst1.setString(9, jTableWk1Activities.getValueAt(i, 5).toString());
+                pst1.setString(10, jTableWk1Activities.getValueAt(i, 6).toString());
+                pst1.setString(11, jTableWk1Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk1Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk1Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk1Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk1Activities.getValueAt(i, 11).toString()));
+                pst1.setString(16, String.valueOf(jTableWk1Activities.getValueAt(i, 12).toString()));
+                pst1.setString(17, String.valueOf(jTableWk1Activities.getValueAt(i, 13).toString()));
+                pst1.setString(18, String.valueOf(jTableWk1Activities.getValueAt(i, 14).toString()));
+                pst1.setString(19, jTableWk1Activities.getValueAt(i, 15).toString());
+                pst1.setString(20, String.valueOf(jTableWk1Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk1Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk1Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk1Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk1Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk1Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk1Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, actNextVer);
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1078,16 +1119,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
 
-                String sqlWk2plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk2plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk2plan);
+                pst1 = conn.prepareStatement(sqlwk2plan);
                 pst1.setString(1, "P");
-                pst1.setString(2, jTextRefNum.getText());
+                pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
                 pst1.setString(4, jTableWk2Activities.getValueAt(i, 0).toString());
                 pst1.setString(5, jTableWk2Activities.getValueAt(i, 1).toString());
@@ -1096,21 +1133,25 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 pst1.setString(8, jTableWk2Activities.getValueAt(i, 4).toString());
                 pst1.setString(9, jTableWk2Activities.getValueAt(i, 5).toString());
                 pst1.setString(10, jTableWk2Activities.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableWk2Activities.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableWk2Activities.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableWk2Activities.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableWk2Activities.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableWk2Activities.getValueAt(i, 11).toString());
+                pst1.setString(11, jTableWk2Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk2Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk2Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk2Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk2Activities.getValueAt(i, 11).toString()));
                 pst1.setString(16, String.valueOf(jTableWk2Activities.getValueAt(i, 12).toString()));
                 pst1.setString(17, String.valueOf(jTableWk2Activities.getValueAt(i, 13).toString()));
                 pst1.setString(18, String.valueOf(jTableWk2Activities.getValueAt(i, 14).toString()));
                 pst1.setString(19, jTableWk2Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableWk2Activities.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableWk2Activities.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableWk2Activities.getValueAt(i, 18).toString());
-                pst1.setString(23, actNextVer);
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(20, String.valueOf(jTableWk2Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk2Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk2Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk2Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk2Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk2Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk2Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, actNextVer);
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1130,16 +1171,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
 
-                String sqlWk3plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk3plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk3plan);
+                pst1 = conn.prepareStatement(sqlwk3plan);
                 pst1.setString(1, "P");
-                pst1.setString(2, jTextRefNum.getText());
+                pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
                 pst1.setString(4, jTableWk3Activities.getValueAt(i, 0).toString());
                 pst1.setString(5, jTableWk3Activities.getValueAt(i, 1).toString());
@@ -1148,21 +1185,25 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 pst1.setString(8, jTableWk3Activities.getValueAt(i, 4).toString());
                 pst1.setString(9, jTableWk3Activities.getValueAt(i, 5).toString());
                 pst1.setString(10, jTableWk3Activities.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableWk3Activities.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableWk3Activities.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableWk3Activities.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableWk3Activities.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableWk3Activities.getValueAt(i, 11).toString());
+                pst1.setString(11, jTableWk3Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk3Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk3Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk3Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk3Activities.getValueAt(i, 11).toString()));
                 pst1.setString(16, String.valueOf(jTableWk3Activities.getValueAt(i, 12).toString()));
                 pst1.setString(17, String.valueOf(jTableWk3Activities.getValueAt(i, 13).toString()));
                 pst1.setString(18, String.valueOf(jTableWk3Activities.getValueAt(i, 14).toString()));
                 pst1.setString(19, jTableWk3Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableWk3Activities.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableWk3Activities.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableWk3Activities.getValueAt(i, 18).toString());
-                pst1.setString(23, actNextVer);
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(20, String.valueOf(jTableWk3Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk3Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk3Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk3Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk3Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk3Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk3Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, actNextVer);
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1182,16 +1223,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
 
-                String sqlWk4plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk4plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk4plan);
+                pst1 = conn.prepareStatement(sqlwk4plan);
                 pst1.setString(1, "P");
-                pst1.setString(2, jTextRefNum.getText());
+                pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
                 pst1.setString(4, jTableWk4Activities.getValueAt(i, 0).toString());
                 pst1.setString(5, jTableWk4Activities.getValueAt(i, 1).toString());
@@ -1200,21 +1237,25 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 pst1.setString(8, jTableWk4Activities.getValueAt(i, 4).toString());
                 pst1.setString(9, jTableWk4Activities.getValueAt(i, 5).toString());
                 pst1.setString(10, jTableWk4Activities.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableWk4Activities.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableWk4Activities.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableWk4Activities.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableWk4Activities.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableWk4Activities.getValueAt(i, 11).toString());
+                pst1.setString(11, jTableWk4Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk4Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk4Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk4Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk4Activities.getValueAt(i, 11).toString()));
                 pst1.setString(16, String.valueOf(jTableWk4Activities.getValueAt(i, 12).toString()));
                 pst1.setString(17, String.valueOf(jTableWk4Activities.getValueAt(i, 13).toString()));
                 pst1.setString(18, String.valueOf(jTableWk4Activities.getValueAt(i, 14).toString()));
                 pst1.setString(19, jTableWk4Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableWk4Activities.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableWk4Activities.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableWk4Activities.getValueAt(i, 18).toString());
-                pst1.setString(23, actNextVer);
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(20, String.valueOf(jTableWk4Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk4Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk4Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk4Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk4Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk4Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk4Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, actNextVer);
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1234,16 +1275,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
 
-                String sqlWk5plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
-                        + "(SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
-                        + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,"
-                        + "MSC_AMT,ACC_UNPROV_AMT,ACC_PROV_AMT,"
-                        + "EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER,DOC_VER,ACT_REC_STA)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sqlwk5plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                pst1 = conn.prepareStatement(sqlWk5plan);
+                pst1 = conn.prepareStatement(sqlwk5plan);
                 pst1.setString(1, "P");
-                pst1.setString(2, jTextRefNum.getText());
+                pst1.setString(2, jLabelRefNum.getText());
                 pst1.setString(3, Integer.toString(itmNum));
                 pst1.setString(4, jTableWk5Activities.getValueAt(i, 0).toString());
                 pst1.setString(5, jTableWk5Activities.getValueAt(i, 1).toString());
@@ -1252,21 +1289,25 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 pst1.setString(8, jTableWk5Activities.getValueAt(i, 4).toString());
                 pst1.setString(9, jTableWk5Activities.getValueAt(i, 5).toString());
                 pst1.setString(10, jTableWk5Activities.getValueAt(i, 6).toString());
-                pst1.setString(11, String.valueOf(jTableWk5Activities.getValueAt(i, 7).toString()));
-                pst1.setString(12, String.valueOf(jTableWk5Activities.getValueAt(i, 8).toString()));
-                pst1.setString(13, String.valueOf(jTableWk5Activities.getValueAt(i, 9).toString()));
-                pst1.setString(14, String.valueOf(jTableWk5Activities.getValueAt(i, 10).toString()));
-                pst1.setString(15, jTableWk5Activities.getValueAt(i, 11).toString());
+                pst1.setString(11, jTableWk5Activities.getValueAt(i, 7).toString());
+                pst1.setString(12, jTableWk5Activities.getValueAt(i, 8).toString());
+                pst1.setString(13, jTableWk5Activities.getValueAt(i, 9).toString());
+                pst1.setString(14, jTableWk5Activities.getValueAt(i, 10).toString());
+                pst1.setString(15, String.valueOf(jTableWk5Activities.getValueAt(i, 11).toString()));
                 pst1.setString(16, String.valueOf(jTableWk5Activities.getValueAt(i, 12).toString()));
                 pst1.setString(17, String.valueOf(jTableWk5Activities.getValueAt(i, 13).toString()));
                 pst1.setString(18, String.valueOf(jTableWk5Activities.getValueAt(i, 14).toString()));
                 pst1.setString(19, jTableWk5Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, jTableWk5Activities.getValueAt(i, 16).toString());
-                pst1.setString(21, jTableWk5Activities.getValueAt(i, 17).toString());
-                pst1.setString(22, jTableWk5Activities.getValueAt(i, 18).toString());
-                pst1.setString(23, actNextVer);
-                pst1.setString(24, "1");
-                pst1.setString(25, "A");
+                pst1.setString(20, String.valueOf(jTableWk5Activities.getValueAt(i, 16).toString()));
+                pst1.setString(21, String.valueOf(jTableWk5Activities.getValueAt(i, 17).toString()));
+                pst1.setString(22, String.valueOf(jTableWk5Activities.getValueAt(i, 18).toString()));
+                pst1.setString(23, jTableWk5Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, jTableWk5Activities.getValueAt(i, 20).toString());
+                pst1.setString(25, jTableWk5Activities.getValueAt(i, 21).toString());
+                pst1.setString(26, jTableWk5Activities.getValueAt(i, 22).toString());
+                pst1.setString(27, actNextVer);
+                pst1.setString(28, "1");
+                pst1.setString(29, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1343,20 +1384,20 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < modelAttWk1Main.getRowCount(); i++) {
-                if ( modelAttWk1Main.getValueAt(i, 0).toString().trim().length()==0){
-                String imgFileValue = modelAttWk1Main.getValueAt(i, 3).toString();
-                String imgFileDsc = modelAttWk1Main.getValueAt(i, 1).toString();
-                String imgFileName = modelAttWk1Main.getValueAt(i, 2).toString();
+                if (modelAttWk1Main.getValueAt(i, 0).toString().trim().length() == 0) {
+                    String imgFileValue = modelAttWk1Main.getValueAt(i, 3).toString();
+                    String imgFileDsc = modelAttWk1Main.getValueAt(i, 1).toString();
+                    String imgFileName = modelAttWk1Main.getValueAt(i, 2).toString();
 
-                if (imgFileValue.trim().length() > 0) {
+                    if (imgFileValue.trim().length() > 0) {
 
-                    attL.insertAttWkDoc(conn, imgFileName, imgFileDsc, imgFileValue,
-                            itmNumAtt, jTextRefNum.getText(), actNextVer, "1", "ClaimAttDocJustTabWk1", finyear);
+                        attL.insertAttWkDoc(conn, imgFileName, imgFileDsc, imgFileValue,
+                                itmNumAtt, jTextRefNum.getText(), actNextVer, "1", "ClaimAttDocJustTabWk1", finyear);
 
+                    }
+
+                    itmNumAtt = itmNumAtt + 1;
                 }
-
-                itmNumAtt = itmNumAtt + 1;
-            }
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -1485,7 +1526,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
-            if (jTableActivitiesWk1.getRowCount() > 0 && jTableWk2Activities.getRowCount() == 0
+            if (jTableWk1Activities.getRowCount() > 0 && jTableWk2Activities.getRowCount() == 0
                     && jTableWk3Activities.getRowCount() == 0 && jTableWk4Activities.getRowCount() == 0
                     && jTableWk5Activities.getRowCount() == 0) {
 
@@ -1662,10 +1703,176 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         }
     }
 
+    void regCheck() {
+
+        try {
+            if (jTableWk1Activities.getRowCount() > 0) {
+                finDayCalcWk1();
+                minDateComWk1 = Date.from(minDateWk1.atStartOfDay(zoneId).toInstant());
+                maxDateComWk1 = Date.from(maxDateWk1.atStartOfDay(zoneId).toInstant());
+
+            }
+
+            if (jTableWk2Activities.getRowCount() > 0) {
+                finDayCalcWk2();
+                minDateComWk2 = Date.from(minDateWk2.atStartOfDay(zoneId).toInstant());
+                maxDateComWk2 = Date.from(maxDateWk2.atStartOfDay(zoneId).toInstant());
+
+            }
+            if (jTableWk3Activities.getRowCount() > 0) {
+                finDayCalcWk3();
+                minDateComWk3 = Date.from(minDateWk3.atStartOfDay(zoneId).toInstant());
+                maxDateComWk3 = Date.from(maxDateWk3.atStartOfDay(zoneId).toInstant());
+
+            }
+            if (jTableWk4Activities.getRowCount() > 0) {
+                finDayCalcWk4();
+                minDateComWk4 = Date.from(minDateWk4.atStartOfDay(zoneId).toInstant());
+                maxDateComWk4 = Date.from(maxDateWk4.atStartOfDay(zoneId).toInstant());
+
+            }
+            if (jTableWk5Activities.getRowCount() > 0) {
+                finDayCalcWk5();
+                minDateComWk5 = Date.from(minDateWk5.atStartOfDay(zoneId).toInstant());
+                maxDateComWk5 = Date.from(maxDateWk5.atStartOfDay(zoneId).toInstant());
+
+            }
+
+            if (jTextRefNum.getText().trim().length() == 0 && (jTableWk1Activities.getRowCount() == 0 && jTableWk2Activities.getRowCount() == 0
+                    && jTableWk3Activities.getRowCount() == 0 && jTableWk4Activities.getRowCount() == 0
+                    && jTableWk5Activities.getRowCount() == 0)) {
+                JOptionPane.showMessageDialog(this, "Please retrieve record to be modified before saving.");
+                jDateChooserWk1From.requestFocusInWindow();
+                jDateChooserWk1From.setFocusable(true);
+            } else if (jTableWk1Activities.getRowCount() == 0 && jTableWk2Activities.getRowCount() == 0
+                    && jTableWk3Activities.getRowCount() == 0 && jTableWk4Activities.getRowCount() == 0
+                    && jTableWk5Activities.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Please retrieve record to be modified before saving.");
+                jDateChooserWk1From.requestFocusInWindow();
+                jDateChooserWk1From.setFocusable(true);
+            } else if ((jDateChooserWk1From.getDate() == null) || (jDateChooserWk1To.getDate() == null)) {
+                JOptionPane.showMessageDialog(this, "Date for week 1 cannot be blank. Please check your dates");
+                jDateChooserWk1From.requestFocusInWindow();
+                jDateChooserWk1From.setFocusable(true);
+            } else if (noOfFinDays1 > 7) {
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 1 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk1From.setDate(null);
+                jDateChooserWk1To.setDate(null);
+                jDateChooserWk1From.requestFocusInWindow();
+                jDateChooserWk1From.setFocusable(true);
+            } else if (((jDateChooserWk2From.getDate() == null) || (jDateChooserWk2To.getDate() == null)) && noOfFinDays2 > 0) {
+                JOptionPane.showMessageDialog(this, "Date for week 2 cannot be blank. Please check your dates");
+                jDateChooserWk2From.requestFocusInWindow();
+                jDateChooserWk2From.setFocusable(true);
+            } else if (noOfFinDays2 > 7) {
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 2 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk2From.setDate(null);
+                jDateChooserWk2To.setDate(null);
+                jDateChooserWk2From.requestFocusInWindow();
+                jDateChooserWk2From.setFocusable(true);
+            } else if (((jDateChooserWk3From.getDate() == null) || (jDateChooserWk3To.getDate() == null)) && noOfFinDays3 > 0) {
+                JOptionPane.showMessageDialog(this, "Date for week 3 cannot be blank. Please check your dates");
+                jDateChooserWk3From.requestFocusInWindow();
+                jDateChooserWk3From.setFocusable(true);
+            } else if (noOfFinDays3 > 7) {
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 3 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk3From.setDate(null);
+                jDateChooserWk3To.setDate(null);
+                jDateChooserWk3From.requestFocusInWindow();
+                jDateChooserWk3From.setFocusable(true);
+            } else if (((jDateChooserWk4From.getDate() == null) || (jDateChooserWk4To.getDate() == null)) && noOfFinDays4 > 0) {
+                JOptionPane.showMessageDialog(this, "Date for week 4 cannot be blank. Please check your dates");
+                jDateChooserWk4From.requestFocusInWindow();
+                jDateChooserWk4From.setFocusable(true);
+            } else if (noOfFinDays4 > 7) {
+
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 4 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk4From.setDate(null);
+                jDateChooserWk4To.setDate(null);
+                jDateChooserWk4From.requestFocusInWindow();
+                jDateChooserWk4From.setFocusable(true);
+            } else if (((jDateChooserWk5From.getDate() == null) || (jDateChooserWk5To.getDate() == null)) && noOfFinDays5 > 0) {
+                JOptionPane.showMessageDialog(this, "Date for week 5 cannot be blank. Please check your dates");
+                jDateChooserWk5From.requestFocusInWindow();
+                jDateChooserWk5From.setFocusable(true);
+            } else if (noOfFinDays5 > 7) {
+
+                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 5 cannot be more than seven(7) days",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                jDateChooserWk5From.setDate(null);
+                jDateChooserWk5To.setDate(null);
+                jDateChooserWk5From.requestFocusInWindow();
+                jDateChooserWk5From.setFocusable(true);
+            } else if (jTableWk1Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk1From.getDate()).compareTo(formatter.format(minDateComWk1)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 1 cannot be lower than start date.Please check your dates");
+                jDateChooserWk1From.requestFocusInWindow();
+                jDateChooserWk1From.setFocusable(true);
+
+            } else if (jTableWk1Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk1To.getDate()).compareTo(formatter.format(maxDateComWk1)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 1 cannot be greater than end date.Please check your dates");
+                jDateChooserWk1To.requestFocusInWindow();
+                jDateChooserWk1To.setFocusable(true);
+
+            } else if (jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2From.getDate()).compareTo(formatter.format(minDateComWk2)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 2 cannot be lower than start date.Please check your dates");
+                jDateChooserWk2From.requestFocusInWindow();
+                jDateChooserWk2From.setFocusable(true);
+
+            } else if (jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2To.getDate()).compareTo(formatter.format(maxDateComWk2)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 2 cannot be greater than end date.Please check your dates");
+                jDateChooserWk2To.requestFocusInWindow();
+                jDateChooserWk2To.setFocusable(true);
+
+            } else if (jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3From.getDate()).compareTo(formatter.format(minDateComWk3)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 3 cannot be lower than start date.Please check your dates");
+                jDateChooserWk3From.requestFocusInWindow();
+                jDateChooserWk3From.setFocusable(true);
+
+            } else if (jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3To.getDate()).compareTo(formatter.format(maxDateComWk3)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 3 cannot be greater than end date.Please check your dates");
+                jDateChooserWk3To.requestFocusInWindow();
+                jDateChooserWk3To.setFocusable(true);
+
+            } else if (jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4From.getDate()).compareTo(formatter.format(minDateComWk4)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 4 cannot be lower than start date.Please check your dates");
+                jDateChooserWk4From.requestFocusInWindow();
+                jDateChooserWk4From.setFocusable(true);
+
+            } else if (jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4To.getDate()).compareTo(formatter.format(maxDateComWk4)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 4 cannot be greater than end date.Please check your dates");
+                jDateChooserWk4To.requestFocusInWindow();
+                jDateChooserWk4To.setFocusable(true);
+
+            } else if (jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5From.getDate()).compareTo(formatter.format(minDateComWk5)) > 0)) {
+                JOptionPane.showMessageDialog(this, "Minimum activity date for week 5cannot be lower than start date.Please check your dates");
+                jDateChooserWk5From.requestFocusInWindow();
+                jDateChooserWk5From.setFocusable(true);
+
+            } else if (jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5To.getDate()).compareTo(formatter.format(maxDateComWk5)) < 0)) {
+                JOptionPane.showMessageDialog(this, "Maximum activity date for week 5 cannot be greater than end date.Please check your dates");
+                jDateChooserWk5To.requestFocusInWindow();
+                jDateChooserWk5To.setFocusable(true);
+
+            } else {
+                jDialogWaiting.setVisible(true);
+                jMenuItemClose1.setEnabled(false);
+                saveRec();
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
     void resetField() {
 
         jDateChooserDialogActivityDateFrom.setDate(null);
-        jTextFieldDialogWk1Site.setText("");
+        jDateChooserDialogActivityDateTo.setDate(null);
         jTextFieldWk1DialogActivityDesc.setText("");
         jTextAreaWk1DialogJustification.setText("");
         jTextFieldWk1DialogStaffName1.setText("");
@@ -1677,20 +1884,22 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jCheckBoxDialogWk1AccProved.setEnabled(true);
         jCheckBoxDialogWk1Inc.setEnabled(true);
         jCheckBoxDialogWk1Misc.setEnabled(true);
-        jCheckBoxDialogWk1BrkFast.setSelected(false);
-        jCheckBoxDialogWk1Lunch.setSelected(false);
-        jCheckBoxDialogWk1Dinner.setSelected(false);
+        jCheckBoxDialogWk1BrkFast.setEnabled(false);
+        jCheckBoxDialogWk1Lunch.setSelected(true);
+        jCheckBoxDialogWk1Dinner.setSelected(true);
         jCheckBoxDialogWk1AccProved.setSelected(false);
-        jCheckBoxDialogWk1Inc.setSelected(false);
+        jCheckBoxDialogWk1Inc.setSelected(true);
         jCheckBoxDialogWk1Misc.setSelected(false);
-        jCheckBoxDialogWk1AccUnProved.setSelected(false);
-        jCheckBoxDialogWk1AccProved.setSelected(false);
+        jCheckBoxDialogWk1AccUnProved.setSelected(true);
+        jCheckBoxDialogWk1AccProved.setEnabled(false);
+        jCheckBoxNoAcc.setEnabled(false);
         jTextFieldWk1Misc.setVisible(false);
         jLabelWk1Misc.setVisible(false);
         jTextFieldWk1Misc.setText("");
         jLabelWk1MiscAmt.setVisible(false);
         jTextFieldWk1MiscAmt.setVisible(false);
         jTextFieldWk1MiscAmt.setText("");
+        jTextFieldDialogWkSite.setText("");
 
     }
 
@@ -1705,7 +1914,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
             st.executeQuery("SELECT PROVINCE ,DISTRICT ,WK1_PLAN_START_DATE ,WK1_PLAN_END_DATE,"
                     + "Wk2_PLAN_START_DATE,Wk2_PLAN_END_DATE,Wk3_PLAN_START_DATE,Wk3_PLAN_END_DATE, "
-                    + "Wk4_PLAN_START_DATE,Wk4_PLAN_END_DATE,Wk5_PLAN_START_DATE,Wk5_PLAN_END_DATE "
+                    + "Wk4_PLAN_START_DATE,Wk4_PLAN_END_DATE,Wk5_PLAN_START_DATE,Wk5_PLAN_END_DATE,PLAN_REF_NUM "
                     + "FROM [ClaimsAppSysZvandiri].[dbo].[PlanPeriodTab]"
                     + " where PLAN_REF_NUM =" + jTextRefNum.getText() + " and ACT_REC_STA = 'C'");
 
@@ -1715,6 +1924,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
                 jLabelProvince.setText(r.getString(1));
                 jLabelDistrict.setText(r.getString(2));
+                jLabelRefNum.setText(r.getString(13));
 
                 if ((!("".equals(r.getString(3)))) && (r.getString(5) == null) && (r.getString(7) == null)
                         && (r.getString(9) == null) && (r.getString(11) == null)) {
@@ -1967,7 +2177,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
             st.executeQuery("SELECT PROVINCE ,DISTRICT ,WK1_PLAN_START_DATE ,WK1_PLAN_END_DATE,"
                     + "Wk2_PLAN_START_DATE,Wk2_PLAN_END_DATE,Wk3_PLAN_START_DATE,Wk3_PLAN_END_DATE,"
-                    + "Wk4_PLAN_START_DATE,Wk4_PLAN_END_DATE,Wk5_PLAN_START_DATE,Wk5_PLAN_END_DATE "
+                    + "Wk4_PLAN_START_DATE,Wk4_PLAN_END_DATE,Wk5_PLAN_START_DATE,Wk5_PLAN_END_DATE,PLAN_REF_NUM "
                     + "FROM [ClaimsAppSysZvandiri].[dbo].[PlanPeriodTab]"
                     + " where PLAN_REF_NUM =" + jTextRefNum.getText() + " and ACT_REC_STA = 'A'");
 
@@ -1977,6 +2187,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
                 jLabelProvince.setText(r.getString(1));
                 jLabelDistrict.setText(r.getString(2));
+                jLabelRefNum.setText(r.getString(13));
 
                 if ((!("".equals(r.getString(3)))) && (r.getString(5) == null) && (r.getString(7) == null)
                         && (r.getString(9) == null) && (r.getString(11) == null)) {
@@ -2101,12 +2312,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -2128,12 +2339,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -2154,12 +2365,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -2180,12 +2391,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 modelWk4.insertRow(modelWk4.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -2206,12 +2417,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -2241,7 +2452,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             while (r1.next()) {
 
                 maxItmWk1 = r1.getInt(1);
-                System.out.println("wk num "+maxItmWk1 );
+                System.out.println("wk num " + maxItmWk1);
             }
 
         } catch (Exception e) {
@@ -2253,8 +2464,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         noOfFinDays1 = 0;
         try {
             ArrayList<LocalDate> list = new ArrayList<LocalDate>();
-            for (int i = 0; i < jTableActivitiesWk1.getRowCount(); i++) {
-                String reqDay = jTableActivitiesWk1.getValueAt(i, 0).toString();
+            for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
+                String reqDay = jTableWk1Activities.getValueAt(i, 0).toString();
                 LocalDate reqDate = LocalDate.parse(reqDay);
                 list.add(reqDate);
             }
@@ -2344,10 +2555,144 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         }
     }
 
+    void findGrantBud() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+            Statement st1 = conn.createStatement();
+            Statement st2 = conn.createStatement();
+
+            ResultSet r = st.executeQuery("SELECT GRANT_CODE  FROM [ClaimsAppSysZvandiri].[dbo].[BudGrantTab]");
+
+            while (r.next()) {
+
+                grantCode = r.getString(1);
+
+            }
+
+            ResultSet r1 = st1.executeQuery("SELECT concat(BUD_CODE,' ',BUD_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudMainCodTab] order by 1");
+
+            while (r1.next()) {
+
+                jComboBudMainCode.addItem(r1.getString(1));
+
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+    void findAccCode() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+
+            jComboAccountCode.setSelectedIndex(-1);
+
+            ResultSet r = st.executeQuery("SELECT concat(ACC_CODE,' ',ACC_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudAccCodTab] order by 1 desc");
+
+            while (r.next()) {
+
+                jComboAccountCode.addItem(r.getString(1));
+
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+    void findPrjCode(String donorCode) {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            int itemCount = jComboProjectCodeGL.getItemCount();
+
+            for (int i = 0; i < itemCount; i++) {
+                jComboProjectCodeGL.removeItemAt(0);
+            }
+
+            Statement st = conn.createStatement();
+//            jComboBudMainCode.setSelectedIndex(-1);
+
+            ResultSet r = st.executeQuery("SELECT distinct concat(PRJ_CODE,' ',PRJ_DESC) FROM "
+                    + "[ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where DONOR_CODE = '" + donorCode + "' order by 1");
+
+            while (r.next()) {
+
+                jComboProjectCodeGL.addItem(r.getString(1));
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+    void findDonorCode() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+
+            jComboDonor.setSelectedIndex(-1);
+
+            ResultSet r = st.executeQuery("SELECT distinct concat(DONOR_CODE,' ',DONOR_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] order by 1");
+
+            while (r.next()) {
+
+                jComboDonor.addItem(r.getString(1));
+
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+    void findPrjProgCode() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+
+            jComboProjectCodeProgramming.setSelectedIndex(-1);
+
+            ResultSet r = st.executeQuery("SELECT distinct concat(PRJ_CODE_PROG,' ',PRJ_PROG_DESC) "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[BudPrjProgTab] order by 1");
+
+            while (r.next()) {
+
+                jComboProjectCodeProgramming.addItem(r.getString(1));
+
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
     void clearFields() {
         try {
 
-            DefaultTableModel modelWk1 = (DefaultTableModel) this.jTableActivitiesWk1.getModel();
+            DefaultTableModel modelWk1 = (DefaultTableModel) this.jTableWk1Activities.getModel();
             DefaultTableModel modelWk2 = (DefaultTableModel) this.jTableWk2Activities.getModel();
             DefaultTableModel modelWk3 = (DefaultTableModel) this.jTableWk3Activities.getModel();
             DefaultTableModel modelWk4 = (DefaultTableModel) this.jTableWk4Activities.getModel();
@@ -2355,6 +2700,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
             jLabelProvince.setText("");
             jLabelDistrict.setText("");
+            jLabelRefNum.setText("");
             jDateChooserWk1From.setDate(null);
             jDateChooserWk1To.setDate(null);
             jDateChooserWk2From.setDate(null);
@@ -2402,13 +2748,641 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         if ((selectedOption == JOptionPane.NO_OPTION)) {
 
-//            wk2Site = "N";
-//            perRespWk2 = "N";
             jDialogWk1.setVisible(false);
+        } else {
+            addStaff();
         }
 
+    }
 
-        /*To Change*/
+    void addWkItmLine() {
+        try {
+
+            String Wk1Brk = "0.00";
+            String Wk1Lnch = "0.00";
+            String Wk1Dinner = "0.00";
+            String Wk1UnProvedAcc = "0.00";
+            String Wk1Inc = "0.00";
+            String Wk1Misc = "0.00";
+            String Wk1MiscDesc = "";
+            String WkDTBrk = "0.00";
+            String WkDTLnch = "0.00";
+            String WkDTDinner = "0.00";
+            String WkRTBrk = "0.00";
+            String WkRTLnch = "0.00";
+            String WkRTDinner = "0.00";
+            String Wk1ProvedAcc = "0.00";
+            String WkRTUnProvedAcc = "0.00";
+            String WkRTProvedAcc = "0.00";
+            String WkRTInc = "0.00";
+
+            if (jDateChooserDialogActivityDateFrom.getDate() == null) {
+                JOptionPane.showMessageDialog(jDialogWk1, "Date cannot be blank. Please check your dates");
+                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                jDateChooserDialogActivityDateFrom.setFocusable(true);
+            } else if (jDateChooserDialogActivityDateTo.getDate() == null) {
+                JOptionPane.showMessageDialog(jDialogWk1, "Date cannot be blank. Please check your dates");
+                jDateChooserDialogActivityDateTo.requestFocusInWindow();
+                jDateChooserDialogActivityDateTo.setFocusable(true);
+            }
+
+//            else {
+//                if (!(jTextFieldWk1DialogStaffName1.getText().length() == 0)) {
+//                    duplicateUser1Count = null;
+//                    planWk = "PlanWk1Tab";
+//                    planDate = formatter.format(jDateChooserDialogActivityDateFrom.getDate());
+//                    empNamNum1 = "EMP_NAM1";
+//                    empNam1 = jTextFieldWk1DialogStaffName1.getText();
+//                    empNamNum2 = "EMP_NAM2";
+//                    empNam2 = jTextFieldWk1DialogStaffName2.getText();
+//                    empNamNum3 = "EMP_NAM3";
+//                    empNam3 = jTextFieldWk1DialogStaffName3.getText();
+//                    empNamNum4 = "EMP_NAM4";
+//                    empNam4 = jTextFieldWk1DialogStaffName4.getText();
+//
+//                    CheckDuplicateUser1();
+//                    CheckDuplicateUser2();
+//                    CheckDuplicateUser3();
+//                    CheckDuplicateUser4();
+//                    CheckDuplicateUser5();
+//                }
+//            }
+            try {
+                if (jCheckBoxDialogWk1BrkFast.isSelected()) {
+                    Wk1Brk = breakfastAll;
+                } else {
+                    Wk1Brk = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1Lunch.isSelected()) {
+                    Wk1Lnch = lunchAll;
+                } else {
+                    Wk1Lnch = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1Dinner.isSelected()) {
+                    Wk1Dinner = dinnerAll;
+                } else {
+                    Wk1Dinner = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1AccUnProved.isSelected()) {
+                    Wk1UnProvedAcc = unProvedAll;
+                } else {
+                    Wk1UnProvedAcc = "0.00";
+                }
+                if (jCheckBoxDialogWk1AccProved.isSelected()) {
+                    Wk1ProvedAcc = provedAll;
+                } else {
+                    Wk1ProvedAcc = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1Inc.isSelected()) {
+                    Wk1Inc = incidentalAll;
+                } else {
+                    Wk1Inc = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1Misc.isSelected()) {
+                    Wk1MiscDesc = jTextFieldWk1Misc.getText();
+                    Wk1Misc = jTextFieldWk1MiscAmt.getText();
+                } else {
+                    Wk1Misc = "0.00";
+                }
+
+                if (jDateChooserDialogActivityDateFrom.getDate() == null) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Date cannot be blank. Please check your dates");
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (jDateChooserDialogActivityDateTo.getDate() == null) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Date cannot be blank. Please check your dates");
+                    jDateChooserDialogActivityDateTo.requestFocusInWindow();
+                    jDateChooserDialogActivityDateTo.setFocusable(true);
+                } else if (jDateChooserDialogActivityDateFrom.getDate().after(jDateChooserDialogActivityDateTo.getDate())) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "End Date cannot be lower than start date.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (("Y".equals(wk1Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk1From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk1To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (jTextAttDocName.getText().trim().length() > 0) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Please commit attached file by clicking add file. ");
+                    jTextAttDocDesc.requestFocusInWindow();
+                    jTextAttDocDesc.setFocusable(true);
+                } else if (("Y".equals(wk2Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk2From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk2To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (("Y".equals(wk3Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk3From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk3To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (("Y".equals(wk4Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk4From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk4To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (("Y".equals(wk5Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk5From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk5To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (("Y".equals(wk1Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk1From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk1To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (("Y".equals(wk2Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk2From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk2To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (("Y".equals(wk3Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk3From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk3To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (("Y".equals(wk4Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk4From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk4To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (("Y".equals(wk5Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk5From.getDate())) < 0)
+                        || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk5To.getDate())) > 0))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if ("".equals(jTextFieldWk1DialogActivityDesc.getText())) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity description cannot be blank. Please check and correct");
+                    jTextFieldWk1DialogActivityDesc.requestFocusInWindow();
+                    jTextFieldWk1DialogActivityDesc.setFocusable(true);
+                } else if ("".equals(jTextAreaWk1DialogJustification.getText()) && jTableDocAtt.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "Activity justification cannot be blank. Please type your justfication or attach your supporting documents or both.");
+                    jTextAreaWk1DialogJustification.requestFocusInWindow();
+                    jTextAreaWk1DialogJustification.setFocusable(true);
+                } else if ((jCheckBoxDialogWk1BrkFast.isSelected() || jCheckBoxDialogWk1Lunch.isSelected()
+                        || jCheckBoxDialogWk1Dinner.isSelected() || jCheckBoxDialogWk1AccProved.isSelected()
+                        || jCheckBoxDialogWk1Inc.isSelected() || jCheckBoxDialogWk1Misc.isSelected()
+                        || jCheckBoxDialogWk1AccUnProved.isSelected() || jCheckBoxNoAcc.isSelected())
+                        && ("".equals(jTextFieldWk1DialogStaffName1.getText()))) {
+                    JOptionPane.showMessageDialog(jDialogWk1, "You have select an allowance.Please enter at least one staff name");
+                    jTextFieldWk1DialogStaffName1.requestFocusInWindow();
+                    jTextFieldWk1DialogStaffName1.setFocusable(true);
+
+                } else {
+
+                    DateFormat dfYear = new SimpleDateFormat("yyyy");
+                    DateFormat dfMon = new SimpleDateFormat("MM");
+                    DateFormat dfDay = new SimpleDateFormat("dd");
+                    int yearF = Integer.parseInt(dfYear.format(jDateChooserDialogActivityDateFrom.getDate()));
+                    int monF = Integer.parseInt(dfMon.format(jDateChooserDialogActivityDateFrom.getDate()));
+                    int dayF = Integer.parseInt(dfDay.format(jDateChooserDialogActivityDateFrom.getDate()));
+                    int yearT = Integer.parseInt(dfYear.format(jDateChooserDialogActivityDateTo.getDate()));
+                    int monT = Integer.parseInt(dfMon.format(jDateChooserDialogActivityDateTo.getDate()));
+                    int dayT = Integer.parseInt(dfDay.format(jDateChooserDialogActivityDateTo.getDate()));
+                    LocalDate start = LocalDate.of(yearF, monF, dayF);
+                    LocalDate end = LocalDate.of(yearT, monT, dayT).minusDays(1);
+                    String filenameDT = departTime.getSelectedTimeDB();     // full file name
+                    String[] partsDT = filenameDT.split("\\:"); // String array, each element is text between dots
+
+                    String beforeFirstDotDT = partsDT[0];
+
+                    String filenameRT = returnTime.getSelectedTimeDB();     // full file name
+                    String[] partsRT = filenameRT.split("\\:"); // String array, each element is text between dots
+
+                    String beforeFirstDotRT = partsRT[0];
+
+                    if (Integer.parseInt(beforeFirstDotDT) < 7) {
+                        WkDTBrk = Wk1Brk;
+
+                    }
+
+                    if (Integer.parseInt(beforeFirstDotDT) < 13) {
+                        WkDTLnch = Wk1Lnch;
+
+                    }
+
+                    if (Integer.parseInt(beforeFirstDotRT) >= 14) {
+                        WkRTLnch = Wk1Lnch;
+
+                    }
+
+                    if (Integer.parseInt(beforeFirstDotRT) >= 19) {
+                        WkRTDinner = Wk1Dinner;
+
+                    }
+
+                    if ((!"D036 CDC-Zim-TTECH".equals(taskDonor))
+                            && (!"D032 ZHI".equals(taskDonor))
+                            && (!"D022 CDC".equals(taskDonor))) {
+                        String donorName = jComboDonor.getSelectedItem().toString();
+                        prjProgCodeName = "";
+                        prjProgCode = "";
+
+                    }
+
+                    addFileAttToTabWk1Main();
+
+                    if ("Y".equals(wk1Site)) {
+                        if (modelWk1.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
+
+                            modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk1.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
+                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk1.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk1.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk1.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
+                            modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                            c.setTime(startDate);
+                            c.add(Calendar.DATE, 1);
+                            startDate = c.getTime();
+
+                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk1.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                        }
+                        addItem();
+                        resetField();
+
+                    }
+
+                    if ("Y".equals(wk2Site)) {
+                        if (modelWk2.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
+
+                            modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk2.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
+                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk2.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk2.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk2.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
+                            modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                            c.setTime(startDate);
+                            c.add(Calendar.DATE, 1);
+                            startDate = c.getTime();
+
+                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk2.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                        }
+                        addItem();
+                        resetField();
+
+                    }
+
+                    if ("Y".equals(wk3Site)) {
+                        if (modelWk3.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
+
+                            modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk3.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
+                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk3.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk3.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk3.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
+                            modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                            c.setTime(startDate);
+                            c.add(Calendar.DATE, 1);
+                            startDate = c.getTime();
+
+                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk3.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                        }
+                        addItem();
+                        resetField();
+
+                    }
+
+                    if ("Y".equals(wk4Site)) {
+                        if (modelWk4.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
+
+                            modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk4.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
+                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk4.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk4.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk4.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
+                            modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                            c.setTime(startDate);
+                            c.add(Calendar.DATE, 1);
+                            startDate = c.getTime();
+
+                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk4.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                        }
+                        addItem();
+                        resetField();
+
+                    }
+
+                    if ("Y".equals(wk5Site)) {
+                        if (modelWk5.getRowCount() == 0 && formatter.format(jDateChooserDialogActivityDateFrom.getDate()).equals(formatter.format(jDateChooserDialogActivityDateTo.getDate()))) {
+
+                            modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk5.getRowCount() > 0) && !jCheckAddStaff.isSelected()) {
+                            LocalDate endWk = LocalDate.of(yearT, monT, dayT);
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+                            for (LocalDate date = start; date.isBefore(endWk); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk5.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk5.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                        } else if ((modelWk5.getRowCount() == 0) || jCheckAddStaff.isSelected()) {
+                            modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+
+                            Calendar c = Calendar.getInstance();
+                            Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                            c.setTime(startDate);
+                            c.add(Calendar.DATE, 1);
+                            startDate = c.getTime();
+
+                            for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                                c.setTime(startDate);
+
+                                modelWk5.addRow(new Object[]{formatter.format(startDate), accCodeName, donorName, prjCodeName,
+                                    prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                    Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                    jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                                c.add(Calendar.DAY_OF_MONTH, 1);
+                                startDate = c.getTime();
+
+                            }
+
+                            modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(), jTextAreaWk1DialogJustification.getText(), Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                                WkRTProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
+                                jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
+                        }
+                        addItem();
+                        resetField();
+
+                    }
+
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    void addStaff() {
+        try {
+
+            if (modelWk1.getRowCount() > 0) {
+                jPanelAddStaff.setVisible(true);
+            } else {
+                jPanelAddStaff.setVisible(false);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    void deleteFileAtt() {
+        int selectedOption = JOptionPane.showConfirmDialog(null,
+                "Do you want to delete selected casual attachement?",
+                "Choose", JOptionPane.YES_NO_OPTION);
+
+        if (selectedOption == JOptionPane.YES_OPTION) {
+
+            int[] rows = jTableDocAtt.getSelectedRows();
+            if (rows.length > 0) {
+                for (int i = 0; i < rows.length; i++) {
+                    modelAtt.removeRow(rows[i] - i);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Please note that the table is empty.");
+
+            }
+
+        }
     }
 
     void deleteFileAttWk1Main() {
@@ -2418,7 +3392,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         if (selectedOption == JOptionPane.YES_OPTION) {
 
-            int[] rows = jTableDocAttMainWk1.getSelectedRows();
+            int[] rows = jTableDocAttWk1.getSelectedRows();
             if (rows.length > 0) {
 
                 for (int i = 0; i < rows.length; i++) {
@@ -2444,7 +3418,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         if (selectedOption == JOptionPane.YES_OPTION) {
 
-            int[] rows = jTableDocAttMainWk2.getSelectedRows();
+            int[] rows = jTableDocAttWk2.getSelectedRows();
             if (rows.length > 0) {
 
                 for (int i = 0; i < rows.length; i++) {
@@ -2470,7 +3444,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         if (selectedOption == JOptionPane.YES_OPTION) {
 
-            int[] rows = jTableDocAttMainWk3.getSelectedRows();
+            int[] rows = jTableDocAttWk3.getSelectedRows();
             if (rows.length > 0) {
 
                 for (int i = 0; i < rows.length; i++) {
@@ -2496,7 +3470,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         if (selectedOption == JOptionPane.YES_OPTION) {
 
-            int[] rows = jTableDocAttMainWk4.getSelectedRows();
+            int[] rows = jTableDocAttWk4.getSelectedRows();
             if (rows.length > 0) {
 
                 for (int i = 0; i < rows.length; i++) {
@@ -2522,7 +3496,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         if (selectedOption == JOptionPane.YES_OPTION) {
 
-            int[] rows = jTableDocAttMainWk5.getSelectedRows();
+            int[] rows = jTableDocAttWk5.getSelectedRows();
             if (rows.length > 0) {
 
                 for (int i = 0; i < rows.length; i++) {
@@ -2538,6 +3512,55 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             delWk5 = "Y";
             fetchStringWk5 = "('" + String.join("','", listFetchWk5) + "')";
 
+        }
+    }
+
+    void addFileAtt() {
+
+        modelAtt.addRow(new Object[]{jTextAttDocDesc.getText(), jTextAttDocName.getText(), jTextAttDocPath.getText()});
+    }
+
+    void addFileAttToTabWk1Main() {
+
+        System.out.println("wkYN 1 " + wk1Site + " -2 " + wk2Site + " -3 " + wk3Site + " -4 " + wk4Site + " -5 " + wk5Site + " - ");
+        if ("Y".equals(wk1Site)) {
+            for (int i = 0; i < modelAtt.getRowCount(); i++) {
+
+                modelAttWk1Main.addRow(new Object[]{modelAtt.getValueAt(i, 0), modelAtt.getValueAt(i, 1), modelAtt.getValueAt(i, 2)});
+
+            }
+        }
+
+        if ("Y".equals(wk2Site)) {
+            for (int i = 0; i < modelAtt.getRowCount(); i++) {
+
+                modelAttWk2Main.addRow(new Object[]{modelAtt.getValueAt(i, 0), modelAtt.getValueAt(i, 1), modelAtt.getValueAt(i, 2)});
+
+            }
+        }
+
+        if ("Y".equals(wk3Site)) {
+            for (int i = 0; i < modelAtt.getRowCount(); i++) {
+
+                modelAttWk3Main.addRow(new Object[]{modelAtt.getValueAt(i, 0), modelAtt.getValueAt(i, 1), modelAtt.getValueAt(i, 2)});
+
+            }
+        }
+
+        if ("Y".equals(wk4Site)) {
+            for (int i = 0; i < modelAtt.getRowCount(); i++) {
+
+                modelAttWk4Main.addRow(new Object[]{modelAtt.getValueAt(i, 0), modelAtt.getValueAt(i, 1), modelAtt.getValueAt(i, 2)});
+
+            }
+        }
+
+        if ("Y".equals(wk5Site)) {
+            for (int i = 0; i < modelAtt.getRowCount(); i++) {
+
+                modelAttWk5Main.addRow(new Object[]{modelAtt.getValueAt(i, 0), modelAtt.getValueAt(i, 1), modelAtt.getValueAt(i, 2)});
+
+            }
         }
     }
 
@@ -2618,6 +3641,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     }
 
     void saveRec() {
+
         try {
             updatePrevRecord();
             updateWk1Plan();
@@ -2633,6 +3657,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             updateAttDocWk4Main();
             updateAttDocWk5Main();
             UsrRecEditUpd();
+            jDialogWaiting.setVisible(false);
             JOptionPane.showMessageDialog(this, "<html> Plan Ref No. <b>" + jLabelSerial.getText() + " " + jTextRefNum.getText()
                     + "</b> successfully updated.</html>");
             jDialogWaitingEmail.setVisible(true);
@@ -2647,6 +3672,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             emSend.sendMail(MailMsgTitle, supUsrMail, mailMsg, "");
 
             jDialogWaitingEmail.setVisible(false);
+
+            jMenuItemClose1.setEnabled(true);
 
             JOptionPane.showMessageDialog(this, "<html> An email has been sent to <b>" + supNam + "</b> for processing.</html>");
 
@@ -2687,17 +3714,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jButtonOk1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jDialogWk1 = new javax.swing.JDialog();
-        jPanel1 = new javax.swing.JPanel();
-        jLabelDialogWk1ActivityDate = new javax.swing.JLabel();
-        jDateChooserDialogActivityDateFrom = new com.toedter.calendar.JDateChooser();
-        jLabelDialogWk1Site = new javax.swing.JLabel();
-        jTextFieldDialogWk1Site = new javax.swing.JTextField();
-        jLabelWk1DialogJustification = new javax.swing.JLabel();
+        jPanelActivity = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jTextFieldWk1DialogActivityDesc = new javax.swing.JTextField();
-        jLabelWk1DialogActivityDesc = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextAreaWk1DialogJustification = new javax.swing.JTextArea();
         jSeparator3 = new javax.swing.JSeparator();
         jLabelDialogPerDiem = new javax.swing.JLabel();
         jLabelWk1DialogStaffName = new javax.swing.JLabel();
@@ -2713,7 +3731,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jCheckBoxDialogWk1BrkFast = new javax.swing.JCheckBox();
         jCheckBoxDialogWk1Lunch = new javax.swing.JCheckBox();
         jCheckBoxDialogWk1Dinner = new javax.swing.JCheckBox();
-        jLabelRemain = new javax.swing.JLabel();
         jCheckBoxDialogWk1Misc = new javax.swing.JCheckBox();
         jCheckBoxDialogWk1Inc = new javax.swing.JCheckBox();
         jLabelWk1Misc = new javax.swing.JLabel();
@@ -2725,17 +3742,50 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelWk1Name1Del = new javax.swing.JLabel();
         jLabelWk1Name2Del = new javax.swing.JLabel();
         jLabelWk1Name3Del = new javax.swing.JLabel();
-        jLabelProjectName = new javax.swing.JLabel();
-        jComboProjectName = new javax.swing.JComboBox<>();
-        jLabelProjectTask = new javax.swing.JLabel();
-        jComboProjectTask = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jCheckBoxDialogWk1AccUnProved = new javax.swing.JCheckBox();
         jCheckBoxDialogWk1AccProved = new javax.swing.JCheckBox();
         jCheckBoxNoAcc = new javax.swing.JCheckBox();
-        jLabelActFrom = new javax.swing.JLabel();
-        jLabelActTo = new javax.swing.JLabel();
+        jPanelDepartureDetails = new javax.swing.JPanel();
+        jLabelDialogDepartActivityDate = new javax.swing.JLabel();
+        jDateChooserDialogActivityDateFrom = new com.toedter.calendar.JDateChooser();
+        departTime = new cambodia.raven.Time();
+        jPanel3 = new javax.swing.JPanel();
+        jLabelDialogReturnActivityDate = new javax.swing.JLabel();
         jDateChooserDialogActivityDateTo = new com.toedter.calendar.JDateChooser();
+        returnTime = new cambodia.raven.Time();
+        jPanelDooAtt = new javax.swing.JPanel();
+        jPanelAttach = new javax.swing.JPanel();
+        jLabelMOHCCConfirmation = new javax.swing.JLabel();
+        jToggleButtonMOHCCConfirmation = new javax.swing.JToggleButton();
+        jToggleButtonMOHCCConfirmation2 = new javax.swing.JToggleButton();
+        jTextAttDocDesc = new javax.swing.JTextField();
+        jButtonSelectFile = new javax.swing.JButton();
+        jTextAttDocName = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableDocAtt = new javax.swing.JTable();
+        jTextAttDocPath = new javax.swing.JTextField();
+        jPanelActivityInfo = new javax.swing.JPanel();
+        jLabeAccountCode = new javax.swing.JLabel();
+        jComboAccountCode = new javax.swing.JComboBox<>();
+        jLabelDonor = new javax.swing.JLabel();
+        jComboDonor = new javax.swing.JComboBox<>();
+        jLabelPrjCodeGL = new javax.swing.JLabel();
+        jComboProjectCodeGL = new javax.swing.JComboBox<>();
+        jLabelBudMainCode = new javax.swing.JLabel();
+        jComboBudMainCode = new javax.swing.JComboBox<>();
+        jLabelDialogWk1Site = new javax.swing.JLabel();
+        jTextFieldDialogWkSite = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaWk1DialogJustification = new javax.swing.JTextArea();
+        jLabelWk1DialogActivityDesc = new javax.swing.JLabel();
+        jTextFieldWk1DialogActivityDesc = new javax.swing.JTextField();
+        jLabelJustfy = new javax.swing.JLabel();
+        jLabelPrjCodeProgramming = new javax.swing.JLabel();
+        jComboProjectCodeProgramming = new javax.swing.JComboBox<>();
+        jLabelRemain = new javax.swing.JLabel();
+        jPanelAddStaff = new javax.swing.JPanel();
+        jCheckAddStaff = new javax.swing.JCheckBox();
         jTabbedPaneMain = new javax.swing.JTabbedPane();
         jPanelWkOne = new javax.swing.JPanel();
         jLabelWkDuration = new javax.swing.JLabel();
@@ -2762,8 +3812,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelPostAppMod1 = new javax.swing.JLabel();
         jButtonWk1AddActivity = new javax.swing.JButton();
         jButtonWk1DelActivity = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableActivitiesWk1 = new javax.swing.JTable();
         jPanelDooAttMainWk1 = new javax.swing.JPanel();
         jPanelAttachMainWk1 = new javax.swing.JPanel();
         jLabelConfirmationMainWk1 = new javax.swing.JLabel();
@@ -2773,11 +3821,13 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jButtonAddAttWk1 = new javax.swing.JButton();
         jButtonDeleteAttWk1 = new javax.swing.JButton();
         jScrollPaneWk1 = new javax.swing.JScrollPane();
-        jTableDocAttMainWk1 = new javax.swing.JTable();
+        jTableDocAttWk1 = new javax.swing.JTable();
         jTextAttDocPathMainWk1 = new javax.swing.JTextField();
         jPanelSave = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonSave = new javax.swing.JButton();
+        jScrollPaneWk6 = new javax.swing.JScrollPane();
+        jTableWk1Activities = new javax.swing.JTable();
+        jLabelRefNo = new javax.swing.JLabel();
+        jLabelRefNum = new javax.swing.JLabel();
         jPanelWkTwo = new javax.swing.JPanel();
         jLabelWkDuration1 = new javax.swing.JLabel();
         jDateChooserWk2From = new com.toedter.calendar.JDateChooser();
@@ -2794,8 +3844,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelLineTime1 = new javax.swing.JLabel();
         jLabelLineLogNam1 = new javax.swing.JLabel();
         jLabelHeaderGen7 = new javax.swing.JLabel();
-        jScrollPane11 = new javax.swing.JScrollPane();
-        jTableWk2Activities = new javax.swing.JTable();
         jLabelPostAppMod2 = new javax.swing.JLabel();
         jPanelDooAttMainWk2 = new javax.swing.JPanel();
         jPanelAttachMainWk2 = new javax.swing.JPanel();
@@ -2806,9 +3854,11 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jButtonAddAttWk2 = new javax.swing.JButton();
         jButtonDeleteAttWk2 = new javax.swing.JButton();
         jScrollPaneWk2 = new javax.swing.JScrollPane();
-        jTableDocAttMainWk2 = new javax.swing.JTable();
+        jTableDocAttWk2 = new javax.swing.JTable();
         jTextAttDocPathMainWk2 = new javax.swing.JTextField();
         jPanelSave1 = new javax.swing.JPanel();
+        jScrollPaneWk7 = new javax.swing.JScrollPane();
+        jTableWk2Activities = new javax.swing.JTable();
         jPanelWkThree = new javax.swing.JPanel();
         jLabelWkDuration2 = new javax.swing.JLabel();
         jDateChooserWk3From = new com.toedter.calendar.JDateChooser();
@@ -2825,8 +3875,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelLineTime2 = new javax.swing.JLabel();
         jLabelLineDate2 = new javax.swing.JLabel();
         jLabelHeaderGen11 = new javax.swing.JLabel();
-        jScrollPane26 = new javax.swing.JScrollPane();
-        jTableWk3Activities = new javax.swing.JTable();
         jLabelPostAppMod3 = new javax.swing.JLabel();
         jPanelDooAttMainWk3 = new javax.swing.JPanel();
         jPanelAttachMainWk3 = new javax.swing.JPanel();
@@ -2837,9 +3885,11 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jButtonAddAttWk3 = new javax.swing.JButton();
         jButtonDeleteAttWk3 = new javax.swing.JButton();
         jScrollPaneWk3 = new javax.swing.JScrollPane();
-        jTableDocAttMainWk3 = new javax.swing.JTable();
+        jTableDocAttWk3 = new javax.swing.JTable();
         jTextAttDocPathMainWk3 = new javax.swing.JTextField();
         jPanelSave2 = new javax.swing.JPanel();
+        jScrollPaneWk8 = new javax.swing.JScrollPane();
+        jTableWk3Activities = new javax.swing.JTable();
         jPanelWkFour = new javax.swing.JPanel();
         jLabelWkDuration4 = new javax.swing.JLabel();
         jDateChooserWk4From = new com.toedter.calendar.JDateChooser();
@@ -2856,8 +3906,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelLineTime6 = new javax.swing.JLabel();
         jLabelLineDate6 = new javax.swing.JLabel();
         jLabelHeaderGen9 = new javax.swing.JLabel();
-        jScrollPane23 = new javax.swing.JScrollPane();
-        jTableWk4Activities = new javax.swing.JTable();
         jLabelPostAppMod4 = new javax.swing.JLabel();
         jPanelDooAttMainWk4 = new javax.swing.JPanel();
         jPanelAttachMainWk4 = new javax.swing.JPanel();
@@ -2868,9 +3916,11 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jButtonAddAttWk4 = new javax.swing.JButton();
         jButtonDeleteAttWk4 = new javax.swing.JButton();
         jScrollPaneWk4 = new javax.swing.JScrollPane();
-        jTableDocAttMainWk4 = new javax.swing.JTable();
+        jTableDocAttWk4 = new javax.swing.JTable();
         jTextAttDocPathMainWk4 = new javax.swing.JTextField();
         jPanelSave3 = new javax.swing.JPanel();
+        jScrollPaneWk9 = new javax.swing.JScrollPane();
+        jTableWk4Activities = new javax.swing.JTable();
         jPanelWkFive = new javax.swing.JPanel();
         jLabelWkDuration5 = new javax.swing.JLabel();
         jDateChooserWk5From = new com.toedter.calendar.JDateChooser();
@@ -2887,8 +3937,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelLineTime4 = new javax.swing.JLabel();
         jLabelLineDate4 = new javax.swing.JLabel();
         jLabelHeaderGen10 = new javax.swing.JLabel();
-        jScrollPane24 = new javax.swing.JScrollPane();
-        jTableWk5Activities = new javax.swing.JTable();
         jLabelPostAppMod5 = new javax.swing.JLabel();
         jPanelDooAttMainWk5 = new javax.swing.JPanel();
         jPanelAttachMainWk5 = new javax.swing.JPanel();
@@ -2899,9 +3947,11 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jButtonAddAttWk5 = new javax.swing.JButton();
         jButtonDeleteAttWk5 = new javax.swing.JButton();
         jScrollPaneWk5 = new javax.swing.JScrollPane();
-        jTableDocAttMainWk5 = new javax.swing.JTable();
+        jTableDocAttWk5 = new javax.swing.JTable();
         jTextAttDocPathMainWk5 = new javax.swing.JTextField();
         jPanelSave4 = new javax.swing.JPanel();
+        jScrollPaneWk10 = new javax.swing.JScrollPane();
+        jTableWk5Activities = new javax.swing.JTable();
         jPanelWkComments = new javax.swing.JPanel();
         jSeparator35 = new javax.swing.JSeparator();
         jLabelLogo4 = new javax.swing.JLabel();
@@ -2980,7 +4030,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jDialogWaiting.getContentPane().setLayout(jDialogWaitingLayout);
         jDialogWaitingLayout.setHorizontalGroup(
             jDialogWaitingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 607, Short.MAX_VALUE)
         );
         jDialogWaitingLayout.setVerticalGroup(
             jDialogWaitingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3190,99 +4240,47 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         jDialogWk1.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         jDialogWk1.setTitle("ACTIVITY PLANNER WEEK 1");
-        jDialogWk1.setAlwaysOnTop(true);
         jDialogWk1.setBackground(new java.awt.Color(255, 255, 204));
-        jDialogWk1.setLocation(new java.awt.Point(300, 100));
+        jDialogWk1.setLocation(new java.awt.Point(200, 50));
+        jDialogWk1.setMinimumSize(new java.awt.Dimension(890, 750));
         jDialogWk1.setName("dialogWk1"); // NOI18N
         jDialogWk1.setResizable(false);
-        jDialogWk1.setSize(new java.awt.Dimension(850, 650));
+        jDialogWk1.setSize(new java.awt.Dimension(850, 750));
 
-        jPanel1.setBackground(new java.awt.Color(237, 235, 92));
-        jPanel1.setPreferredSize(new java.awt.Dimension(890, 650));
-        jPanel1.setVerifyInputWhenFocusTarget(false);
-        jPanel1.setLayout(null);
-
-        jLabelDialogWk1ActivityDate.setText("Activity Date");
-        jPanel1.add(jLabelDialogWk1ActivityDate);
-        jLabelDialogWk1ActivityDate.setBounds(10, 80, 90, 30);
-
-        jDateChooserDialogActivityDateFrom.setDateFormatString("yyyy-MM-dd");
-        jPanel1.add(jDateChooserDialogActivityDateFrom);
-        jDateChooserDialogActivityDateFrom.setBounds(150, 80, 120, 30);
-
-        jLabelDialogWk1Site.setText("Site");
-        jPanel1.add(jLabelDialogWk1Site);
-        jLabelDialogWk1Site.setBounds(10, 240, 40, 30);
-
-        jTextFieldDialogWk1Site.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextFieldDialogWk1SiteMouseClicked(evt);
-            }
-        });
-        jTextFieldDialogWk1Site.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDialogWk1SiteActionPerformed(evt);
-            }
-        });
-        jTextFieldDialogWk1Site.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldDialogWk1SiteKeyTyped(evt);
-            }
-        });
-        jPanel1.add(jTextFieldDialogWk1Site);
-        jTextFieldDialogWk1Site.setBounds(70, 240, 440, 30);
-
-        jLabelWk1DialogJustification.setText("Justification for Choice of Activity ");
-        jPanel1.add(jLabelWk1DialogJustification);
-        jLabelWk1DialogJustification.setBounds(10, 360, 340, 30);
+        jPanelActivity.setBackground(new java.awt.Color(237, 235, 92));
+        jPanelActivity.setMinimumSize(new java.awt.Dimension(890, 750));
+        jPanelActivity.setVerifyInputWhenFocusTarget(false);
+        jPanelActivity.setLayout(null);
 
         jLabel10.setText("4.");
-        jPanel1.add(jLabel10);
-        jLabel10.setBounds(540, 180, 20, 30);
-        jPanel1.add(jTextFieldWk1DialogActivityDesc);
-        jTextFieldWk1DialogActivityDesc.setBounds(10, 330, 490, 30);
-
-        jLabelWk1DialogActivityDesc.setText("Activity Descrpition");
-        jPanel1.add(jLabelWk1DialogActivityDesc);
-        jLabelWk1DialogActivityDesc.setBounds(10, 290, 130, 30);
-
-        jTextAreaWk1DialogJustification.setColumns(20);
-        jTextAreaWk1DialogJustification.setRows(5);
-        jTextAreaWk1DialogJustification.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextAreaWk1DialogJustificationKeyTyped(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTextAreaWk1DialogJustification);
-
-        jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(10, 400, 500, 96);
+        jPanelActivity.add(jLabel10);
+        jLabel10.setBounds(530, 300, 20, 30);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel1.add(jSeparator3);
-        jSeparator3.setBounds(530, 10, 20, 490);
+        jPanelActivity.add(jSeparator3);
+        jSeparator3.setBounds(530, 140, 0, 510);
 
         jLabelDialogPerDiem.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelDialogPerDiem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDialogPerDiem.setText("Activity Details");
-        jPanel1.add(jLabelDialogPerDiem);
-        jLabelDialogPerDiem.setBounds(10, 20, 460, 30);
+        jPanelActivity.add(jLabelDialogPerDiem);
+        jLabelDialogPerDiem.setBounds(10, 0, 460, 30);
 
         jLabelWk1DialogStaffName.setText("Staff Details");
-        jPanel1.add(jLabelWk1DialogStaffName);
-        jLabelWk1DialogStaffName.setBounds(540, 30, 130, 30);
+        jPanelActivity.add(jLabelWk1DialogStaffName);
+        jLabelWk1DialogStaffName.setBounds(530, 150, 130, 30);
 
         jLabelWk1DialogStaffName1.setText("1.");
-        jPanel1.add(jLabelWk1DialogStaffName1);
-        jLabelWk1DialogStaffName1.setBounds(540, 60, 20, 30);
+        jPanelActivity.add(jLabelWk1DialogStaffName1);
+        jLabelWk1DialogStaffName1.setBounds(530, 180, 20, 30);
 
         jLabelWk1DialogStaffName2.setText("2.");
-        jPanel1.add(jLabelWk1DialogStaffName2);
-        jLabelWk1DialogStaffName2.setBounds(540, 100, 20, 30);
+        jPanelActivity.add(jLabelWk1DialogStaffName2);
+        jLabelWk1DialogStaffName2.setBounds(530, 220, 20, 30);
 
         jLabel17.setText("3.");
-        jPanel1.add(jLabel17);
-        jLabel17.setBounds(540, 140, 20, 30);
+        jPanelActivity.add(jLabel17);
+        jLabel17.setBounds(530, 260, 20, 30);
 
         jTextFieldWk1DialogStaffName4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3299,8 +4297,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jTextFieldWk1DialogStaffName4KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextFieldWk1DialogStaffName4);
-        jTextFieldWk1DialogStaffName4.setBounds(560, 180, 220, 30);
+        jPanelActivity.add(jTextFieldWk1DialogStaffName4);
+        jTextFieldWk1DialogStaffName4.setBounds(550, 300, 220, 30);
 
         jTextFieldWk1DialogStaffName1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3317,8 +4315,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jTextFieldWk1DialogStaffName1KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextFieldWk1DialogStaffName1);
-        jTextFieldWk1DialogStaffName1.setBounds(560, 60, 220, 30);
+        jPanelActivity.add(jTextFieldWk1DialogStaffName1);
+        jTextFieldWk1DialogStaffName1.setBounds(550, 180, 220, 30);
 
         jTextFieldWk1DialogStaffName2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3330,8 +4328,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jTextFieldWk1DialogStaffName2KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextFieldWk1DialogStaffName2);
-        jTextFieldWk1DialogStaffName2.setBounds(560, 100, 220, 30);
+        jPanelActivity.add(jTextFieldWk1DialogStaffName2);
+        jTextFieldWk1DialogStaffName2.setBounds(550, 220, 220, 30);
 
         jTextFieldWk1DialogStaffName3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3343,8 +4341,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jTextFieldWk1DialogStaffName3KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextFieldWk1DialogStaffName3);
-        jTextFieldWk1DialogStaffName3.setBounds(560, 140, 220, 30);
+        jPanelActivity.add(jTextFieldWk1DialogStaffName3);
+        jTextFieldWk1DialogStaffName3.setBounds(550, 260, 220, 30);
 
         jButtonDialogWk1Reset.setText("Reset");
         jButtonDialogWk1Reset.addActionListener(new java.awt.event.ActionListener() {
@@ -3352,8 +4350,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jButtonDialogWk1ResetActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonDialogWk1Reset);
-        jButtonDialogWk1Reset.setBounds(650, 460, 70, 30);
+        jPanelActivity.add(jButtonDialogWk1Reset);
+        jButtonDialogWk1Reset.setBounds(660, 580, 70, 30);
 
         jButtonDialogWk1Add.setText("Add Activity");
         jButtonDialogWk1Add.addActionListener(new java.awt.event.ActionListener() {
@@ -3361,24 +4359,20 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jButtonDialogWk1AddActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonDialogWk1Add);
-        jButtonDialogWk1Add.setBounds(530, 460, 100, 30);
+        jPanelActivity.add(jButtonDialogWk1Add);
+        jButtonDialogWk1Add.setBounds(540, 580, 100, 30);
 
         jCheckBoxDialogWk1BrkFast.setText(" Breakfast");
-        jPanel1.add(jCheckBoxDialogWk1BrkFast);
-        jCheckBoxDialogWk1BrkFast.setBounds(550, 230, 90, 21);
+        jPanelActivity.add(jCheckBoxDialogWk1BrkFast);
+        jCheckBoxDialogWk1BrkFast.setBounds(540, 350, 90, 21);
 
         jCheckBoxDialogWk1Lunch.setText("Lunch");
-        jPanel1.add(jCheckBoxDialogWk1Lunch);
-        jCheckBoxDialogWk1Lunch.setBounds(670, 230, 80, 21);
+        jPanelActivity.add(jCheckBoxDialogWk1Lunch);
+        jCheckBoxDialogWk1Lunch.setBounds(660, 350, 80, 21);
 
         jCheckBoxDialogWk1Dinner.setText(" Dinner");
-        jPanel1.add(jCheckBoxDialogWk1Dinner);
-        jCheckBoxDialogWk1Dinner.setBounds(550, 270, 90, 21);
-
-        jLabelRemain.setFont(new java.awt.Font("Tahoma", 3, 10)); // NOI18N
-        jPanel1.add(jLabelRemain);
-        jLabelRemain.setBounds(20, 440, 250, 20);
+        jPanelActivity.add(jCheckBoxDialogWk1Dinner);
+        jCheckBoxDialogWk1Dinner.setBounds(540, 390, 90, 21);
 
         jCheckBoxDialogWk1Misc.setText("Miscellaneous");
         jCheckBoxDialogWk1Misc.addActionListener(new java.awt.event.ActionListener() {
@@ -3386,24 +4380,24 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jCheckBoxDialogWk1MiscActionPerformed(evt);
             }
         });
-        jPanel1.add(jCheckBoxDialogWk1Misc);
-        jCheckBoxDialogWk1Misc.setBounds(550, 350, 110, 21);
+        jPanelActivity.add(jCheckBoxDialogWk1Misc);
+        jCheckBoxDialogWk1Misc.setBounds(540, 470, 110, 21);
 
         jCheckBoxDialogWk1Inc.setText("Incidental");
-        jPanel1.add(jCheckBoxDialogWk1Inc);
-        jCheckBoxDialogWk1Inc.setBounds(550, 310, 110, 21);
+        jPanelActivity.add(jCheckBoxDialogWk1Inc);
+        jCheckBoxDialogWk1Inc.setBounds(540, 430, 110, 21);
 
         jLabelWk1Misc.setText("Miscellaneous Desc");
-        jPanel1.add(jLabelWk1Misc);
-        jLabelWk1Misc.setBounds(560, 370, 160, 30);
+        jPanelActivity.add(jLabelWk1Misc);
+        jLabelWk1Misc.setBounds(540, 490, 160, 30);
 
         jTextFieldWk1Misc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldWk1MiscActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldWk1Misc);
-        jTextFieldWk1Misc.setBounds(560, 400, 110, 30);
+        jPanelActivity.add(jTextFieldWk1Misc);
+        jTextFieldWk1Misc.setBounds(540, 520, 110, 30);
 
         jButtonDialogWk1Close.setText("Close");
         jButtonDialogWk1Close.addActionListener(new java.awt.event.ActionListener() {
@@ -3411,14 +4405,14 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jButtonDialogWk1CloseActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonDialogWk1Close);
-        jButtonDialogWk1Close.setBounds(730, 460, 70, 30);
+        jPanelActivity.add(jButtonDialogWk1Close);
+        jButtonDialogWk1Close.setBounds(740, 580, 70, 30);
 
         jLabelWk1MiscAmt.setText("$");
-        jPanel1.add(jLabelWk1MiscAmt);
-        jLabelWk1MiscAmt.setBounds(690, 400, 30, 30);
-        jPanel1.add(jTextFieldWk1MiscAmt);
-        jTextFieldWk1MiscAmt.setBounds(730, 400, 70, 30);
+        jPanelActivity.add(jLabelWk1MiscAmt);
+        jLabelWk1MiscAmt.setBounds(670, 520, 30, 30);
+        jPanelActivity.add(jTextFieldWk1MiscAmt);
+        jTextFieldWk1MiscAmt.setBounds(710, 520, 70, 30);
 
         jLabelWk1Name4Del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
         jLabelWk1Name4Del.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3426,8 +4420,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jLabelWk1Name4DelMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabelWk1Name4Del);
-        jLabelWk1Name4Del.setBounds(780, 180, 30, 30);
+        jPanelActivity.add(jLabelWk1Name4Del);
+        jLabelWk1Name4Del.setBounds(770, 300, 30, 30);
 
         jLabelWk1Name1Del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
         jLabelWk1Name1Del.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3435,8 +4429,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jLabelWk1Name1DelMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabelWk1Name1Del);
-        jLabelWk1Name1Del.setBounds(780, 60, 30, 30);
+        jPanelActivity.add(jLabelWk1Name1Del);
+        jLabelWk1Name1Del.setBounds(770, 180, 30, 30);
 
         jLabelWk1Name2Del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
         jLabelWk1Name2Del.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3444,8 +4438,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jLabelWk1Name2DelMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabelWk1Name2Del);
-        jLabelWk1Name2Del.setBounds(780, 100, 30, 30);
+        jPanelActivity.add(jLabelWk1Name2Del);
+        jLabelWk1Name2Del.setBounds(770, 220, 30, 30);
 
         jLabelWk1Name3Del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
         jLabelWk1Name3Del.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3453,42 +4447,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jLabelWk1Name3DelMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabelWk1Name3Del);
-        jLabelWk1Name3Del.setBounds(780, 140, 30, 30);
-
-        jLabelProjectName.setText("Project Name");
-        jPanel1.add(jLabelProjectName);
-        jLabelProjectName.setBounds(10, 140, 80, 30);
-
-        jComboProjectName.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboProjectNameMouseClicked(evt);
-            }
-        });
-        jComboProjectName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboProjectNameActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jComboProjectName);
-        jComboProjectName.setBounds(125, 140, 390, 30);
-
-        jLabelProjectTask.setText("Project Task");
-        jPanel1.add(jLabelProjectTask);
-        jLabelProjectTask.setBounds(10, 190, 80, 30);
-
-        jComboProjectTask.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboProjectTaskMouseClicked(evt);
-            }
-        });
-        jComboProjectTask.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboProjectTaskActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jComboProjectTask);
-        jComboProjectTask.setBounds(125, 190, 390, 30);
+        jPanelActivity.add(jLabelWk1Name3Del);
+        jLabelWk1Name3Del.setBounds(770, 260, 30, 30);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(null);
@@ -3505,32 +4465,288 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanel2.add(jCheckBoxNoAcc);
         jCheckBoxNoAcc.setBounds(0, 80, 130, 21);
 
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(680, 270, 130, 100);
+        jPanelActivity.add(jPanel2);
+        jPanel2.setBounds(670, 390, 130, 100);
 
-        jLabelActFrom.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabelActFrom.setText("From");
-        jPanel1.add(jLabelActFrom);
-        jLabelActFrom.setBounds(110, 80, 40, 30);
+        jPanelDepartureDetails.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelDepartureDetails.setLayout(null);
+        jPanelDepartureDetails.add(jLabelDialogDepartActivityDate);
+        jLabelDialogDepartActivityDate.setBounds(5, 15, 140, 30);
 
-        jLabelActTo.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabelActTo.setText("To");
-        jPanel1.add(jLabelActTo);
-        jLabelActTo.setBounds(320, 80, 30, 30);
+        jDateChooserDialogActivityDateFrom.setDateFormatString("yyyy-MM-dd");
+        jPanelDepartureDetails.add(jDateChooserDialogActivityDateFrom);
+        jDateChooserDialogActivityDateFrom.setBounds(150, 15, 120, 30);
+
+        departTime.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelDepartureDetails.add(departTime);
+        departTime.setBounds(280, -10, 122, 70);
+
+        jPanelActivity.add(jPanelDepartureDetails);
+        jPanelDepartureDetails.setBounds(10, 35, 400, 60);
+
+        jPanel3.setLayout(null);
+        jPanel3.add(jLabelDialogReturnActivityDate);
+        jLabelDialogReturnActivityDate.setBounds(10, 20, 140, 30);
 
         jDateChooserDialogActivityDateTo.setDateFormatString("yyyy-MM-dd");
-        jPanel1.add(jDateChooserDialogActivityDateTo);
-        jDateChooserDialogActivityDateTo.setBounds(350, 80, 120, 30);
+        jPanel3.add(jDateChooserDialogActivityDateTo);
+        jDateChooserDialogActivityDateTo.setBounds(150, 15, 120, 30);
+        jPanel3.add(returnTime);
+        returnTime.setBounds(280, -10, 122, 70);
+
+        jPanelActivity.add(jPanel3);
+        jPanel3.setBounds(460, 35, 400, 60);
+
+        jPanelDooAtt.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelDooAtt.setLayout(null);
+
+        jPanelAttach.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelAttach.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanelAttach.setLayout(null);
+
+        jLabelMOHCCConfirmation.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabelMOHCCConfirmation.setText(" Enter Attachment Description below and select File");
+        jLabelMOHCCConfirmation.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelAttach.add(jLabelMOHCCConfirmation);
+        jLabelMOHCCConfirmation.setBounds(0, 0, 280, 25);
+
+        jToggleButtonMOHCCConfirmation.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jToggleButtonMOHCCConfirmation.setText("Delete File");
+        jToggleButtonMOHCCConfirmation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonMOHCCConfirmationActionPerformed(evt);
+            }
+        });
+        jPanelAttach.add(jToggleButtonMOHCCConfirmation);
+        jToggleButtonMOHCCConfirmation.setBounds(150, 85, 90, 20);
+
+        jToggleButtonMOHCCConfirmation2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jToggleButtonMOHCCConfirmation2.setText("Add File");
+        jToggleButtonMOHCCConfirmation2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonMOHCCConfirmation2ActionPerformed(evt);
+            }
+        });
+        jPanelAttach.add(jToggleButtonMOHCCConfirmation2);
+        jToggleButtonMOHCCConfirmation2.setBounds(30, 85, 90, 20);
+
+        jTextAttDocDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextAttDocDescActionPerformed(evt);
+            }
+        });
+        jPanelAttach.add(jTextAttDocDesc);
+        jTextAttDocDesc.setBounds(5, 30, 170, 25);
+
+        jButtonSelectFile.setText("Select File");
+        jButtonSelectFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSelectFileActionPerformed(evt);
+            }
+        });
+        jPanelAttach.add(jButtonSelectFile);
+        jButtonSelectFile.setBounds(180, 30, 95, 25);
+
+        jTextAttDocName.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTextAttDocName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextAttDocNameActionPerformed(evt);
+            }
+        });
+        jPanelAttach.add(jTextAttDocName);
+        jTextAttDocName.setBounds(5, 60, 270, 20);
+
+        jPanelDooAtt.add(jPanelAttach);
+        jPanelAttach.setBounds(0, 0, 280, 110);
+
+        jTableDocAtt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Description", "File Name", "File Path"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTableDocAtt);
+
+        jPanelDooAtt.add(jScrollPane3);
+        jScrollPane3.setBounds(280, 0, 230, 110);
+
+        jPanelActivity.add(jPanelDooAtt);
+        jPanelDooAtt.setBounds(10, 580, 510, 110);
+
+        jTextAttDocPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextAttDocPathActionPerformed(evt);
+            }
+        });
+        jPanelActivity.add(jTextAttDocPath);
+        jTextAttDocPath.setBounds(620, 630, 230, 25);
+
+        jPanelActivityInfo.setBackground(new java.awt.Color(237, 235, 92));
+        jPanelActivityInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
+        jPanelActivityInfo.setLayout(null);
+
+        jLabeAccountCode.setText("Account Code");
+        jPanelActivityInfo.add(jLabeAccountCode);
+        jLabeAccountCode.setBounds(10, 0, 495, 20);
+
+        jComboAccountCode.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboAccountCodeMouseClicked(evt);
+            }
+        });
+        jComboAccountCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboAccountCodeActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboAccountCode);
+        jComboAccountCode.setBounds(10, 20, 495, 30);
+
+        jLabelDonor.setText("Donor");
+        jPanelActivityInfo.add(jLabelDonor);
+        jLabelDonor.setBounds(10, 50, 495, 20);
+
+        jComboDonor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboDonorMouseClicked(evt);
+            }
+        });
+        jComboDonor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboDonorActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboDonor);
+        jComboDonor.setBounds(10, 70, 495, 30);
+
+        jLabelPrjCodeGL.setText("Project Code (GL)");
+        jPanelActivityInfo.add(jLabelPrjCodeGL);
+        jLabelPrjCodeGL.setBounds(10, 100, 495, 20);
+
+        jComboProjectCodeGL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboProjectCodeGLMouseClicked(evt);
+            }
+        });
+        jComboProjectCodeGL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboProjectCodeGLActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboProjectCodeGL);
+        jComboProjectCodeGL.setBounds(10, 120, 495, 30);
+
+        jLabelBudMainCode.setText("Budget line");
+        jPanelActivityInfo.add(jLabelBudMainCode);
+        jLabelBudMainCode.setBounds(10, 200, 495, 20);
+
+        jComboBudMainCode.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBudMainCodeMouseClicked(evt);
+            }
+        });
+        jComboBudMainCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBudMainCodeActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboBudMainCode);
+        jComboBudMainCode.setBounds(10, 220, 495, 30);
+
+        jLabelDialogWk1Site.setText("Site to be Visited");
+        jPanelActivityInfo.add(jLabelDialogWk1Site);
+        jLabelDialogWk1Site.setBounds(10, 250, 495, 20);
+
+        jTextFieldDialogWkSite.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldDialogWkSiteMouseClicked(evt);
+            }
+        });
+        jTextFieldDialogWkSite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDialogWkSiteActionPerformed(evt);
+            }
+        });
+        jTextFieldDialogWkSite.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldDialogWkSiteKeyTyped(evt);
+            }
+        });
+        jPanelActivityInfo.add(jTextFieldDialogWkSite);
+        jTextFieldDialogWkSite.setBounds(10, 270, 495, 30);
+
+        jTextAreaWk1DialogJustification.setColumns(20);
+        jTextAreaWk1DialogJustification.setRows(5);
+        jTextAreaWk1DialogJustification.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextAreaWk1DialogJustificationKeyTyped(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTextAreaWk1DialogJustification);
+
+        jPanelActivityInfo.add(jScrollPane2);
+        jScrollPane2.setBounds(10, 370, 490, 70);
+
+        jLabelWk1DialogActivityDesc.setText("Activity Descrpition");
+        jPanelActivityInfo.add(jLabelWk1DialogActivityDesc);
+        jLabelWk1DialogActivityDesc.setBounds(10, 300, 100, 20);
+        jPanelActivityInfo.add(jTextFieldWk1DialogActivityDesc);
+        jTextFieldWk1DialogActivityDesc.setBounds(10, 320, 490, 30);
+
+        jLabelJustfy.setText("Justification for Choice of Activity ");
+        jPanelActivityInfo.add(jLabelJustfy);
+        jLabelJustfy.setBounds(10, 350, 200, 20);
+
+        jLabelPrjCodeProgramming.setText("Project Code (Programming)");
+        jPanelActivityInfo.add(jLabelPrjCodeProgramming);
+        jLabelPrjCodeProgramming.setBounds(10, 150, 495, 20);
+
+        jComboProjectCodeProgramming.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboProjectCodeProgrammingMouseClicked(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboProjectCodeProgramming);
+        jComboProjectCodeProgramming.setBounds(10, 170, 495, 30);
+
+        jLabelRemain.setFont(new java.awt.Font("Tahoma", 3, 9)); // NOI18N
+        jPanelActivityInfo.add(jLabelRemain);
+        jLabelRemain.setBounds(280, 350, 210, 20);
+
+        jPanelActivity.add(jPanelActivityInfo);
+        jPanelActivityInfo.setBounds(0, 110, 510, 450);
+
+        jPanelAddStaff.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelAddStaff.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanelAddStaff.setLayout(null);
+
+        jCheckAddStaff.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jCheckAddStaff.setText(" Additional Staff");
+        jPanelAddStaff.add(jCheckAddStaff);
+        jCheckAddStaff.setBounds(10, 5, 220, 21);
+
+        jPanelActivity.add(jPanelAddStaff);
+        jPanelAddStaff.setBounds(530, 120, 320, 30);
 
         javax.swing.GroupLayout jDialogWk1Layout = new javax.swing.GroupLayout(jDialogWk1.getContentPane());
         jDialogWk1.getContentPane().setLayout(jDialogWk1Layout);
         jDialogWk1Layout.setHorizontalGroup(
             jDialogWk1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE)
+            .addComponent(jPanelActivity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jDialogWk1Layout.setVerticalGroup(
             jDialogWk1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelActivity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -3564,7 +4780,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkOne.add(jLabelLogo1);
-        jLabelLogo1.setBounds(10, 10, 220, 100);
+        jLabelLogo1.setBounds(10, 5, 220, 115);
 
         jLabelProvince1.setMinimumSize(new java.awt.Dimension(130, 130));
         jLabelProvince1.setName(""); // NOI18N
@@ -3615,7 +4831,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelWkOne.add(jLabelLineDate);
         jLabelLineDate.setBounds(1090, 0, 110, 30);
         jPanelWkOne.add(jLabelEmp);
-        jLabelEmp.setBounds(1180, 66, 70, 30);
+        jLabelEmp.setBounds(1040, 130, 70, 30);
 
         jLabelHeaderGen6.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderGen6.setText("MONTHLY  PLAN ");
@@ -3649,27 +4865,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         });
         jPanelWkOne.add(jButtonWk1DelActivity);
         jButtonWk1DelActivity.setBounds(1020, 165, 210, 30);
-
-        jTableActivitiesWk1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTableActivitiesWk1);
-
-        jPanelWkOne.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 220, 1290, 310);
 
         jPanelDooAttMainWk1.setBackground(new java.awt.Color(255, 255, 255));
         jPanelDooAttMainWk1.setLayout(null);
@@ -3733,7 +4928,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelDooAttMainWk1.add(jPanelAttachMainWk1);
         jPanelAttachMainWk1.setBounds(0, 0, 280, 140);
 
-        jTableDocAttMainWk1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDocAttWk1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -3749,7 +4944,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPaneWk1.setViewportView(jTableDocAttMainWk1);
+        jScrollPaneWk1.setViewportView(jTableDocAttWk1);
 
         jPanelDooAttMainWk1.add(jScrollPaneWk1);
         jScrollPaneWk1.setBounds(280, 0, 460, 140);
@@ -3768,28 +4963,38 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelSave.setBackground(new java.awt.Color(255, 255, 255));
         jPanelSave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jPanelSave.setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Record Validation");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanelSave.add(jLabel1);
-        jLabel1.setBounds(170, 10, 190, 20);
-
-        jButtonSave.setBackground(new java.awt.Color(0, 153, 0));
-        jButtonSave.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonSave.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonSave.setText("Submit");
-        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveActionPerformed(evt);
-            }
-        });
-        jPanelSave.add(jButtonSave);
-        jButtonSave.setBounds(180, 51, 170, 50);
-
         jPanelWkOne.add(jPanelSave);
         jPanelSave.setBounds(765, 530, 555, 140);
+
+        jTableWk1Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk6.setViewportView(jTableWk1Activities);
+
+        jPanelWkOne.add(jScrollPaneWk6);
+        jScrollPaneWk6.setBounds(30, 220, 1290, 310);
+
+        jLabelRefNo.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabelRefNo.setText("Ref No.");
+        jPanelWkOne.add(jLabelRefNo);
+        jLabelRefNo.setBounds(1090, 70, 50, 30);
+
+        jLabelRefNum.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jPanelWkOne.add(jLabelRefNum);
+        jLabelRefNum.setBounds(1170, 70, 70, 30);
 
         jTabbedPaneMain.addTab("Week One", jPanelWkOne);
 
@@ -3834,7 +5039,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         jLabelLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkTwo.add(jLabelLogo2);
-        jLabelLogo2.setBounds(10, 10, 220, 100);
+        jLabelLogo2.setBounds(10, 10, 220, 115);
 
         jButtonWk2DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk2DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -3870,27 +5075,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelHeaderGen7.setText("MONTHLY  PLAN ");
         jPanelWkTwo.add(jLabelHeaderGen7);
         jLabelHeaderGen7.setBounds(450, 40, 420, 40);
-
-        jTableWk2Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane11.setViewportView(jTableWk2Activities);
-
-        jPanelWkTwo.add(jScrollPane11);
-        jScrollPane11.setBounds(30, 220, 1290, 310);
 
         jLabelPostAppMod2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jPanelWkTwo.add(jLabelPostAppMod2);
@@ -3958,7 +5142,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelDooAttMainWk2.add(jPanelAttachMainWk2);
         jPanelAttachMainWk2.setBounds(0, 0, 280, 140);
 
-        jTableDocAttMainWk2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDocAttWk2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -3974,7 +5158,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPaneWk2.setViewportView(jTableDocAttMainWk2);
+        jScrollPaneWk2.setViewportView(jTableDocAttWk2);
 
         jPanelDooAttMainWk2.add(jScrollPaneWk2);
         jScrollPaneWk2.setBounds(280, 0, 460, 140);
@@ -3995,6 +5179,27 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelSave1.setLayout(null);
         jPanelWkTwo.add(jPanelSave1);
         jPanelSave1.setBounds(765, 530, 555, 140);
+
+        jTableWk2Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk7.setViewportView(jTableWk2Activities);
+
+        jPanelWkTwo.add(jScrollPaneWk7);
+        jScrollPaneWk7.setBounds(25, 220, 1290, 310);
 
         jTabbedPaneMain.addTab("Week Two", jPanelWkTwo);
 
@@ -4041,7 +5246,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         jLabelLogo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkThree.add(jLabelLogo3);
-        jLabelLogo3.setBounds(10, 10, 220, 100);
+        jLabelLogo3.setBounds(10, 10, 220, 115);
 
         jButtonWk3DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk3DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -4081,27 +5286,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelHeaderGen11.setText("MONTHLY  PLAN ");
         jPanelWkThree.add(jLabelHeaderGen11);
         jLabelHeaderGen11.setBounds(450, 40, 420, 40);
-
-        jTableWk3Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane26.setViewportView(jTableWk3Activities);
-
-        jPanelWkThree.add(jScrollPane26);
-        jScrollPane26.setBounds(30, 220, 1290, 310);
 
         jLabelPostAppMod3.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jPanelWkThree.add(jLabelPostAppMod3);
@@ -4169,7 +5353,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelDooAttMainWk3.add(jPanelAttachMainWk3);
         jPanelAttachMainWk3.setBounds(0, 0, 280, 140);
 
-        jTableDocAttMainWk3.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDocAttWk3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -4185,7 +5369,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPaneWk3.setViewportView(jTableDocAttMainWk3);
+        jScrollPaneWk3.setViewportView(jTableDocAttWk3);
 
         jPanelDooAttMainWk3.add(jScrollPaneWk3);
         jScrollPaneWk3.setBounds(280, 0, 460, 140);
@@ -4206,6 +5390,27 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelSave2.setLayout(null);
         jPanelWkThree.add(jPanelSave2);
         jPanelSave2.setBounds(765, 530, 555, 140);
+
+        jTableWk3Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk8.setViewportView(jTableWk3Activities);
+
+        jPanelWkThree.add(jScrollPaneWk8);
+        jScrollPaneWk8.setBounds(25, 220, 1290, 310);
 
         jTabbedPaneMain.addTab("Week Three", jPanelWkThree);
 
@@ -4252,7 +5457,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         jLabelLogo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkFour.add(jLabelLogo7);
-        jLabelLogo7.setBounds(10, 10, 220, 100);
+        jLabelLogo7.setBounds(10, 10, 220, 115);
 
         jButtonWk4DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk4DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -4292,27 +5497,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelHeaderGen9.setText("MONTHLY  PLAN ");
         jPanelWkFour.add(jLabelHeaderGen9);
         jLabelHeaderGen9.setBounds(450, 40, 420, 40);
-
-        jTableWk4Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane23.setViewportView(jTableWk4Activities);
-
-        jPanelWkFour.add(jScrollPane23);
-        jScrollPane23.setBounds(30, 220, 1290, 310);
 
         jLabelPostAppMod4.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jPanelWkFour.add(jLabelPostAppMod4);
@@ -4380,7 +5564,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelDooAttMainWk4.add(jPanelAttachMainWk4);
         jPanelAttachMainWk4.setBounds(0, 0, 280, 140);
 
-        jTableDocAttMainWk4.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDocAttWk4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -4396,7 +5580,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPaneWk4.setViewportView(jTableDocAttMainWk4);
+        jScrollPaneWk4.setViewportView(jTableDocAttWk4);
 
         jPanelDooAttMainWk4.add(jScrollPaneWk4);
         jScrollPaneWk4.setBounds(280, 0, 460, 140);
@@ -4417,6 +5601,27 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelSave3.setLayout(null);
         jPanelWkFour.add(jPanelSave3);
         jPanelSave3.setBounds(765, 530, 555, 140);
+
+        jTableWk4Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk9.setViewportView(jTableWk4Activities);
+
+        jPanelWkFour.add(jScrollPaneWk9);
+        jScrollPaneWk9.setBounds(25, 220, 1290, 310);
 
         jTabbedPaneMain.addTab("Week Four", jPanelWkFour);
 
@@ -4463,7 +5668,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
         jLabelLogo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkFive.add(jLabelLogo5);
-        jLabelLogo5.setBounds(10, 10, 220, 100);
+        jLabelLogo5.setBounds(10, 10, 220, 115);
 
         jButtonWk5DelActivity.setBackground(new java.awt.Color(204, 0, 0));
         jButtonWk5DelActivity.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -4503,27 +5708,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jLabelHeaderGen10.setText("MONTHLY  PLAN ");
         jPanelWkFive.add(jLabelHeaderGen10);
         jLabelHeaderGen10.setBounds(450, 40, 420, 40);
-
-        jTableWk5Activities.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane24.setViewportView(jTableWk5Activities);
-
-        jPanelWkFive.add(jScrollPane24);
-        jScrollPane24.setBounds(30, 220, 1290, 310);
 
         jLabelPostAppMod5.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jPanelWkFive.add(jLabelPostAppMod5);
@@ -4591,7 +5775,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelDooAttMainWk5.add(jPanelAttachMainWk5);
         jPanelAttachMainWk5.setBounds(0, 0, 280, 140);
 
-        jTableDocAttMainWk5.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDocAttWk5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -4607,7 +5791,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPaneWk5.setViewportView(jTableDocAttMainWk5);
+        jScrollPaneWk5.setViewportView(jTableDocAttWk5);
 
         jPanelDooAttMainWk5.add(jScrollPaneWk5);
         jScrollPaneWk5.setBounds(280, 0, 460, 140);
@@ -4628,6 +5812,27 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jPanelSave4.setLayout(null);
         jPanelWkFive.add(jPanelSave4);
         jPanelSave4.setBounds(765, 530, 555, 140);
+
+        jTableWk5Activities.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPaneWk10.setViewportView(jTableWk5Activities);
+
+        jPanelWkFive.add(jScrollPaneWk10);
+        jScrollPaneWk10.setBounds(25, 220, 1290, 310);
 
         jTabbedPaneMain.addTab("Week Five", jPanelWkFive);
 
@@ -4977,165 +6182,12 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuFileActionPerformed
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-        
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jMenuItemClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClose1ActionPerformed
-        try {
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableActivitiesWk1.getRowCount() > 0) {
-                finDayCalcWk1();
-                minDateComWk1 = Date.from(minDateWk1.atStartOfDay(zoneId).toInstant());
-                maxDateComWk1 = Date.from(maxDateWk1.atStartOfDay(zoneId).toInstant());
 
-            }
-
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk2Activities.getRowCount() > 0) {
-                finDayCalcWk2();
-                minDateComWk2 = Date.from(minDateWk2.atStartOfDay(zoneId).toInstant());
-                maxDateComWk2 = Date.from(maxDateWk2.atStartOfDay(zoneId).toInstant());
-
-            }
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk3Activities.getRowCount() > 0) {
-                finDayCalcWk3();
-                minDateComWk3 = Date.from(minDateWk3.atStartOfDay(zoneId).toInstant());
-                maxDateComWk3 = Date.from(maxDateWk3.atStartOfDay(zoneId).toInstant());
-
-            }
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk4Activities.getRowCount() > 0) {
-                finDayCalcWk4();
-                minDateComWk4 = Date.from(minDateWk4.atStartOfDay(zoneId).toInstant());
-                maxDateComWk4 = Date.from(maxDateWk4.atStartOfDay(zoneId).toInstant());
-
-            }
-            if ("National Office".equals(jLabelDistrict.getText()) && jTableWk5Activities.getRowCount() > 0) {
-                finDayCalcWk5();
-                minDateComWk5 = Date.from(minDateWk5.atStartOfDay(zoneId).toInstant());
-                maxDateComWk5 = Date.from(maxDateWk5.atStartOfDay(zoneId).toInstant());
-
-            }
-
-            if (jTableActivitiesWk1.getRowCount() == 0 && jTableWk2Activities.getRowCount() == 0
-                    && jTableWk3Activities.getRowCount() == 0 && jTableWk4Activities.getRowCount() == 0
-                    && jTableWk5Activities.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "At least one activity should be completed.");
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-
-            } else if ((jDateChooserWk1From.getDate() == null) || (jDateChooserWk1To.getDate() == null)) {
-                JOptionPane.showMessageDialog(this, "Date for week 1 cannot be blank. Please check your dates");
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-            } else if (noOfFinDays1 > 7) {
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 1 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk1From.setDate(null);
-                jDateChooserWk1To.setDate(null);
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-            } else if (((jDateChooserWk2From.getDate() == null) || (jDateChooserWk2To.getDate() == null)) && noOfFinDays2 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 2 cannot be blank. Please check your dates");
-                jDateChooserWk2From.requestFocusInWindow();
-                jDateChooserWk2From.setFocusable(true);
-            } else if (noOfFinDays2 > 7) {
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 2 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk2From.setDate(null);
-                jDateChooserWk2To.setDate(null);
-                jDateChooserWk2From.requestFocusInWindow();
-                jDateChooserWk2From.setFocusable(true);
-            } else if (((jDateChooserWk3From.getDate() == null) || (jDateChooserWk3To.getDate() == null)) && noOfFinDays3 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 3 cannot be blank. Please check your dates");
-                jDateChooserWk3From.requestFocusInWindow();
-                jDateChooserWk3From.setFocusable(true);
-            } else if (noOfFinDays3 > 7) {
-
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 3 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk3From.setDate(null);
-                jDateChooserWk3To.setDate(null);
-                jDateChooserWk3From.requestFocusInWindow();
-                jDateChooserWk3From.setFocusable(true);
-            } else if (((jDateChooserWk4From.getDate() == null) || (jDateChooserWk4To.getDate() == null)) && noOfFinDays4 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 4 cannot be blank. Please check your dates");
-                jDateChooserWk4From.requestFocusInWindow();
-                jDateChooserWk4From.setFocusable(true);
-            } else if (noOfFinDays4 > 7) {
-
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 4 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk4From.setDate(null);
-                jDateChooserWk4To.setDate(null);
-                jDateChooserWk4From.requestFocusInWindow();
-                jDateChooserWk4From.setFocusable(true);
-            } else if (((jDateChooserWk5From.getDate() == null) || (jDateChooserWk5To.getDate() == null)) && noOfFinDays5 > 0) {
-                JOptionPane.showMessageDialog(this, "Date for week 5 cannot be blank. Please check your dates");
-                jDateChooserWk5From.requestFocusInWindow();
-                jDateChooserWk5From.setFocusable(true);
-            } else if (noOfFinDays5 > 7) {
-
-                JOptionPane.showMessageDialog(this, "Weekly Plan days for week 5 cannot be more than seven(7) days",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserWk5From.setDate(null);
-                jDateChooserWk5To.setDate(null);
-                jDateChooserWk5From.requestFocusInWindow();
-                jDateChooserWk5From.setFocusable(true);
-            } else if (jTableActivitiesWk1.getRowCount() > 0 && (formatter.format(jDateChooserWk1From.getDate()).compareTo(formatter.format(minDateComWk1)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 1 cannot be lower than start date.Please check your dates");
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-
-            } else if (jTableActivitiesWk1.getRowCount() > 0 && (formatter.format(jDateChooserWk1To.getDate()).compareTo(formatter.format(maxDateComWk1)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 1 cannot be greater than end date.Please check your dates");
-                jDateChooserWk1To.requestFocusInWindow();
-                jDateChooserWk1To.setFocusable(true);
-
-            } else if (jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2From.getDate()).compareTo(formatter.format(minDateComWk2)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 2 cannot be lower than start date.Please check your dates");
-                jDateChooserWk2From.requestFocusInWindow();
-                jDateChooserWk2From.setFocusable(true);
-
-            } else if (jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2To.getDate()).compareTo(formatter.format(maxDateComWk2)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 2 cannot be greater than end date.Please check your dates");
-                jDateChooserWk2To.requestFocusInWindow();
-                jDateChooserWk2To.setFocusable(true);
-
-            } else if (jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3From.getDate()).compareTo(formatter.format(minDateComWk3)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 3 cannot be lower than start date.Please check your dates");
-                jDateChooserWk3From.requestFocusInWindow();
-                jDateChooserWk3From.setFocusable(true);
-
-            } else if (jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3To.getDate()).compareTo(formatter.format(maxDateComWk3)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 3 cannot be greater than end date.Please check your dates");
-                jDateChooserWk3To.requestFocusInWindow();
-                jDateChooserWk3To.setFocusable(true);
-
-            } else if (jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4From.getDate()).compareTo(formatter.format(minDateComWk4)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 4 cannot be lower than start date.Please check your dates");
-                jDateChooserWk4From.requestFocusInWindow();
-                jDateChooserWk4From.setFocusable(true);
-
-            } else if (jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4To.getDate()).compareTo(formatter.format(maxDateComWk4)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 4 cannot be greater than end date.Please check your dates");
-                jDateChooserWk4To.requestFocusInWindow();
-                jDateChooserWk4To.setFocusable(true);
-
-            } else if (jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5From.getDate()).compareTo(formatter.format(minDateComWk5)) > 0)) {
-                JOptionPane.showMessageDialog(this, "Minimum activity date for week 5cannot be lower than start date.Please check your dates");
-                jDateChooserWk5From.requestFocusInWindow();
-                jDateChooserWk5From.setFocusable(true);
-
-            } else if (jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5To.getDate()).compareTo(formatter.format(maxDateComWk5)) < 0)) {
-                JOptionPane.showMessageDialog(this, "Maximum activity date for week 5 cannot be greater than end date.Please check your dates");
-                jDateChooserWk5To.requestFocusInWindow();
-                jDateChooserWk5To.setFocusable(true);
-
-            } else {
-                saveRec();
-            }
-        } catch (Exception e) {
-        }
-
-
+        regCheck();
     }//GEN-LAST:event_jMenuItemClose1ActionPerformed
 
     private void jButtonWk2AddActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonWk2AddActivityActionPerformed
@@ -5572,7 +6624,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Date cannot be blank. Please check your dates");
                 jDateChooserWk1To.requestFocusInWindow();
                 jDateChooserWk1To.setFocusable(true);
-                //            } else if (formatter.format(jDateChooserWk1From.getDate()).compareTo(formatter.format(todayDate)) < 0) {
+//            } else if (formatter.format(jDateChooserWk1From.getDate()).compareTo(formatter.format(todayDate)) < 0) {
             } else if (formatter.format(jDateChooserWk1From.getDate()).compareTo(tH.internetDate) < 0) {
                 JOptionPane.showMessageDialog(this, "Activity date cannot be lower than today's date.Please check your dates");
                 jDateChooserWk1From.requestFocusInWindow();
@@ -5585,31 +6637,36 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 jDateChooserWk1To.setDate(null);
                 jDateChooserWk1From.requestFocusInWindow();
                 jDateChooserWk1From.setFocusable(true);
-            } else if (("National Office".equals(jLabelDistrict.getText())) && (noOfDaysBetweenWk1 > 7)) {
-                JOptionPane.showMessageDialog(this, "Weekly Plan days cannot be more than seven(7) days haere",
+            } else if (noOfDaysBetweenWk1 > 7) {
+                JOptionPane.showMessageDialog(this, "Weekly Plan days cannot be more than seven(7) days here",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 jDateChooserWk1From.setDate(null);
                 jDateChooserWk1To.setDate(null);
                 jDateChooserWk1From.requestFocusInWindow();
                 jDateChooserWk1From.setFocusable(true);
-            } else if ((!"National Office".equals(jLabelDistrict.getText())) && (lastDateofMonth.compareTo(formatter.format(jDateChooserWk1To.getDate())) < 0)) {
-                JOptionPane.showMessageDialog(this, "Activity date cannot be greater than last day of the month.Please check your dates");
-                jDateChooserWk1From.requestFocusInWindow();
-                jDateChooserWk1From.setFocusable(true);
-            } else {
+            } //            else if ((!"National Office".equals(jLabelDistrict.getText())) && (lastDateofMonth.compareTo(formatter.format(jDateChooserWk1To.getDate())) < 0)) {
+            //                JOptionPane.showMessageDialog(this, "Activity date cannot be greater than last day of the month.Please check your dates");
+            //                jDateChooserWk1From.requestFocusInWindow();
+            //                jDateChooserWk1From.setFocusable(true);
+            //            } 
+            else {
                 wk1Site = "Y";
                 wk2Site = "N";
                 wk3Site = "N";
                 wk4Site = "N";
                 wk5Site = "N";
 
-                if (("National Office".equals(jLabelDistrict.getText()))) {
-                    jDialogWk1.setTitle("Per Diem Week 1");
-                } else {
-                    jDialogWk1.setTitle("Month Per Diem ");
-                }
+//                if (("National Office".equals(jLabelDistrict.getText()))) {
+                jDialogWk1.setTitle("Per Diem Week 1");
+//                } else {
+//                    jDialogWk1.setTitle("Month Per Diem ");
+//                }
                 resetField();
+                refreshAttFields();
+                modelAtt.setRowCount(0);
                 jDialogWk1.setVisible(true);
+                addStaff();
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -5617,15 +6674,15 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonWk1AddActivityActionPerformed
 
     private void jButtonWk1DelActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonWk1DelActivityActionPerformed
-        DefaultTableModel model = (DefaultTableModel) this.jTableActivitiesWk1.getModel();
+        DefaultTableModel model = (DefaultTableModel) this.jTableWk1Activities.getModel();
 
-        int selectedOption = JOptionPane.showConfirmDialog(jTableActivitiesWk1,
+        int selectedOption = JOptionPane.showConfirmDialog(jTableWk1Activities,
                 "Do you want to delete selected activity line?",
                 "Choose",
                 JOptionPane.YES_NO_OPTION);
         if (selectedOption == JOptionPane.YES_OPTION) {
 
-            int[] rows = jTableActivitiesWk1.getSelectedRows();
+            int[] rows = jTableWk1Activities.getSelectedRows();
             for (int i = 0; i < rows.length; i++) {
                 model.removeRow(rows[i] - i);
             }
@@ -5636,7 +6693,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonWk1DelActivityActionPerformed
 
     private void jButtonOkFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkFacilityActionPerformed
-        jTextFieldDialogWk1Site.setText(jComboFacility.getSelectedItem().toString());
+        jTextFieldDialogWkSite.setText(jComboFacility.getSelectedItem().toString());
         jDialogFacility.setVisible(false);
     }//GEN-LAST:event_jButtonOkFacilityActionPerformed
 
@@ -5824,574 +6881,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         jDialogSearchName1.dispose();
     }//GEN-LAST:event_jButtonOk1ActionPerformed
 
-    private void jTextFieldDialogWk1SiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDialogWk1SiteMouseClicked
-        facilityPOP();
-    }//GEN-LAST:event_jTextFieldDialogWk1SiteMouseClicked
-
-    private void jTextFieldDialogWk1SiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDialogWk1SiteActionPerformed
-
-    }//GEN-LAST:event_jTextFieldDialogWk1SiteActionPerformed
-
-    private void jTextFieldDialogWk1SiteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDialogWk1SiteKeyTyped
-        facilityPOP();
-    }//GEN-LAST:event_jTextFieldDialogWk1SiteKeyTyped
-
-    private void jTextAreaWk1DialogJustificationKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaWk1DialogJustificationKeyTyped
-        jTextAreaWk1DialogJustification.setLineWrap(true);
-        jTextAreaWk1DialogJustification.setWrapStyleWord(true);
-
-        String charsRemaining = " characters remaining";
-        int newLen = 0;
-
-        int currLen = jTextAreaWk1DialogJustification.getText().length();
-
-        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-            newLen = currLen - 1;
-            ignoreInput = false;
-        } else {
-            newLen = currLen + 1;
-        }
-
-        if (newLen < 0) {
-            newLen = 0;
-        }
-
-        if (newLen == 0) {
-            jLabelRemain.setText(charMaxWk1 + " characters maximum!");
-        } else if (newLen >= 0 && newLen < charMaxWk1) {
-            jLabelRemain.setText((charMaxWk1 - newLen) + charsRemaining);
-        } else if (newLen >= charMaxWk1) {
-            try {
-                ignoreInput = true;
-                jLabelRemain.setText("0 " + charsRemaining);
-                JOptionPane.showMessageDialog(jDialogWk1, "Maximum allowed characters reached.",
-                        "Word Count Warning", JOptionPane.WARNING_MESSAGE);
-                jTextAreaWk1DialogJustification.requestFocusInWindow();
-                jTextAreaWk1DialogJustification.setFocusable(true);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-
-        }
-        if ((charMaxWk1 - newLen) > 15) {
-            jLabelRemain.setForeground(new java.awt.Color(0, 102, 0));
-        } else {
-            jLabelRemain.setForeground(new java.awt.Color(255, 51, 51));
-        }
-    }//GEN-LAST:event_jTextAreaWk1DialogJustificationKeyTyped
-
-    private void jTextFieldWk1DialogStaffName4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName4MouseClicked
-        staffName1 = "N";
-        staffName2 = "N";
-        staffName3 = "N";
-        staffName4 = "Y";
-        jDialogSearchName1.setVisible(true);
-        jDialogSearchName1.setVisible(false);
-        jDialogSearchName1.setVisible(true);
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName4MouseClicked
-
-    private void jTextFieldWk1DialogStaffName4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName4ActionPerformed
-        staffName1 = "N";
-        staffName2 = "N";
-        staffName3 = "N";
-        staffName4 = "Y";
-        jDialogSearchName1.setVisible(true);
-        jDialogSearchName1.setVisible(false);
-        jDialogSearchName1.setVisible(true);
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName4ActionPerformed
-
-    private void jTextFieldWk1DialogStaffName4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName4KeyTyped
-        staffName1 = "N";
-        staffName2 = "N";
-        staffName3 = "Y";
-        staffName4 = "N";
-        jDialogSearchName1.setVisible(true);
-        jDialogSearchName1.setVisible(false);
-        jDialogSearchName1.setVisible(true);
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName4KeyTyped
-
-    private void jTextFieldWk1DialogStaffName1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName1MouseClicked
-        staffName1 = "Y";
-        staffName2 = "N";
-        staffName3 = "N";
-        staffName4 = "N";
-
-        jDialogSearchName1.setVisible(true);
-        jDialogSearchName1.setVisible(false);
-        jDialogSearchName1.setVisible(true);
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName1MouseClicked
-
-    private void jTextFieldWk1DialogStaffName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName1ActionPerformed
-
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName1ActionPerformed
-
-    private void jTextFieldWk1DialogStaffName1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName1KeyTyped
-        staffName1 = "Y";
-        staffName2 = "N";
-        staffName3 = "N";
-        staffName4 = "N";
-
-        jDialogSearchName1.setVisible(true);
-        jDialogSearchName1.setVisible(false);
-        jDialogSearchName1.setVisible(true);
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName1KeyTyped
-
-    private void jTextFieldWk1DialogStaffName2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName2MouseClicked
-        staffName1 = "N";
-        staffName2 = "Y";
-        staffName3 = "N";
-        staffName4 = "N";
-        jDialogSearchName1.setVisible(true);
-        jDialogSearchName1.setVisible(false);
-        jDialogSearchName1.setVisible(true);
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName2MouseClicked
-
-    private void jTextFieldWk1DialogStaffName2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName2KeyTyped
-        staffName1 = "N";
-        staffName2 = "Y";
-        staffName3 = "N";
-        staffName4 = "N";
-        jDialogSearchName1.setVisible(true);
-        jDialogSearchName1.setVisible(false);
-        jDialogSearchName1.setVisible(true);
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName2KeyTyped
-
-    private void jTextFieldWk1DialogStaffName3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName3MouseClicked
-        staffName1 = "N";
-        staffName2 = "N";
-        staffName3 = "Y";
-        staffName4 = "N";
-        jDialogSearchName1.setVisible(true);
-        jDialogSearchName1.setVisible(false);
-        jDialogSearchName1.setVisible(true);
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName3MouseClicked
-
-    private void jTextFieldWk1DialogStaffName3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName3KeyTyped
-        staffName1 = "N";
-        staffName2 = "N";
-        staffName3 = "Y";
-        staffName4 = "N";
-        jDialogSearchName1.setVisible(true);
-        jDialogSearchName1.setVisible(false);
-        jDialogSearchName1.setVisible(true);
-    }//GEN-LAST:event_jTextFieldWk1DialogStaffName3KeyTyped
-
-    private void jButtonDialogWk1ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDialogWk1ResetActionPerformed
-        resetField();
-    }//GEN-LAST:event_jButtonDialogWk1ResetActionPerformed
-
-    private void jButtonDialogWk1AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDialogWk1AddActionPerformed
-
-        String Wk1Brk = "0.00";
-        String Wk1Lnch = "0.00";
-        String Wk1Dinner = "0.00";
-        String Wk1ProvedAcc = "0.00";
-        String Wk1UnProvedAcc = "0.00";
-        String Wk1Inc = "0.00";
-        String Wk1Misc = "0.00";
-        String Wk1MiscDesc = "";
-
-//        if (!(jTextFieldWk1DialogStaffName1.getText().length() == 0)) {
-//            duplicateUser1Count = null;
-//            planWk = "PlanWk1Tab";
-//            planDate = formatter.format(jDateChooserDialogWk1ActivityDate.getDate());
-//            empNamNum1 = "EMP_NAM1";
-//            empNam1 = jTextFieldWk1DialogStaffName1.getText();
-//            empNamNum2 = "EMP_NAM2";
-//            empNam2 = jTextFieldWk1DialogStaffName2.getText();
-//            empNamNum3 = "EMP_NAM3";
-//            empNam3 = jTextFieldWk1DialogStaffName3.getText();
-//            empNamNum4 = "EMP_NAM4";
-//            empNam4 = jTextFieldWk1DialogStaffName4.getText();
-//
-//            CheckDuplicateUser1();
-//            CheckDuplicateUser2();
-//            CheckDuplicateUser3();
-//            CheckDuplicateUser4();
-//            CheckDuplicateUser5();
-//        }
-        try {
-            if (jCheckBoxDialogWk1BrkFast.isSelected()) {
-                Wk1Brk = breakfastAll;
-            } else {
-                Wk1Brk = "0.00";
-            }
-
-            if (jCheckBoxDialogWk1Lunch.isSelected()) {
-                Wk1Lnch = lunchAll;
-            } else {
-                Wk1Lnch = "0.00";
-            }
-
-            if (jCheckBoxDialogWk1Dinner.isSelected()) {
-                Wk1Dinner = dinnerAll;
-            } else {
-                Wk1Dinner = "0.00";
-            }
-
-            if (jCheckBoxDialogWk1AccUnProved.isSelected()) {
-                Wk1UnProvedAcc = unProvedAll;
-            } else {
-                Wk1UnProvedAcc = "0.00";
-            }
-            if (jCheckBoxDialogWk1AccProved.isSelected()) {
-                Wk1ProvedAcc = provedAll;
-            } else {
-                Wk1ProvedAcc = "0.00";
-            }
-
-            if (jCheckBoxDialogWk1Inc.isSelected()) {
-                Wk1Inc = incidentalAll;
-            } else {
-                Wk1Inc = "0.00";
-            }
-
-            if (jCheckBoxDialogWk1Misc.isSelected()) {
-                Wk1MiscDesc = jTextFieldWk1Misc.getText();
-                Wk1Misc = jTextFieldWk1MiscAmt.getText();
-            } else {
-                Wk1Misc = "0.00";
-            }
-
-            if (jDateChooserDialogActivityDateFrom.getDate() == null) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Date cannot be blank. Please check your dates");
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (jDateChooserDialogActivityDateTo.getDate() == null) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Date cannot be blank. Please check your dates");
-                jDateChooserDialogActivityDateTo.requestFocusInWindow();
-                jDateChooserDialogActivityDateTo.setFocusable(true);
-            } else if (jDateChooserDialogActivityDateFrom.getDate().after(jDateChooserDialogActivityDateTo.getDate())) {
-                JOptionPane.showMessageDialog(jDialogWk1, "End Date cannot be lower than start date.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk1Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk1From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk1To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk2Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk2From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk2To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk3Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk3From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk3To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk4Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk4From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk4To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk5Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk5From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk5To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified  date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk1Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk1From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk1To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk2Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk2From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk2To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk3Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk3From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk3To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk4Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk4From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk4To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (("Y".equals(wk5Site)) && ((formatter.format(jDateChooserDialogActivityDateFrom.getDate()).compareTo(formatter.format(jDateChooserWk5From.getDate())) < 0)
-                    || (formatter.format(jDateChooserDialogActivityDateTo.getDate()).compareTo(formatter.format(jDateChooserWk5To.getDate())) > 0))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity date cannot be outside the specified date range.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                jDateChooserDialogActivityDateFrom.setDate(null);
-                jDateChooserDialogActivityDateTo.setDate(null);
-                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
-                jDateChooserDialogActivityDateFrom.setFocusable(true);
-            } else if (jTextFieldDialogWk1Site.getText().trim().length() == 0) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Site cannot be blank. Please check and correct");
-                jTextFieldDialogWk1Site.requestFocusInWindow();
-                jTextFieldDialogWk1Site.setFocusable(true);
-            } else if ("".equals(jTextFieldWk1DialogActivityDesc.getText())) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity description cannot be blank. Please check and correct");
-                jTextFieldWk1DialogActivityDesc.requestFocusInWindow();
-                jTextFieldWk1DialogActivityDesc.setFocusable(true);
-            } else if ("".equals(jTextAreaWk1DialogJustification.getText())) {
-                JOptionPane.showMessageDialog(jDialogWk1, "Activity justification cannot be blank. Please check and correct");
-                jTextAreaWk1DialogJustification.requestFocusInWindow();
-                jTextAreaWk1DialogJustification.setFocusable(true);
-            } else if ((jCheckBoxDialogWk1BrkFast.isSelected() || jCheckBoxDialogWk1Lunch.isSelected()
-                    || jCheckBoxDialogWk1Dinner.isSelected() || jCheckBoxDialogWk1AccProved.isSelected()
-                    || jCheckBoxDialogWk1Inc.isSelected() || jCheckBoxDialogWk1Misc.isSelected()
-                    || jCheckBoxDialogWk1AccUnProved.isSelected() || jCheckBoxNoAcc.isSelected())
-                    && ("".equals(jTextFieldWk1DialogStaffName1.getText()))) {
-                JOptionPane.showMessageDialog(jDialogWk1, "You have select an allowance.Please enter at least one staff name");
-                jTextFieldWk1DialogStaffName1.requestFocusInWindow();
-                jTextFieldWk1DialogStaffName1.setFocusable(true);
-
-            } else {
-
-                DateFormat dfYear = new SimpleDateFormat("yyyy");
-                DateFormat dfMon = new SimpleDateFormat("MM");
-                DateFormat dfDay = new SimpleDateFormat("dd");
-                int yearF = Integer.parseInt(dfYear.format(jDateChooserDialogActivityDateFrom.getDate()));
-                int monF = Integer.parseInt(dfMon.format(jDateChooserDialogActivityDateFrom.getDate()));
-                int dayF = Integer.parseInt(dfDay.format(jDateChooserDialogActivityDateFrom.getDate()));
-                int yearT = Integer.parseInt(dfYear.format(jDateChooserDialogActivityDateTo.getDate()));
-                int monT = Integer.parseInt(dfMon.format(jDateChooserDialogActivityDateTo.getDate()));
-                int dayT = Integer.parseInt(dfDay.format(jDateChooserDialogActivityDateTo.getDate()));
-                LocalDate start = LocalDate.of(yearF, monF, dayF);
-                LocalDate end = LocalDate.of(yearT, monT, dayT);
-
-                if ("Y".equals(wk1Site)) {
-                    Calendar c = Calendar.getInstance();
-                    Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-                    for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-                        c.setTime(startDate);
-                        modelWk1.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-                            jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                            jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                            Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                            jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                        c.add(Calendar.DAY_OF_MONTH, 1);
-                        startDate = c.getTime();
-
-                    }
-                    modelWk1.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), branchCode, prjCode, taskCode,
-                        jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                        jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                        Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                        jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                    addItem();
-                    resetField();
-
-                }
-                if ("Y".equals(wk2Site)) {
-
-                    Calendar c = Calendar.getInstance();
-                    Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-                    for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-                        c.setTime(startDate);
-                        modelWk2.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-                            jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                            jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                            Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                            jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                        c.add(Calendar.DAY_OF_MONTH, 1);
-                        startDate = c.getTime();
-                    }
-
-                    modelWk2.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), branchCode, prjCode, taskCode,
-                        jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                        jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                        Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                        jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                    addItem();
-                    resetField();
-                }
-
-                if ("Y".equals(wk3Site)) {
-                    Calendar c = Calendar.getInstance();
-                    Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-                    for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-                        c.setTime(startDate);
-                        modelWk3.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-                            jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                            jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                            Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                            jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                        c.add(Calendar.DAY_OF_MONTH, 1);
-                        startDate = c.getTime();
-                    }
-
-                    modelWk3.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), branchCode, prjCode, taskCode,
-                        jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                        jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                        Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                        jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                    addItem();
-                    resetField();
-                }
-
-                if ("Y".equals(wk4Site)) {
-
-                    Calendar c = Calendar.getInstance();
-                    Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-                    for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-                        c.setTime(startDate);
-                        modelWk4.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-                            jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                            jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                            Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                            jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                        c.add(Calendar.DAY_OF_MONTH, 1);
-                        startDate = c.getTime();
-                    }
-                    modelWk4.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), branchCode, prjCode, taskCode,
-                        jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                        jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                        Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                        jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                    addItem();
-                    resetField();
-                }
-
-                if ("Y".equals(wk5Site)) {
-
-                    Calendar c = Calendar.getInstance();
-                    Date startDate = jDateChooserDialogActivityDateFrom.getDate();
-                    for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-                        c.setTime(startDate);
-                        modelWk5.addRow(new Object[]{formatter.format(startDate), branchCode, prjCode, taskCode,
-                            jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                            jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                            Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                            jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                        c.add(Calendar.DAY_OF_MONTH, 1);
-                        startDate = c.getTime();
-                    }
-
-                    modelWk5.addRow(new Object[]{formatter.format(jDateChooserDialogActivityDateTo.getDate()), branchCode, prjCode, taskCode,
-                        jTextFieldDialogWk1Site.getText(), jTextFieldWk1DialogActivityDesc.getText(),
-                        jTextAreaWk1DialogJustification.getText(), Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                        Wk1ProvedAcc, jTextFieldWk1DialogStaffName1.getText(),
-                        jTextFieldWk1DialogStaffName2.getText(), jTextFieldWk1DialogStaffName3.getText(), jTextFieldWk1DialogStaffName4.getText()});
-                    addItem();
-                    resetField();
-                }
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        //}
-    }//GEN-LAST:event_jButtonDialogWk1AddActionPerformed
-
-    private void jCheckBoxDialogWk1MiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDialogWk1MiscActionPerformed
-        if (jCheckBoxDialogWk1Misc.isSelected()) {
-            jTextFieldWk1Misc.setVisible(true);
-            jLabelWk1Misc.setVisible(true);
-            jLabelWk1MiscAmt.setVisible(true);
-            jTextFieldWk1MiscAmt.setVisible(true);
-        } else {
-            jTextFieldWk1Misc.setVisible(false);
-            jLabelWk1Misc.setVisible(false);
-            jTextFieldWk1Misc.setText("");
-            jLabelWk1MiscAmt.setVisible(false);
-            jTextFieldWk1MiscAmt.setVisible(false);
-        }
-    }//GEN-LAST:event_jCheckBoxDialogWk1MiscActionPerformed
-
-    private void jTextFieldWk1MiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWk1MiscActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldWk1MiscActionPerformed
-
-    private void jButtonDialogWk1CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDialogWk1CloseActionPerformed
-        wk1Site = "N";
-        jDialogWk1.setVisible(false);
-    }//GEN-LAST:event_jButtonDialogWk1CloseActionPerformed
-
-    private void jLabelWk1Name4DelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelWk1Name4DelMouseClicked
-        jTextFieldWk1DialogStaffName4.setText("");
-        jLabelWk1Name4Del.setVisible(false);
-    }//GEN-LAST:event_jLabelWk1Name4DelMouseClicked
-
-    private void jLabelWk1Name1DelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelWk1Name1DelMouseClicked
-        jTextFieldWk1DialogStaffName1.setText("");
-        jLabelWk1Name1Del.setVisible(false);
-    }//GEN-LAST:event_jLabelWk1Name1DelMouseClicked
-
-    private void jLabelWk1Name2DelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelWk1Name2DelMouseClicked
-        jTextFieldWk1DialogStaffName2.setText("");
-        jLabelWk1Name2Del.setVisible(false);
-    }//GEN-LAST:event_jLabelWk1Name2DelMouseClicked
-
-    private void jLabelWk1Name3DelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelWk1Name3DelMouseClicked
-        jTextFieldWk1DialogStaffName3.setText("");
-        jLabelWk1Name3Del.setVisible(false);
-    }//GEN-LAST:event_jLabelWk1Name3DelMouseClicked
-
-    private void jComboProjectNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProjectNameMouseClicked
-
-    }//GEN-LAST:event_jComboProjectNameMouseClicked
-
-    private void jComboProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProjectNameActionPerformed
-        try {
-            int itemCount = jComboProjectTask.getItemCount();
-
-            for (int i = 0; i < itemCount; i++) {
-                jComboProjectTask.removeItemAt(0);
-            }
-            String prjName = jComboProjectName.getSelectedItem().toString();
-            String prjParts[] = prjName.split(" ", 2);
-            prjCode = prjParts[0];
-            findTask(prjCode);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jComboProjectNameActionPerformed
-
-    private void jComboProjectTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProjectTaskMouseClicked
-
-        //        String prjName = jComboProjectName.getSelectedItem().toString();
-        //        String prjParts[] = prjName.split(" ", 2);
-        //        String prjCode = prjParts[0];
-        //        findTask(prjCode);
-    }//GEN-LAST:event_jComboProjectTaskMouseClicked
-
-    private void jComboProjectTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProjectTaskActionPerformed
-        try {
-
-            String taskName = jComboProjectTask.getSelectedItem().toString();
-            String taskParts[] = taskName.split(" ", 2);
-            taskCode = taskParts[0];
-            findBranch(taskCode);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jComboProjectTaskActionPerformed
-
     private void jMenuItemPlanPerDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanPerDiemActionPerformed
         new JFrameMnthPlanPerDiemCreate(jLabelEmp.getText()).setVisible(true);
         setVisible(false);
@@ -6552,167 +7041,6 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private void jTextAttDocPathMainWk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAttDocPathMainWk1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextAttDocPathMainWk1ActionPerformed
-
-    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        try {
-            try {
-                if ("National Office".equals(jLabelDistrict.getText()) && jTableActivitiesWk1.getRowCount() > 0) {
-                    finDayCalcWk1();
-                    minDateComWk1 = Date.from(minDateWk1.atStartOfDay(zoneId).toInstant());
-                    maxDateComWk1 = Date.from(maxDateWk1.atStartOfDay(zoneId).toInstant());
-
-                }
-
-                if ("National Office".equals(jLabelDistrict.getText()) && jTableWk2Activities.getRowCount() > 0) {
-                    finDayCalcWk2();
-                    minDateComWk2 = Date.from(minDateWk2.atStartOfDay(zoneId).toInstant());
-                    maxDateComWk2 = Date.from(maxDateWk2.atStartOfDay(zoneId).toInstant());
-
-                }
-                if ("National Office".equals(jLabelDistrict.getText()) && jTableWk3Activities.getRowCount() > 0) {
-                    finDayCalcWk3();
-                    minDateComWk3 = Date.from(minDateWk3.atStartOfDay(zoneId).toInstant());
-                    maxDateComWk3 = Date.from(maxDateWk3.atStartOfDay(zoneId).toInstant());
-
-                }
-                if ("National Office".equals(jLabelDistrict.getText()) && jTableWk4Activities.getRowCount() > 0) {
-                    finDayCalcWk4();
-                    minDateComWk4 = Date.from(minDateWk4.atStartOfDay(zoneId).toInstant());
-                    maxDateComWk4 = Date.from(maxDateWk4.atStartOfDay(zoneId).toInstant());
-
-                }
-                if ("National Office".equals(jLabelDistrict.getText()) && jTableWk5Activities.getRowCount() > 0) {
-                    finDayCalcWk5();
-                    minDateComWk5 = Date.from(minDateWk5.atStartOfDay(zoneId).toInstant());
-                    maxDateComWk5 = Date.from(maxDateWk5.atStartOfDay(zoneId).toInstant());
-
-                }
-
-                if (jTableActivitiesWk1.getRowCount() == 0 && jTableWk2Activities.getRowCount() == 0
-                        && jTableWk3Activities.getRowCount() == 0 && jTableWk4Activities.getRowCount() == 0
-                        && jTableWk5Activities.getRowCount() == 0) {
-                    JOptionPane.showMessageDialog(this, "At least one activity should be completed.");
-                    jDateChooserWk1From.requestFocusInWindow();
-                    jDateChooserWk1From.setFocusable(true);
-
-                } else if ((jDateChooserWk1From.getDate() == null) || (jDateChooserWk1To.getDate() == null)) {
-                    JOptionPane.showMessageDialog(this, "Date for week 1 cannot be blank. Please check your dates");
-                    jDateChooserWk1From.requestFocusInWindow();
-                    jDateChooserWk1From.setFocusable(true);
-                } else if (noOfFinDays1 > 7) {
-                    JOptionPane.showMessageDialog(this, "Weekly Plan days for week 1 cannot be more than seven(7) days",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    jDateChooserWk1From.setDate(null);
-                    jDateChooserWk1To.setDate(null);
-                    jDateChooserWk1From.requestFocusInWindow();
-                    jDateChooserWk1From.setFocusable(true);
-                } else if (((jDateChooserWk2From.getDate() == null) || (jDateChooserWk2To.getDate() == null)) && noOfFinDays2 > 0) {
-                    JOptionPane.showMessageDialog(this, "Date for week 2 cannot be blank. Please check your dates");
-                    jDateChooserWk2From.requestFocusInWindow();
-                    jDateChooserWk2From.setFocusable(true);
-                } else if (noOfFinDays2 > 7) {
-                    JOptionPane.showMessageDialog(this, "Weekly Plan days for week 2 cannot be more than seven(7) days",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    jDateChooserWk2From.setDate(null);
-                    jDateChooserWk2To.setDate(null);
-                    jDateChooserWk2From.requestFocusInWindow();
-                    jDateChooserWk2From.setFocusable(true);
-                } else if (((jDateChooserWk3From.getDate() == null) || (jDateChooserWk3To.getDate() == null)) && noOfFinDays3 > 0) {
-                    JOptionPane.showMessageDialog(this, "Date for week 3 cannot be blank. Please check your dates");
-                    jDateChooserWk3From.requestFocusInWindow();
-                    jDateChooserWk3From.setFocusable(true);
-                } else if (noOfFinDays3 > 7) {
-
-                    JOptionPane.showMessageDialog(this, "Weekly Plan days for week 3 cannot be more than seven(7) days",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    jDateChooserWk3From.setDate(null);
-                    jDateChooserWk3To.setDate(null);
-                    jDateChooserWk3From.requestFocusInWindow();
-                    jDateChooserWk3From.setFocusable(true);
-                } else if (((jDateChooserWk4From.getDate() == null) || (jDateChooserWk4To.getDate() == null)) && noOfFinDays4 > 0) {
-                    JOptionPane.showMessageDialog(this, "Date for week 4 cannot be blank. Please check your dates");
-                    jDateChooserWk4From.requestFocusInWindow();
-                    jDateChooserWk4From.setFocusable(true);
-                } else if (noOfFinDays4 > 7) {
-
-                    JOptionPane.showMessageDialog(this, "Weekly Plan days for week 4 cannot be more than seven(7) days",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    jDateChooserWk4From.setDate(null);
-                    jDateChooserWk4To.setDate(null);
-                    jDateChooserWk4From.requestFocusInWindow();
-                    jDateChooserWk4From.setFocusable(true);
-                } else if (((jDateChooserWk5From.getDate() == null) || (jDateChooserWk5To.getDate() == null)) && noOfFinDays5 > 0) {
-                    JOptionPane.showMessageDialog(this, "Date for week 5 cannot be blank. Please check your dates");
-                    jDateChooserWk5From.requestFocusInWindow();
-                    jDateChooserWk5From.setFocusable(true);
-                } else if (noOfFinDays5 > 7) {
-
-                    JOptionPane.showMessageDialog(this, "Weekly Plan days for week 5 cannot be more than seven(7) days",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    jDateChooserWk5From.setDate(null);
-                    jDateChooserWk5To.setDate(null);
-                    jDateChooserWk5From.requestFocusInWindow();
-                    jDateChooserWk5From.setFocusable(true);
-                } else if (jTableActivitiesWk1.getRowCount() > 0 && (formatter.format(jDateChooserWk1From.getDate()).compareTo(formatter.format(minDateComWk1)) > 0)) {
-                    JOptionPane.showMessageDialog(this, "Minimum activity date for week 1 cannot be lower than start date.Please check your dates");
-                    jDateChooserWk1From.requestFocusInWindow();
-                    jDateChooserWk1From.setFocusable(true);
-
-                } else if (jTableActivitiesWk1.getRowCount() > 0 && (formatter.format(jDateChooserWk1To.getDate()).compareTo(formatter.format(maxDateComWk1)) < 0)) {
-                    JOptionPane.showMessageDialog(this, "Maximum activity date for week 1 cannot be greater than end date.Please check your dates");
-                    jDateChooserWk1To.requestFocusInWindow();
-                    jDateChooserWk1To.setFocusable(true);
-
-                } else if (jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2From.getDate()).compareTo(formatter.format(minDateComWk2)) > 0)) {
-                    JOptionPane.showMessageDialog(this, "Minimum activity date for week 2 cannot be lower than start date.Please check your dates");
-                    jDateChooserWk2From.requestFocusInWindow();
-                    jDateChooserWk2From.setFocusable(true);
-
-                } else if (jTableWk2Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk2To.getDate()).compareTo(formatter.format(maxDateComWk2)) < 0)) {
-                    JOptionPane.showMessageDialog(this, "Maximum activity date for week 2 cannot be greater than end date.Please check your dates");
-                    jDateChooserWk2To.requestFocusInWindow();
-                    jDateChooserWk2To.setFocusable(true);
-
-                } else if (jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3From.getDate()).compareTo(formatter.format(minDateComWk3)) > 0)) {
-                    JOptionPane.showMessageDialog(this, "Minimum activity date for week 3 cannot be lower than start date.Please check your dates");
-                    jDateChooserWk3From.requestFocusInWindow();
-                    jDateChooserWk3From.setFocusable(true);
-
-                } else if (jTableWk3Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk3To.getDate()).compareTo(formatter.format(maxDateComWk3)) < 0)) {
-                    JOptionPane.showMessageDialog(this, "Maximum activity date for week 3 cannot be greater than end date.Please check your dates");
-                    jDateChooserWk3To.requestFocusInWindow();
-                    jDateChooserWk3To.setFocusable(true);
-
-                } else if (jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4From.getDate()).compareTo(formatter.format(minDateComWk4)) > 0)) {
-                    JOptionPane.showMessageDialog(this, "Minimum activity date for week 4 cannot be lower than start date.Please check your dates");
-                    jDateChooserWk4From.requestFocusInWindow();
-                    jDateChooserWk4From.setFocusable(true);
-
-                } else if (jTableWk4Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk4To.getDate()).compareTo(formatter.format(maxDateComWk4)) < 0)) {
-                    JOptionPane.showMessageDialog(this, "Maximum activity date for week 4 cannot be greater than end date.Please check your dates");
-                    jDateChooserWk4To.requestFocusInWindow();
-                    jDateChooserWk4To.setFocusable(true);
-
-                } else if (jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5From.getDate()).compareTo(formatter.format(minDateComWk5)) > 0)) {
-                    JOptionPane.showMessageDialog(this, "Minimum activity date for week 5cannot be lower than start date.Please check your dates");
-                    jDateChooserWk5From.requestFocusInWindow();
-                    jDateChooserWk5From.setFocusable(true);
-
-                } else if (jTableWk5Activities.getRowCount() > 0 && (formatter.format(jDateChooserWk5To.getDate()).compareTo(formatter.format(maxDateComWk5)) < 0)) {
-                    JOptionPane.showMessageDialog(this, "Maximum activity date for week 5 cannot be greater than end date.Please check your dates");
-                    jDateChooserWk5To.requestFocusInWindow();
-                    jDateChooserWk5To.setFocusable(true);
-
-                } else {
-                    saveRec();
-                }
-            } catch (Exception e) {
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jTextAttDocDescMainWk2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAttDocDescMainWk2ActionPerformed
         // TODO add your handling code here:
@@ -6922,6 +7250,319 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextAttDocPathMainWk5ActionPerformed
 
+    private void jTextFieldWk1DialogStaffName4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName4MouseClicked
+        staffName1 = "N";
+        staffName2 = "N";
+        staffName3 = "N";
+        staffName4 = "Y";
+        jDialogSearchName1.setVisible(true);
+        jDialogSearchName1.setVisible(false);
+        jDialogSearchName1.setVisible(true);
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName4MouseClicked
+
+    private void jTextFieldWk1DialogStaffName4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName4ActionPerformed
+        staffName1 = "N";
+        staffName2 = "N";
+        staffName3 = "N";
+        staffName4 = "Y";
+        jDialogSearchName1.setVisible(true);
+        jDialogSearchName1.setVisible(false);
+        jDialogSearchName1.setVisible(true);
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName4ActionPerformed
+
+    private void jTextFieldWk1DialogStaffName4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName4KeyTyped
+        staffName1 = "N";
+        staffName2 = "N";
+        staffName3 = "Y";
+        staffName4 = "N";
+        jDialogSearchName1.setVisible(true);
+        jDialogSearchName1.setVisible(false);
+        jDialogSearchName1.setVisible(true);
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName4KeyTyped
+
+    private void jTextFieldWk1DialogStaffName1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName1MouseClicked
+        staffName1 = "Y";
+        staffName2 = "N";
+        staffName3 = "N";
+        staffName4 = "N";
+
+        jDialogSearchName1.setVisible(true);
+        jDialogSearchName1.setVisible(false);
+        jDialogSearchName1.setVisible(true);
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName1MouseClicked
+
+    private void jTextFieldWk1DialogStaffName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName1ActionPerformed
+
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName1ActionPerformed
+
+    private void jTextFieldWk1DialogStaffName1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName1KeyTyped
+        staffName1 = "Y";
+        staffName2 = "N";
+        staffName3 = "N";
+        staffName4 = "N";
+
+        jDialogSearchName1.setVisible(true);
+        jDialogSearchName1.setVisible(false);
+        jDialogSearchName1.setVisible(true);
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName1KeyTyped
+
+    private void jTextFieldWk1DialogStaffName2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName2MouseClicked
+        staffName1 = "N";
+        staffName2 = "Y";
+        staffName3 = "N";
+        staffName4 = "N";
+        jDialogSearchName1.setVisible(true);
+        jDialogSearchName1.setVisible(false);
+        jDialogSearchName1.setVisible(true);
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName2MouseClicked
+
+    private void jTextFieldWk1DialogStaffName2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName2KeyTyped
+        staffName1 = "N";
+        staffName2 = "Y";
+        staffName3 = "N";
+        staffName4 = "N";
+        jDialogSearchName1.setVisible(true);
+        jDialogSearchName1.setVisible(false);
+        jDialogSearchName1.setVisible(true);
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName2KeyTyped
+
+    private void jTextFieldWk1DialogStaffName3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName3MouseClicked
+        staffName1 = "N";
+        staffName2 = "N";
+        staffName3 = "Y";
+        staffName4 = "N";
+        jDialogSearchName1.setVisible(true);
+        jDialogSearchName1.setVisible(false);
+        jDialogSearchName1.setVisible(true);
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName3MouseClicked
+
+    private void jTextFieldWk1DialogStaffName3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldWk1DialogStaffName3KeyTyped
+        staffName1 = "N";
+        staffName2 = "N";
+        staffName3 = "Y";
+        staffName4 = "N";
+        jDialogSearchName1.setVisible(true);
+        jDialogSearchName1.setVisible(false);
+        jDialogSearchName1.setVisible(true);
+    }//GEN-LAST:event_jTextFieldWk1DialogStaffName3KeyTyped
+
+    private void jButtonDialogWk1ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDialogWk1ResetActionPerformed
+        resetField();
+    }//GEN-LAST:event_jButtonDialogWk1ResetActionPerformed
+
+    private void jButtonDialogWk1AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDialogWk1AddActionPerformed
+        //        addFileAttToTabWk1Main();
+        budCreate();
+        addWkItmLine();
+
+    }//GEN-LAST:event_jButtonDialogWk1AddActionPerformed
+
+    private void jCheckBoxDialogWk1MiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDialogWk1MiscActionPerformed
+        if (jCheckBoxDialogWk1Misc.isSelected()) {
+            jTextFieldWk1Misc.setVisible(true);
+            jLabelWk1Misc.setVisible(true);
+            jLabelWk1MiscAmt.setVisible(true);
+            jTextFieldWk1MiscAmt.setVisible(true);
+        } else {
+            jTextFieldWk1Misc.setVisible(false);
+            jLabelWk1Misc.setVisible(false);
+            jTextFieldWk1Misc.setText("");
+            jLabelWk1MiscAmt.setVisible(false);
+            jTextFieldWk1MiscAmt.setVisible(false);
+        }
+    }//GEN-LAST:event_jCheckBoxDialogWk1MiscActionPerformed
+
+    private void jTextFieldWk1MiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWk1MiscActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldWk1MiscActionPerformed
+
+    private void jButtonDialogWk1CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDialogWk1CloseActionPerformed
+        wk1Site = "N";
+        jDialogWk1.setVisible(false);
+    }//GEN-LAST:event_jButtonDialogWk1CloseActionPerformed
+
+    private void jLabelWk1Name4DelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelWk1Name4DelMouseClicked
+        jTextFieldWk1DialogStaffName4.setText("");
+        jLabelWk1Name4Del.setVisible(false);
+    }//GEN-LAST:event_jLabelWk1Name4DelMouseClicked
+
+    private void jLabelWk1Name1DelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelWk1Name1DelMouseClicked
+        jTextFieldWk1DialogStaffName1.setText("");
+        jLabelWk1Name1Del.setVisible(false);
+    }//GEN-LAST:event_jLabelWk1Name1DelMouseClicked
+
+    private void jLabelWk1Name2DelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelWk1Name2DelMouseClicked
+        jTextFieldWk1DialogStaffName2.setText("");
+        jLabelWk1Name2Del.setVisible(false);
+    }//GEN-LAST:event_jLabelWk1Name2DelMouseClicked
+
+    private void jLabelWk1Name3DelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelWk1Name3DelMouseClicked
+        jTextFieldWk1DialogStaffName3.setText("");
+        jLabelWk1Name3Del.setVisible(false);
+    }//GEN-LAST:event_jLabelWk1Name3DelMouseClicked
+
+    private void jToggleButtonMOHCCConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonMOHCCConfirmationActionPerformed
+        deleteFileAtt();
+    }//GEN-LAST:event_jToggleButtonMOHCCConfirmationActionPerformed
+
+    private void jToggleButtonMOHCCConfirmation2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonMOHCCConfirmation2ActionPerformed
+        if ("".equals(jTextAttDocDesc.getText())) {
+            JOptionPane.showMessageDialog(jDialogWk1, "Please enter attached file description.");
+            jTextAttDocDesc.requestFocusInWindow();
+            jTextAttDocDesc.setFocusable(true);
+        } else if ("".equals(jTextAttDocName.getText())) {
+            JOptionPane.showMessageDialog(this, "Please note that no file has been selected.");
+            jTextAttDocName.requestFocusInWindow();
+            jTextAttDocName.setFocusable(true);
+        } else {
+            addFileAtt();
+            refreshAttFields();
+
+        }
+    }//GEN-LAST:event_jToggleButtonMOHCCConfirmation2ActionPerformed
+
+    private void jTextAttDocDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAttDocDescActionPerformed
+
+    }//GEN-LAST:event_jTextAttDocDescActionPerformed
+
+    private void jButtonSelectFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelectFileActionPerformed
+
+        savePDFToDB pdfDB = new savePDFToDB();
+        pdfDB.pdfChooser();
+        String attFileName = pdfDB.fileName;
+
+        File file = new File(attFileName);
+        long attFileLength = file.length();
+        if (attFileLength < 512000) {
+            jTextAttDocName.setText(file.getName());
+            jTextAttDocPath.setText(attFileName);
+
+        } else if (attFileLength > 512000) {
+            JOptionPane.showMessageDialog(this, "File size cannot be greater than 512Kb. ");
+        }
+    }//GEN-LAST:event_jButtonSelectFileActionPerformed
+
+    private void jTextAttDocNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAttDocNameActionPerformed
+
+    }//GEN-LAST:event_jTextAttDocNameActionPerformed
+
+    private void jTextAttDocPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAttDocPathActionPerformed
+
+    }//GEN-LAST:event_jTextAttDocPathActionPerformed
+
+    private void jComboAccountCodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboAccountCodeMouseClicked
+
+    }//GEN-LAST:event_jComboAccountCodeMouseClicked
+
+    private void jComboAccountCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboAccountCodeActionPerformed
+
+    }//GEN-LAST:event_jComboAccountCodeActionPerformed
+
+    private void jComboDonorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboDonorMouseClicked
+
+        //        String prjName = jComboProjectName.getSelectedItem().toString();
+        //        String prjParts[] = prjName.split(" ", 2);
+        //        String prjCode = prjParts[0];
+        //        findTask(prjCode);
+    }//GEN-LAST:event_jComboDonorMouseClicked
+
+    private void jComboDonorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboDonorActionPerformed
+        try {
+            if (("D036 CDC-Zim-TTECH".equals(jComboDonor.getSelectedItem().toString()))
+                    || ("D032 ZHI".equals(jComboDonor.getSelectedItem().toString()))
+                    || ("D022 CDC".equals(jComboDonor.getSelectedItem().toString()))) {
+                jLabelPrjCodeProgramming.setVisible(true);
+                jComboProjectCodeProgramming.setVisible(true);
+            } else {
+                jLabelPrjCodeProgramming.setVisible(false);
+                jComboProjectCodeProgramming.setVisible(false);
+            }
+            String taskName = jComboDonor.getSelectedItem().toString();
+            String taskParts[] = taskName.split(" ", 2);
+            donorCode = taskParts[0];
+
+            findPrjCode(donorCode);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jComboDonorActionPerformed
+
+    private void jComboProjectCodeGLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProjectCodeGLMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboProjectCodeGLMouseClicked
+
+    private void jComboProjectCodeGLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProjectCodeGLActionPerformed
+
+    }//GEN-LAST:event_jComboProjectCodeGLActionPerformed
+
+    private void jComboBudMainCodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBudMainCodeMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBudMainCodeMouseClicked
+
+    private void jComboBudMainCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBudMainCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBudMainCodeActionPerformed
+
+    private void jTextFieldDialogWkSiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDialogWkSiteMouseClicked
+        facilityPOP();
+    }//GEN-LAST:event_jTextFieldDialogWkSiteMouseClicked
+
+    private void jTextFieldDialogWkSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDialogWkSiteActionPerformed
+
+    }//GEN-LAST:event_jTextFieldDialogWkSiteActionPerformed
+
+    private void jTextFieldDialogWkSiteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDialogWkSiteKeyTyped
+        facilityPOP();
+    }//GEN-LAST:event_jTextFieldDialogWkSiteKeyTyped
+
+    private void jTextAreaWk1DialogJustificationKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaWk1DialogJustificationKeyTyped
+        jTextAreaWk1DialogJustification.setLineWrap(true);
+        jTextAreaWk1DialogJustification.setWrapStyleWord(true);
+
+        String charsRemaining = " characters remaining";
+        int newLen = 0;
+
+        int currLen = jTextAreaWk1DialogJustification.getText().length();
+
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            newLen = currLen - 1;
+            ignoreInput = false;
+        } else {
+            newLen = currLen + 1;
+        }
+
+        if (newLen < 0) {
+            newLen = 0;
+        }
+
+        if (newLen == 0) {
+            jLabelRemain.setText(jLabelRemain.getText() + "   " + charMaxWk1 + " characters maximum!");
+        } else if (newLen >= 0 && newLen < charMaxWk1) {
+            jLabelRemain.setText(jLabelRemain.getText() + "   " + (charMaxWk1 - newLen) + charsRemaining);
+        } else if (newLen >= charMaxWk1) {
+            try {
+                ignoreInput = true;
+                jLabelRemain.setText(jLabelRemain.getText() + "   " + "0 " + charsRemaining);
+                JOptionPane.showMessageDialog(jDialogWk1, "Maximum allowed characters reached.",
+                        "Word Count Warning", JOptionPane.WARNING_MESSAGE);
+                jTextAreaWk1DialogJustification.requestFocusInWindow();
+                jTextAreaWk1DialogJustification.setFocusable(true);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+        if ((charMaxWk1 - newLen) > 15) {
+            jLabelRemain.setForeground(new java.awt.Color(0, 102, 0));
+        } else {
+            jLabelRemain.setForeground(new java.awt.Color(255, 51, 51));
+        }
+    }//GEN-LAST:event_jTextAreaWk1DialogJustificationKeyTyped
+
+    private void jComboProjectCodeProgrammingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProjectCodeProgrammingMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboProjectCodeProgrammingMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -6969,6 +7610,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private cambodia.raven.Time departTime;
     private javax.swing.JButton jButtonAddAttWk1;
     private javax.swing.JButton jButtonAddAttWk2;
     private javax.swing.JButton jButtonAddAttWk3;
@@ -6985,8 +7627,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JButton jButtonDialogWk1Reset;
     private javax.swing.JButton jButtonOk1;
     private javax.swing.JButton jButtonOkFacility;
-    private javax.swing.JButton jButtonSave;
     private javax.swing.JButton jButtonSearch1;
+    private javax.swing.JButton jButtonSelectFile;
     private javax.swing.JButton jButtonSelectFileMainWk1;
     private javax.swing.JButton jButtonSelectFileMainWk2;
     private javax.swing.JButton jButtonSelectFileMainWk3;
@@ -7002,6 +7644,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JButton jButtonWk4DelActivity;
     private javax.swing.JButton jButtonWk5AddActivity;
     private javax.swing.JButton jButtonWk5DelActivity;
+    private javax.swing.JCheckBox jCheckAddStaff;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccProved;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccUnProved;
     private javax.swing.JCheckBox jCheckBoxDialogWk1BrkFast;
@@ -7010,11 +7653,14 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxDialogWk1Lunch;
     private javax.swing.JCheckBox jCheckBoxDialogWk1Misc;
     private javax.swing.JCheckBox jCheckBoxNoAcc;
+    private javax.swing.JComboBox<String> jComboAccountCode;
     private javax.swing.JComboBox<String> jComboBoxSearchResult1;
+    private javax.swing.JComboBox<String> jComboBudMainCode;
     private javax.swing.JComboBox<String> jComboDistrictFacility;
+    private javax.swing.JComboBox<String> jComboDonor;
     private javax.swing.JComboBox<String> jComboFacility;
-    private javax.swing.JComboBox<String> jComboProjectName;
-    private javax.swing.JComboBox<String> jComboProjectTask;
+    private javax.swing.JComboBox<String> jComboProjectCodeGL;
+    private javax.swing.JComboBox<String> jComboProjectCodeProgramming;
     private javax.swing.JComboBox<String> jComboProvinceFacility;
     private com.toedter.calendar.JDateChooser jDateChooserDialogActivityDateFrom;
     private com.toedter.calendar.JDateChooser jDateChooserDialogActivityDateTo;
@@ -7033,23 +7679,24 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JDialog jDialogWaiting;
     private javax.swing.JDialog jDialogWaitingEmail;
     private javax.swing.JDialog jDialogWk1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabeAccountCode;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabelActFrom;
-    private javax.swing.JLabel jLabelActTo;
+    private javax.swing.JLabel jLabelBudMainCode;
     private javax.swing.JLabel jLabelCommentsHeading;
     private javax.swing.JLabel jLabelConfirmationMainWk1;
     private javax.swing.JLabel jLabelConfirmationMainWk2;
     private javax.swing.JLabel jLabelConfirmationMainWk3;
     private javax.swing.JLabel jLabelConfirmationMainWk4;
     private javax.swing.JLabel jLabelConfirmationMainWk5;
+    private javax.swing.JLabel jLabelDialogDepartActivityDate;
     private javax.swing.JLabel jLabelDialogPerDiem;
-    private javax.swing.JLabel jLabelDialogWk1ActivityDate;
+    private javax.swing.JLabel jLabelDialogReturnActivityDate;
     private javax.swing.JLabel jLabelDialogWk1Site;
     private javax.swing.JLabel jLabelDistrict;
     private javax.swing.JLabel jLabelDistrictFacility;
+    private javax.swing.JLabel jLabelDonor;
     private javax.swing.JLabel jLabelEmp;
     private javax.swing.JLabel jLabelFacility;
     private javax.swing.JLabel jLabelGenLogNam1;
@@ -7065,6 +7712,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelHeaderGen7;
     private javax.swing.JLabel jLabelHeaderGen8;
     private javax.swing.JLabel jLabelHeaderGen9;
+    private javax.swing.JLabel jLabelJustfy;
     private javax.swing.JLabel jLabelLineDate;
     private javax.swing.JLabel jLabelLineDate1;
     private javax.swing.JLabel jLabelLineDate2;
@@ -7089,6 +7737,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelLogo4;
     private javax.swing.JLabel jLabelLogo5;
     private javax.swing.JLabel jLabelLogo7;
+    private javax.swing.JLabel jLabelMOHCCConfirmation;
     private javax.swing.JLabel jLabelOffice1;
     private javax.swing.JLabel jLabelPlanRefNo;
     private javax.swing.JLabel jLabelPostAppMod1;
@@ -7096,15 +7745,16 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelPostAppMod3;
     private javax.swing.JLabel jLabelPostAppMod4;
     private javax.swing.JLabel jLabelPostAppMod5;
-    private javax.swing.JLabel jLabelProjectName;
-    private javax.swing.JLabel jLabelProjectTask;
+    private javax.swing.JLabel jLabelPrjCodeGL;
+    private javax.swing.JLabel jLabelPrjCodeProgramming;
     private javax.swing.JLabel jLabelProvince;
     private javax.swing.JLabel jLabelProvince1;
     private javax.swing.JLabel jLabelProvinceFacility;
+    private javax.swing.JLabel jLabelRefNo;
+    private javax.swing.JLabel jLabelRefNum;
     private javax.swing.JLabel jLabelRemain;
     private javax.swing.JLabel jLabelSerial;
     private javax.swing.JLabel jLabelWk1DialogActivityDesc;
-    private javax.swing.JLabel jLabelWk1DialogJustification;
     private javax.swing.JLabel jLabelWk1DialogStaffName;
     private javax.swing.JLabel jLabelWk1DialogStaffName1;
     private javax.swing.JLabel jLabelWk1DialogStaffName2;
@@ -7162,14 +7812,20 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuPlanApproval;
     private javax.swing.JMenu jMenuReports;
     private javax.swing.JMenu jMenuRequest;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelActivity;
+    private javax.swing.JPanel jPanelActivityInfo;
+    private javax.swing.JPanel jPanelAddStaff;
+    private javax.swing.JPanel jPanelAttach;
     private javax.swing.JPanel jPanelAttachMainWk1;
     private javax.swing.JPanel jPanelAttachMainWk2;
     private javax.swing.JPanel jPanelAttachMainWk3;
     private javax.swing.JPanel jPanelAttachMainWk4;
     private javax.swing.JPanel jPanelAttachMainWk5;
+    private javax.swing.JPanel jPanelDepartureDetails;
+    private javax.swing.JPanel jPanelDooAtt;
     private javax.swing.JPanel jPanelDooAttMainWk1;
     private javax.swing.JPanel jPanelDooAttMainWk2;
     private javax.swing.JPanel jPanelDooAttMainWk3;
@@ -7187,18 +7843,19 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelWkOne;
     private javax.swing.JPanel jPanelWkThree;
     private javax.swing.JPanel jPanelWkTwo;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane23;
-    private javax.swing.JScrollPane jScrollPane24;
-    private javax.swing.JScrollPane jScrollPane26;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPaneWk1;
+    private javax.swing.JScrollPane jScrollPaneWk10;
     private javax.swing.JScrollPane jScrollPaneWk2;
     private javax.swing.JScrollPane jScrollPaneWk3;
     private javax.swing.JScrollPane jScrollPaneWk4;
     private javax.swing.JScrollPane jScrollPaneWk5;
+    private javax.swing.JScrollPane jScrollPaneWk6;
+    private javax.swing.JScrollPane jScrollPaneWk7;
+    private javax.swing.JScrollPane jScrollPaneWk8;
+    private javax.swing.JScrollPane jScrollPaneWk9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
@@ -7232,34 +7889,38 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPaneMain;
-    private javax.swing.JTable jTableActivitiesWk1;
-    private javax.swing.JTable jTableDocAttMainWk1;
-    private javax.swing.JTable jTableDocAttMainWk2;
-    private javax.swing.JTable jTableDocAttMainWk3;
-    private javax.swing.JTable jTableDocAttMainWk4;
-    private javax.swing.JTable jTableDocAttMainWk5;
+    private javax.swing.JTable jTableDocAtt;
+    private javax.swing.JTable jTableDocAttWk1;
+    private javax.swing.JTable jTableDocAttWk2;
+    private javax.swing.JTable jTableDocAttWk3;
+    private javax.swing.JTable jTableDocAttWk4;
+    private javax.swing.JTable jTableDocAttWk5;
+    private javax.swing.JTable jTableWk1Activities;
     private javax.swing.JTable jTableWk2Activities;
     private javax.swing.JTable jTableWk3Activities;
     private javax.swing.JTable jTableWk4Activities;
     private javax.swing.JTable jTableWk5Activities;
     private javax.swing.JTextArea jTextAreaComments;
     private javax.swing.JTextArea jTextAreaWk1DialogJustification;
+    private javax.swing.JTextField jTextAttDocDesc;
     private javax.swing.JTextField jTextAttDocDescMainWk1;
     private javax.swing.JTextField jTextAttDocDescMainWk2;
     private javax.swing.JTextField jTextAttDocDescMainWk3;
     private javax.swing.JTextField jTextAttDocDescMainWk4;
     private javax.swing.JTextField jTextAttDocDescMainWk5;
+    private javax.swing.JTextField jTextAttDocName;
     private javax.swing.JTextField jTextAttDocNameMainWk1;
     private javax.swing.JTextField jTextAttDocNameMainWk2;
     private javax.swing.JTextField jTextAttDocNameMainWk3;
     private javax.swing.JTextField jTextAttDocNameMainWk4;
     private javax.swing.JTextField jTextAttDocNameMainWk5;
+    private javax.swing.JTextField jTextAttDocPath;
     private javax.swing.JTextField jTextAttDocPathMainWk1;
     private javax.swing.JTextField jTextAttDocPathMainWk2;
     private javax.swing.JTextField jTextAttDocPathMainWk3;
     private javax.swing.JTextField jTextAttDocPathMainWk4;
     private javax.swing.JTextField jTextAttDocPathMainWk5;
-    private javax.swing.JTextField jTextFieldDialogWk1Site;
+    private javax.swing.JTextField jTextFieldDialogWkSite;
     private javax.swing.JTextField jTextFieldSearchNam1;
     private javax.swing.JTextField jTextFieldWk1DialogActivityDesc;
     private javax.swing.JTextField jTextFieldWk1DialogStaffName1;
@@ -7269,5 +7930,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldWk1Misc;
     private javax.swing.JTextField jTextFieldWk1MiscAmt;
     private javax.swing.JTextField jTextRefNum;
+    public javax.swing.JToggleButton jToggleButtonMOHCCConfirmation;
+    public javax.swing.JToggleButton jToggleButtonMOHCCConfirmation2;
+    private cambodia.raven.Time returnTime;
     // End of variables declaration//GEN-END:variables
 }
