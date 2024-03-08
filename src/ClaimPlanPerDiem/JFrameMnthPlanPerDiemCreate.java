@@ -1619,16 +1619,17 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
-            String sqlrecplan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] "
-                    + "(SERIAL,PLAN_REF_NUM,ACT_DATE,EMP_NAM,PLAN_WK,STATUS,ACT_TYPE) VALUES (?,?,?,?,?,?,?)";
+            String sqlrecplan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] VALUES (?,?,?,?,?,?,?,?,?)";
             pst1 = conn.prepareStatement(sqlrecplan);
             pst1.setString(1, "P");
             pst1.setString(2, jLabelRefNum.getText());
             pst1.setString(3, actDate);
             pst1.setString(4, usrRecNam);
             pst1.setString(5, UsrRecWk);
-            pst1.setString(6, "A");
-            pst1.setString(7, usrActType);
+            pst1.setString(6, usrActType);
+            pst1.setString(7, "1");
+            pst1.setString(8, "1");
+            pst1.setString(9, "A");
             pst1.executeUpdate();
 
         } catch (Exception e) {

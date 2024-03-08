@@ -27,6 +27,7 @@ public class expireRequest {
         try {
             SearchRef = planRef;
             requestUsr = usrNam;
+            System.out.println("rree   "+SearchRef +" "+requestUsr);
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 

@@ -34,6 +34,7 @@ import java.util.Properties;
 import ClaimPlan.*;
 import utils.StockVehicleMgt;
 import utils.connCred;
+import utils.connSaveFile;
 
 /**
  *
@@ -43,6 +44,8 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
 
     connCred c = new connCred();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    DefaultTableModel modelAttWk1, modelAttWk2, modelAttWk3, modelAttWk4, modelAttWk5,
+            modelWk1, modelWk2, modelWk3, modelWk4, modelWk5;
     String wk1Site = "N";
     String wk2Site = "N";
     String wk3Site = "N";
@@ -68,12 +71,23 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         SearchRef = ref;
         showDate();
         showTime();
+        modelAttWk1 = (DefaultTableModel) jTableDocAttWk1.getModel();
+        modelAttWk2 = (DefaultTableModel) jTableDocAttWk2.getModel();
+        modelAttWk3 = (DefaultTableModel) jTableDocAttWk3.getModel();
+        modelAttWk4 = (DefaultTableModel) jTableDocAttWk4.getModel();
+        modelAttWk5 = (DefaultTableModel) jTableDocAttWk5.getModel();
+        modelWk1 = (DefaultTableModel) jTableWk1Activities.getModel();
+        modelWk2 = (DefaultTableModel) jTableWk2Activities.getModel();
+        modelWk3 = (DefaultTableModel) jTableWk3Activities.getModel();
+        modelWk4 = (DefaultTableModel) jTableWk4Activities.getModel();
+        modelWk5 = (DefaultTableModel) jTableWk5Activities.getModel();
         fetchdataGenWk1();
         fetchdataWk1();
         fetchdataWk2();
         fetchdataWk3();
         fetchdataWk4();
         fetchdataWk5();
+        fetchAttDoc(SearchRef);
 //        fetchdataMeetWk1();
 //        fetchdataMeetWk2();
 //        fetchdataMeetWk3();
@@ -81,27 +95,104 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
 //        fetchdataMeetWk5();
         jLabelEmp.setText(usrLogNam);
         jLabelEmp.setVisible(false);
-          jLabelRefNum.setText(SearchRef);
+        jLabelRefNum.setText(SearchRef);
         findUser();
         findCreator();
         findUserGrp();
-        
-       if (!"Administrator".equals(usrGrp)) {
+
+        if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
             jMenuItemUserCreate.setEnabled(false);
         }
-        
-        if (!"National Office".equals(jLabelDistrict.getText())) {
-            jTabbedPaneMain.setTitleAt(0, "Month Plan");
-            jTabbedPaneMain.setEnabledAt(1, false);
-            jTabbedPaneMain.setTitleAt(1, "");
-            jTabbedPaneMain.setEnabledAt(2, false);
-            jTabbedPaneMain.setTitleAt(2, "");
-            jTabbedPaneMain.setEnabledAt(3, false);
-            jTabbedPaneMain.setTitleAt(3, "");
-            jTabbedPaneMain.setEnabledAt(4, false);
-            jTabbedPaneMain.setTitleAt(4, "");
-        }
+//
+//        if (!"National Office".equals(jLabelDistrict.getText())) {
+//            jTabbedPaneMain.setTitleAt(0, "Month Plan");
+//            jTabbedPaneMain.setEnabledAt(1, false);
+//            jTabbedPaneMain.setTitleAt(1, "");
+//            jTabbedPaneMain.setEnabledAt(2, false);
+//            jTabbedPaneMain.setTitleAt(2, "");
+//            jTabbedPaneMain.setEnabledAt(3, false);
+//            jTabbedPaneMain.setTitleAt(3, "");
+//            jTabbedPaneMain.setEnabledAt(4, false);
+//            jTabbedPaneMain.setTitleAt(4, "");
+//        }
+
+        jTableWk1Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk2Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk3Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk1Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(2).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(7).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(10).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(10).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(11).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(18).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(18).setMaxWidth(0);
+
+        jTableDocAttWk1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk2.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk2.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk3.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk3.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk4.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk4.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableDocAttWk5.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableDocAttWk5.getColumnModel().getColumn(0).setMaxWidth(0);
 
     }
 
@@ -177,7 +268,7 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         }
     }
 
-   void findUserGrp() {
+    void findUserGrp() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -192,7 +283,7 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -270,7 +361,7 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
             if ("usrSupAcc".equals(usrGrp)) {
 
                 jMenuItemHeadApp.setEnabled(false);
-                  jMenuItemAcqHeadApp.setEnabled(false);
+                jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanHODApproval.setEnabled(false);
 
             }
@@ -372,6 +463,78 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         }
     }
 
+    void fetchAttDoc(String refNum) {
+
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+            Statement st1 = conn.createStatement();
+            Statement st2 = conn.createStatement();
+            Statement st3 = conn.createStatement();
+            Statement st4 = conn.createStatement();
+
+            st.executeQuery("SELECT ACT_ITM,attDesc,fileName FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk1] "
+                    + "where ACT_REC_STA='A' and REF_NUM='" + refNum + "'");
+
+            ResultSet r = st.getResultSet();
+            while (r.next()) {
+
+                modelAttWk1.insertRow(modelAttWk1.getRowCount(), new Object[]{r.getString(1), r.getString(2),
+                    r.getString(3)});
+
+            }
+
+            st1.executeQuery("SELECT ACT_ITM,attDesc,fileName FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk2] "
+                    + "where ACT_REC_STA='A' and REF_NUM='" + refNum + "'");
+
+            ResultSet r1 = st1.getResultSet();
+            while (r1.next()) {
+
+                modelAttWk2.insertRow(modelAttWk2.getRowCount(), new Object[]{r1.getString(1), r1.getString(2),
+                    r1.getString(3)});
+
+            }
+
+            st2.executeQuery("SELECT ACT_ITM,attDesc,fileName FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk3] "
+                    + "where ACT_REC_STA='A' and REF_NUM='" + refNum + "'");
+
+            ResultSet r2 = st2.getResultSet();
+            while (r2.next()) {
+
+                modelAttWk3.insertRow(modelAttWk3.getRowCount(), new Object[]{r2.getString(1), r2.getString(2),
+                    r2.getString(3)});
+
+            }
+
+            st3.executeQuery("SELECT ACT_ITM,attDesc,fileName FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk4] "
+                    + "where ACT_REC_STA='A' and REF_NUM='" + refNum + "'");
+
+            ResultSet r3 = st3.getResultSet();
+            while (r3.next()) {
+
+                modelAttWk4.insertRow(modelAttWk4.getRowCount(), new Object[]{r3.getString(1), r3.getString(2),
+                    r3.getString(3)});
+
+            }
+
+            st4.executeQuery("SELECT ACT_ITM,attDesc,fileName FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAttDocJustTabWk5] "
+                    + "where ACT_REC_STA='A' and REF_NUM='" + refNum + "'");
+
+            ResultSet r4 = st4.getResultSet();
+            while (r4.next()) {
+
+                modelAttWk5.insertRow(modelAttWk5.getRowCount(), new Object[]{r4.getString(1), r4.getString(2),
+                    r4.getString(3)});
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     void fetchdataGenWk1() {
         try {
 
@@ -447,12 +610,12 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
                 modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -474,12 +637,12 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
                 modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -501,12 +664,12 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
                 modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -528,12 +691,12 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
                 modelWk4.insertRow(modelWk4.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -555,16 +718,14 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
                 modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
-                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23), r.getString(24), r.getString(25), r.getString(26)});
 
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -600,8 +761,13 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         jLabelRefNum = new javax.swing.JLabel();
         jLabelStatus = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneWk6 = new javax.swing.JScrollPane();
         jTableWk1Activities = new javax.swing.JTable();
+        jPanelAttDocWk1 = new javax.swing.JPanel();
+        jScrollPaneWk1 = new javax.swing.JScrollPane();
+        jTableDocAttWk1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         jPanelWkTwo = new javax.swing.JPanel();
         jLabelWkDuration1 = new javax.swing.JLabel();
         jLabelWk1From1 = new javax.swing.JLabel();
@@ -618,8 +784,13 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         jLabelHeaderGen7 = new javax.swing.JLabel();
         jLabelStatus1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane11 = new javax.swing.JScrollPane();
+        jScrollPaneWk7 = new javax.swing.JScrollPane();
         jTableWk2Activities = new javax.swing.JTable();
+        jPanelAttDocWk2 = new javax.swing.JPanel();
+        jScrollPaneWk2 = new javax.swing.JScrollPane();
+        jTableDocAttWk2 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jPanelWk2 = new javax.swing.JPanel();
         jPanelWkThree = new javax.swing.JPanel();
         jLabelWkDuration2 = new javax.swing.JLabel();
         jLabelWk3From = new javax.swing.JLabel();
@@ -636,8 +807,13 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         jLabelHeaderGen4 = new javax.swing.JLabel();
         jLabelStatus2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPaneWk8 = new javax.swing.JScrollPane();
         jTableWk3Activities = new javax.swing.JTable();
+        jPanelAttDocWk3 = new javax.swing.JPanel();
+        jScrollPaneWk3 = new javax.swing.JScrollPane();
+        jTableDocAttWk3 = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        jPanelWk3 = new javax.swing.JPanel();
         jPanelWkFour = new javax.swing.JPanel();
         jLabelWkDuration3 = new javax.swing.JLabel();
         jLabelWk4From = new javax.swing.JLabel();
@@ -654,8 +830,13 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         jLabelHeaderGen5 = new javax.swing.JLabel();
         jLabelStatus3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
+        jScrollPaneWk9 = new javax.swing.JScrollPane();
         jTableWk4Activities = new javax.swing.JTable();
+        jPanelAttDocWk4 = new javax.swing.JPanel();
+        jScrollPaneWk4 = new javax.swing.JScrollPane();
+        jTableDocAttWk4 = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
+        jPanelWk4 = new javax.swing.JPanel();
         jPanelWkFive = new javax.swing.JPanel();
         jLabelWkDuration4 = new javax.swing.JLabel();
         jLabelWk5From = new javax.swing.JLabel();
@@ -672,8 +853,13 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         jLabelHeaderGen8 = new javax.swing.JLabel();
         jLabelStatus4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jScrollPane9 = new javax.swing.JScrollPane();
+        jScrollPaneWk10 = new javax.swing.JScrollPane();
         jTableWk5Activities = new javax.swing.JTable();
+        jPanelAttDocWk5 = new javax.swing.JPanel();
+        jScrollPaneWk5 = new javax.swing.JScrollPane();
+        jTableDocAttWk5 = new javax.swing.JTable();
+        jLabel12 = new javax.swing.JLabel();
+        jPanelWk5 = new javax.swing.JPanel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuNew = new javax.swing.JMenu();
@@ -822,26 +1008,67 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk1Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk1ActivitiesMouseClicked(evt);
+        jScrollPaneWk6.setViewportView(jTableWk1Activities);
+
+        jPanelWkOne.add(jScrollPaneWk6);
+        jScrollPaneWk6.setBounds(30, 240, 1290, 310);
+
+        jPanelAttDocWk1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanelAttDocWk1.setLayout(null);
+
+        jTableDocAttWk1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "File Itm No", "Attachment Description", "Attachement File Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableWk1Activities);
+        jTableDocAttWk1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk1MouseEntered(evt);
+            }
+        });
+        jScrollPaneWk1.setViewportView(jTableDocAttWk1);
 
-        jPanelWkOne.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 240, 1290, 420);
+        jPanelAttDocWk1.add(jScrollPaneWk1);
+        jScrollPaneWk1.setBounds(10, 10, 900, 105);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        jLabel2.setText("*NB: Double Click to View the PDF Document");
+        jPanelAttDocWk1.add(jLabel2);
+        jLabel2.setBounds(10, 160, 450, 13);
+
+        jPanelWkOne.add(jPanelAttDocWk1);
+        jPanelAttDocWk1.setBounds(30, 550, 920, 120);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanel4.setLayout(null);
+        jPanelWkOne.add(jPanel4);
+        jPanel4.setBounds(950, 550, 370, 120);
 
         jTabbedPaneMain.addTab("Week One", jPanelWkOne);
 
@@ -909,26 +1136,67 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk2Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk2ActivitiesMouseClicked(evt);
+        jScrollPaneWk7.setViewportView(jTableWk2Activities);
+
+        jPanelWkTwo.add(jScrollPaneWk7);
+        jScrollPaneWk7.setBounds(30, 240, 1290, 305);
+
+        jPanelAttDocWk2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanelAttDocWk2.setLayout(null);
+
+        jTableDocAttWk2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "File Itm No", "Attachment Description", "Attachement File Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane11.setViewportView(jTableWk2Activities);
+        jTableDocAttWk2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk2MouseEntered(evt);
+            }
+        });
+        jScrollPaneWk2.setViewportView(jTableDocAttWk2);
 
-        jPanelWkTwo.add(jScrollPane11);
-        jScrollPane11.setBounds(30, 230, 1290, 430);
+        jPanelAttDocWk2.add(jScrollPaneWk2);
+        jScrollPaneWk2.setBounds(10, 10, 900, 105);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        jLabel6.setText("*NB: Double Click to View the PDF Document");
+        jPanelAttDocWk2.add(jLabel6);
+        jLabel6.setBounds(10, 160, 450, 13);
+
+        jPanelWkTwo.add(jPanelAttDocWk2);
+        jPanelAttDocWk2.setBounds(30, 545, 920, 120);
+
+        jPanelWk2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelWk2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanelWk2.setLayout(null);
+        jPanelWkTwo.add(jPanelWk2);
+        jPanelWk2.setBounds(950, 545, 370, 120);
 
         jTabbedPaneMain.addTab("Week Two", jPanelWkTwo);
 
@@ -1003,26 +1271,67 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk3Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk3ActivitiesMouseClicked(evt);
+        jScrollPaneWk8.setViewportView(jTableWk3Activities);
+
+        jPanelWkThree.add(jScrollPaneWk8);
+        jScrollPaneWk8.setBounds(30, 240, 1290, 305);
+
+        jPanelAttDocWk3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanelAttDocWk3.setLayout(null);
+
+        jTableDocAttWk3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "File Itm No", "Attachment Description", "Attachement File Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTableWk3Activities);
+        jTableDocAttWk3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk3MouseEntered(evt);
+            }
+        });
+        jScrollPaneWk3.setViewportView(jTableDocAttWk3);
 
-        jPanelWkThree.add(jScrollPane3);
-        jScrollPane3.setBounds(30, 240, 1290, 420);
+        jPanelAttDocWk3.add(jScrollPaneWk3);
+        jScrollPaneWk3.setBounds(10, 10, 900, 105);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        jLabel8.setText("*NB: Double Click to View the PDF Document");
+        jPanelAttDocWk3.add(jLabel8);
+        jLabel8.setBounds(10, 160, 450, 13);
+
+        jPanelWkThree.add(jPanelAttDocWk3);
+        jPanelAttDocWk3.setBounds(30, 550, 920, 120);
+
+        jPanelWk3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelWk3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanelWk3.setLayout(null);
+        jPanelWkThree.add(jPanelWk3);
+        jPanelWk3.setBounds(950, 550, 370, 120);
 
         jTabbedPaneMain.addTab("Week Three", jPanelWkThree);
 
@@ -1097,26 +1406,67 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk4Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk4ActivitiesMouseClicked(evt);
+        jScrollPaneWk9.setViewportView(jTableWk4Activities);
+
+        jPanelWkFour.add(jScrollPaneWk9);
+        jScrollPaneWk9.setBounds(30, 240, 1290, 305);
+
+        jPanelAttDocWk4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanelAttDocWk4.setLayout(null);
+
+        jTableDocAttWk4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "File Itm No", "Attachment Description", "Attachement File Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(jTableWk4Activities);
+        jTableDocAttWk4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk4MouseEntered(evt);
+            }
+        });
+        jScrollPaneWk4.setViewportView(jTableDocAttWk4);
 
-        jPanelWkFour.add(jScrollPane5);
-        jScrollPane5.setBounds(30, 240, 1290, 420);
+        jPanelAttDocWk4.add(jScrollPaneWk4);
+        jScrollPaneWk4.setBounds(10, 10, 900, 105);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        jLabel11.setText("*NB: Double Click to View the PDF Document");
+        jPanelAttDocWk4.add(jLabel11);
+        jLabel11.setBounds(10, 160, 450, 13);
+
+        jPanelWkFour.add(jPanelAttDocWk4);
+        jPanelAttDocWk4.setBounds(30, 550, 920, 125);
+
+        jPanelWk4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelWk4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanelWk4.setLayout(null);
+        jPanelWkFour.add(jPanelWk4);
+        jPanelWk4.setBounds(950, 550, 370, 120);
 
         jTabbedPaneMain.addTab("Week Four", jPanelWkFour);
 
@@ -1191,26 +1541,67 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Justification for Choice of Activity ", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Staff Member 1", "Staff Member 2", "Staff Member 3", "Staff Member 4"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk5Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk5ActivitiesMouseClicked(evt);
+        jScrollPaneWk10.setViewportView(jTableWk5Activities);
+
+        jPanelWkFive.add(jScrollPaneWk10);
+        jScrollPaneWk10.setBounds(30, 240, 1290, 305);
+
+        jPanelAttDocWk5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanelAttDocWk5.setLayout(null);
+
+        jTableDocAttWk5.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "File Itm No", "Attachment Description", "Attachement File Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane9.setViewportView(jTableWk5Activities);
+        jTableDocAttWk5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTableDocAttWk5MouseEntered(evt);
+            }
+        });
+        jScrollPaneWk5.setViewportView(jTableDocAttWk5);
 
-        jPanelWkFive.add(jScrollPane9);
-        jScrollPane9.setBounds(30, 240, 1290, 420);
+        jPanelAttDocWk5.add(jScrollPaneWk5);
+        jScrollPaneWk5.setBounds(10, 10, 900, 105);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        jLabel12.setText("*NB: Double Click to View the PDF Document");
+        jPanelAttDocWk5.add(jLabel12);
+        jLabel12.setBounds(10, 160, 450, 13);
+
+        jPanelWkFive.add(jPanelAttDocWk5);
+        jPanelAttDocWk5.setBounds(30, 550, 920, 120);
+
+        jPanelWk5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelWk5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanelWk5.setLayout(null);
+        jPanelWkFive.add(jPanelWk5);
+        jPanelWk5.setBounds(950, 550, 370, 120);
 
         jTabbedPaneMain.addTab("Week Five", jPanelWkFive);
 
@@ -1479,28 +1870,8 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-       
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
-
-    private void jTableWk5ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk5ActivitiesMouseClicked
-
-    }//GEN-LAST:event_jTableWk5ActivitiesMouseClicked
-
-    private void jTableWk4ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk4ActivitiesMouseClicked
-
-    }//GEN-LAST:event_jTableWk4ActivitiesMouseClicked
-
-    private void jTableWk3ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk3ActivitiesMouseClicked
-
-    }//GEN-LAST:event_jTableWk3ActivitiesMouseClicked
-
-    private void jTableWk2ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk2ActivitiesMouseClicked
-
-    }//GEN-LAST:event_jTableWk2ActivitiesMouseClicked
-
-    private void jTableWk1ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk1ActivitiesMouseClicked
-
-    }//GEN-LAST:event_jTableWk1ActivitiesMouseClicked
 
     private void jMenuItemPlanPerDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanPerDiemActionPerformed
         new JFrameMnthPlanPerDiemCreate(jLabelEmp.getText()).setVisible(true);
@@ -1624,6 +1995,156 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jMenuItemUserCreateActionPerformed
 
+    private void jTableDocAttWk5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk5MouseClicked
+        if (evt.getClickCount() == 2) {
+            connSaveFile pdfRetrive = new connSaveFile();
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                        + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+                int row = jTableDocAttWk5.getSelectedRow();
+
+                int col = 0;
+                int col1 = 2;
+
+                Object id = jTableDocAttWk5.getValueAt(row, col);
+                Object id1 = jTableDocAttWk5.getValueAt(row, col1);
+
+                String refItmNum = jLabelRefNum.getText() + id.toString();
+                String pdfName = id1.toString();
+
+                pdfRetrive.getPDFData5(conn, refItmNum, pdfName, "ClaimAttDocJustTabWk5");
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+    }//GEN-LAST:event_jTableDocAttWk5MouseClicked
+
+    private void jTableDocAttWk5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk5MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableDocAttWk5MouseEntered
+
+    private void jTableDocAttWk4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk4MouseClicked
+        if (evt.getClickCount() == 2) {
+            connSaveFile pdfRetrive = new connSaveFile();
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                        + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+                int row = jTableDocAttWk4.getSelectedRow();
+
+                int col = 0;
+                int col1 = 2;
+
+                Object id = jTableDocAttWk4.getValueAt(row, col);
+                Object id1 = jTableDocAttWk4.getValueAt(row, col1);
+
+                String refItmNum = jLabelRefNum.getText() + id.toString();
+                String pdfName = id1.toString();
+                System.out.println("wk4 " + refItmNum + " fff " + pdfName);
+                pdfRetrive.getPDFData5(conn, refItmNum, pdfName, "ClaimAttDocJustTabWk4");
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+    }//GEN-LAST:event_jTableDocAttWk4MouseClicked
+
+    private void jTableDocAttWk4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk4MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableDocAttWk4MouseEntered
+
+    private void jTableDocAttWk3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk3MouseClicked
+        if (evt.getClickCount() == 2) {
+            connSaveFile pdfRetrive = new connSaveFile();
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                        + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+                int row = jTableDocAttWk3.getSelectedRow();
+
+                int col = 0;
+                int col1 = 2;
+
+                Object id = jTableDocAttWk3.getValueAt(row, col);
+                Object id1 = jTableDocAttWk3.getValueAt(row, col1);
+
+                String refItmNum = jLabelRefNum.getText() + id.toString();
+                String pdfName = id1.toString();
+
+                pdfRetrive.getPDFData5(conn, refItmNum, pdfName, "ClaimAttDocJustTabWk3");
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+    }//GEN-LAST:event_jTableDocAttWk3MouseClicked
+
+    private void jTableDocAttWk3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableDocAttWk3MouseEntered
+
+    private void jTableDocAttWk2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk2MouseClicked
+        if (evt.getClickCount() == 2) {
+            connSaveFile pdfRetrive = new connSaveFile();
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                        + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+                int row = jTableDocAttWk2.getSelectedRow();
+
+                int col = 0;
+                int col1 = 2;
+
+                Object id = jTableDocAttWk2.getValueAt(row, col);
+                Object id1 = jTableDocAttWk2.getValueAt(row, col1);
+
+                String refItmNum = jLabelRefNum.getText() + id.toString();
+                String pdfName = id1.toString();
+
+                pdfRetrive.getPDFData5(conn, refItmNum, pdfName, "ClaimAttDocJustTabWk2");
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+    }//GEN-LAST:event_jTableDocAttWk2MouseClicked
+
+    private void jTableDocAttWk2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableDocAttWk2MouseEntered
+
+    private void jTableDocAttWk1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk1MouseClicked
+        if (evt.getClickCount() == 2) {
+            connSaveFile pdfRetrive = new connSaveFile();
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                        + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+                int row = jTableDocAttWk1.getSelectedRow();
+
+                int col = 0;
+                int col1 = 2;
+
+                Object id = jTableDocAttWk1.getValueAt(row, col);
+                Object id1 = jTableDocAttWk1.getValueAt(row, col1);
+
+                String refItmNum = jLabelRefNum.getText() + id.toString();
+                String pdfName = id1.toString();
+
+                pdfRetrive.getPDFData5(conn, refItmNum, pdfName, "ClaimAttDocJustTabWk1");
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+    }//GEN-LAST:event_jTableDocAttWk1MouseClicked
+
+    private void jTableDocAttWk1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDocAttWk1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableDocAttWk1MouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -1724,9 +2245,14 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelDistrict;
     private javax.swing.JLabel jLabelEmp;
@@ -1828,16 +2354,31 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuPlanApproval;
     private javax.swing.JMenu jMenuReports;
     private javax.swing.JMenu jMenuRequest;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanelAttDocWk1;
+    private javax.swing.JPanel jPanelAttDocWk2;
+    private javax.swing.JPanel jPanelAttDocWk3;
+    private javax.swing.JPanel jPanelAttDocWk4;
+    private javax.swing.JPanel jPanelAttDocWk5;
+    private javax.swing.JPanel jPanelWk2;
+    private javax.swing.JPanel jPanelWk3;
+    private javax.swing.JPanel jPanelWk4;
+    private javax.swing.JPanel jPanelWk5;
     private javax.swing.JPanel jPanelWkFive;
     private javax.swing.JPanel jPanelWkFour;
     private javax.swing.JPanel jPanelWkOne;
     private javax.swing.JPanel jPanelWkThree;
     private javax.swing.JPanel jPanelWkTwo;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane11;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JScrollPane jScrollPaneWk1;
+    private javax.swing.JScrollPane jScrollPaneWk10;
+    private javax.swing.JScrollPane jScrollPaneWk2;
+    private javax.swing.JScrollPane jScrollPaneWk3;
+    private javax.swing.JScrollPane jScrollPaneWk4;
+    private javax.swing.JScrollPane jScrollPaneWk5;
+    private javax.swing.JScrollPane jScrollPaneWk6;
+    private javax.swing.JScrollPane jScrollPaneWk7;
+    private javax.swing.JScrollPane jScrollPaneWk8;
+    private javax.swing.JScrollPane jScrollPaneWk9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
@@ -1867,6 +2408,11 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JTabbedPane jTabbedPaneMain;
+    private javax.swing.JTable jTableDocAttWk1;
+    private javax.swing.JTable jTableDocAttWk2;
+    private javax.swing.JTable jTableDocAttWk3;
+    private javax.swing.JTable jTableDocAttWk4;
+    private javax.swing.JTable jTableDocAttWk5;
     private javax.swing.JTable jTableWk1Activities;
     private javax.swing.JTable jTableWk2Activities;
     private javax.swing.JTable jTableWk3Activities;

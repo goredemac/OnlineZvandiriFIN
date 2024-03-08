@@ -833,14 +833,14 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             String sql1 = "update [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] set "
-                    + "STATUS ='P' where PLAN_REF_NUM=" + jTextRefNum.getText();
+                    + "ACT_REC_STA ='P' where PLAN_REF_NUM=" + jTextRefNum.getText();
 
             pst = conn.prepareStatement(sql1);
             pst.executeUpdate();
 
             for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk1Activities.getValueAt(i, 15).toString()))) {
-                    usrRecNam = jTableWk1Activities.getValueAt(i, 15).toString();
+                if (!("".equals(jTableWk1Activities.getValueAt(i, 19).toString()))) {
+                    usrRecNam = jTableWk1Activities.getValueAt(i, 19).toString();
                     actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "1";
                     usrActType = "Per Diem";
@@ -849,8 +849,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk1Activities.getValueAt(i, 16).toString()))) {
-                    usrRecNam = jTableWk1Activities.getValueAt(i, 16).toString();
+                if (!("".equals(jTableWk1Activities.getValueAt(i, 20).toString()))) {
+                    usrRecNam = jTableWk1Activities.getValueAt(i, 20).toString();
                     actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "1";
                     usrActType = "Per Diem";
@@ -859,8 +859,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk1Activities.getValueAt(i, 17).toString()))) {
-                    usrRecNam = jTableWk1Activities.getValueAt(i, 17).toString();
+                if (!("".equals(jTableWk1Activities.getValueAt(i, 21).toString()))) {
+                    usrRecNam = jTableWk1Activities.getValueAt(i, 21).toString();
                     actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "1";
                     usrActType = "Per Diem";
@@ -868,8 +868,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 }
             }
             for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk1Activities.getValueAt(i, 18).toString()))) {
-                    usrRecNam = jTableWk1Activities.getValueAt(i, 18).toString();
+                if (!("".equals(jTableWk1Activities.getValueAt(i, 22).toString()))) {
+                    usrRecNam = jTableWk1Activities.getValueAt(i, 22).toString();
                     actDate = jTableWk1Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "1";
                     usrActType = "Per Diem";
@@ -878,8 +878,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk2Activities.getValueAt(i, 15).toString()))) {
-                    usrRecNam = jTableWk2Activities.getValueAt(i, 15).toString();
+                if (!("".equals(jTableWk2Activities.getValueAt(i, 19).toString()))) {
+                    usrRecNam = jTableWk2Activities.getValueAt(i, 19).toString();
                     actDate = jTableWk2Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "2";
                     usrActType = "Per Diem";
@@ -888,8 +888,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk2Activities.getValueAt(i, 16).toString()))) {
-                    usrRecNam = jTableWk2Activities.getValueAt(i, 16).toString();
+                if (!("".equals(jTableWk2Activities.getValueAt(i, 20).toString()))) {
+                    usrRecNam = jTableWk2Activities.getValueAt(i, 20).toString();
                     actDate = jTableWk2Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "2";
                     usrActType = "Per Diem";
@@ -897,8 +897,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 }
             }
             for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk2Activities.getValueAt(i, 17).toString()))) {
-                    usrRecNam = jTableWk2Activities.getValueAt(i, 17).toString();
+                if (!("".equals(jTableWk2Activities.getValueAt(i, 21).toString()))) {
+                    usrRecNam = jTableWk2Activities.getValueAt(i, 21).toString();
                     actDate = jTableWk2Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "2";
                     usrActType = "Per Diem";
@@ -906,8 +906,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 }
             }
             for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk2Activities.getValueAt(i, 18).toString()))) {
-                    usrRecNam = jTableWk2Activities.getValueAt(i, 18).toString();
+                if (!("".equals(jTableWk2Activities.getValueAt(i, 22).toString()))) {
+                    usrRecNam = jTableWk2Activities.getValueAt(i, 22).toString();
                     actDate = jTableWk2Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "2";
                     usrActType = "Per Diem";
@@ -916,8 +916,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk3Activities.getValueAt(i, 15).toString()))) {
-                    usrRecNam = jTableWk3Activities.getValueAt(i, 15).toString();
+                if (!("".equals(jTableWk3Activities.getValueAt(i, 19).toString()))) {
+                    usrRecNam = jTableWk3Activities.getValueAt(i, 19).toString();
                     actDate = jTableWk3Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "3";
                     usrActType = "Per Diem";
@@ -926,8 +926,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk3Activities.getValueAt(i, 16).toString()))) {
-                    usrRecNam = jTableWk3Activities.getValueAt(i, 16).toString();
+                if (!("".equals(jTableWk3Activities.getValueAt(i, 20).toString()))) {
+                    usrRecNam = jTableWk3Activities.getValueAt(i, 20).toString();
                     actDate = jTableWk3Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "3";
                     usrActType = "Per Diem";
@@ -935,8 +935,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 }
             }
             for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk3Activities.getValueAt(i, 17).toString()))) {
-                    usrRecNam = jTableWk3Activities.getValueAt(i, 17).toString();
+                if (!("".equals(jTableWk3Activities.getValueAt(i, 21).toString()))) {
+                    usrRecNam = jTableWk3Activities.getValueAt(i, 21).toString();
                     actDate = jTableWk3Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "3";
                     usrActType = "Per Diem";
@@ -944,8 +944,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 }
             }
             for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk3Activities.getValueAt(i, 18).toString()))) {
-                    usrRecNam = jTableWk3Activities.getValueAt(i, 18).toString();
+                if (!("".equals(jTableWk3Activities.getValueAt(i, 22).toString()))) {
+                    usrRecNam = jTableWk3Activities.getValueAt(i, 22).toString();
                     actDate = jTableWk3Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "3";
                     usrActType = "Per Diem";
@@ -954,8 +954,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk4Activities.getValueAt(i, 15).toString()))) {
-                    usrRecNam = jTableWk4Activities.getValueAt(i, 15).toString();
+                if (!("".equals(jTableWk4Activities.getValueAt(i, 19).toString()))) {
+                    usrRecNam = jTableWk4Activities.getValueAt(i, 19).toString();
                     actDate = jTableWk4Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "4";
                     usrActType = "Per Diem";
@@ -964,8 +964,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk4Activities.getValueAt(i, 16).toString()))) {
-                    usrRecNam = jTableWk4Activities.getValueAt(i, 16).toString();
+                if (!("".equals(jTableWk4Activities.getValueAt(i, 20).toString()))) {
+                    usrRecNam = jTableWk4Activities.getValueAt(i, 20).toString();
                     actDate = jTableWk4Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "4";
                     usrActType = "Per Diem";
@@ -974,8 +974,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 }
             }
             for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk4Activities.getValueAt(i, 17).toString()))) {
-                    usrRecNam = jTableWk4Activities.getValueAt(i, 17).toString();
+                if (!("".equals(jTableWk4Activities.getValueAt(i, 21).toString()))) {
+                    usrRecNam = jTableWk4Activities.getValueAt(i, 21).toString();
                     actDate = jTableWk4Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "4";
                     usrActType = "Per Diem";
@@ -983,8 +983,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 }
             }
             for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk4Activities.getValueAt(i, 18).toString()))) {
-                    usrRecNam = jTableWk4Activities.getValueAt(i, 18).toString();
+                if (!("".equals(jTableWk4Activities.getValueAt(i, 22).toString()))) {
+                    usrRecNam = jTableWk4Activities.getValueAt(i, 22).toString();
                     actDate = jTableWk4Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "4";
                     usrActType = "Per Diem";
@@ -993,8 +993,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk5Activities.getValueAt(i, 15).toString()))) {
-                    usrRecNam = jTableWk5Activities.getValueAt(i, 15).toString();
+                if (!("".equals(jTableWk5Activities.getValueAt(i, 19).toString()))) {
+                    usrRecNam = jTableWk5Activities.getValueAt(i, 19).toString();
                     actDate = jTableWk5Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "5";
                     usrActType = "Per Diem";
@@ -1003,8 +1003,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             }
 
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk5Activities.getValueAt(i, 16).toString()))) {
-                    usrRecNam = jTableWk5Activities.getValueAt(i, 16).toString();
+                if (!("".equals(jTableWk5Activities.getValueAt(i, 20).toString()))) {
+                    usrRecNam = jTableWk5Activities.getValueAt(i, 20).toString();
                     actDate = jTableWk5Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "5";
                     usrActType = "Per Diem";
@@ -1012,8 +1012,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 }
             }
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk5Activities.getValueAt(i, 17).toString()))) {
-                    usrRecNam = jTableWk5Activities.getValueAt(i, 17).toString();
+                if (!("".equals(jTableWk5Activities.getValueAt(i, 21).toString()))) {
+                    usrRecNam = jTableWk5Activities.getValueAt(i, 21).toString();
                     actDate = jTableWk5Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "5";
                     usrActType = "Per Diem";
@@ -1021,8 +1021,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 }
             }
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-                if (!("".equals(jTableWk5Activities.getValueAt(i, 18).toString()))) {
-                    usrRecNam = jTableWk5Activities.getValueAt(i, 18).toString();
+                if (!("".equals(jTableWk5Activities.getValueAt(i, 22).toString()))) {
+                    usrRecNam = jTableWk5Activities.getValueAt(i, 22).toString();
                     actDate = jTableWk5Activities.getValueAt(i, 0).toString();
                     UsrRecWk = "5";
                     usrActType = "Per Diem";
@@ -1042,16 +1042,17 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
-            String sqlrecplan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] "
-                    + "(SERIAL,PLAN_REF_NUM,ACT_DATE,EMP_NAM,PLAN_WK,STATUS,ACT_TYPE) VALUES (?,?,?,?,?,?,?)";
+            String sqlrecplan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] VALUES (?,?,?,?,?,?,?,?,?)";
             pst1 = conn.prepareStatement(sqlrecplan);
             pst1.setString(1, "P");
-            pst1.setString(2, jTextRefNum.getText());
+            pst1.setString(2, jLabelRefNum.getText());
             pst1.setString(3, actDate);
             pst1.setString(4, usrRecNam);
             pst1.setString(5, UsrRecWk);
-            pst1.setString(6, "A");
-            pst1.setString(7, usrActType);
+            pst1.setString(6, usrActType);
+            pst1.setString(7, actNextVer);
+            pst1.setString(8, "1");
+            pst1.setString(9, "A");
             pst1.executeUpdate();
 
         } catch (Exception e) {

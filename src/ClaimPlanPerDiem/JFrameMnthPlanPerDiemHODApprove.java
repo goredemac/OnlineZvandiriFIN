@@ -583,7 +583,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
+            System.out.println("here");
             String sqlWkplanperiod = "insert into [ClaimsAppSysZvandiri].[dbo].[PlanActTab] "
                     + "(SERIAL,PLAN_REF_NUM,USR_ACTION,DOC_STATUS,"
                     + "ACTIONED_BY_EMP_NUM,ACTIONED_BY_NAM,SEND_TO_EMP_NUM,SEND_TO_NAM,"
@@ -1301,7 +1301,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
 
                 jDialogWaitingEmail.setVisible(false);
 
-                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to <b>Finance</b> with status.</html>");
+                JOptionPane.showMessageDialog(this, "<html>An email notification has been sent to all staff members on the plan with the status.</html>");
 
                 new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
                 setVisible(false);
@@ -1474,7 +1474,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
-                    pst1.setString(29, "A");
+                    pst1.setString(29, "C");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
@@ -1535,7 +1535,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
-                    pst1.setString(29, "A");
+                    pst1.setString(29, "C");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
@@ -1596,7 +1596,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
-                    pst1.setString(29, "A");
+                    pst1.setString(29, "C");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
@@ -1657,7 +1657,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
-                    pst1.setString(29, "A");
+                    pst1.setString(29, "C");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
@@ -1718,7 +1718,7 @@ public class JFrameMnthPlanPerDiemHODApprove extends javax.swing.JFrame {
                 } else if (("Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
-                    pst1.setString(29, "A");
+                    pst1.setString(29, "C");
                 } else if (("Not Approved".equals(jComboSupApproval.getSelectedItem().toString()))) {
                     pst1.setString(27, "1");
                     pst1.setString(28, docNextVer);
