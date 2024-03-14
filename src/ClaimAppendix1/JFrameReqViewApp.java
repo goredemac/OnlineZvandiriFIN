@@ -42,7 +42,6 @@ import utils.connSaveFile;
 import utils.savePDFToDB;
 import utils.StockVehicleMgt;
 
-
 /**
  *
  * @author cgoredema
@@ -135,12 +134,11 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         jLabelRejectComments.setVisible(false);
         findUser();
         findUserGrp();
-        
+
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
 
-      
     }
 
     String hostName = "";
@@ -173,7 +171,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         jLabelLineDate4.setText(s.format(d));
     }
 
-void findUserGrp() {
+    void findUserGrp() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -188,7 +186,7 @@ void findUserGrp() {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -350,7 +348,6 @@ void findUserGrp() {
         }
     }
 
-
     void findUser() {
         try {
 
@@ -471,9 +468,9 @@ void findUserGrp() {
                     st1.executeQuery("SELECT distinct a.REF_YEAR,a.SERIAL,a.REF_NUM,REF_DAT,a.EMP_NUM,"
                             + "a.EMP_NAM,a.EMP_TTL, a.EMP_PROV,a.EMP_OFF,a.EMP_BNK_NAM,a.ACC_NUM,a.ACT_MAIN_PUR, "
                             + "a.ACT_TOT_AMT,a.ACT_REC_STA,a.DOC_VER,b.USR_ACTION,b.REJECT_COMMENTS  "
-                            + "FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab a,[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b "
+                            + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab a,[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b "
                             + "where  ( a.REF_NUM = b.REF_NUM and a.DOC_VER=b.DOC_VER) and concat(a.SERIAL,a.REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "'"
-                            + " and a.DOC_VER =(select max(DOC_VER) from ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+                            + " and a.DOC_VER =(select max(DOC_VER) from ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
                             + "where concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "') and a.ACT_REC_STA = 'A'");
 
                     ResultSet r1 = st1.getResultSet();
@@ -527,7 +524,7 @@ void findUserGrp() {
 //                            + "MSC_AMT,ACC_UNPROV_AMT,ACT_ITM_TOT FROM "
 //                            + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
 //                            + "  where SERIAL = 'R' and concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "'and "
-//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
 //                            + "where concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "') and ACT_REC_STA='A' and PLAN_WK = 1"
 //                            + "order by ACT_DATE");
 //
@@ -552,7 +549,7 @@ void findUserGrp() {
 //                            + "MSC_AMT,ACC_UNPROV_AMT,ACT_ITM_TOT FROM "
 //                            + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
 //                            + "  where SERIAL = 'R' and concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "'and "
-//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
 //                            + "where concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "') and ACT_REC_STA='A' and PLAN_WK = 2"
 //                            + "order by ACT_DATE");
 //
@@ -577,7 +574,7 @@ void findUserGrp() {
 //                            + "MSC_AMT,ACC_UNPROV_AMT,ACT_ITM_TOT FROM "
 //                            + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
 //                            + "  where SERIAL = 'R' and concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "'and "
-//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
 //                            + "where concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "') and ACT_REC_STA='A' and PLAN_WK = 3"
 //                            + "order by ACT_DATE");
 //
@@ -602,7 +599,7 @@ void findUserGrp() {
 //                            + "MSC_AMT,ACC_UNPROV_AMT,ACT_ITM_TOT FROM "
 //                            + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
 //                            + "  where SERIAL = 'R' and concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "'and "
-//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
 //                            + "where concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "') and ACT_REC_STA='A' and PLAN_WK = 4"
 //                            + "order by ACT_DATE");
 //
@@ -627,7 +624,7 @@ void findUserGrp() {
 //                            + "MSC_AMT,ACC_UNPROV_AMT,ACT_ITM_TOT FROM "
 //                            + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
 //                            + "  where SERIAL = 'R' and concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "'and "
-//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+//                            + "DOC_VER =(select max(DOC_VER) from ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
 //                            + "where concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "') and ACT_REC_STA='A' and PLAN_WK = 5"
 //                            + "order by ACT_DATE");
 //
@@ -671,7 +668,8 @@ void findUserGrp() {
             while (r.next()) {
                 modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19)});
+                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
 
             }
 
@@ -809,27 +807,27 @@ void findUserGrp() {
         numFormat = new DecimalFormat("000.##");
         double breakfastsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 6));
+            double breakfastamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 6));
+            double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 6));
+            double breakfastamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 6));
+            double breakfastamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 6));
+            double breakfastamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
@@ -837,27 +835,27 @@ void findUserGrp() {
 
         double lunchsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 7));
+            double lunchamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 7));
+            double lunchamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 7));
+            double lunchamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 7));
+            double lunchamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 7));
+            double lunchamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
@@ -865,28 +863,28 @@ void findUserGrp() {
 
         double dinnersubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 8));
+            double dinneramount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 8));
+            double dinneramount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
         //jLabelDinnerSubTot.setText(Double.toString(dinnersubtotal));
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 8));
+            double dinneramount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 8));
+            double dinneramount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 8));
+            double dinneramount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
@@ -894,27 +892,27 @@ void findUserGrp() {
 
         double incidentalsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 9));
+            double incidentalamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 9));
+            double incidentalamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 9));
+            double incidentalamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 9));
+            double incidentalamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 9));
+            double incidentalamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
@@ -922,27 +920,27 @@ void findUserGrp() {
 
         double miscSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 11));
+            double miscamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 11));
+            double miscamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 11));
+            double miscamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 11));
+            double miscamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 11));
+            double miscamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
@@ -950,54 +948,54 @@ void findUserGrp() {
 
         double unprovedSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 12));
+            double unprovedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 12));
+            double unprovedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 12));
+            double unprovedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 12));
+            double unprovedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 12));
+            double unprovedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
         jLabelAccUnprovedSubTot.setText(String.format("%.2f", unprovedSubTot));
 
         double provedSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 13));
+            double provedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 13));
+            double provedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 13));
+            double provedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 13));
+            double provedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 13));
+            double provedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
         jLabelAccProvedSubTot.setText(String.format("%.2f", provedSubTot));
@@ -1107,7 +1105,7 @@ void findUserGrp() {
         jLabelLinRegNum1 = new javax.swing.JLabel();
         jLabelNum2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneWk8 = new javax.swing.JScrollPane();
         jTableWk1Activities = new javax.swing.JTable();
         jPanelRequestWk2 = new javax.swing.JPanel();
         jLabelLogo4 = new javax.swing.JLabel();
@@ -1120,7 +1118,7 @@ void findUserGrp() {
         jLabelLinRegNum2 = new javax.swing.JLabel();
         jLabelNum3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane9 = new javax.swing.JScrollPane();
+        jScrollPaneWk9 = new javax.swing.JScrollPane();
         jTableWk2Activities = new javax.swing.JTable();
         jPanelRequestWk3 = new javax.swing.JPanel();
         jLabelLogo5 = new javax.swing.JLabel();
@@ -1133,7 +1131,7 @@ void findUserGrp() {
         jLabelLinRegNum3 = new javax.swing.JLabel();
         jLabelNum4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        jScrollPaneWk10 = new javax.swing.JScrollPane();
         jTableWk3Activities = new javax.swing.JTable();
         jPanelRequestWk4 = new javax.swing.JPanel();
         jLabelLogo6 = new javax.swing.JLabel();
@@ -1146,7 +1144,7 @@ void findUserGrp() {
         jLabelLinRegNum4 = new javax.swing.JLabel();
         jLabelNum5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
+        jScrollPaneWk11 = new javax.swing.JScrollPane();
         jTableWk4Activities = new javax.swing.JTable();
         jPanelRequestWk5 = new javax.swing.JPanel();
         jLabelLogo7 = new javax.swing.JLabel();
@@ -1159,7 +1157,7 @@ void findUserGrp() {
         jLabelLinRegNum5 = new javax.swing.JLabel();
         jLabelNum6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane6 = new javax.swing.JScrollPane();
+        jScrollPaneWk12 = new javax.swing.JScrollPane();
         jTableWk5Activities = new javax.swing.JTable();
         jPanelDocAttach = new javax.swing.JPanel();
         jLabelLogo3 = new javax.swing.JLabel();
@@ -1281,7 +1279,7 @@ void findUserGrp() {
 
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelGen.add(jLabelLogo);
-        jLabelLogo.setBounds(10, 10, 220, 100);
+        jLabelLogo.setBounds(10, 5, 220, 115);
 
         jLabelHeaderGen.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jPanelGen.add(jLabelHeaderGen);
@@ -1662,7 +1660,7 @@ void findUserGrp() {
 
         jLabelLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequestWk1.add(jLabelLogo2);
-        jLabelLogo2.setBounds(10, 10, 220, 100);
+        jLabelLogo2.setBounds(10, 10, 220, 115);
 
         jLabelHeaderLine1.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine1.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -1713,26 +1711,21 @@ void findUserGrp() {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk1Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk1ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableWk1Activities);
+        jScrollPaneWk8.setViewportView(jTableWk1Activities);
 
-        jPanelRequestWk1.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 150, 1330, 480);
+        jPanelRequestWk1.add(jScrollPaneWk8);
+        jScrollPaneWk8.setBounds(10, 170, 1340, 470);
 
         jTabbedPaneAppSys.addTab("Perdiem Request - Week 1", jPanelRequestWk1);
 
@@ -1743,7 +1736,7 @@ void findUserGrp() {
 
         jLabelLogo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequestWk2.add(jLabelLogo4);
-        jLabelLogo4.setBounds(10, 10, 220, 100);
+        jLabelLogo4.setBounds(10, 10, 220, 115);
 
         jLabelHeaderLine3.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine3.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -1794,26 +1787,21 @@ void findUserGrp() {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk2Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk2ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane9.setViewportView(jTableWk2Activities);
+        jScrollPaneWk9.setViewportView(jTableWk2Activities);
 
-        jPanelRequestWk2.add(jScrollPane9);
-        jScrollPane9.setBounds(10, 150, 1330, 480);
+        jPanelRequestWk2.add(jScrollPaneWk9);
+        jScrollPaneWk9.setBounds(10, 170, 1340, 470);
 
         jTabbedPaneAppSys.addTab("Perdiem Request - Week 2", jPanelRequestWk2);
 
@@ -1824,7 +1812,7 @@ void findUserGrp() {
 
         jLabelLogo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequestWk3.add(jLabelLogo5);
-        jLabelLogo5.setBounds(10, 10, 220, 100);
+        jLabelLogo5.setBounds(10, 10, 220, 115);
 
         jLabelHeaderLine4.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine4.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -1875,26 +1863,21 @@ void findUserGrp() {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk3Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk3ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane4.setViewportView(jTableWk3Activities);
+        jScrollPaneWk10.setViewportView(jTableWk3Activities);
 
-        jPanelRequestWk3.add(jScrollPane4);
-        jScrollPane4.setBounds(10, 150, 1330, 480);
+        jPanelRequestWk3.add(jScrollPaneWk10);
+        jScrollPaneWk10.setBounds(10, 170, 1340, 470);
 
         jTabbedPaneAppSys.addTab("Perdiem Request - Week 3", jPanelRequestWk3);
 
@@ -1905,7 +1888,7 @@ void findUserGrp() {
 
         jLabelLogo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequestWk4.add(jLabelLogo6);
-        jLabelLogo6.setBounds(10, 10, 220, 100);
+        jLabelLogo6.setBounds(10, 10, 220, 115);
 
         jLabelHeaderLine5.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine5.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -1956,26 +1939,21 @@ void findUserGrp() {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk4Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk4ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane5.setViewportView(jTableWk4Activities);
+        jScrollPaneWk11.setViewportView(jTableWk4Activities);
 
-        jPanelRequestWk4.add(jScrollPane5);
-        jScrollPane5.setBounds(10, 150, 1330, 480);
+        jPanelRequestWk4.add(jScrollPaneWk11);
+        jScrollPaneWk11.setBounds(10, 170, 1340, 470);
 
         jTabbedPaneAppSys.addTab("Perdiem Request - Week 4", jPanelRequestWk4);
 
@@ -1986,7 +1964,7 @@ void findUserGrp() {
 
         jLabelLogo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequestWk5.add(jLabelLogo7);
-        jLabelLogo7.setBounds(10, 10, 220, 100);
+        jLabelLogo7.setBounds(10, 10, 220, 115);
 
         jLabelHeaderLine6.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine6.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -2037,26 +2015,21 @@ void findUserGrp() {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk5Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk5ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane6.setViewportView(jTableWk5Activities);
+        jScrollPaneWk12.setViewportView(jTableWk5Activities);
 
-        jPanelRequestWk5.add(jScrollPane6);
-        jScrollPane6.setBounds(10, 150, 1330, 480);
+        jPanelRequestWk5.add(jScrollPaneWk12);
+        jScrollPaneWk12.setBounds(10, 170, 1340, 470);
 
         jTabbedPaneAppSys.addTab("Perdiem Request - Week 5", jPanelRequestWk5);
 
@@ -2406,7 +2379,7 @@ void findUserGrp() {
 
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-        
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jTextRegNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextRegNumActionPerformed
@@ -2459,14 +2432,14 @@ void findUserGrp() {
             SearchRef = jLabelSerial.getText() + jTextRegNum.getText();
             fetchGenData();
             fetchdataWk1();
-            fetchdataWk2();
-            fetchdataWk3();
-            fetchdataWk4();
-            fetchdataWk5();
-            imgDisplay();
+//            fetchdataWk2();
+//            fetchdataWk3();
+//            fetchdataWk4();
+//            fetchdataWk5();
+//            imgDisplay();
             mainPageTotUpdate();
             System.out.println("hhjhd " + SearchRef);
-        } 
+        }
 
     }//GEN-LAST:event_jTextRegNumActionPerformed
 
@@ -2530,148 +2503,6 @@ void findUserGrp() {
         jRadioPerDiem.setSelected(false);
 //        jLabelHeaderGen.setText("PARTICIPANTS ALLOWANCES CLAIM");
     }//GEN-LAST:event_jRadioPartAllowActionPerformed
-
-    private void jTableWk1ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk1ActivitiesMouseClicked
-        //        if (evt.getClickCount() == 2) {
-        //            resetField();
-        //            int row = jTableWk1Activities.getSelectedRow();
-        //
-        //            int col1 = 1;
-        //            int col3 = 3;
-        //            int col4 = 4;
-        //            int col5 = 5;
-        //            int col6 = 6;
-        //            int col7 = 7;
-        //            int col8 = 8;
-        //            int col9 = 9;
-        //            int col10 = 10;
-        //            int col11 = 11;
-        //            int col12 = 12;
-        //            int col13 = 13;
-        //            int col14 = 14;
-        //            int col15 = 15;
-        //            int col16 = 16;
-        //            int col17 = 17;
-        //            int col18 = 18;
-        //            int col19 = 19;
-        //
-        //            Object id1 = jTableWk1Activities.getValueAt(row, col1);
-        //            Object id2 = jTableWk1Activities.getValueAt(row, col3);
-        //            Object id3 = jTableWk1Activities.getValueAt(row, col4);
-        //            Object id4 = jTableWk1Activities.getValueAt(row, col5);
-        //            Object id5 = jTableWk1Activities.getValueAt(row, col6);
-        //            Object id6 = jTableWk1Activities.getValueAt(row, col7);
-        //            Object id7 = jTableWk1Activities.getValueAt(row, col8);
-        //            Object id8 = jTableWk1Activities.getValueAt(row, col9);
-        //            Object id9 = jTableWk1Activities.getValueAt(row, col10);
-        //            Object id10 = jTableWk1Activities.getValueAt(row, col11);
-        //            Object id11 = jTableWk1Activities.getValueAt(row, col12);
-        //            Object id12 = jTableWk1Activities.getValueAt(row, col13);
-        //            Object id13 = jTableWk1Activities.getValueAt(row, col14);
-        //            Object id14 = jTableWk1Activities.getValueAt(row, col15);
-        //            Object id15 = jTableWk1Activities.getValueAt(row, col16);
-        //            Object id16 = jTableWk1Activities.getValueAt(row, col17);
-        //            Object id17 = jTableWk1Activities.getValueAt(row, col18);
-        //            Object id18 = jTableWk1Activities.getValueAt(row, col19);
-        //
-        //            jLabelActWk1Date.setText(id1.toString());
-        //            //            jLabelPrjNameDet.setText(id2.toString());
-        //            //            jLabelPrjTaskDet.setText(id3.toString());
-        //            jTextFieldDialogWk1Site.setText(id4.toString());
-        //            jTextFieldWk1DialogActivityDesc.setText(id5.toString());
-        //            jTextAreaWk1DialogJustification.setText(id6.toString());
-        //            //            jTextFieldWk1DialogStaffName1
-        //            //            jLabelStaff.setText(id7.toString());
-        //
-        //            if ((Double.parseDouble(id7.toString())) > 0) {
-        //                jCheckBoxDialogWk1BrkFast.setSelected(true);
-        //            }
-        //            if ((Double.parseDouble(id8.toString())) > 0) {
-        //                jCheckBoxDialogWk1Lunch.setSelected(true);
-        //            }
-        //            if ((Double.parseDouble(id9.toString())) > 0) {
-        //                jCheckBoxDialogWk1Dinner.setSelected(true);
-        //            }
-        //
-        //            if ((Double.parseDouble(id10.toString())) > 0) {
-        //                jCheckBoxDialogWk1Inc.setSelected(true);
-        //            }
-        //
-        //            if ((Double.parseDouble(id12.toString())) > 0) {
-        //                jCheckBoxDialogWk1Misc.setSelected(true);
-        //                jTextFieldWk1Misc.setText(id11.toString());
-        //                jTextFieldWk1MiscAmt.setText(id12.toString());
-        //            }
-        //
-        //            if ((Double.parseDouble(id13.toString())) > 0) {
-        //                jCheckBoxDialogWk1AccUnProved.setSelected(true);
-        //                jCheckBoxDialogWk1AccProved.setSelected(false);
-        //                jCheckBoxNoAcc.setSelected(false);
-        //
-        //            }
-        //            if ((Double.parseDouble(id14.toString())) > 0) {
-        //                jCheckBoxDialogWk1AccProved.setSelected(true);
-        //                jCheckBoxNoAcc.setSelected(false);
-        //                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-        //
-        //            }
-        //            if (((Double.parseDouble(id13.toString())) == 0) && ((Double.parseDouble(id14.toString())) == 0)) {
-        //                jCheckBoxNoAcc.setSelected(true);
-        //                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-        //                jCheckBoxDialogWk1AccProved.setSelected(false);
-        //
-        //            }
-        //            jTextFieldWk1DialogStaffName1.setText(id15.toString());
-        //            jTextFieldWk1DialogStaffName2.setText(id16.toString());
-        //            jTextFieldWk1DialogStaffName3.setText(id17.toString());
-        //            jTextFieldWk1DialogStaffName4.setText(id18.toString());
-        //
-        //            jDialogWk1.setVisible(true);
-        //            findProject(id2.toString());
-        //            findTask(id3.toString());
-        //            if (("NATIONAL".equals(jLabelDistrict.getText()))) {
-        //                jDialogWk1.setTitle("Per Diem Week 1");
-        //            } else {
-        //                jDialogWk1.setTitle("Month Per Diem ");
-        //            }
-        //            jTextAreaWk1DialogJustification.setLineWrap(true);
-        //            jTextAreaWk1DialogJustification.setWrapStyleWord(true);
-        //            jTextFieldDialogWk1Site.setEditable(false);
-        //            jTextFieldWk1DialogActivityDesc.setEditable(false);
-        //            jTextAreaWk1DialogJustification.setEditable(false);
-        //            jTextFieldWk1DialogStaffName1.setEditable(false);
-        //            jTextFieldWk1DialogStaffName2.setEditable(false);
-        //            jTextFieldWk1DialogStaffName3.setEditable(false);
-        //            jTextFieldWk1DialogStaffName4.setEditable(false);
-        //            jTextFieldWk1Misc.setEditable(false);
-        //            jTextFieldWk1MiscAmt.setEditable(false);
-        //            jCheckBoxDialogWk1BrkFast.setEnabled(false);
-        //            jCheckBoxDialogWk1Lunch.setEnabled(false);
-        //            jCheckBoxDialogWk1Dinner.setEnabled(false);
-        //            jCheckBoxDialogWk1Inc.setEnabled(false);
-        //            jCheckBoxDialogWk1AccUnProved.setEnabled(false);
-        //            jCheckBoxDialogWk1AccProved.setEnabled(false);
-        //            jCheckBoxNoAcc.setEnabled(false);
-        //            jCheckBoxDialogWk1Misc.setEnabled(false);
-        //
-        //        }
-    }//GEN-LAST:event_jTableWk1ActivitiesMouseClicked
-
-    private void jTableWk2ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk2ActivitiesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableWk2ActivitiesMouseClicked
-
-    private void jTableWk3ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk3ActivitiesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableWk3ActivitiesMouseClicked
-
-    private void jTableWk4ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk4ActivitiesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableWk4ActivitiesMouseClicked
-
-    private void jTableWk5ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk5ActivitiesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableWk5ActivitiesMouseClicked
 
     private void jMenuItemPlanPerDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanPerDiemActionPerformed
         new JFrameMnthPlanPerDiemCreate(jLabelEmp.getText()).setVisible(true);
@@ -3121,13 +2952,13 @@ void findUserGrp() {
     private javax.swing.JPanel jPanelStatusView;
     private javax.swing.JRadioButton jRadioPartAllow;
     private javax.swing.JRadioButton jRadioPerDiem;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JScrollPane jScrollPaneWk10;
+    private javax.swing.JScrollPane jScrollPaneWk11;
+    private javax.swing.JScrollPane jScrollPaneWk12;
+    private javax.swing.JScrollPane jScrollPaneWk8;
+    private javax.swing.JScrollPane jScrollPaneWk9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;

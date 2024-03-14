@@ -71,7 +71,7 @@ public class JFrameMnthReqGenList extends javax.swing.JFrame {
         checkOutstandingRequest();
         
         try {
-            System.out.println("1");
+           
             if (requestDays > 0) {
                 //if ((requestDays < -5)) {
                 //requestDays = requestDays * -1;
@@ -81,7 +81,7 @@ public class JFrameMnthReqGenList extends javax.swing.JFrame {
                 new JFrameMnthReqGenList(jLabelEmp.getText()).setVisible(true);
                 setVisible(false);
             } else {
-System.out.println("2");
+
                 int row = jTableProvList.getSelectedRow();
 
                 int col = 0;
@@ -89,17 +89,16 @@ System.out.println("2");
 
                 Object id = jTableProvList.getValueAt(row, col);
                 Object id1 = jTableProvList.getValueAt(row, col1);
-System.out.println("3");
+
                 String ref = id.toString();
                 String actTyp = id1.toString();
 
                 existPrevPerDiem(ref);
-System.out.println("4");
+
                 exp.findMinDate(ref, jLabelGenLogNam.getText());
 
                 Date date = new Date();
-System.out.println("5");
-System.out.println("5ee "+existPrevPerDiemCount+"  "+exp.minDate+" "+formatter.format(date));
+
                 // if (existPrevPerDiemCount==0){
                 if ((existPrevPerDiemCount == 0) && (exp.minDate.compareTo(formatter.format(date)) < 0) ) {
                     JOptionPane.showMessageDialog(this, "Your partcipation on Plan ref no." + ref + " has activities whose date/s have passed. Please refer to the Finance policy."
@@ -108,16 +107,16 @@ System.out.println("5ee "+existPrevPerDiemCount+"  "+exp.minDate+" "+formatter.f
                     JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b> P " + ref + "</b> has been <b>expired.</html>");
                     new JFrameMnthReqGenList(jLabelEmp.getText()).setVisible(true);
                     setVisible(false);
-System.out.println("6");
+
                     //  }
                 } else {
-                    System.out.println("7u");
+                  
 //                    if (!"National Office".equals(provNam)) {
 //                        new JFrameMnthDistrictAcquittal(ref, jLabelEmp.getText()).setVisible(true);
 //                        setVisible(false);
 //                    } else {
-//                        new JFrameMnthRequest(ref, jLabelEmp.getText()).setVisible(true);
-//                        setVisible(false);
+                        new JFrameMnthRequest(ref, jLabelEmp.getText()).setVisible(true);
+                        setVisible(false);
 //                    }
 
                 }
@@ -396,7 +395,7 @@ System.out.println("6");
 
     void fetchdata() {
         try {
-            System.out.println("prov " + provNam + " g " + jLabelGenLogNam.getText());
+            
             DefaultTableModel model = (DefaultTableModel) jTableProvList.getModel();
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");

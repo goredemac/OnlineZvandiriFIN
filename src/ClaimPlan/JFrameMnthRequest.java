@@ -137,6 +137,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 //        jTableWk5Activities.getColumn(0).setMinWidth(0);
 //        jTableWk5Activities.getColumn(0).setMaxWidth(0);
         SearchRef = ref;
+        System.out.println("jhj " + usrLogNam);
         jLabelEmp.setText(usrLogNam);
         jLabelEmp.setVisible(false);
         jTextBankNam.setVisible(false);
@@ -164,27 +165,27 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         findUserGrp();
         fetchdataGenWk1();
         fetchdataWk1();
-        fetchdataWk2();
-        fetchdataWk3();
-        fetchdataWk4();
-        fetchdataWk5();
+//        fetchdataWk2();
+//        fetchdataWk3();
+//        fetchdataWk4();
+//        fetchdataWk5();
         calTotWk1();
-        calTotWk2();
-        calTotWk3();
-        calTotWk4();
-        calTotWk5();
+//        calTotWk2();
+//        calTotWk3();
+//        calTotWk4();
+//        calTotWk5();
         mainPageTotInsert();
-        if (!"National Office".equals(empOff)) {
-            jTabbedPane1.setTitleAt(0, "Month Activities");
-            jTabbedPane1.setEnabledAt(1, false);
-            jTabbedPane1.setTitleAt(1, "");
-            jTabbedPane1.setEnabledAt(2, false);
-            jTabbedPane1.setTitleAt(2, "");
-            jTabbedPane1.setEnabledAt(3, false);
-            jTabbedPane1.setTitleAt(3, "");
-            jTabbedPane1.setEnabledAt(4, false);
-            jTabbedPane1.setTitleAt(4, "");
-        }
+//        if (!"National Office".equals(empOff)) {
+//            jTabbedPane1.setTitleAt(0, "Month Activities");
+//            jTabbedPane1.setEnabledAt(1, false);
+//            jTabbedPane1.setTitleAt(1, "");
+//            jTabbedPane1.setEnabledAt(2, false);
+//            jTabbedPane1.setTitleAt(2, "");
+//            jTabbedPane1.setEnabledAt(3, false);
+//            jTabbedPane1.setTitleAt(3, "");
+//            jTabbedPane1.setEnabledAt(4, false);
+//            jTabbedPane1.setTitleAt(4, "");
+//        }
 
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
@@ -868,7 +869,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'C' "
                     + "  and act_date in (SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] "
-                    + "where status = 'A' and PLAN_WK = 1) and "
+                    + "where ACT_REC_STA = 'A' and PLAN_WK = 1) and "
                     + "(EMP_NAM1 = '" + jLabelGenLogNam.getText() + "' or "
                     + "EMP_NAM2 = '" + jLabelGenLogNam.getText() + "' or"
                     + " EMP_NAM3 = '" + jLabelGenLogNam.getText() + "'  or "
@@ -878,8 +879,9 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             while (r.next()) {
                 modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
-                    r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18)});
+                    r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
+                    r.getString(13), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22)});
 
             }
 
@@ -914,7 +916,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'C' "
                     + "  and act_date in (SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] "
-                    + "where status = 'A' and PLAN_WK = 2) and "
+                    + "where ACT_REC_STA = 'A' and PLAN_WK = 2) and "
                     + "(EMP_NAM1 = '" + jLabelGenLogNam.getText() + "' or "
                     + "EMP_NAM2 = '" + jLabelGenLogNam.getText() + "' or"
                     + " EMP_NAM3 = '" + jLabelGenLogNam.getText() + "'  or "
@@ -960,7 +962,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'C' "
                     + "  and act_date in (SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] "
-                    + "where status = 'A' and PLAN_WK = 3) and "
+                    + "where ACT_REC_STA = 'A' and PLAN_WK = 3) and "
                     + "(EMP_NAM1 = '" + jLabelGenLogNam.getText() + "' or "
                     + "EMP_NAM2 = '" + jLabelGenLogNam.getText() + "' or"
                     + " EMP_NAM3 = '" + jLabelGenLogNam.getText() + "'  or "
@@ -1006,7 +1008,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'C' "
                     + "  and act_date in (SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] "
-                    + "where status = 'A' and PLAN_WK = 4) and "
+                    + "where ACT_REC_STA = 'A' and PLAN_WK = 4) and "
                     + "(EMP_NAM1 = '" + jLabelGenLogNam.getText() + "' or "
                     + "EMP_NAM2 = '" + jLabelGenLogNam.getText() + "' or"
                     + " EMP_NAM3 = '" + jLabelGenLogNam.getText() + "'  or "
@@ -1055,7 +1057,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'C' "
                     + "  and act_date in (SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] "
-                    + "where status = 'A' and PLAN_WK = 5) and "
+                    + "where ACT_REC_STA = 'A' and PLAN_WK = 5) and "
                     + "(EMP_NAM1 = '" + jLabelGenLogNam.getText() + "' or "
                     + "EMP_NAM2 = '" + jLabelGenLogNam.getText() + "' or"
                     + " EMP_NAM3 = '" + jLabelGenLogNam.getText() + "'  or "
@@ -1094,7 +1096,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             for (int i = 0; i < modelWk1.getRowCount(); i++) {
 
-                Object id = modelWk1.getValueAt(i, 0);
+                Object id = modelWk1.getValueAt(i, 1);
                 String refDate = id.toString();
 
                 Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -1115,7 +1117,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
                 }
 
-                if (itmDateCountWk1 > 0) {
+                if (itmDateCountWk1 > 1) {
                     JOptionPane.showMessageDialog(this, "<html>Requesting of per diem "
                             + "twice for one day is not allowed. Another Perdiem request with activity date <b>"
                             + refDate + "</b> has already been registered in the system.Please check and correct.</html>", "Error Connection", JOptionPane.ERROR_MESSAGE);
@@ -1126,7 +1128,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             for (int i = 0; i < modelWk2.getRowCount(); i++) {
 
-                Object id = modelWk2.getValueAt(i, 0);
+                Object id = modelWk2.getValueAt(i, 1);
                 String refDate = id.toString();
 
                 Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -1158,7 +1160,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             for (int i = 0; i < modelWk3.getRowCount(); i++) {
 
-                Object id = modelWk3.getValueAt(i, 0);
+                Object id = modelWk3.getValueAt(i, 1);
                 String refDate = id.toString();
 
                 Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -1190,7 +1192,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             for (int i = 0; i < modelWk4.getRowCount(); i++) {
 
-                Object id = modelWk4.getValueAt(i, 0);
+                Object id = modelWk4.getValueAt(i, 1);
                 String refDate = id.toString();
 
                 Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -1222,7 +1224,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             for (int i = 0; i < modelWk5.getRowCount(); i++) {
 
-                Object id = modelWk5.getValueAt(i, 0);
+                Object id = modelWk5.getValueAt(i, 1);
                 String refDate = id.toString();
 
                 Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -1461,7 +1463,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+                    + "DataBaseName=ClaimsAppSysZimTTECH;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             String sqlcreate = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] "
                     + "(YEAR,SERIAL,REF_NUM,USR_ACTION, DOC_STATUS,ACTIONED_BY_EMP_NUM ,"
@@ -1589,16 +1591,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                 wfCount = r4.getInt(1);
             }
 
-//            if (!jLabelImg.getIcon()==null) {
-//                st1.executeQuery("SELECT count(*) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimDocAttachTab] "
-//                    + "WHERE concat(SERIAL,REF_NUM) ='" + jLabelSerial.getText() + jLabelRegNum.getText() + "'"
-//                    + " and SERIAL = 'R'");
-//            ResultSet r1 = st1.getResultSet();
-//
-//            while (r1.next()) {
-//                docAttDoc = r1.getInt(1);
-//            }
-//            }
             if ((refCheck == (Integer.parseInt(jLabelRegNum.getText()))) && (genCount == 1) && (itmCount > 0)
                     && (wfCount == 1)) {
 
@@ -1689,7 +1681,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             pst = conn.prepareStatement(sqlrefUpdate);
             pst.executeUpdate();
 
-            String sqlPlanRec = "update [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] set STATUS ='A' "
+            String sqlPlanRec = "update [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] set ACT_REC_STA ='A' "
                     + "where PLAN_REF_NUM =" + SearchRef + " and EMP_NAM = '" + jLabelGenLogNam.getText() + "'"
                     + " and ACT_TYPE='Per Diem'";
             pst = conn.prepareStatement(sqlPlanRec);
@@ -1743,11 +1735,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
 
                 String sqlitm = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                        + "(REF_YEAR ,SERIAL ,REF_NUM ,ITM_NUM ,ACT_DATE ,BRANCH ,PROJ_ID ,"
-                        + "PRJ_TASK_CODE ,ACT_SITE ,ACT_ITM_PUR ,BRK_AMT ,LNC_AMT ,DIN_AMT ,"
-                        + "INC_AMT ,MSC_ACT ,MSC_AMT ,ACC_UNPROV_AMT ,ACC_PRO_AMT ,ACT_ITM_TOT ,"
-                        + "PLAN_WK ,REG_MOD_VER ,DOC_VER ,ACT_REC_STA)"
-                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst1 = conn.prepareStatement(sqlitm);
 
@@ -1770,10 +1758,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                 pst1.setString(17, jTableWk1Activities.getValueAt(i, 13).toString());
                 pst1.setString(18, jTableWk1Activities.getValueAt(i, 14).toString());
                 pst1.setString(19, jTableWk1Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, "1");
-                pst1.setString(21, "1");
-                pst1.setString(22, "1");
-                pst1.setString(23, "A");
+                pst1.setString(20, jTableWk1Activities.getValueAt(i, 16).toString());
+                pst1.setString(21, jTableWk1Activities.getValueAt(i, 17).toString());
+                pst1.setString(22, jTableWk1Activities.getValueAt(i, 18).toString());
+                pst1.setString(23, jTableWk1Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, "1");
+                pst1.setString(25, "1");
+                pst1.setString(26, "1");
+                pst1.setString(27, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1793,11 +1785,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
 
                 String sqlitm = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                        + "(REF_YEAR ,SERIAL ,REF_NUM ,ITM_NUM ,ACT_DATE ,BRANCH ,PROJ_ID ,"
-                        + "PRJ_TASK_CODE ,ACT_SITE ,ACT_ITM_PUR ,BRK_AMT ,LNC_AMT ,DIN_AMT ,"
-                        + "INC_AMT ,MSC_ACT ,MSC_AMT ,ACC_UNPROV_AMT ,ACC_PRO_AMT ,ACT_ITM_TOT ,"
-                        + "PLAN_WK ,REG_MOD_VER ,DOC_VER ,ACT_REC_STA)"
-                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst1 = conn.prepareStatement(sqlitm);
 
@@ -1820,10 +1808,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                 pst1.setString(17, jTableWk2Activities.getValueAt(i, 13).toString());
                 pst1.setString(18, jTableWk2Activities.getValueAt(i, 14).toString());
                 pst1.setString(19, jTableWk2Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, "2");
-                pst1.setString(21, "1");
-                pst1.setString(22, "1");
-                pst1.setString(23, "A");
+                pst1.setString(20, jTableWk2Activities.getValueAt(i, 16).toString());
+                pst1.setString(21, jTableWk2Activities.getValueAt(i, 17).toString());
+                pst1.setString(22, jTableWk2Activities.getValueAt(i, 18).toString());
+                pst1.setString(23, jTableWk2Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, "1");
+                pst1.setString(25, "1");
+                pst1.setString(26, "1");
+                pst1.setString(27, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1843,11 +1835,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
 
                 String sqlitm = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                        + "(REF_YEAR ,SERIAL ,REF_NUM ,ITM_NUM ,ACT_DATE ,BRANCH ,PROJ_ID ,"
-                        + "PRJ_TASK_CODE ,ACT_SITE ,ACT_ITM_PUR ,BRK_AMT ,LNC_AMT ,DIN_AMT ,"
-                        + "INC_AMT ,MSC_ACT ,MSC_AMT ,ACC_UNPROV_AMT ,ACC_PRO_AMT ,ACT_ITM_TOT ,"
-                        + "PLAN_WK ,REG_MOD_VER ,DOC_VER ,ACT_REC_STA)"
-                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst1 = conn.prepareStatement(sqlitm);
 
@@ -1870,10 +1858,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                 pst1.setString(17, jTableWk3Activities.getValueAt(i, 13).toString());
                 pst1.setString(18, jTableWk3Activities.getValueAt(i, 14).toString());
                 pst1.setString(19, jTableWk3Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, "3");
-                pst1.setString(21, "1");
-                pst1.setString(22, "1");
-                pst1.setString(23, "A");
+                pst1.setString(20, jTableWk3Activities.getValueAt(i, 16).toString());
+                pst1.setString(21, jTableWk3Activities.getValueAt(i, 17).toString());
+                pst1.setString(22, jTableWk3Activities.getValueAt(i, 18).toString());
+                pst1.setString(23, jTableWk3Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, "1");
+                pst1.setString(25, "1");
+                pst1.setString(26, "1");
+                pst1.setString(27, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1893,11 +1885,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
 
                 String sqlitm = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                        + "(REF_YEAR ,SERIAL ,REF_NUM ,ITM_NUM ,ACT_DATE ,BRANCH ,PROJ_ID ,"
-                        + "PRJ_TASK_CODE ,ACT_SITE ,ACT_ITM_PUR ,BRK_AMT ,LNC_AMT ,DIN_AMT ,"
-                        + "INC_AMT ,MSC_ACT ,MSC_AMT ,ACC_UNPROV_AMT ,ACC_PRO_AMT ,ACT_ITM_TOT ,"
-                        + "PLAN_WK ,REG_MOD_VER ,DOC_VER ,ACT_REC_STA)"
-                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst1 = conn.prepareStatement(sqlitm);
 
@@ -1920,10 +1908,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                 pst1.setString(17, jTableWk4Activities.getValueAt(i, 13).toString());
                 pst1.setString(18, jTableWk4Activities.getValueAt(i, 14).toString());
                 pst1.setString(19, jTableWk4Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, "4");
-                pst1.setString(21, "1");
-                pst1.setString(22, "1");
-                pst1.setString(23, "A");
+                pst1.setString(20, jTableWk4Activities.getValueAt(i, 16).toString());
+                pst1.setString(21, jTableWk4Activities.getValueAt(i, 17).toString());
+                pst1.setString(22, jTableWk4Activities.getValueAt(i, 18).toString());
+                pst1.setString(23, jTableWk4Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, "1");
+                pst1.setString(25, "1");
+                pst1.setString(26, "1");
+                pst1.setString(27, "A");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -1943,11 +1935,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
 
                 String sqlitm = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                        + "(REF_YEAR ,SERIAL ,REF_NUM ,ITM_NUM ,ACT_DATE ,BRANCH ,PROJ_ID ,"
-                        + "PRJ_TASK_CODE ,ACT_SITE ,ACT_ITM_PUR ,BRK_AMT ,LNC_AMT ,DIN_AMT ,"
-                        + "INC_AMT ,MSC_ACT ,MSC_AMT ,ACC_UNPROV_AMT ,ACC_PRO_AMT ,ACT_ITM_TOT ,"
-                        + "PLAN_WK ,REG_MOD_VER ,DOC_VER ,ACT_REC_STA)"
-                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst1 = conn.prepareStatement(sqlitm);
 
@@ -1970,11 +1958,15 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                 pst1.setString(17, jTableWk5Activities.getValueAt(i, 13).toString());
                 pst1.setString(18, jTableWk5Activities.getValueAt(i, 14).toString());
                 pst1.setString(19, jTableWk5Activities.getValueAt(i, 15).toString());
-                pst1.setString(20, "5");
-                pst1.setString(21, "1");
-                pst1.setString(22, "1");
-                pst1.setString(23, "A");
-
+                pst1.setString(20, jTableWk5Activities.getValueAt(i, 16).toString());
+                pst1.setString(21, jTableWk5Activities.getValueAt(i, 17).toString());
+                pst1.setString(22, jTableWk5Activities.getValueAt(i, 18).toString());
+                pst1.setString(23, jTableWk5Activities.getValueAt(i, 19).toString());
+                pst1.setString(24, "1");
+                pst1.setString(25, "1");
+                pst1.setString(26, "1");
+                pst1.setString(27, "A");
+                
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
 
@@ -2032,7 +2024,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             String sqlPlanAct = "update [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] set "
-                    + "STATUS ='P' where PLAN_REF_NUM =" + SearchRef + " and STATUS= 'A' "
+                    + "ACT_REC_STA ='P' where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA= 'A' "
                     + "and EMP_NAM = '" + jLabelGenLogNam.getText() + "' and ACT_TYPE='Per Diem'";
 
             pst = conn.prepareStatement(sqlPlanAct);
@@ -2183,14 +2175,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     void calTotWk1() {
         Double lineTot = 0.00;
         for (int row = 0; row < jTableWk1Activities.getRowCount(); row++) {
-            lineTot = Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 7))
-                    + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 8))
-                    + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 9))
-                    + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 10))
+            lineTot = Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 11))
                     + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 12))
                     + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 13))
-                    + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 14));
-            jTableWk1Activities.setValueAt((String.format("%.2f", lineTot)), row, 15);
+                    + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 14))
+                    + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 16))
+                    + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 17))
+                    + Double.parseDouble((String) jTableWk1Activities.getValueAt(row, 18));
+            jTableWk1Activities.setValueAt((String.format("%.2f", lineTot)), row, 19);
 
         }
 
@@ -2279,27 +2271,27 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         numFormat = new DecimalFormat("000.##");
         double breakfastsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 7));
+            double breakfastamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 7));
+            double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 7));
+            double breakfastamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 7));
+            double breakfastamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 7));
+            double breakfastamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
@@ -2307,27 +2299,27 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         double lunchsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 8));
+            double lunchamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 8));
+            double lunchamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 8));
+            double lunchamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 8));
+            double lunchamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 8));
+            double lunchamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
@@ -2335,28 +2327,28 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         double dinnersubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 9));
+            double dinneramount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 9));
+            double dinneramount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
         //jLabelDinnerSubTot.setText(Double.toString(dinnersubtotal));
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 9));
+            double dinneramount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 9));
+            double dinneramount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 9));
+            double dinneramount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
@@ -2364,27 +2356,27 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         double incidentalsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 10));
+            double incidentalamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 10));
+            double incidentalamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 10));
+            double incidentalamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 10));
+            double incidentalamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 10));
+            double incidentalamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
@@ -2392,27 +2384,27 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         double miscSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 12));
+            double miscamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 12));
+            double miscamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 12));
+            double miscamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 12));
+            double miscamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 12));
+            double miscamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
@@ -2420,54 +2412,54 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         double unprovedSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 13));
+            double unprovedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 13));
+            double unprovedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 13));
+            double unprovedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 13));
+            double unprovedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 13));
+            double unprovedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
         jLabelAccUnprovedSubTot.setText(String.format("%.2f", unprovedSubTot));
 
         double provedSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 14));
+            double provedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 14));
+            double provedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 14));
+            double provedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 14));
+            double provedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 14));
+            double provedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
         jLabelAccProvedSubTot.setText(String.format("%.2f", provedSubTot));
@@ -2699,7 +2691,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelWk1DateFrom = new javax.swing.JLabel();
         jLabelWk1DateTo = new javax.swing.JLabel();
         jLabelHeaderGen1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneWk8 = new javax.swing.JScrollPane();
         jTableWk1Activities = new javax.swing.JTable();
         jPanelWkTwo = new javax.swing.JPanel();
         jLabelLineLogNam1 = new javax.swing.JLabel();
@@ -2715,7 +2707,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelWk2DateFrom = new javax.swing.JLabel();
         jLabelWk2DateTo = new javax.swing.JLabel();
         jLabelHeaderGen2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPaneWk7 = new javax.swing.JScrollPane();
         jTableWk2Activities = new javax.swing.JTable();
         jPanelWkThree = new javax.swing.JPanel();
         jLabelLineLogNam2 = new javax.swing.JLabel();
@@ -2731,7 +2723,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelWk3DateFrom = new javax.swing.JLabel();
         jLabelWk3DateTo = new javax.swing.JLabel();
         jLabelHeaderGen3 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPaneWk9 = new javax.swing.JScrollPane();
         jTableWk3Activities = new javax.swing.JTable();
         jPanelWkFour = new javax.swing.JPanel();
         jLabelLineLogNam4 = new javax.swing.JLabel();
@@ -2747,7 +2739,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelWk4DateFrom = new javax.swing.JLabel();
         jLabelWk4DateTo = new javax.swing.JLabel();
         jLabelHeaderGen9 = new javax.swing.JLabel();
-        jScrollPane6 = new javax.swing.JScrollPane();
+        jScrollPaneWk10 = new javax.swing.JScrollPane();
         jTableWk4Activities = new javax.swing.JTable();
         jPanelWkFive = new javax.swing.JPanel();
         jLabelLineLogNam5 = new javax.swing.JLabel();
@@ -2763,7 +2755,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelWk5DateFrom = new javax.swing.JLabel();
         jLabelWk5DateTo = new javax.swing.JLabel();
         jLabelHeaderGen10 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
+        jScrollPaneWk11 = new javax.swing.JScrollPane();
         jTableWk5Activities = new javax.swing.JTable();
         jPanelDocAttach = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -3797,7 +3789,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelGen.add(jLabelLogo);
-        jLabelLogo.setBounds(10, 10, 220, 100);
+        jLabelLogo.setBounds(10, 10, 220, 115);
 
         jLabelHeaderGen.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderGen.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -4118,7 +4110,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkOne.add(jLabelLogo1);
-        jLabelLogo1.setBounds(10, 10, 220, 100);
+        jLabelLogo1.setBounds(10, 10, 220, 115);
         jPanelWkOne.add(jLabelWk1DateFrom);
         jLabelWk1DateFrom.setBounds(200, 160, 100, 30);
         jPanelWkOne.add(jLabelWk1DateTo);
@@ -4134,26 +4126,21 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Item No.", "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk1Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk1ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableWk1Activities);
+        jScrollPaneWk8.setViewportView(jTableWk1Activities);
 
-        jPanelWkOne.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 240, 1290, 420);
+        jPanelWkOne.add(jScrollPaneWk8);
+        jScrollPaneWk8.setBounds(30, 240, 1290, 305);
 
         jTabbedPane1.addTab("Week One", jPanelWkOne);
 
@@ -4196,7 +4183,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         jLabelLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkTwo.add(jLabelLogo2);
-        jLabelLogo2.setBounds(10, 10, 220, 100);
+        jLabelLogo2.setBounds(10, 10, 220, 115);
         jPanelWkTwo.add(jLabelWk2DateFrom);
         jLabelWk2DateFrom.setBounds(200, 160, 100, 30);
         jPanelWkTwo.add(jLabelWk2DateTo);
@@ -4212,26 +4199,21 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Item No.", "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk2Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk2ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTableWk2Activities);
+        jScrollPaneWk7.setViewportView(jTableWk2Activities);
 
-        jPanelWkTwo.add(jScrollPane2);
-        jScrollPane2.setBounds(30, 240, 1290, 420);
+        jPanelWkTwo.add(jScrollPaneWk7);
+        jScrollPaneWk7.setBounds(30, 240, 1290, 305);
 
         jTabbedPane1.addTab("Week Two", jPanelWkTwo);
 
@@ -4277,7 +4259,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         jLabelLogo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkThree.add(jLabelLogo3);
-        jLabelLogo3.setBounds(10, 10, 220, 100);
+        jLabelLogo3.setBounds(10, 10, 220, 115);
         jPanelWkThree.add(jLabelWk3DateFrom);
         jLabelWk3DateFrom.setBounds(200, 160, 100, 30);
         jPanelWkThree.add(jLabelWk3DateTo);
@@ -4293,26 +4275,21 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Item No.", "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk3Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk3ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jTableWk3Activities);
+        jScrollPaneWk9.setViewportView(jTableWk3Activities);
 
-        jPanelWkThree.add(jScrollPane3);
-        jScrollPane3.setBounds(30, 240, 1290, 420);
+        jPanelWkThree.add(jScrollPaneWk9);
+        jScrollPaneWk9.setBounds(30, 240, 1290, 305);
 
         jTabbedPane1.addTab("Week Three", jPanelWkThree);
 
@@ -4358,7 +4335,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         jLabelLogo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkFour.add(jLabelLogo5);
-        jLabelLogo5.setBounds(10, 10, 220, 100);
+        jLabelLogo5.setBounds(10, 10, 220, 115);
         jPanelWkFour.add(jLabelWk4DateFrom);
         jLabelWk4DateFrom.setBounds(200, 160, 100, 30);
         jPanelWkFour.add(jLabelWk4DateTo);
@@ -4374,26 +4351,21 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Item No.", "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk4Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk4ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane6.setViewportView(jTableWk4Activities);
+        jScrollPaneWk10.setViewportView(jTableWk4Activities);
 
-        jPanelWkFour.add(jScrollPane6);
-        jScrollPane6.setBounds(30, 240, 1290, 420);
+        jPanelWkFour.add(jScrollPaneWk10);
+        jScrollPaneWk10.setBounds(30, 240, 1290, 305);
 
         jTabbedPane1.addTab("Week Four", jPanelWkFour);
 
@@ -4439,7 +4411,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         jLabelLogo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkFive.add(jLabelLogo6);
-        jLabelLogo6.setBounds(10, 10, 220, 100);
+        jLabelLogo6.setBounds(10, 10, 220, 115);
         jPanelWkFive.add(jLabelWk5DateFrom);
         jLabelWk5DateFrom.setBounds(200, 160, 100, 30);
         jPanelWkFive.add(jLabelWk5DateTo);
@@ -4455,26 +4427,21 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item No", "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Item No.", "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableWk5Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableWk5ActivitiesMouseClicked(evt);
-            }
-        });
-        jScrollPane5.setViewportView(jTableWk5Activities);
+        jScrollPaneWk11.setViewportView(jTableWk5Activities);
 
-        jPanelWkFive.add(jScrollPane5);
-        jScrollPane5.setBounds(30, 240, 1290, 420);
+        jPanelWkFive.add(jScrollPaneWk11);
+        jScrollPaneWk11.setBounds(30, 240, 1290, 305);
 
         jTabbedPane1.addTab("Week Five", jPanelWkFive);
 
@@ -4507,7 +4474,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         jLabelLogo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelDocAttach.add(jLabelLogo4);
-        jLabelLogo4.setBounds(10, 10, 220, 100);
+        jLabelLogo4.setBounds(10, 2, 220, 115);
 
         jLabelHeaderLine2.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine2.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -5272,148 +5239,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jCheckBoxDialogWk2MiscActionPerformed
 
-    private void jTableWk1ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk1ActivitiesMouseClicked
-//        if (evt.getClickCount() == 2) {
-//            resetField();
-//            int row = jTableWk1Activities.getSelectedRow();
-//
-//            int col1 = 1;
-//            int col3 = 3;
-//            int col4 = 4;
-//            int col5 = 5;
-//            int col6 = 6;
-//            int col7 = 7;
-//            int col8 = 8;
-//            int col9 = 9;
-//            int col10 = 10;
-//            int col11 = 11;
-//            int col12 = 12;
-//            int col13 = 13;
-//            int col14 = 14;
-//            int col15 = 15;
-//            int col16 = 16;
-//            int col17 = 17;
-//            int col18 = 18;
-//            int col19 = 19;
-//
-//            Object id1 = jTableWk1Activities.getValueAt(row, col1);
-//            Object id2 = jTableWk1Activities.getValueAt(row, col3);
-//            Object id3 = jTableWk1Activities.getValueAt(row, col4);
-//            Object id4 = jTableWk1Activities.getValueAt(row, col5);
-//            Object id5 = jTableWk1Activities.getValueAt(row, col6);
-//            Object id6 = jTableWk1Activities.getValueAt(row, col7);
-//            Object id7 = jTableWk1Activities.getValueAt(row, col8);
-//            Object id8 = jTableWk1Activities.getValueAt(row, col9);
-//            Object id9 = jTableWk1Activities.getValueAt(row, col10);
-//            Object id10 = jTableWk1Activities.getValueAt(row, col11);
-//            Object id11 = jTableWk1Activities.getValueAt(row, col12);
-//            Object id12 = jTableWk1Activities.getValueAt(row, col13);
-//            Object id13 = jTableWk1Activities.getValueAt(row, col14);
-//            Object id14 = jTableWk1Activities.getValueAt(row, col15);
-//            Object id15 = jTableWk1Activities.getValueAt(row, col16);
-//            Object id16 = jTableWk1Activities.getValueAt(row, col17);
-//            Object id17 = jTableWk1Activities.getValueAt(row, col18);
-//            Object id18 = jTableWk1Activities.getValueAt(row, col19);
-//
-//            jLabelActWk1Date.setText(id1.toString());
-//            //            jLabelPrjNameDet.setText(id2.toString());
-//            //            jLabelPrjTaskDet.setText(id3.toString());
-//            jTextFieldDialogWk1Site.setText(id4.toString());
-//            jTextFieldWk1DialogActivityDesc.setText(id5.toString());
-//            jTextAreaWk1DialogJustification.setText(id6.toString());
-//            //            jTextFieldWk1DialogStaffName1
-//            //            jLabelStaff.setText(id7.toString());
-//
-//            if ((Double.parseDouble(id7.toString())) > 0) {
-//                jCheckBoxDialogWk1BrkFast.setSelected(true);
-//            }
-//            if ((Double.parseDouble(id8.toString())) > 0) {
-//                jCheckBoxDialogWk1Lunch.setSelected(true);
-//            }
-//            if ((Double.parseDouble(id9.toString())) > 0) {
-//                jCheckBoxDialogWk1Dinner.setSelected(true);
-//            }
-//
-//            if ((Double.parseDouble(id10.toString())) > 0) {
-//                jCheckBoxDialogWk1Inc.setSelected(true);
-//            }
-//
-//            if ((Double.parseDouble(id12.toString())) > 0) {
-//                jCheckBoxDialogWk1Misc.setSelected(true);
-//                jTextFieldWk1Misc.setText(id11.toString());
-//                jTextFieldWk1MiscAmt.setText(id12.toString());
-//            }
-//
-//            if ((Double.parseDouble(id13.toString())) > 0) {
-//                jCheckBoxDialogWk1AccUnProved.setSelected(true);
-//                jCheckBoxDialogWk1AccProved.setSelected(false);
-//                jCheckBoxNoAcc.setSelected(false);
-//
-//            }
-//            if ((Double.parseDouble(id14.toString())) > 0) {
-//                jCheckBoxDialogWk1AccProved.setSelected(true);
-//                jCheckBoxNoAcc.setSelected(false);
-//                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-//
-//            }
-//            if (((Double.parseDouble(id13.toString())) == 0) && ((Double.parseDouble(id14.toString())) == 0)) {
-//                jCheckBoxNoAcc.setSelected(true);
-//                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-//                jCheckBoxDialogWk1AccProved.setSelected(false);
-//
-//            }
-//            jTextFieldWk1DialogStaffName1.setText(id15.toString());
-//            jTextFieldWk1DialogStaffName2.setText(id16.toString());
-//            jTextFieldWk1DialogStaffName3.setText(id17.toString());
-//            jTextFieldWk1DialogStaffName4.setText(id18.toString());
-//
-//            jDialogWk1.setVisible(true);
-//            findProject(id2.toString());
-//            findTask(id3.toString());
-//            if (("National Office".equals(jLabelDistrict.getText()))) {
-//                jDialogWk1.setTitle("Per Diem Week 1");
-//            } else {
-//                jDialogWk1.setTitle("Month Per Diem ");
-//            }
-//            jTextAreaWk1DialogJustification.setLineWrap(true);
-//            jTextAreaWk1DialogJustification.setWrapStyleWord(true);
-//            jTextFieldDialogWk1Site.setEditable(false);
-//            jTextFieldWk1DialogActivityDesc.setEditable(false);
-//            jTextAreaWk1DialogJustification.setEditable(false);
-//            jTextFieldWk1DialogStaffName1.setEditable(false);
-//            jTextFieldWk1DialogStaffName2.setEditable(false);
-//            jTextFieldWk1DialogStaffName3.setEditable(false);
-//            jTextFieldWk1DialogStaffName4.setEditable(false);
-//            jTextFieldWk1Misc.setEditable(false);
-//            jTextFieldWk1MiscAmt.setEditable(false);
-//            jCheckBoxDialogWk1BrkFast.setEnabled(false);
-//            jCheckBoxDialogWk1Lunch.setEnabled(false);
-//            jCheckBoxDialogWk1Dinner.setEnabled(false);
-//            jCheckBoxDialogWk1Inc.setEnabled(false);
-//            jCheckBoxDialogWk1AccUnProved.setEnabled(false);
-//            jCheckBoxDialogWk1AccProved.setEnabled(false);
-//            jCheckBoxNoAcc.setEnabled(false);
-//            jCheckBoxDialogWk1Misc.setEnabled(false);
-//
-//        }
-    }//GEN-LAST:event_jTableWk1ActivitiesMouseClicked
-
-    private void jTableWk2ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk2ActivitiesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableWk2ActivitiesMouseClicked
-
-    private void jTableWk3ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk3ActivitiesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableWk3ActivitiesMouseClicked
-
-    private void jTableWk5ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk5ActivitiesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableWk5ActivitiesMouseClicked
-
-    private void jTableWk4ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWk4ActivitiesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableWk4ActivitiesMouseClicked
-
     private void jButtonCancelPayTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelPayTypeActionPerformed
         jDialogPayType.dispose();
     }//GEN-LAST:event_jButtonCancelPayTypeActionPerformed
@@ -5980,12 +5805,12 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     private javax.swing.JPanel jPanellPayType;
     private javax.swing.JRadioButton jRadioBank;
     private javax.swing.JRadioButton jRadioMukuru;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPaneWk10;
+    private javax.swing.JScrollPane jScrollPaneWk11;
+    private javax.swing.JScrollPane jScrollPaneWk7;
+    private javax.swing.JScrollPane jScrollPaneWk8;
+    private javax.swing.JScrollPane jScrollPaneWk9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
