@@ -812,7 +812,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 10));
+             double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 

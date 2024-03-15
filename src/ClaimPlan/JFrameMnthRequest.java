@@ -1463,7 +1463,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSysZimTTECH;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             String sqlcreate = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] "
                     + "(YEAR,SERIAL,REF_NUM,USR_ACTION, DOC_STATUS,ACTIONED_BY_EMP_NUM ,"
@@ -1984,7 +1984,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
 
-            String sqlAckUsr = "INSERT ClaimsAppSysZimTTECH.dbo.ClaimsAckTab (SERIAL,REF_NUM,"
+            String sqlAckUsr = "INSERT ClaimsAppSysZvandiri.dbo.ClaimsAckTab (SERIAL,REF_NUM,"
                     + "EMP_NUM,ACK_SUBMIT,ACK_SAL_DEDUCT,ACK_DATE)"
                     + "VALUES (?,?, ?,?, ?, ?)";
 
@@ -2103,7 +2103,8 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
     }
 
-    void imgSave() {
+
+      void imgSave() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -3014,7 +3015,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jPanel7.setLayout(null);
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 11)); // NOI18N
-        jLabel7.setText("<html>I shall acquit this perdiem request within five days, after the last activity.If I fail to submit an acquittal for this perdiem request in<br> the prescribed period, I authorise Zim-TTECH to deduct the unacquitted perdiem request amount from my salary without further notice.<br><br>I acknowledge that failure to submit acquittal for this perdiem request  <b>may</b> result in a displinary action. </html>");
+        jLabel7.setText("<html>I shall acquit this perdiem request within five days, after the last activity.If I fail to submit an acquittal for this perdiem request in<br> the prescribed period, I authorise Zvandiri to deduct the unacquitted perdiem request amount from my salary without further notice.<br><br>I acknowledge that failure to submit acquittal for this perdiem request  <b>may</b> result in a displinary action. </html>");
         jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel7.add(jLabel7);
         jLabel7.setBounds(10, 50, 590, 80);
