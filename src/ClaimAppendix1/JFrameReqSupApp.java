@@ -36,6 +36,8 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.WindowConstants;
@@ -66,10 +68,12 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
     Date curYear = new Date();
     String sendToProv, sendToFin, reqUsrMail, finUsrMail, reqUsrNam, reqEmpNum, createUsrNam, docVersion,
             oldDocVersion, actVersion, statusCodeApp, statusCodeDisApp, checkRef,
-            authNam1, authNam2, usrGrp, empOff, searchRef;
+            authNam1, authNam2, usrGrp, empOff, searchRef, finAppMailList;
     String province = "";
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     DefaultTableModel modelWk1, modelWk2, modelWk3, modelWk4, modelWk5;
+    List<String> list = new ArrayList<>();
+    List<String> listFetch = new ArrayList<>();
     double breakfastsubtotalAcq = 0;
     double lunchsubtotalAcq = 0;
     double dinnersubtotalAcq = 0;
@@ -143,9 +147,10 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
         fetchdataWk3();
         fetchdataWk4();
         fetchdataWk5();
-//        imgDisplay();
+        imgDisplay();
         mainPageTotInsert();
         findApplicantUser();
+        findFinApprove();
 
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
@@ -354,6 +359,82 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             //  JOptionPane.showMessageDialog(null, "Failed to Connect to Database (Province).Try Again", "Error Connection", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e);
+        }
+    }
+    
+      void findFinApprove() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+
+            if (modelWk1.getRowCount() > 0) {
+                ResultSet r = st.executeQuery("SELECT EMP_MAIL FROM [ClaimsAppSysZvandiri].[dbo].[EmpDetTab] "
+                        + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
+                        + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
+                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
+                        + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='FINANCE')");
+
+                while (r.next()) {
+                    list.add(r.getString(1));
+                    System.out.println("list " + r.getString(1));
+                }
+            } else if (modelWk2.getRowCount() > 0) {
+                ResultSet r = st.executeQuery("SELECT EMP_MAIL FROM [ClaimsAppSysZvandiri].[dbo].[EmpDetTab] "
+                        + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
+                        + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
+                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
+                        + "where concat(SERIAL,REF_NUM)='" + searchRef + "'  and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='FINANCE')");
+
+                while (r.next()) {
+                    list.add(r.getString(1));
+                    System.out.println("list " + r.getString(1));
+                }
+            } else if (modelWk3.getRowCount() > 0) {
+                ResultSet r = st.executeQuery("SELECT EMP_MAIL FROM [ClaimsAppSysZvandiri].[dbo].[EmpDetTab] "
+                        + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
+                        + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
+                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
+                        + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='FINANCE')");
+
+                while (r.next()) {
+                    list.add(r.getString(1));
+                    System.out.println("list " + r.getString(1));
+                }
+            } else if (modelWk4.getRowCount() > 0) {
+                ResultSet r = st.executeQuery("SELECT EMP_MAIL FROM [ClaimsAppSysZvandiri].[dbo].[EmpDetTab] "
+                        + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
+                        + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
+                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
+                        + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='FINANCE')");
+
+                while (r.next()) {
+                    list.add(r.getString(1));
+                    System.out.println("list " + r.getString(1));
+                }
+            } else if (modelWk5.getRowCount() > 0) {
+                ResultSet r = st.executeQuery("SELECT EMP_MAIL FROM [ClaimsAppSysZvandiri].[dbo].[EmpDetTab] "
+                        + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
+                        + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
+                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
+                        + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='FINANCE')");
+
+                while (r.next()) {
+                    list.add(r.getString(1));
+                    System.out.println("list " + r.getString(1));
+                }
+            }
+            finAppMailList = String.join(",", list);
+            System.out.println("fin list " + finAppMailList);
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -1189,7 +1270,7 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
         }
     }
 
- void insItmWk1Tab() {
+    void insItmWk1Tab() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -1238,8 +1319,8 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
- 
-  void insItmWk2Tab() {
+
+    void insItmWk2Tab() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -1288,8 +1369,8 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-  
-   void insItmWk3Tab() {
+
+    void insItmWk3Tab() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -1338,7 +1419,7 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-   
+
     void insItmWk4Tab() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -1388,8 +1469,8 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-    
-     void insItmWk5Tab() {
+
+    void insItmWk5Tab() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -1438,7 +1519,7 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-  
+
     void createAction() {
 
         try {
@@ -1552,7 +1633,7 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
 
                     String MailMsgTitle = "Per Diem Approval Request - Reference No. " + jLabelSerial.getText() + " " + jLabelRegNum.getText() + " ";
 
-                    emSend.sendMail(MailMsgTitle, c.FinGrpMail, mailMsg, reqUsrMail);
+                    emSend.sendMail(MailMsgTitle, finAppMailList, mailMsg, reqUsrMail);
 
                     jDialogWaitingEmail.setVisible(false);
 

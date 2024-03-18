@@ -476,7 +476,7 @@ void findUserGrp() {
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequest.add(jLabelLogo1);
-        jLabelLogo1.setBounds(10, 10, 220, 100);
+        jLabelLogo1.setBounds(10, 2, 220, 115);
 
         jLabelHeaderLine.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine.setText("TRAVEL AND SUBSISTENCE CLAIM");
