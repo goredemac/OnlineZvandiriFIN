@@ -115,6 +115,7 @@ public class JFrameMnthReqGenList extends javax.swing.JFrame {
 //                        new JFrameMnthDistrictAcquittal(ref, jLabelEmp.getText()).setVisible(true);
 //                        setVisible(false);
 //                    } else {
+System.out.println("oneMore");
                         new JFrameMnthRequest(ref, jLabelEmp.getText()).setVisible(true);
                         setVisible(false);
 //                    }

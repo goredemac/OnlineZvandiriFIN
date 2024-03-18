@@ -125,16 +125,21 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
         modelWk3 = (DefaultTableModel) jTableWk3Activities.getModel();
         modelWk4 = (DefaultTableModel) jTableWk4Activities.getModel();
         modelWk5 = (DefaultTableModel) jTableWk5Activities.getModel();
-//        jTableWk1Activities.getColumn(0).setMinWidth(0);
-//        jTableWk1Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk2Activities.getColumn(0).setMinWidth(0);
-//        jTableWk2Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk3Activities.getColumn(0).setMinWidth(0);
-//        jTableWk3Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk4Activities.getColumn(0).setMinWidth(0);
-//        jTableWk4Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk5Activities.getColumn(0).setMinWidth(0);
-//        jTableWk5Activities.getColumn(0).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk1Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk2Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk3Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
         jLabelRegYear.setVisible(false);
         jLabelEmp.setVisible(false);
         jLabelEmp.setText(usrLogNum);
@@ -362,8 +367,8 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-    
-      void findFinApprove() {
+
+    void findFinApprove() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"

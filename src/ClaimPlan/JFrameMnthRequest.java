@@ -120,30 +120,34 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
     public JFrameMnthRequest(String ref, String usrLogNam) {
         initComponents();
-
+        System.out.println("twoMore");
         modelWk1 = (DefaultTableModel) jTableWk1Activities.getModel();
         modelWk2 = (DefaultTableModel) jTableWk2Activities.getModel();
         modelWk3 = (DefaultTableModel) jTableWk3Activities.getModel();
         modelWk4 = (DefaultTableModel) jTableWk4Activities.getModel();
         modelWk5 = (DefaultTableModel) jTableWk5Activities.getModel();
-//        jTableWk1Activities.getColumn(0).setMinWidth(0);
-//        jTableWk1Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk2Activities.getColumn(0).setMinWidth(0);
-//        jTableWk2Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk3Activities.getColumn(0).setMinWidth(0);
-//        jTableWk3Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk4Activities.getColumn(0).setMinWidth(0);
-//        jTableWk4Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk5Activities.getColumn(0).setMinWidth(0);
-//        jTableWk5Activities.getColumn(0).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk1Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk2Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk3Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
         SearchRef = ref;
         System.out.println("jhj " + usrLogNam);
         jLabelEmp.setText(usrLogNam);
         jLabelEmp.setVisible(false);
         jTextBankNam.setVisible(false);
         jLabelPhoneDet.setVisible(false);
-        jSeparator50.setVisible(false);
-        jMenuItemSubmit.setVisible(false);
+
         try {
             ///  showDate();
             tH.intShowDate();
@@ -163,17 +167,18 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         computerName();
         findUser();
         findUserGrp();
+        System.out.println("threeMore");
         fetchdataGenWk1();
         fetchdataWk1();
-//        fetchdataWk2();
-//        fetchdataWk3();
-//        fetchdataWk4();
-//        fetchdataWk5();
+        fetchdataWk2();
+        fetchdataWk3();
+        fetchdataWk4();
+        fetchdataWk5();
         calTotWk1();
-//        calTotWk2();
-//        calTotWk3();
-//        calTotWk4();
-//        calTotWk5();
+        calTotWk2();
+        calTotWk3();
+        calTotWk4();
+        calTotWk5();
         mainPageTotInsert();
 //        if (!"National Office".equals(empOff)) {
 //            jTabbedPane1.setTitleAt(0, "Month Activities");
@@ -191,6 +196,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             jMenuItemUserProfUpd.setEnabled(false);
             jMenuItemUserCreate.setEnabled(false);
         }
+        System.out.println("fourMore");
     }
 
     void computerName() {
@@ -927,7 +933,8 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             while (r.next()) {
                 modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18)});
+                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22)});
 
             }
 
@@ -973,7 +980,8 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             while (r.next()) {
                 modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18)});
+                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22)});
 
             }
 
@@ -1019,7 +1027,8 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             while (r.next()) {
                 modelWk4.insertRow(modelWk4.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18)});
+                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22)});
 
             }
 
@@ -1068,7 +1077,8 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             while (r.next()) {
                 modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{r.getString(3), r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18)});
+                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22)});
 
             }
 
@@ -1966,7 +1976,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                 pst1.setString(25, "1");
                 pst1.setString(26, "1");
                 pst1.setString(27, "A");
-                
+
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
 
@@ -2035,6 +2045,42 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         }
     }
 
+    void regCheck() {
+        try {
+            if (("".equals(jLabelBankName.getText())) || ("".equals(jLabelAccNum.getText())) || ("".equals(jLabelEmpNam.getText()))) {
+                JOptionPane.showMessageDialog(this, "Your Employee or Banking details are not complete. Please contact IT to update your details.");
+                jTextActMainPurpose.requestFocusInWindow();
+                jTextActMainPurpose.setFocusable(true);
+            } else {
+                try {
+                    itmDateCountWk1 = 0;
+                    itmDateCountWk2 = 0;
+                    itmDateCountWk3 = 0;
+                    itmDateCountWk4 = 0;
+                    itmDateCountWk5 = 0;
+
+                    checkDupDate();
+                    if ((itmDateCountWk1 == 0) && (itmDateCountWk2 == 0) && (itmDateCountWk3 == 0) && (itmDateCountWk4 == 0)
+                            && (itmDateCountWk5 == 0)) {
+                        jCheckBoxSalAckAgree.setSelected(false);
+                        jCheckBoxSalSubmitAgree.setSelected(false);
+                        jLabelDisProvince.setVisible(false);
+                        jLabelDisDistrict.setVisible(false);
+                        jLabelDisFacilty.setVisible(false);
+
+                        jDialogAckSubmit.setVisible(true);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
+            }
+
+        } catch (Exception e1) {
+            System.out.println(e1);
+        }
+    }
+
     void submitSaveRequest() {
 
         try {
@@ -2042,7 +2088,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             jMenuItemSubmit.setEnabled(false);
-            jButtonSave.setEnabled(false);
 
             SerialCheck();
 
@@ -2053,7 +2098,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                         + "Registration falure can be caused by slow network speeds.<br><br> "
                         + "Please try again. If the problem persist contact IT.</html>");
                 jMenuItemSubmit.setEnabled(true);
-                jButtonSave.setEnabled(true);
 
             } else {
 
@@ -2103,8 +2147,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
     }
 
-
-      void imgSave() {
+    void imgSave() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -2192,15 +2235,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     void calTotWk2() {
         Double lineTot = 0.00;
         for (int row = 0; row < jTableWk2Activities.getRowCount(); row++) {
-            lineTot
-                    = Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 7))
-                    + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 8))
-                    + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 9))
-                    + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 10))
+            lineTot = Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 11))
                     + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 12))
                     + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 13))
-                    + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 14));
-            jTableWk2Activities.setValueAt((String.format("%.2f", lineTot)), row, 15);
+                    + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 14))
+                    + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 16))
+                    + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 17))
+                    + Double.parseDouble((String) jTableWk2Activities.getValueAt(row, 18));
+            jTableWk2Activities.setValueAt((String.format("%.2f", lineTot)), row, 19);
 
         }
 
@@ -2209,25 +2251,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     void calTotWk3() {
         Double lineTot = 0.00;
         for (int row = 0; row < jTableWk3Activities.getRowCount(); row++) {
-            lineTot
-                    = Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 7))
-                    + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 8))
-                    + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 9))
-                    + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 10))
+            lineTot = Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 11))
                     + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 12))
                     + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 13))
-                    + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 14));
-            jTableWk3Activities.setValueAt((String.format("%.2f", lineTot)), row, 15);
-
-            System.out.println("7 " + jTableWk3Activities.getValueAt(row, 7)
-                    + "8 " + jTableWk3Activities.getValueAt(row, 8)
-                    + "9 " + jTableWk3Activities.getValueAt(row, 9)
-                    + "10 " + jTableWk3Activities.getValueAt(row, 10)
-                    + "12 " + jTableWk3Activities.getValueAt(row, 12)
-                    + "13 " + jTableWk3Activities.getValueAt(row, 13)
-                    + "14 " + jTableWk3Activities.getValueAt(row, 14)
-                    + "15 " + jTableWk3Activities.getValueAt(row, 15)
-            );
+                    + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 14))
+                    + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 16))
+                    + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 17))
+                    + Double.parseDouble((String) jTableWk3Activities.getValueAt(row, 18));
+            jTableWk3Activities.setValueAt((String.format("%.2f", lineTot)), row, 19);
 
         }
 
@@ -2236,14 +2267,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     void calTotWk4() {
         Double lineTot = 0.00;
         for (int row = 0; row < jTableWk4Activities.getRowCount(); row++) {
-            lineTot = Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 7))
-                    + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 8))
-                    + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 9))
-                    + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 10))
+            lineTot = Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 11))
                     + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 12))
                     + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 13))
-                    + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 14));
-            jTableWk4Activities.setValueAt((String.format("%.2f", lineTot)), row, 15);
+                    + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 14))
+                    + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 16))
+                    + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 17))
+                    + Double.parseDouble((String) jTableWk4Activities.getValueAt(row, 18));
+            jTableWk4Activities.setValueAt((String.format("%.2f", lineTot)), row, 19);
 
         }
 
@@ -2252,15 +2283,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     void calTotWk5() {
         Double lineTot = 0.00;
         for (int row = 0; row < jTableWk5Activities.getRowCount(); row++) {
-            lineTot
-                    = Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 7))
-                    + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 8))
-                    + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 9))
-                    + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 10))
+            lineTot = Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 11))
                     + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 12))
                     + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 13))
-                    + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 14));
-            jTableWk5Activities.setValueAt((String.format("%.2f", lineTot)), row, 15);
+                    + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 14))
+                    + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 16))
+                    + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 17))
+                    + Double.parseDouble((String) jTableWk5Activities.getValueAt(row, 18));
+            jTableWk5Activities.setValueAt((String.format("%.2f", lineTot)), row, 19);
 
         }
 
@@ -2675,9 +2705,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelEmpNum = new javax.swing.JLabel();
         jLabelEmpProvince = new javax.swing.JLabel();
         jLabelEmpOffice = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonSave = new javax.swing.JButton();
         jPanelWkOne = new javax.swing.JPanel();
         jLabelLineLogNam = new javax.swing.JLabel();
         jLabelGenLogNam1 = new javax.swing.JLabel();
@@ -3857,7 +3884,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         jLabelActMainPurpose.setText("Activity Main Purpose");
         jPanelGen.add(jLabelActMainPurpose);
-        jLabelActMainPurpose.setBounds(10, 320, 130, 30);
+        jLabelActMainPurpose.setBounds(10, 350, 130, 30);
 
         jTextActMainPurpose.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -3870,7 +3897,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             }
         });
         jPanelGen.add(jTextActMainPurpose);
-        jTextActMainPurpose.setBounds(150, 320, 760, 30);
+        jTextActMainPurpose.setBounds(150, 350, 760, 30);
 
         jPanelAllowanceSubTot.setBackground(new java.awt.Color(255, 255, 255));
         jPanelAllowanceSubTot.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -3945,7 +3972,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelDinnerSubTot.setBounds(140, 90, 60, 25);
 
         jPanelGen.add(jPanelAllowanceSubTot);
-        jPanelAllowanceSubTot.setBounds(20, 380, 320, 150);
+        jPanelAllowanceSubTot.setBounds(20, 430, 320, 150);
 
         jPanelMiscSubTot.setBackground(new java.awt.Color(255, 255, 255));
         jPanelMiscSubTot.setLayout(null);
@@ -3964,7 +3991,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelMscSub.setBounds(8, 30, 80, 25);
 
         jPanelGen.add(jPanelMiscSubTot);
-        jPanelMiscSubTot.setBounds(400, 380, 210, 150);
+        jPanelMiscSubTot.setBounds(400, 430, 210, 150);
 
         jPanelAccSubTot.setBackground(new java.awt.Color(255, 255, 255));
         jPanelAccSubTot.setLayout(null);
@@ -3991,19 +4018,19 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelAccUnprovedSub.setBounds(8, 30, 70, 25);
 
         jPanelGen.add(jPanelAccSubTot);
-        jPanelAccSubTot.setBounds(670, 380, 190, 150);
+        jPanelAccSubTot.setBounds(670, 430, 190, 150);
 
         jLabelAppTotReqCost.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabelAppTotReqCost.setForeground(new java.awt.Color(255, 255, 255));
         jLabelAppTotReqCost.setText("0");
         jPanelGen.add(jLabelAppTotReqCost);
-        jLabelAppTotReqCost.setBounds(1120, 500, 100, 30);
+        jLabelAppTotReqCost.setBounds(1120, 550, 100, 30);
 
         jLabelAppTotReq.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelAppTotReq.setForeground(new java.awt.Color(255, 255, 255));
         jLabelAppTotReq.setText("Total Requested Amount");
         jPanelGen.add(jLabelAppTotReq);
-        jLabelAppTotReq.setBounds(920, 500, 180, 30);
+        jLabelAppTotReq.setBounds(920, 550, 180, 30);
 
         jLabelOffice.setText("Office");
         jPanelGen.add(jLabelOffice);
@@ -4041,35 +4068,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelEmpProvince.setBounds(120, 200, 370, 30);
         jPanelGen.add(jLabelEmpOffice);
         jLabelEmpOffice.setBounds(670, 200, 360, 30);
-
-        jPanel3.setBackground(new java.awt.Color(0, 153, 51));
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        jPanel3.setForeground(new java.awt.Color(0, 153, 0));
-        jPanel3.setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Record Validation");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel3.add(jLabel1);
-        jLabel1.setBounds(520, 10, 190, 25);
-
-        jButtonSave.setBackground(new java.awt.Color(255, 255, 255));
-        jButtonSave.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonSave.setForeground(new java.awt.Color(0, 153, 0));
-        jButtonSave.setText("Submit");
-        jButtonSave.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButtonSave);
-        jButtonSave.setBounds(420, 40, 380, 50);
-
-        jPanelGen.add(jPanel3);
-        jPanel3.setBounds(20, 560, 1320, 100);
 
         jTabbedPane1.addTab("User and Accounting Details", jPanelGen);
 
@@ -4141,7 +4139,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jScrollPaneWk8.setViewportView(jTableWk1Activities);
 
         jPanelWkOne.add(jScrollPaneWk8);
-        jScrollPaneWk8.setBounds(30, 240, 1290, 305);
+        jScrollPaneWk8.setBounds(30, 240, 1290, 420);
 
         jTabbedPane1.addTab("Week One", jPanelWkOne);
 
@@ -4214,7 +4212,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jScrollPaneWk7.setViewportView(jTableWk2Activities);
 
         jPanelWkTwo.add(jScrollPaneWk7);
-        jScrollPaneWk7.setBounds(30, 240, 1290, 305);
+        jScrollPaneWk7.setBounds(30, 240, 1290, 420);
 
         jTabbedPane1.addTab("Week Two", jPanelWkTwo);
 
@@ -4290,7 +4288,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jScrollPaneWk9.setViewportView(jTableWk3Activities);
 
         jPanelWkThree.add(jScrollPaneWk9);
-        jScrollPaneWk9.setBounds(30, 240, 1290, 305);
+        jScrollPaneWk9.setBounds(30, 240, 1290, 400);
 
         jTabbedPane1.addTab("Week Three", jPanelWkThree);
 
@@ -4366,7 +4364,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jScrollPaneWk10.setViewportView(jTableWk4Activities);
 
         jPanelWkFour.add(jScrollPaneWk10);
-        jScrollPaneWk10.setBounds(30, 240, 1290, 305);
+        jScrollPaneWk10.setBounds(30, 240, 1290, 420);
 
         jTabbedPane1.addTab("Week Four", jPanelWkFour);
 
@@ -4442,7 +4440,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jScrollPaneWk11.setViewportView(jTableWk5Activities);
 
         jPanelWkFive.add(jScrollPaneWk11);
-        jScrollPaneWk11.setBounds(30, 240, 1290, 305);
+        jScrollPaneWk11.setBounds(30, 240, 1290, 410);
 
         jTabbedPane1.addTab("Week Five", jPanelWkFive);
 
@@ -5397,34 +5395,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemCloseActionPerformed
 
     private void jMenuItemSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSubmitActionPerformed
-        if (("".equals(jLabelBankName.getText())) || ("".equals(jLabelAccNum.getText())) || ("".equals(jLabelEmpNam.getText()))) {
-            JOptionPane.showMessageDialog(this, "Your Employee or Banking details are not complete. Please contact IT to update your details.");
-            jTextActMainPurpose.requestFocusInWindow();
-            jTextActMainPurpose.setFocusable(true);
-        } else {
-            try {
-                itmDateCountWk1 = 0;
-                itmDateCountWk2 = 0;
-                itmDateCountWk3 = 0;
-                itmDateCountWk4 = 0;
-                itmDateCountWk5 = 0;
-
-                checkDupDate();
-                if ((itmDateCountWk1 == 0) && (itmDateCountWk2 == 0) && (itmDateCountWk3 == 0) && (itmDateCountWk4 == 0)
-                        && (itmDateCountWk5 == 0)) {
-                    jCheckBoxSalAckAgree.setSelected(false);
-                    jCheckBoxSalSubmitAgree.setSelected(false);
-                    jLabelDisProvince.setVisible(false);
-                    jLabelDisDistrict.setVisible(false);
-                    jLabelDisFacilty.setVisible(false);
-
-                    jDialogAckSubmit.setVisible(true);
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-
-        }
+        regCheck();
     }//GEN-LAST:event_jMenuItemSubmitActionPerformed
 
     private void jMenuItemPlanPerDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanPerDiemActionPerformed
@@ -5446,42 +5417,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         new JFrameFixedUserCreation(jLabelEmp.getText()).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenuItemUserCreateActionPerformed
-
-    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        try {
-            if (("".equals(jLabelBankName.getText())) || ("".equals(jLabelAccNum.getText())) || ("".equals(jLabelEmpNam.getText()))) {
-                JOptionPane.showMessageDialog(this, "Your Employee or Banking details are not complete. Please contact IT to update your details.");
-                jTextActMainPurpose.requestFocusInWindow();
-                jTextActMainPurpose.setFocusable(true);
-            } else {
-                try {
-                    itmDateCountWk1 = 0;
-                    itmDateCountWk2 = 0;
-                    itmDateCountWk3 = 0;
-                    itmDateCountWk4 = 0;
-                    itmDateCountWk5 = 0;
-
-                    checkDupDate();
-                    if ((itmDateCountWk1 == 0) && (itmDateCountWk2 == 0) && (itmDateCountWk3 == 0) && (itmDateCountWk4 == 0)
-                            && (itmDateCountWk5 == 0)) {
-                        jCheckBoxSalAckAgree.setSelected(false);
-                        jCheckBoxSalSubmitAgree.setSelected(false);
-                        jLabelDisProvince.setVisible(false);
-                        jLabelDisDistrict.setVisible(false);
-                        jLabelDisFacilty.setVisible(false);
-
-                        jDialogAckSubmit.setVisible(true);
-                    }
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-
-            }
-
-        } catch (Exception e1) {
-            System.out.println(e1);
-        }
-    }//GEN-LAST:event_jButtonSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -5545,7 +5480,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     private javax.swing.JButton jButtonOkFacility2;
     private javax.swing.JButton jButtonSalAckCancel;
     private javax.swing.JButton jButtonSalSubmitCancel;
-    private javax.swing.JButton jButtonSave;
     private javax.swing.JCheckBox jCheckBoxDialogWk1Acc;
     private javax.swing.JCheckBox jCheckBoxDialogWk1BrkFast;
     private javax.swing.JCheckBox jCheckBoxDialogWk1Dinner;
@@ -5584,7 +5518,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     private javax.swing.JDialog jDialogWk1;
     private javax.swing.JDialog jDialogWk2;
     private javax.swing.JDialog jDialogWk3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -5786,7 +5719,6 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

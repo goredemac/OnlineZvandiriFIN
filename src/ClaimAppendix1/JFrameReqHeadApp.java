@@ -121,16 +121,21 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
         modelWk3 = (DefaultTableModel) jTableWk3Activities.getModel();
         modelWk4 = (DefaultTableModel) jTableWk4Activities.getModel();
         modelWk5 = (DefaultTableModel) jTableWk5Activities.getModel();
-//        jTableWk1Activities.getColumn(0).setMinWidth(0);
-//        jTableWk1Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk2Activities.getColumn(0).setMinWidth(0);
-//        jTableWk2Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk3Activities.getColumn(0).setMinWidth(0);
-//        jTableWk3Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk4Activities.getColumn(0).setMinWidth(0);
-//        jTableWk4Activities.getColumn(0).setMaxWidth(0);
-//        jTableWk5Activities.getColumn(0).setMinWidth(0);
-//        jTableWk5Activities.getColumn(0).setMaxWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk2Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk3Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk4Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk5Activities.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableWk1Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk2Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk3Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
+        jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
         jLabelRegYear.setVisible(false);
         jLabelEmp.setVisible(false);
         jLabelEmp.setText(usrLogNum);
@@ -146,8 +151,7 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
         imgDisplay();
         mainPageTotInsert();
         findApplicantUser();
-        
-        
+
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
@@ -182,7 +186,7 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
 
     }
 
-void findUserGrp() {
+    void findUserGrp() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -197,7 +201,7 @@ void findUserGrp() {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -3679,7 +3683,7 @@ void findUserGrp() {
     }//GEN-LAST:event_jButtonClearBudActionPerformed
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-   
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jButtonReasonDialogOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReasonDialogOkActionPerformed

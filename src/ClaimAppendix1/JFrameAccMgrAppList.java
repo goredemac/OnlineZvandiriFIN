@@ -26,6 +26,8 @@ import javax.swing.table.DefaultTableModel;
 import ClaimAppendix2.*;
 import ClaimReports.*;
 import ClaimPlan.*;
+import java.util.ArrayList;
+import java.util.List;
 import utils.connCred;
 import utils.connSaveFile;
 import utils.savePDFToDB;
@@ -42,10 +44,11 @@ public class JFrameAccMgrAppList extends javax.swing.JFrame {
     PreparedStatement pst1 = null;
     int itmNum = 1;
     int month, finyear;
+    int prjListCount=0;
     Date curYear = new Date();
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     DefaultTableModel model;
-    String provNam, provNam1, provNam2;
+    String provNam, provNam1, provNam2, finPrjList;
     String provHeadSupNam = "";
     String headApprover = "No";
     double breakfastsubtotalAcq = 0;
@@ -90,8 +93,10 @@ public class JFrameAccMgrAppList extends javax.swing.JFrame {
         jLabelEmp.setText(usrLogNum);
         findUser();
         findUserGrp();
+        getProjList();
+        if (finPrjList.trim().length()>0){
         fetchdata();
-        
+        }
 
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
@@ -131,7 +136,35 @@ public class JFrameAccMgrAppList extends javax.swing.JFrame {
         }
     }
 
-void findUserGrp() {
+    void getProjList() {
+        try {
+            System.out.println("emp " + jLabelEmp.getText());
+            List<String> prjlist = new ArrayList<>();
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+            ResultSet r = st.executeQuery("SELECT concat(DONOR_DESC,PRJ_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] "
+                    + "where concat(DONOR_CODE,PRJ_CODE) in (SELECT concat(DONOR_CODE,PRJ_CODE_GL) FROM "
+                    + "[ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] where EMP_NUM ='" + jLabelEmp.getText() + "')");
+
+            while (r.next()) {
+                prjlist.add("'" + r.getString(1) + "'");
+                prjListCount = prjlist.size();
+
+            }
+
+            finPrjList = String.join(",", prjlist);
+            System.out.println("fff " + finPrjList+ " fff "+prjListCount);
+            
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    void findUserGrp() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -146,7 +179,7 @@ void findUserGrp() {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -347,8 +380,12 @@ void findUserGrp() {
                     + "b.ACTION_VER,b.DOC_STATUS FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
                     + "join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM "
                     + "and a.ACT_REC_STA = b.ACT_REC_STA and a.DOC_VER=b.DOC_VER where  a.DOC_VER = 2 and a.ACT_REC_STA = 'A' "
-                    + "and a.SERIAL = 'R' and b.SEND_TO_NAM='FINANCE'  and b.DOC_STATUS in ('SupApprove') "
-                    + "group by a.REF_YEAR,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NAM, a.ACT_MAIN_PUR,a.ACT_TOT_AMT, b.ACTION_VER,b.DOC_STATUS");
+                    + "and a.SERIAL = 'R' and b.SEND_TO_NAM='FINANCE'  and b.DOC_STATUS in ('SupApprove') and a.REF_NUM in "
+                    + "(SELECT distinct REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] where ACT_REC_STA ='A' "
+                    + "and REF_NUM in (SELECT distinct REF_NUM from [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] where  "
+                    + "SEND_TO_EMP_NUM = 'FINANCE' and ACT_REC_STA = 'A' and DOC_STATUS  in ('SupApprove') ) and "
+                    + "concat(DONOR,PRJ_CODE_GL) in ("+finPrjList+")) group by a.REF_YEAR,a.SERIAL,a.REF_NUM,"
+                    + "a.REF_DAT,a.EMP_NAM, a.ACT_MAIN_PUR,a.ACT_TOT_AMT, b.ACTION_VER,b.DOC_STATUS");
 
             ResultSet r = st.getResultSet();
 
@@ -825,12 +862,12 @@ void findUserGrp() {
                 new JFrameReqAccMgrApp(searchRef, jLabelEmp.getText()).setVisible(true);
                 setVisible(false);
                 jDialogPleaseWait.setVisible(false);
-            } 
+            }
         }
     }//GEN-LAST:event_jTableActivityActionListMouseClicked
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-       
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jTableActivityActionListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableActivityActionListMouseEntered
