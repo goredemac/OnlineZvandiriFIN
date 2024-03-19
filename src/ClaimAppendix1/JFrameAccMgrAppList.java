@@ -94,7 +94,7 @@ public class JFrameAccMgrAppList extends javax.swing.JFrame {
         findUser();
         findUserGrp();
         getProjList();
-        if (finPrjList.trim().length()>0){
+        if (prjListCount>0){
         fetchdata();
         }
 

@@ -338,7 +338,7 @@ public class JFrameFinSysLogin extends javax.swing.JFrame {
                         jButtonPassUdate.setVisible(true);
                         jButtonLogin.setVisible(false);
                         jLabelPassChangeViewOpen.setVisible(true);
-                          createLogAudit("Change Password");
+                        createLogAudit("Change Password");
 
                     } else {
 
@@ -735,16 +735,17 @@ public class JFrameFinSysLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextUsrNamActionPerformed
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
-       
+        jButtonLogin.setEnabled(false);
         login();
-      
+        jButtonLogin.setEnabled(true);
+
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     private void jPasswordUsrKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordUsrKeyPressed
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             login();
-          
+
         }
     }//GEN-LAST:event_jPasswordUsrKeyPressed
 
@@ -948,9 +949,7 @@ public class JFrameFinSysLogin extends javax.swing.JFrame {
 //            jLabelPassViewOpen.setBounds(520, 165, 30, 25);
 //            jLabelPassViewClose.setBounds(470, 165, 30, 25);
 //            jPasswordUsr.setEchoChar((char) 0);
-          
-
-        } 
+        }
     }//GEN-LAST:event_jLabelPassViewOpenMouseClicked
 
     private void jLabelPassViewCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPassViewCloseMouseClicked
@@ -1006,21 +1005,21 @@ public class JFrameFinSysLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelPassViewOpenFocusLost
 
     private void jLabelPassViewOpenMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPassViewOpenMouseReleased
-       jPasswordUsr.setEchoChar('*');
+        jPasswordUsr.setEchoChar('*');
     }//GEN-LAST:event_jLabelPassViewOpenMouseReleased
 
     private void jLabelPassViewOpenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPassViewOpenMousePressed
-         jPasswordUsr.setEchoChar((char) 0);
+        jPasswordUsr.setEchoChar((char) 0);
     }//GEN-LAST:event_jLabelPassViewOpenMousePressed
 
     private void jLabelPassChangeViewOpenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPassChangeViewOpenMousePressed
-                jPasswordUsr1.setEchoChar((char) 0);
-            jPasswordUsr2.setEchoChar((char) 0);
+        jPasswordUsr1.setEchoChar((char) 0);
+        jPasswordUsr2.setEchoChar((char) 0);
     }//GEN-LAST:event_jLabelPassChangeViewOpenMousePressed
 
     private void jLabelPassChangeViewOpenMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPassChangeViewOpenMouseReleased
-         jPasswordUsr1.setEchoChar('*');
-          jPasswordUsr2.setEchoChar('*');
+        jPasswordUsr1.setEchoChar('*');
+        jPasswordUsr2.setEchoChar('*');
     }//GEN-LAST:event_jLabelPassChangeViewOpenMouseReleased
 
     /**

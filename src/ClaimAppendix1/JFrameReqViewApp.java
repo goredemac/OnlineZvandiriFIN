@@ -666,7 +666,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(5),
+                modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
@@ -675,7 +675,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             if (modelWk1.getRowCount() == 0) {
                 jTabbedPaneAppSys.setEnabledAt(1, false);
-            }
+            } 
 
         } catch (Exception e) {
             System.out.println(e);
@@ -697,15 +697,16 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{r.getString(5),
+                modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19)});
+                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
 
             }
 
             if (modelWk2.getRowCount() == 0) {
                 jTabbedPaneAppSys.setEnabledAt(2, false);
-            }
+            } 
 
         } catch (Exception e) {
             System.out.println(e);
@@ -727,15 +728,16 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{r.getString(5),
+                modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19)});
+                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
 
             }
 
             if (modelWk3.getRowCount() == 0) {
                 jTabbedPaneAppSys.setEnabledAt(3, false);
-            }
+            } 
 
         } catch (Exception e) {
             System.out.println(e);
@@ -757,9 +759,10 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk4.insertRow(modelWk4.getRowCount(), new Object[]{r.getString(5),
+                modelWk4.insertRow(modelWk4.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19)});
+                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
 
             }
 
@@ -786,15 +789,16 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{r.getString(5),
+                modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{r.getString(4), r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
-                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19)});
+                    r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
 
             }
 
             if (modelWk5.getRowCount() == 0) {
                 jTabbedPaneAppSys.setEnabledAt(5, false);
-            }
+            } 
 
         } catch (Exception e) {
             System.out.println(e);
@@ -807,27 +811,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         numFormat = new DecimalFormat("000.##");
         double breakfastsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 10));
+            double breakfastamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-             double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 10));
+            double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 10));
+            double breakfastamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 10));
+            double breakfastamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 10));
+            double breakfastamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 11));
             breakfastsubtotal += breakfastamount;
         }
 
@@ -835,27 +839,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double lunchsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 11));
+            double lunchamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 11));
+            double lunchamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 11));
+            double lunchamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 11));
+            double lunchamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 11));
+            double lunchamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 12));
             lunchsubtotal += lunchamount;
         }
 
@@ -863,28 +867,28 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double dinnersubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 12));
+            double dinneramount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 12));
+            double dinneramount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
         //jLabelDinnerSubTot.setText(Double.toString(dinnersubtotal));
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 12));
+            double dinneramount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 12));
+            double dinneramount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 12));
+            double dinneramount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 13));
             dinnersubtotal += dinneramount;
         }
 
@@ -892,27 +896,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double incidentalsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 13));
+            double incidentalamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 13));
+            double incidentalamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 13));
+            double incidentalamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 13));
+            double incidentalamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 13));
+            double incidentalamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 14));
             incidentalsubtotal += incidentalamount;
         }
 
@@ -920,27 +924,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double miscSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 15));
+            double miscamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 15));
+            double miscamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 15));
+            double miscamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 15));
+            double miscamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 15));
+            double miscamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 16));
             miscSubTot += miscamount;
         }
 
@@ -948,56 +952,57 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double unprovedSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 16));
+            double unprovedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 16));
+            double unprovedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 16));
+            double unprovedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 16));
+            double unprovedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 16));
+            double unprovedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 17));
             unprovedSubTot += unprovedamount;
         }
         jLabelAccUnprovedSubTot.setText(String.format("%.2f", unprovedSubTot));
 
         double provedSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 17));
+            double provedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 17));
+            double provedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 17));
+            double provedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 17));
+            double provedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 17));
+            double provedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 18));
             provedSubTot += provedamount;
         }
+
         jLabelAccProvedSubTot.setText(String.format("%.2f", provedSubTot));
 
         double allTotal = unprovedSubTot + miscSubTot + incidentalsubtotal
@@ -2432,11 +2437,11 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             SearchRef = jLabelSerial.getText() + jTextRegNum.getText();
             fetchGenData();
             fetchdataWk1();
-//            fetchdataWk2();
-//            fetchdataWk3();
-//            fetchdataWk4();
-//            fetchdataWk5();
-//            imgDisplay();
+            fetchdataWk2();
+            fetchdataWk3();
+            fetchdataWk4();
+            fetchdataWk5();
+            imgDisplay();
             mainPageTotUpdate();
             System.out.println("hhjhd " + SearchRef);
         }

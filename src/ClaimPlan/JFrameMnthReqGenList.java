@@ -67,11 +67,11 @@ public class JFrameMnthReqGenList extends javax.swing.JFrame {
     }
 
     void initUserDet() {
-        
+
         checkOutstandingRequest();
-        
+
         try {
-           
+
             if (requestDays > 0) {
                 //if ((requestDays < -5)) {
                 //requestDays = requestDays * -1;
@@ -81,7 +81,7 @@ public class JFrameMnthReqGenList extends javax.swing.JFrame {
                 new JFrameMnthReqGenList(jLabelEmp.getText()).setVisible(true);
                 setVisible(false);
             } else {
-
+                jDialogPleaseWait.setVisible(true);
                 int row = jTableProvList.getSelectedRow();
 
                 int col = 0;
@@ -100,27 +100,28 @@ public class JFrameMnthReqGenList extends javax.swing.JFrame {
                 Date date = new Date();
 
                 // if (existPrevPerDiemCount==0){
-                if ((existPrevPerDiemCount == 0) && (exp.minDate.compareTo(formatter.format(date)) < 0) ) {
+                if ((existPrevPerDiemCount == 0) && (exp.minDate.compareTo(formatter.format(date)) < 0)) {
                     JOptionPane.showMessageDialog(this, "Your partcipation on Plan ref no." + ref + " has activities whose date/s have passed. Please refer to the Finance policy."
                             + "Perdiem request cannot be generated and your part on this paln will be expired immediately. ");
                     exp.updatePrevRecordExpire();
                     JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b> P " + ref + "</b> has been <b>expired.</html>");
                     new JFrameMnthReqGenList(jLabelEmp.getText()).setVisible(true);
                     setVisible(false);
-
+                   
                     //  }
                 } else {
-                  
+
 //                    if (!"National Office".equals(provNam)) {
 //                        new JFrameMnthDistrictAcquittal(ref, jLabelEmp.getText()).setVisible(true);
 //                        setVisible(false);
 //                    } else {
-System.out.println("oneMore");
-                        new JFrameMnthRequest(ref, jLabelEmp.getText()).setVisible(true);
-                        setVisible(false);
+                   
+                    new JFrameMnthRequest(ref, jLabelEmp.getText()).setVisible(true);
+                    setVisible(false);
 //                    }
 
                 }
+                jDialogPleaseWait.setVisible(false);
             }
 
         } catch (Exception e) {
@@ -178,7 +179,7 @@ System.out.println("oneMore");
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -396,7 +397,7 @@ System.out.println("oneMore");
 
     void fetchdata() {
         try {
-            
+
             DefaultTableModel model = (DefaultTableModel) jTableProvList.getModel();
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -459,6 +460,7 @@ System.out.println("oneMore");
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialogPleaseWait = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         jLabelLogo1 = new javax.swing.JLabel();
         jLabelGenLogNam1 = new javax.swing.JLabel();
@@ -519,6 +521,29 @@ System.out.println("oneMore");
         jMenuItemUserCreate = new javax.swing.JMenuItem();
         jSeparator24 = new javax.swing.JPopupMenu.Separator();
         jMenuItemUserProfUpd = new javax.swing.JMenuItem();
+
+        jDialogPleaseWait.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        jDialogPleaseWait.setTitle("                    Retrieving  requested information.  Please Wait.");
+        jDialogPleaseWait.setAlwaysOnTop(true);
+        jDialogPleaseWait.setBackground(new java.awt.Color(51, 255, 51));
+        jDialogPleaseWait.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jDialogPleaseWait.setFont(new java.awt.Font("Agency FB", 1, 14)); // NOI18N
+        jDialogPleaseWait.setForeground(new java.awt.Color(255, 0, 0));
+        jDialogPleaseWait.setIconImages(null);
+        jDialogPleaseWait.setLocation(new java.awt.Point(650, 375));
+        jDialogPleaseWait.setMinimumSize(new java.awt.Dimension(500, 50));
+        jDialogPleaseWait.setResizable(false);
+
+        javax.swing.GroupLayout jDialogPleaseWaitLayout = new javax.swing.GroupLayout(jDialogPleaseWait.getContentPane());
+        jDialogPleaseWait.getContentPane().setLayout(jDialogPleaseWaitLayout);
+        jDialogPleaseWaitLayout.setHorizontalGroup(
+            jDialogPleaseWaitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 453, Short.MAX_VALUE)
+        );
+        jDialogPleaseWaitLayout.setVerticalGroup(
+            jDialogPleaseWaitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -856,7 +881,7 @@ System.out.println("oneMore");
     }//GEN-LAST:event_jTableProvListMouseClicked
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-       
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jTableProvListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProvListMouseEntered
@@ -1024,6 +1049,7 @@ System.out.println("oneMore");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog jDialogPleaseWait;
     private javax.swing.JLabel jLabelEmp;
     private javax.swing.JLabel jLabelGenDate;
     private javax.swing.JLabel jLabelGenLogNam;

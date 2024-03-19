@@ -26,6 +26,8 @@ import javax.swing.table.DefaultTableModel;
 import ClaimAppendix2.*;
 import ClaimReports.*;
 import ClaimPlan.*;
+import java.util.ArrayList;
+import java.util.List;
 import utils.connCred;
 import utils.connSaveFile;
 import utils.savePDFToDB;
@@ -41,11 +43,12 @@ public class JFrameReqHeadAppList extends javax.swing.JFrame {
     PreparedStatement pst = null;
     PreparedStatement pst1 = null;
     int itmNum = 1;
+    int prjListCount=0;
     int month, finyear;
     Date curYear = new Date();
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     DefaultTableModel model;
-    String provNam, provNam1, provNam2;
+    String provNam, provNam1, provNam2,HODPrjList;
     String provHeadSupNam = "";
     String headApprover = "No";
     double breakfastsubtotalAcq = 0;
@@ -89,9 +92,11 @@ public class JFrameReqHeadAppList extends javax.swing.JFrame {
         jLabelEmp.setText(usrLogNum);
         findUser();
         findUserGrp();
+        getProjList();
+       if (prjListCount>0){
         fetchdata();
-        
-        
+        }
+
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
@@ -130,7 +135,7 @@ public class JFrameReqHeadAppList extends javax.swing.JFrame {
         }
     }
 
-void findUserGrp() {
+    void findUserGrp() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -145,7 +150,7 @@ void findUserGrp() {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -306,6 +311,33 @@ void findUserGrp() {
             System.out.println(e);
         }
     }
+    
+    void getProjList() {
+        try {
+
+            List<String> prjlist = new ArrayList<>();
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+            ResultSet r = st.executeQuery("SELECT concat(DONOR_DESC,PRJ_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] "
+                    + "where concat(DONOR_CODE,PRJ_CODE) in (SELECT concat(DONOR_CODE,PRJ_CODE_GL) FROM "
+                    + "[ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] where EMP_NUM ='" + jLabelEmp.getText() + "')");
+
+            while (r.next()) {
+                prjlist.add("'" + r.getString(1) + "'");
+                prjListCount = prjlist.size();
+
+            }
+
+            HODPrjList = String.join(",", prjlist);
+            System.out.println("fff " + HODPrjList);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     void findUser() {
         try {
@@ -345,20 +377,10 @@ void findUserGrp() {
             st.executeQuery("SELECT a.REF_YEAR,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NAM, a.ACT_MAIN_PUR,a.ACT_TOT_AMT,"
                     + "b.ACTION_VER,b.DOC_STATUS FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a, "
                     + "[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b where  (a.DOC_VER = 3 and a.ACT_REC_STA = 'A') and "
-                    + " a.SERIAL = 'R' and b.SEND_TO_NAM='" + jLabelGenLogNam.getText() + "'  and (a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM and "
+                    + " a.SERIAL = 'R' and concat(SEND_TO_EMP_NUM,SEND_TO_NAM) in ("+HODPrjList+")  and (a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM and "
                     + "a.ACT_REC_STA = b.ACT_REC_STA and a.DOC_VER=b.DOC_VER)  and b.DOC_STATUS in ('FinApprove')"
                     + " group by a.REF_YEAR,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NAM, a.ACT_MAIN_PUR,a.ACT_TOT_AMT, "
-                    + "b.ACTION_VER,b.DOC_STATUS union SELECT a.REF_YEAR,a.SERIAL,a.REF_NUM,"
-                    + "a.REF_DAT,a.EMP_NAM, a.ACT_MAIN_PUR,a.ACT_TOT_AMT,b.ACTION_VER,b.DOC_STATUS "
-                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimMeetGenTab] a, [ClaimsAppSysZvandiri].[dbo].[ClaimsMeetWFActTab] b "
-                    + "where  (a.DOC_VER = 3 and a.ACT_REC_STA = 'A') and  a.SERIAL = 'RM'  and a.EMP_NUM in "
-                    + "(select EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[EmpDetTab] where SUP_NAM = '" + jLabelGenLogNam.getText() + "') and "
-                    + "(a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA and a.DOC_VER=b.DOC_VER)  "
-                    + "and b.DOC_STATUS in ('FinApprove') and concat(a.REF_NUM,b.REG_MOD_VER) in "
-                    + "(select * from (SELECT concat(REF_NUM,max(REG_MOD_VER)) \"mod\" FROM "
-                    + "[ClaimsAppSysZvandiri].[dbo].[ClaimsMeetWFActTab] where ACTION_VER = 3 group by REF_NUM ) a) "
-                    + "group by a.REF_YEAR,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NAM, a.ACT_MAIN_PUR,a.ACT_TOT_AMT,"
-                    + "b.ACTION_VER,b.DOC_STATUS");
+                    + "b.ACTION_VER,b.DOC_STATUS ");
 
             ResultSet r = st.getResultSet();
 
@@ -448,7 +470,7 @@ void findUserGrp() {
         jMenuItemUserProfUpd = new javax.swing.JMenuItem();
 
         jDialogPleaseWait.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        jDialogPleaseWait.setTitle("                    Retrieving  requeeted information.  Please Wait.");
+        jDialogPleaseWait.setTitle("                    Retrieving  requested information.  Please Wait.");
         jDialogPleaseWait.setAlwaysOnTop(true);
         jDialogPleaseWait.setBackground(new java.awt.Color(51, 255, 51));
         jDialogPleaseWait.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -835,7 +857,7 @@ void findUserGrp() {
                 new JFrameReqHeadApp(searchRef, jLabelEmp.getText()).setVisible(true);
                 setVisible(false);
                 jDialogPleaseWait.setVisible(false);
-            } 
+            }
         }
     }//GEN-LAST:event_jTableActivityActionListMouseClicked
 

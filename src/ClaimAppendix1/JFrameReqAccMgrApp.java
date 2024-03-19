@@ -70,7 +70,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
     String sendToProv, sendToFin, reqUsrMail, finUsrMail, reqUsrNam, reqEmpNum, createUsrNam,
             HODUsrNam, HODUsrEmail, HODUsrEmpNum, docVersion,
             oldDocVersion, actVersion, statusCodeApp, statusCodeDisApp, checkRef,
-            authNam1, authNam2, usrGrp, empOff, searchRef, HODPrjNam;
+            authNam1, authNam2, usrGrp, empOff, searchRef, HODPrjNam,HODPrjCodeGL;
     String province = "";
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     DefaultTableModel modelWk1, modelWk2, modelWk3, modelWk4, modelWk5;
@@ -125,7 +125,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
         modelWk3 = (DefaultTableModel) jTableWk3Activities.getModel();
         modelWk4 = (DefaultTableModel) jTableWk4Activities.getModel();
         modelWk5 = (DefaultTableModel) jTableWk5Activities.getModel();
-  jTableWk1Activities.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableWk1Activities.getColumnModel().getColumn(0).setMinWidth(0);
         jTableWk1Activities.getColumnModel().getColumn(0).setMaxWidth(0);
         jTableWk2Activities.getColumnModel().getColumn(0).setMinWidth(0);
         jTableWk2Activities.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -160,15 +160,21 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
 
         if (modelWk1.getRowCount() > 0) {
             HODPrjNam = modelWk1.getValueAt(0, 3).toString();
+            HODPrjCodeGL = modelWk1.getValueAt(0, 4).toString();
         } else if (modelWk2.getRowCount() > 0) {
             HODPrjNam = modelWk2.getValueAt(0, 3).toString();
+            HODPrjCodeGL = modelWk2.getValueAt(0, 4).toString();
         } else if (modelWk3.getRowCount() > 0) {
             HODPrjNam = modelWk3.getValueAt(0, 3).toString();
+            HODPrjCodeGL = modelWk3.getValueAt(0, 4).toString();
         } else if (modelWk4.getRowCount() > 0) {
             HODPrjNam = modelWk4.getValueAt(0, 3).toString();
+            HODPrjCodeGL = modelWk4.getValueAt(0, 4).toString();
         } else if (modelWk5.getRowCount() > 0) {
             HODPrjNam = modelWk5.getValueAt(0, 3).toString();
+            HODPrjCodeGL = modelWk5.getValueAt(0, 4).toString();
         }
+        
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
@@ -1497,8 +1503,9 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
             pst1.setString(6, jLabelEmp.getText());
             pst1.setString(7, createUsrNam);
             if (jCheckBoxAgreed.isSelected()) {
+
                 pst1.setString(8, HODPrjNam);
-                pst1.setString(9, HODPrjNam);
+                pst1.setString(9, HODPrjCodeGL);
 
             } else if (jCheckBoxDisAgree.isSelected()) {
                 pst1.setString(8, reqEmpNum);
@@ -1580,7 +1587,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
 
                     jDialogWaitingEmail.setVisible(false);
 
-                    JOptionPane.showMessageDialog(this, "<html>An email has been sent to head of <b>" + HODPrjNam + "</b> for processing of per diem No. "
+                    JOptionPane.showMessageDialog(this, "<html>An email has been sent to head of <b>" + HODPrjCodeGL + "</b> project for processing of per diem No. "
                             + jLabelSerial.getText() + " " + jLabelRegNum.getText() + "</html>");
 
                     new JFrameSupAppList(jLabelEmp.getText()).setVisible(true);

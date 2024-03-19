@@ -120,7 +120,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
     public JFrameMnthRequest(String ref, String usrLogNam) {
         initComponents();
-        System.out.println("twoMore");
+     
         modelWk1 = (DefaultTableModel) jTableWk1Activities.getModel();
         modelWk2 = (DefaultTableModel) jTableWk2Activities.getModel();
         modelWk3 = (DefaultTableModel) jTableWk3Activities.getModel();
@@ -142,8 +142,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
         jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
         SearchRef = ref;
-        System.out.println("jhj " + usrLogNam);
-        jLabelEmp.setText(usrLogNam);
+            jLabelEmp.setText(usrLogNam);
         jLabelEmp.setVisible(false);
         jTextBankNam.setVisible(false);
         jLabelPhoneDet.setVisible(false);
@@ -167,8 +166,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         computerName();
         findUser();
         findUserGrp();
-        System.out.println("threeMore");
-        fetchdataGenWk1();
+            fetchdataGenWk1();
         fetchdataWk1();
         fetchdataWk2();
         fetchdataWk3();
@@ -196,7 +194,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             jMenuItemUserProfUpd.setEnabled(false);
             jMenuItemUserCreate.setEnabled(false);
         }
-        System.out.println("fourMore");
+       
     }
 
     void computerName() {
@@ -2046,12 +2044,15 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     }
 
     void regCheck() {
+        jMenuItemSubmit.setEnabled(false);
         try {
             if (("".equals(jLabelBankName.getText())) || ("".equals(jLabelAccNum.getText())) || ("".equals(jLabelEmpNam.getText()))) {
                 JOptionPane.showMessageDialog(this, "Your Employee or Banking details are not complete. Please contact IT to update your details.");
                 jTextActMainPurpose.requestFocusInWindow();
                 jTextActMainPurpose.setFocusable(true);
+                jMenuItemSubmit.setEnabled(true);
             } else {
+                
                 try {
                     itmDateCountWk1 = 0;
                     itmDateCountWk2 = 0;
@@ -2069,7 +2070,10 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                         jLabelDisFacilty.setVisible(false);
 
                         jDialogAckSubmit.setVisible(true);
+                        
                     }
+                    jMenuItemSubmit.setEnabled(true);
+                    
                 } catch (Exception e) {
                     System.out.println(e);
                 }
