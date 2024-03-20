@@ -1249,11 +1249,10 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         budcode = accCode + "/ZW/" + donor + "/" + prjCode + "/" + grantCode + "/" + budLine + "/" + subBudLine + "/NAT1";
 
-          String taskBudCode = budcode;
+        String taskBudCode = budcode;
         String taskPartsBudCode[] = taskBudCode.split("/", 5);
         String budCodeStr = taskPartsBudCode[3];
-        
-        
+
 //        System.out.println("Budcode " + accCode + "/ZW/" + donor + "/" + prjCode + "/" + grantCode + "/" + budLine + "/" + subBudLine + "/NAT1" + "  " + accCodeName);
         System.out.println("kvll " + budcode);
         System.out.println("kvllgg " + budCodeStr);
@@ -2893,7 +2892,6 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
             }
 
-          
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -3005,7 +3003,9 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTextFieldWk1MiscAmt.setVisible(false);
         jTextFieldWk1MiscAmt.setText("");
         jTextFieldDialogWkSite.setText("");
-
+        while (jTableDocAtt.getRowCount()>0){
+        modelAtt.removeRow(0);
+        }
     }
 
     void addItem() {
@@ -3047,7 +3047,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
     void addStaff() {
         try {
-        
+
             if (modelWk1.getRowCount() > 0) {
                 jPanelAddStaff.setVisible(true);
             } else {
@@ -3762,7 +3762,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanel10.add(jButtonOkFacility);
-        jButtonOkFacility.setBounds(180, 220, 80, 21);
+        jButtonOkFacility.setBounds(180, 220, 80, 25);
 
         jButtonCancelFacility.setText("Cancel");
         jButtonCancelFacility.addActionListener(new java.awt.event.ActionListener() {
@@ -3771,7 +3771,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanel10.add(jButtonCancelFacility);
-        jButtonCancelFacility.setBounds(300, 220, 80, 21);
+        jButtonCancelFacility.setBounds(300, 220, 80, 25);
 
         jLabelProvinceFacility.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabelProvinceFacility.setText("Province");
@@ -4067,15 +4067,15 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jCheckBoxDialogWk1BrkFast.setText(" Breakfast");
         jPanelActivity.add(jCheckBoxDialogWk1BrkFast);
-        jCheckBoxDialogWk1BrkFast.setBounds(540, 350, 90, 21);
+        jCheckBoxDialogWk1BrkFast.setBounds(540, 350, 90, 25);
 
         jCheckBoxDialogWk1Lunch.setText("Lunch");
         jPanelActivity.add(jCheckBoxDialogWk1Lunch);
-        jCheckBoxDialogWk1Lunch.setBounds(660, 350, 80, 21);
+        jCheckBoxDialogWk1Lunch.setBounds(660, 350, 80, 25);
 
         jCheckBoxDialogWk1Dinner.setText(" Dinner");
         jPanelActivity.add(jCheckBoxDialogWk1Dinner);
-        jCheckBoxDialogWk1Dinner.setBounds(540, 390, 90, 21);
+        jCheckBoxDialogWk1Dinner.setBounds(540, 390, 90, 25);
 
         jCheckBoxDialogWk1Misc.setText("Miscellaneous");
         jCheckBoxDialogWk1Misc.addActionListener(new java.awt.event.ActionListener() {
@@ -4084,11 +4084,11 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelActivity.add(jCheckBoxDialogWk1Misc);
-        jCheckBoxDialogWk1Misc.setBounds(540, 470, 110, 21);
+        jCheckBoxDialogWk1Misc.setBounds(540, 470, 110, 25);
 
         jCheckBoxDialogWk1Inc.setText("Incidental");
         jPanelActivity.add(jCheckBoxDialogWk1Inc);
-        jCheckBoxDialogWk1Inc.setBounds(540, 430, 110, 21);
+        jCheckBoxDialogWk1Inc.setBounds(540, 430, 110, 25);
 
         jLabelWk1Misc.setText("Miscellaneous Desc");
         jPanelActivity.add(jLabelWk1Misc);
@@ -4159,17 +4159,17 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         buttonGroupAcc.add(jCheckBoxDialogWk1AccUnProved);
         jCheckBoxDialogWk1AccUnProved.setText(" Unproved Acc");
         jPanel2.add(jCheckBoxDialogWk1AccUnProved);
-        jCheckBoxDialogWk1AccUnProved.setBounds(0, 0, 130, 21);
+        jCheckBoxDialogWk1AccUnProved.setBounds(0, 0, 130, 25);
 
         buttonGroupAcc.add(jCheckBoxDialogWk1AccProved);
         jCheckBoxDialogWk1AccProved.setText(" Proved Acc");
         jPanel2.add(jCheckBoxDialogWk1AccProved);
-        jCheckBoxDialogWk1AccProved.setBounds(0, 40, 130, 21);
+        jCheckBoxDialogWk1AccProved.setBounds(0, 40, 130, 25);
 
         buttonGroupAcc.add(jCheckBoxNoAcc);
         jCheckBoxNoAcc.setText("No Acc Required");
         jPanel2.add(jCheckBoxNoAcc);
-        jCheckBoxNoAcc.setBounds(0, 80, 130, 21);
+        jCheckBoxNoAcc.setBounds(0, 80, 130, 25);
 
         jPanelActivity.add(jPanel2);
         jPanel2.setBounds(670, 390, 130, 100);
@@ -4405,7 +4405,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
         jLabelWk1DialogActivityDesc.setText("Activity Descrpition");
         jPanelActivityInfo.add(jLabelWk1DialogActivityDesc);
-        jLabelWk1DialogActivityDesc.setBounds(10, 300, 100, 20);
+        jLabelWk1DialogActivityDesc.setBounds(10, 300, 130, 20);
         jPanelActivityInfo.add(jTextFieldWk1DialogActivityDesc);
         jTextFieldWk1DialogActivityDesc.setBounds(10, 320, 490, 30);
 
@@ -4666,7 +4666,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelAttachWk1Main.add(jButtonWk1Delete);
-        jButtonWk1Delete.setBounds(170, 95, 85, 20);
+        jButtonWk1Delete.setBounds(170, 95, 87, 20);
 
         jPanelDooAttWk1Main.add(jPanelAttachWk1Main);
         jPanelAttachWk1Main.setBounds(0, 0, 280, 140);
@@ -4846,7 +4846,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelAttachWk1Main1.add(jButtonWk2Delete);
-        jButtonWk2Delete.setBounds(170, 95, 85, 20);
+        jButtonWk2Delete.setBounds(170, 95, 87, 20);
 
         jPanelDooAttWk2Main.add(jPanelAttachWk1Main1);
         jPanelAttachWk1Main1.setBounds(0, 0, 280, 140);
@@ -5053,7 +5053,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelAttachWk3Main.add(jButtonWk3Delete);
-        jButtonWk3Delete.setBounds(170, 95, 85, 20);
+        jButtonWk3Delete.setBounds(170, 95, 87, 20);
 
         jPanelDooAttWk3Main.add(jPanelAttachWk3Main);
         jPanelAttachWk3Main.setBounds(0, 0, 280, 140);
@@ -5268,7 +5268,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelAttachWk4Main.add(jButtonWk4Delete);
-        jButtonWk4Delete.setBounds(170, 95, 85, 20);
+        jButtonWk4Delete.setBounds(170, 95, 87, 20);
 
         jPanelDooAttWk4Main.add(jPanelAttachWk4Main);
         jPanelAttachWk4Main.setBounds(0, 0, 280, 140);
@@ -5467,7 +5467,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             }
         });
         jPanelAttachWk5Main.add(jButtonWk5Delete);
-        jButtonWk5Delete.setBounds(170, 95, 85, 20);
+        jButtonWk5Delete.setBounds(170, 95, 87, 20);
 
         jPanelDooAttWk5Main.add(jPanelAttachWk5Main);
         jPanelAttachWk5Main.setBounds(0, 0, 280, 140);

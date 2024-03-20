@@ -1177,7 +1177,7 @@ public class JFrameMnthPlanPerDiemFinanceApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 2");
+                    + "and DOC_VER = 2 order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -1208,7 +1208,7 @@ public class JFrameMnthPlanPerDiemFinanceApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 2");
+                    + "and DOC_VER = 2 order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -1238,7 +1238,7 @@ public class JFrameMnthPlanPerDiemFinanceApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 2");
+                    + "and DOC_VER = 2 order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -1269,7 +1269,7 @@ public class JFrameMnthPlanPerDiemFinanceApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 2");
+                    + "and DOC_VER = 2 order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -1300,7 +1300,7 @@ public class JFrameMnthPlanPerDiemFinanceApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 2");
+                    + "and DOC_VER = 2 order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -1358,7 +1358,7 @@ public class JFrameMnthPlanPerDiemFinanceApprove extends javax.swing.JFrame {
 
                 jDialogWaitingEmail.setVisible(false);
 
-                JOptionPane.showMessageDialog(this, "<html>An email has been sent to head of <b>" + HODPrjNam + "</b> for processing.</html>");
+                JOptionPane.showMessageDialog(this, "<html>An email has been sent to head of <b>" + HODPrjNam + "</b> project for processing.</html>");
                 new JFrameMnthSupList(jLabelEmp.getText()).setVisible(true);
                 setVisible(false);
 

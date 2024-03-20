@@ -450,7 +450,7 @@ public class JFrameMnthPlanView extends javax.swing.JFrame {
             Statement st = conn.createStatement();
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] "
-                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C')");
+                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C') order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -477,7 +477,7 @@ public class JFrameMnthPlanView extends javax.swing.JFrame {
             Statement st = conn.createStatement();
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
-                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C')");
+                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C') order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -504,7 +504,7 @@ public class JFrameMnthPlanView extends javax.swing.JFrame {
             Statement st = conn.createStatement();
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
-                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C')");
+                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C') order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -531,7 +531,7 @@ public class JFrameMnthPlanView extends javax.swing.JFrame {
             Statement st = conn.createStatement();
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
-                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C')");
+                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C') order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -558,7 +558,7 @@ public class JFrameMnthPlanView extends javax.swing.JFrame {
             Statement st = conn.createStatement();
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
-                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C')");
+                    + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA in ('A','E','C') order by 4");
 
             ResultSet r = st.getResultSet();
 

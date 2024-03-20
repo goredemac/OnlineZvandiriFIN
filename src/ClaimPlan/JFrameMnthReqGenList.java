@@ -101,13 +101,14 @@ public class JFrameMnthReqGenList extends javax.swing.JFrame {
 
                 // if (existPrevPerDiemCount==0){
                 if ((existPrevPerDiemCount == 0) && (exp.minDate.compareTo(formatter.format(date)) < 0)) {
+                    jDialogPleaseWait.setVisible(false);
                     JOptionPane.showMessageDialog(this, "Your partcipation on Plan ref no." + ref + " has activities whose date/s have passed. Please refer to the Finance policy."
-                            + "Perdiem request cannot be generated and your part on this paln will be expired immediately. ");
+                            + "Perdiem request cannot be generated.Your plan will be expired immediately. ");
                     exp.updatePrevRecordExpire();
                     JOptionPane.showMessageDialog(this, "<html>Plan reference No. <b> P " + ref + "</b> has been <b>expired.</html>");
                     new JFrameMnthReqGenList(jLabelEmp.getText()).setVisible(true);
                     setVisible(false);
-                   
+                      
                     //  }
                 } else {
 

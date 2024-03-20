@@ -849,6 +849,7 @@ public class JFrameMnthSupList extends javax.swing.JFrame {
             existPrevPerDiem(ref);
             System.out.println("ver " + refVer);
             Date date = new Date();
+            System.out.println("existPer "+existPerDiemCount+" existPrev "+existPrevPerDiemCount+ " date 1 "+exp.minDate+" date 2 "+formatter.format(date)+" comap "+exp.minDate.compareTo(formatter.format(date)));
             if ((existPerDiemCount > 0) && (existPrevPerDiemCount == 0)) {
                 if (exp.minDate.compareTo(formatter.format(date)) < 0) {
 //                    exp.findCreatorExpire();

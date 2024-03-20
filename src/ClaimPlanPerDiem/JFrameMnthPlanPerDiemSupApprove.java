@@ -1244,7 +1244,7 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 1");
+                    + "and DOC_VER = 1 order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -1277,7 +1277,7 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 1");
+                    + "and DOC_VER = 1 order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -1308,7 +1308,7 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 1");
+                    + "and DOC_VER = 1 order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -1341,7 +1341,7 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 1");
+                    + "and DOC_VER = 1 order by 4");
 
             ResultSet r = st.getResultSet();
 
@@ -1374,7 +1374,7 @@ public class JFrameMnthPlanPerDiemSupApprove extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
                     + "where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "and DOC_VER = 1");
+                    + "and DOC_VER = 1 order by 4");
 
             ResultSet r = st.getResultSet();
 

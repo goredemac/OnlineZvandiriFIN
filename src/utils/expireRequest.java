@@ -73,7 +73,7 @@ public class expireRequest {
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             String sqlPlanAct = "update [ClaimsAppSysZvandiri].[dbo].[PlanUsrRecTab] set "
-                    + "STATUS ='E' where PLAN_REF_NUM =" + SearchRef + " and STATUS = 'A' "
+                    + "ACT_REC_STA ='E' where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
                     + "and EMP_NAM ='"+requestUsr+"'";
 
             pst = conn.prepareStatement(sqlPlanAct);

@@ -23,41 +23,43 @@ public class expirePlan {
     public String docNextVerExpire, SearchRef, SearchStatus, createUsrNam, minDate, todayDate, sendToExpire, usrMail;
     PreparedStatement pst = null;
 
-     public void findMinDate(String planRef) {
+    public void findMinDate(String planRef) {
         try {
-             SearchRef = planRef;
-             
-           Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+            SearchRef = planRef;
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-           
+
             Statement st = conn.createStatement();
 
-            ResultSet r = st.executeQuery("select min(ACT_DATE) as minDate from (SELECT [ACT_DATE]FROM "
-                    + "[ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] where PLAN_REF_NUM = " + SearchRef + " and ACT_REC_STA = 'A' "
-                    + "union SELECT [ACT_DATE] FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] where PLAN_REF_NUM = " + SearchRef + " "
-                    + "and ACT_REC_STA = 'A' union SELECT  [ACT_DATE] FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
-                    + "where PLAN_REF_NUM = " + SearchRef + " and ACT_REC_STA = 'A' union SELECT [ACT_DATE] FROM "
-                    + "[ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] where PLAN_REF_NUM = " + SearchRef + " and ACT_REC_STA = 'A' union "
-                    + "SELECT [ACT_DATE] FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] where PLAN_REF_NUM = " + SearchRef + " and "
-                    + "ACT_REC_STA = 'A' ) a");
+            ResultSet r = st.executeQuery(
+                    "select min(ACT_DATE) as minDate from ( SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab] where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A'"
+                    + "union "
+                    + "SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] where PLAN_REF_NUM =" + SearchRef + "and ACT_REC_STA = 'A'"
+                    + "union "
+                    + "SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
+                    + "union "
+                    + "SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' "
+                    + "union "
+                    + "SELECT ACT_DATE FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] where PLAN_REF_NUM =" + SearchRef + " and ACT_REC_STA = 'A' ) a");
             while (r.next()) {
 
                 minDate = r.getString(1);
-                
+               
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-     
-     public void findMeetMinDate(String planRef) {
+
+    public void findMeetMinDate(String planRef) {
         try {
-             SearchRef = planRef;
-             
-           Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+            SearchRef = planRef;
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-           
+
             Statement st = conn.createStatement();
 
             ResultSet r = st.executeQuery("select min(ACT_DAT_FRO) as minDate from (SELECT [ACT_DAT_FRO]FROM "
@@ -71,15 +73,15 @@ public class expirePlan {
             while (r.next()) {
 
                 minDate = r.getString(1);
-               
+
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-     
-     public void findUser(String logUsrNum) {
+
+    public void findUser(String logUsrNum) {
         try {
 
 //            
@@ -102,9 +104,9 @@ public class expirePlan {
         }
     }
 
-     public void findCreatorExpire() {
+    public void findCreatorExpire() {
         try {
-           
+
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
@@ -134,7 +136,7 @@ public class expirePlan {
         }
     }
 
-     public void updatePrevRecordExpire() {
+    public void updatePrevRecordExpire() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -213,7 +215,7 @@ public class expirePlan {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
-             String sqlwk2plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
+            String sqlwk2plan = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
                     + "SELECT SERIAL,PLAN_REF_NUM,ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,PRJ_TASK_CODE,ACT_SITE,"
                     + "ACT_DESC,ACT_JUSTIFCATION,BRK_AMT,LNC_AMT,DIN_AMT,INC_AMT,MSC_ACT,MSC_AMT,ACC_UNPROV_AMT,"
                     + "ACC_PROV_AMT,EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER + 1,DOC_VER + 1,'E' FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab]"
@@ -248,7 +250,7 @@ public class expirePlan {
         }
     }
 
-   public void updateWk4PlanExpire() {
+    public void updateWk4PlanExpire() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -259,7 +261,7 @@ public class expirePlan {
                     + "ACC_PROV_AMT,EMP_NAM1,EMP_NAM2,EMP_NAM3,EMP_NAM4,ACT_VER + 1,DOC_VER + 1,'E' FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab]"
                     + " where  ACT_VER = (select max(ACT_VER) from [ClaimsAppSysZvandiri].[dbo].[PlanActTab]"
                     + "where PLAN_REF_NUM =" + SearchRef + ") and PLAN_REF_NUM = " + SearchRef;
-            
+
             pst = conn.prepareStatement(sqlwk4plan);
             pst.executeUpdate();
 
@@ -268,7 +270,7 @@ public class expirePlan {
         }
     }
 
-   public void updateWk5PlanExpire() {
+    public void updateWk5PlanExpire() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -288,7 +290,7 @@ public class expirePlan {
         }
     }
 
-   public  void updateWkPlanPeriodExpire() {
+    public void updateWkPlanPeriodExpire() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -311,7 +313,7 @@ public class expirePlan {
         }
     }
 
-   public void WkPlanActionApprovedExpire() {
+    public void WkPlanActionApprovedExpire() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");

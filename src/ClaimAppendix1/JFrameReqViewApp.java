@@ -661,12 +661,12 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
                     + "where concat(SERIAL,REF_NUM)='" + SearchRef + "' and ACT_REC_STA = 'A' "
-                    + "and PLAN_WK=1 ");
+                    + "and PLAN_WK=1 order by 1");
 
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(4), r.getString(5),
+                modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{ r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
@@ -692,12 +692,12 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
                     + "where concat(SERIAL,REF_NUM)='" + SearchRef + "' and ACT_REC_STA = 'A' "
-                    + "and PLAN_WK=2 ");
+                    + "and PLAN_WK=2 order by 1");
 
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{r.getString(4), r.getString(5),
+                modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{ r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
@@ -723,12 +723,12 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
                     + "where concat(SERIAL,REF_NUM)='" + SearchRef + "' and ACT_REC_STA = 'A' "
-                    + "and PLAN_WK=3 ");
+                    + "and PLAN_WK=3 order by 1");
 
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{r.getString(4), r.getString(5),
+                modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{ r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
@@ -754,12 +754,12 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
                     + "where concat(SERIAL,REF_NUM)='" + SearchRef + "' and ACT_REC_STA = 'A' "
-                    + "and PLAN_WK=4 ");
+                    + "and PLAN_WK=4 order by 1");
 
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk4.insertRow(modelWk4.getRowCount(), new Object[]{r.getString(4), r.getString(5),
+                modelWk4.insertRow(modelWk4.getRowCount(), new Object[]{r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
@@ -784,12 +784,12 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             st.executeQuery("SELECT * FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
                     + "where concat(SERIAL,REF_NUM)='" + SearchRef + "' and ACT_REC_STA = 'A' "
-                    + "and PLAN_WK=5 ");
+                    + "and PLAN_WK=5 order by 1");
 
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{r.getString(4), r.getString(5),
+                modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{ r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
