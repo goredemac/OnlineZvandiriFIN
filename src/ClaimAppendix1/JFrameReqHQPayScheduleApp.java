@@ -814,7 +814,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
 
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelItem1.add(jLabelLogo);
-        jLabelLogo.setBounds(10, 10, 220, 100);
+        jLabelLogo.setBounds(10, 5, 220, 115);
 
         jLabelHeaderLine.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine.setText("TRAVEL AND SUBSISTENCE CLAIM");

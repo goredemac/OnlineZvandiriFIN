@@ -507,7 +507,7 @@ public class JFrameReqHeadAppList extends javax.swing.JFrame {
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequest.add(jLabelLogo1);
-        jLabelLogo1.setBounds(10, 10, 220, 100);
+        jLabelLogo1.setBounds(10, 2, 220, 115);
 
         jLabelHeaderLine.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -568,7 +568,7 @@ public class JFrameReqHeadAppList extends javax.swing.JFrame {
 
         jButton4.setText("jButton4");
         jPanelRequest.add(jButton4);
-        jButton4.setBounds(750, 470, 71, 21);
+        jButton4.setBounds(750, 470, 79, 25);
         jPanelRequest.add(jLabelXtrsRef);
         jLabelXtrsRef.setBounds(960, 90, 80, 30);
         jPanelRequest.add(jLabelEmp);

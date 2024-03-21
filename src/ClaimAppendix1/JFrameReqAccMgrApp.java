@@ -1590,7 +1590,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "<html>An email has been sent to head of <b>" + HODPrjCodeGL + "</b> project for processing of per diem No. "
                             + jLabelSerial.getText() + " " + jLabelRegNum.getText() + "</html>");
 
-                    new JFrameSupAppList(jLabelEmp.getText()).setVisible(true);
+                    new JFrameAccMgrAppList(jLabelEmp.getText()).setVisible(true);
                     setVisible(false);
                 } else {
                     PlanReqClearUpd();
@@ -2128,7 +2128,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
 
         jLabelDialogWk1Site.setText("Site");
         jPanel8.add(jLabelDialogWk1Site);
-        jLabelDialogWk1Site.setBounds(20, 100, 40, 13);
+        jLabelDialogWk1Site.setBounds(20, 100, 40, 16);
 
         jTextFieldDialogWk1Site.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -2177,19 +2177,19 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
 
         jCheckBoxDialogWk1BrkFast.setText(" Breakfast");
         jPanel8.add(jCheckBoxDialogWk1BrkFast);
-        jCheckBoxDialogWk1BrkFast.setBounds(540, 100, 90, 21);
+        jCheckBoxDialogWk1BrkFast.setBounds(540, 100, 90, 25);
 
         jCheckBoxDialogWk1Lunch.setText("Lunch");
         jPanel8.add(jCheckBoxDialogWk1Lunch);
-        jCheckBoxDialogWk1Lunch.setBounds(660, 100, 80, 21);
+        jCheckBoxDialogWk1Lunch.setBounds(660, 100, 80, 25);
 
         jCheckBoxDialogWk1Dinner.setText(" Dinner");
         jPanel8.add(jCheckBoxDialogWk1Dinner);
-        jCheckBoxDialogWk1Dinner.setBounds(540, 150, 90, 21);
+        jCheckBoxDialogWk1Dinner.setBounds(540, 150, 90, 25);
 
         jCheckBoxDialogWk1Acc.setText(" Unproved Acc");
         jPanel8.add(jCheckBoxDialogWk1Acc);
-        jCheckBoxDialogWk1Acc.setBounds(660, 150, 130, 21);
+        jCheckBoxDialogWk1Acc.setBounds(660, 150, 130, 25);
 
         jLabelDialogWk1Dis.setText("Km");
         jPanel8.add(jLabelDialogWk1Dis);
@@ -2212,11 +2212,11 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
             }
         });
         jPanel8.add(jCheckBoxDialogWk1Misc);
-        jCheckBoxDialogWk1Misc.setBounds(660, 200, 140, 21);
+        jCheckBoxDialogWk1Misc.setBounds(660, 200, 140, 25);
 
         jCheckBoxDialogWk1Inc.setText("Incidental");
         jPanel8.add(jCheckBoxDialogWk1Inc);
-        jCheckBoxDialogWk1Inc.setBounds(540, 200, 110, 21);
+        jCheckBoxDialogWk1Inc.setBounds(540, 200, 110, 25);
 
         jLabelWk1Misc.setText("Miscellaneous Desc");
         jPanel8.add(jLabelWk1Misc);
@@ -2261,7 +2261,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
 
         jLabelDialogWk3Site.setText("Site");
         jPanel6.add(jLabelDialogWk3Site);
-        jLabelDialogWk3Site.setBounds(20, 90, 40, 13);
+        jLabelDialogWk3Site.setBounds(20, 90, 40, 16);
 
         jTextFieldDialogWk3Site.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -2310,19 +2310,19 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
 
         jCheckBoxDialogWk3BrkFast.setText(" Breakfast");
         jPanel6.add(jCheckBoxDialogWk3BrkFast);
-        jCheckBoxDialogWk3BrkFast.setBounds(550, 110, 90, 21);
+        jCheckBoxDialogWk3BrkFast.setBounds(550, 110, 90, 25);
 
         jCheckBoxDialogWk3Lunch.setText("Lunch");
         jPanel6.add(jCheckBoxDialogWk3Lunch);
-        jCheckBoxDialogWk3Lunch.setBounds(670, 110, 80, 21);
+        jCheckBoxDialogWk3Lunch.setBounds(670, 110, 80, 25);
 
         jCheckBoxDialogWk3Dinner.setText(" Dinner");
         jPanel6.add(jCheckBoxDialogWk3Dinner);
-        jCheckBoxDialogWk3Dinner.setBounds(550, 160, 90, 21);
+        jCheckBoxDialogWk3Dinner.setBounds(550, 160, 90, 25);
 
         jCheckBoxDialogWk3Acc.setText(" Unproved Acc");
         jPanel6.add(jCheckBoxDialogWk3Acc);
-        jCheckBoxDialogWk3Acc.setBounds(670, 160, 130, 21);
+        jCheckBoxDialogWk3Acc.setBounds(670, 160, 130, 25);
 
         jLabelDialogWk2Dis3.setText("Km");
         jPanel6.add(jLabelDialogWk2Dis3);
@@ -2345,11 +2345,11 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
             }
         });
         jPanel6.add(jCheckBoxDialogWk3Misc);
-        jCheckBoxDialogWk3Misc.setBounds(670, 210, 140, 21);
+        jCheckBoxDialogWk3Misc.setBounds(670, 210, 140, 25);
 
         jCheckBoxDialogWk3Inc.setText("Incidental");
         jPanel6.add(jCheckBoxDialogWk3Inc);
-        jCheckBoxDialogWk3Inc.setBounds(550, 210, 110, 21);
+        jCheckBoxDialogWk3Inc.setBounds(550, 210, 110, 25);
 
         jLabelWk3Misc.setText("Miscellaneous Desc");
         jPanel6.add(jLabelWk3Misc);
@@ -2393,7 +2393,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
 
         jLabelDialogWk2Site.setText("Site");
         jPanel10.add(jLabelDialogWk2Site);
-        jLabelDialogWk2Site.setBounds(20, 80, 40, 13);
+        jLabelDialogWk2Site.setBounds(20, 80, 40, 16);
 
         jTextFieldDialogWk2Site.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -2442,19 +2442,19 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
 
         jCheckBoxDialogWk2BrkFast.setText(" Breakfast");
         jPanel10.add(jCheckBoxDialogWk2BrkFast);
-        jCheckBoxDialogWk2BrkFast.setBounds(560, 110, 90, 21);
+        jCheckBoxDialogWk2BrkFast.setBounds(560, 110, 90, 25);
 
         jCheckBoxDialogWk2Lunch.setText("Lunch");
         jPanel10.add(jCheckBoxDialogWk2Lunch);
-        jCheckBoxDialogWk2Lunch.setBounds(680, 110, 80, 21);
+        jCheckBoxDialogWk2Lunch.setBounds(680, 110, 80, 25);
 
         jCheckBoxDialogWk2Dinner.setText(" Dinner");
         jPanel10.add(jCheckBoxDialogWk2Dinner);
-        jCheckBoxDialogWk2Dinner.setBounds(560, 160, 90, 21);
+        jCheckBoxDialogWk2Dinner.setBounds(560, 160, 90, 25);
 
         jCheckBoxDialogWk2Acc.setText(" Unproved Acc");
         jPanel10.add(jCheckBoxDialogWk2Acc);
-        jCheckBoxDialogWk2Acc.setBounds(680, 160, 130, 21);
+        jCheckBoxDialogWk2Acc.setBounds(680, 160, 130, 25);
 
         jLabelDialogWk2Dis2.setText("Km");
         jPanel10.add(jLabelDialogWk2Dis2);
@@ -2477,11 +2477,11 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
             }
         });
         jPanel10.add(jCheckBoxDialogWk2Misc);
-        jCheckBoxDialogWk2Misc.setBounds(680, 210, 140, 21);
+        jCheckBoxDialogWk2Misc.setBounds(680, 210, 140, 25);
 
         jCheckBoxDialogWk2Inc.setText("Incidental");
         jPanel10.add(jCheckBoxDialogWk2Inc);
-        jCheckBoxDialogWk2Inc.setBounds(560, 210, 110, 21);
+        jCheckBoxDialogWk2Inc.setBounds(560, 210, 110, 25);
 
         jLabelWk2Misc.setText("Miscellaneous Desc");
         jPanel10.add(jLabelWk2Misc);
@@ -2558,7 +2558,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
 
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelGen.add(jLabelLogo);
-        jLabelLogo.setBounds(10, 10, 220, 100);
+        jLabelLogo.setBounds(10, 10, 220, 115);
 
         jLabelHeaderGen.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderGen.setText("TRAVEL AND SUBSISTENCE CLAIM");

@@ -1124,8 +1124,9 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                     itmDateCountWk1 = r.getInt(1);
 
                 }
+                System.out.println("dd "+itmDateCountWk1);
 
-                if (itmDateCountWk1 > 1) {
+                if (itmDateCountWk1 > 0) {
                     JOptionPane.showMessageDialog(this, "<html>Requesting of per diem "
                             + "twice for one day is not allowed. Another Perdiem request with activity date <b>"
                             + refDate + "</b> has already been registered in the system.Please check and correct.</html>", "Error Connection", JOptionPane.ERROR_MESSAGE);
