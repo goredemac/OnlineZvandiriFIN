@@ -120,7 +120,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
     public JFrameMnthRequest(String ref, String usrLogNam) {
         initComponents();
-     
+
         modelWk1 = (DefaultTableModel) jTableWk1Activities.getModel();
         modelWk2 = (DefaultTableModel) jTableWk2Activities.getModel();
         modelWk3 = (DefaultTableModel) jTableWk3Activities.getModel();
@@ -142,7 +142,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
         jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
         SearchRef = ref;
-            jLabelEmp.setText(usrLogNam);
+        jLabelEmp.setText(usrLogNam);
         jLabelEmp.setVisible(false);
         jTextBankNam.setVisible(false);
         jLabelPhoneDet.setVisible(false);
@@ -166,7 +166,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         computerName();
         findUser();
         findUserGrp();
-            fetchdataGenWk1();
+        fetchdataGenWk1();
         fetchdataWk1();
         fetchdataWk2();
         fetchdataWk3();
@@ -194,7 +194,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             jMenuItemUserProfUpd.setEnabled(false);
             jMenuItemUserCreate.setEnabled(false);
         }
-       
+
     }
 
     void computerName() {
@@ -1124,7 +1124,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                     itmDateCountWk1 = r.getInt(1);
 
                 }
-                System.out.println("dd "+itmDateCountWk1);
+                System.out.println("dd " + itmDateCountWk1);
 
                 if (itmDateCountWk1 > 0) {
                     JOptionPane.showMessageDialog(this, "<html>Requesting of per diem "
@@ -2053,7 +2053,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                 jTextActMainPurpose.setFocusable(true);
                 jMenuItemSubmit.setEnabled(true);
             } else {
-                
+
                 try {
                     itmDateCountWk1 = 0;
                     itmDateCountWk2 = 0;
@@ -2071,10 +2071,10 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
                         jLabelDisFacilty.setVisible(false);
 
                         jDialogAckSubmit.setVisible(true);
-                        
+
                     }
                     jMenuItemSubmit.setEnabled(true);
-                    
+
                 } catch (Exception e) {
                     System.out.println(e);
                 }

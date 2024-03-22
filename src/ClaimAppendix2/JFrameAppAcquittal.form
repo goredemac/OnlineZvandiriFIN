@@ -1309,7 +1309,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="5" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -2747,7 +2747,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="5" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -2829,13 +2829,13 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+            <Container class="javax.swing.JScrollPane" name="jScrollPaneWk8">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="150" width="1330" height="480"/>
+                  <AbsoluteConstraints x="10" y="170" width="1340" height="470"/>
                 </Constraint>
               </Constraints>
 
@@ -2844,11 +2844,15 @@
                 <Component class="javax.swing.JTable" name="jTableActivityReq">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="15" rowCount="0">
+                      <Table columnCount="19" rowCount="0">
                         <Column editable="false" title="Date" type="java.lang.Object"/>
-                        <Column editable="false" title="Branch" type="java.lang.Object"/>
-                        <Column editable="false" title="Project Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Task Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Account Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Donor" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code GL" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Name Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Line" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Code" type="java.lang.Object"/>
                         <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
                         <Column editable="false" title="Activity" type="java.lang.Object"/>
                         <Column editable="false" title="Breakfast" type="java.lang.Object"/>
@@ -2863,9 +2867,6 @@
                       </Table>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableActivityReqMouseClicked"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -2905,7 +2906,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                  <AbsoluteConstraints x="10" y="2" width="220" height="115"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -3497,13 +3498,13 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane7">
+            <Container class="javax.swing.JScrollPane" name="jScrollPaneWk9">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="290" y="120" width="1060" height="520"/>
+                  <AbsoluteConstraints x="280" y="120" width="1080" height="530"/>
                 </Constraint>
               </Constraints>
 
@@ -3512,11 +3513,15 @@
                 <Component class="javax.swing.JTable" name="jTableActivityAcq">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="15" rowCount="0">
+                      <Table columnCount="19" rowCount="0">
                         <Column editable="false" title="Date" type="java.lang.Object"/>
-                        <Column editable="false" title="Branch" type="java.lang.Object"/>
-                        <Column editable="false" title="Project Code" type="java.lang.Object"/>
-                        <Column editable="false" title="Task Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Account Code" type="java.lang.Object"/>
+                        <Column editable="false" title="Donor" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code GL" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Code Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Project Name Program" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Line" type="java.lang.Object"/>
+                        <Column editable="false" title="Budget Code" type="java.lang.Object"/>
                         <Column editable="false" title="Site to Visit" type="java.lang.Object"/>
                         <Column editable="false" title="Activity" type="java.lang.Object"/>
                         <Column editable="false" title="Breakfast" type="java.lang.Object"/>
@@ -3531,9 +3536,6 @@
                       </Table>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableActivityAcqMouseClicked"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -4081,7 +4083,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                      <AbsoluteConstraints x="10" y="5" width="220" height="115"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -4350,7 +4352,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                      <AbsoluteConstraints x="10" y="5" width="220" height="115"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -4556,7 +4558,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                      <AbsoluteConstraints x="10" y="5" width="220" height="115"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -4749,7 +4751,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="10" width="220" height="100"/>
+                      <AbsoluteConstraints x="10" y="5" width="220" height="115"/>
                     </Constraint>
                   </Constraints>
                 </Component>
