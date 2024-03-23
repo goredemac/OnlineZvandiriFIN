@@ -1291,7 +1291,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     void mainPageTotUpdate() {
         breakfastsubtotal = 0;
         for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 11));
+            double breakfastamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
 
         }
@@ -1299,42 +1299,42 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         lunchsubtotal = 0;
         for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 12));
+            double lunchamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
         jLabelLunchSubTot.setText(String.format("%.2f", lunchsubtotal));
 
         dinnersubtotal = 0;
         for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 13));
+            double dinneramount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
         jLabelDinnerSubTot.setText(String.format("%.2f", dinnersubtotal));
 
         incidentalsubtotal = 0;
         for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 14));
+            double incidentalamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
         jLabelIncidentalSubTot.setText(String.format("%.2f", incidentalsubtotal));
 
         miscSubTot = 0;
         for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 16));
+            double miscamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
         jLabelMiscSubTot.setText(String.format("%.2f", miscSubTot));
 
         unprovedSubTot = 0;
         for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 17));
+            double unprovedamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
         jLabelAccUnprovedSubTot.setText(String.format("%.2f", unprovedSubTot));
 
         provedSubTot = 0;
         for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 18));
+            double provedamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
         jLabelAccProvedSubTot.setText(String.format("%.2f", provedSubTot));
@@ -1350,7 +1350,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     void mainPageTotUpdateAcq() {
         breakfastsubtotalAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double breakfastamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 11));
+            double breakfastamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 10));
             breakfastsubtotalAcq += breakfastamountAcq;
 
         }
@@ -1358,7 +1358,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         lunchsubtotalAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double lunchamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 12));
+            double lunchamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 11));
             lunchsubtotalAcq += lunchamountAcq;
 
         }
@@ -1366,28 +1366,28 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         dinnersubtotalAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double dinneramountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 13));
+            double dinneramountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 12));
             dinnersubtotalAcq += dinneramountAcq;
         }
         jLabelAcqDinnerSubTot.setText(String.format("%.2f", dinnersubtotalAcq));
 
         incidentalsubtotalAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double incidentalamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 14));
+            double incidentalamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 13));
             incidentalsubtotalAcq += incidentalamountAcq;
         }
         jLabelAcqIncidentalSubTot.setText(String.format("%.2f", incidentalsubtotalAcq));
 
         miscSubTotAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double miscamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 16));
+            double miscamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 15));
             miscSubTotAcq += miscamountAcq;
         }
         jLabelAcqMiscSubTot.setText(String.format("%.2f", miscSubTotAcq));
 
         unprovedSubTotAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double unprovedamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 17));
+            double unprovedamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 16));
             unprovedSubTotAcq += unprovedamountAcq;
         }
 
@@ -1395,7 +1395,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         provedSubTotAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double provedamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 18));
+            double provedamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 17));
             provedSubTotAcq += provedamountAcq;
         }
 
@@ -1518,9 +1518,11 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
 
-            st.executeQuery("SELECT b.ITM_NUM,b.ACT_DATE,b.BRANCH,b.PROJ_ID, b.PRJ_TASK_CODE,b.ACT_SITE,b.ACT_ITM_PUR, "
-                    + "b.BRK_AMT, b.LNC_AMT, b.DIN_AMT,b.INC_AMT, b.MSC_ACT,b.MSC_AMT, b.ACC_UNPROV_AMT, b.ACC_PRO_AMT, "
-                    + "b.ACT_ITM_TOT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a join "
+            st.executeQuery("SELECT  b.ITM_NUM,b.ACT_DATE,b.ACC_CODE,b.DONOR ,b.PRJ_CODE_GL , b.PRJ_CODE_PROG ,"
+                    + "b.PRJ_NAM_PROG ,"
+                    + "b.BUD_LINE ,b.BUD_CODE ,b.ACT_SITE , b.ACT_DESC ,b.BRK_AMT ,b.LNC_AMT ,b.DIN_AMT ,"
+                    + "b.INC_AMT ,b.MSC_ACT , b.MSC_AMT ,b.ACC_UNPROV_AMT ,b.ACC_PROV_AMT ,b.ACT_ITM_TOT "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a join "
                     + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL = b.SERIAL and a.REF_NUM=b.REF_NUM "
                     + "and a.DOC_VER=b.DOC_VER and a.ACT_REC_STA=b.ACT_REC_STA join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c "
                     + "on a.SERIAL = c.SERIAL and a.REF_NUM=c.REF_NUM where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' "
@@ -1534,7 +1536,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 modelAcq.insertRow(modelAcq.getRowCount(), new Object[]{r.getString(2), r.getString(3),
                     r.getString(4), r.getString(5), r.getString(6), r.getString(7),
                     r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12), r.getString(13),
-                    r.getString(14), r.getString(15), r.getString(16)});
+                    r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20)});
 
             }
 
@@ -1639,8 +1642,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                         model.insertRow(model.getRowCount(), new Object[]{r.getString(2), r.getString(3),
                             r.getString(4), r.getString(5), r.getString(6), r.getString(7),
                             r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12), r.getString(13),
-                            r.getString(14), r.getString(15), r.getString(16),r.getString(17), r.getString(18), r.getString(19),
-                         r.getString(20)});
+                            r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                            r.getString(20)});
 
                     }
 //
@@ -2904,49 +2907,44 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelLineTime1 = new javax.swing.JLabel();
         jLabellogged1 = new javax.swing.JLabel();
         jLabelLineLogNam1 = new javax.swing.JLabel();
-        jPanelCaptureDetails = new javax.swing.JPanel();
-        jDateChooserActivityAcq = new com.toedter.calendar.JDateChooser();
-        jLabelActDate = new javax.swing.JLabel();
-        jTextPurpose = new javax.swing.JTextField();
-        jLabelBreakfast = new javax.swing.JLabel();
-        jTextAcqBreakfast = new javax.swing.JTextField();
-        jTextAcqLunch = new javax.swing.JTextField();
-        jTextAcqDinner = new javax.swing.JTextField();
-        jTextMiscAmtAcq = new javax.swing.JTextField();
-        jLabelMisc = new javax.swing.JLabel();
-        jTextMiscActivityAcq = new javax.swing.JTextField();
-        jLabelSubAcc = new javax.swing.JLabel();
-        jTextAcqIncidental = new javax.swing.JTextField();
-        jButtonAddActivity = new javax.swing.JButton();
-        jButtonDeleted = new javax.swing.JButton();
-        jLabelActLinePurpose = new javax.swing.JLabel();
-        jCheckBreakfast = new javax.swing.JCheckBox();
-        jCheckIncidental = new javax.swing.JCheckBox();
-        jCheckDinner = new javax.swing.JCheckBox();
-        jLabelBreakfast1 = new javax.swing.JLabel();
-        jLabelBreakfast2 = new javax.swing.JLabel();
-        jLabelBreakfast3 = new javax.swing.JLabel();
-        jRadioAccUnproved = new javax.swing.JRadioButton();
-        jLabelUnproved = new javax.swing.JLabel();
-        jTextAccUnprovedAcq = new javax.swing.JTextField();
-        jRadioAccProved = new javax.swing.JRadioButton();
-        jLabelProved = new javax.swing.JLabel();
-        jTextAccProvedAcq = new javax.swing.JTextField();
-        jLabelProjectName = new javax.swing.JLabel();
-        jComboProjectName = new javax.swing.JComboBox<>();
-        jLabelProjectTask = new javax.swing.JLabel();
-        jComboProjectTask = new javax.swing.JComboBox<>();
-        jLabelDialogWk1Site = new javax.swing.JLabel();
-        jTextFieldDialogSite = new javax.swing.JTextField();
-        jCheckLunch = new javax.swing.JCheckBox();
-        jRadioNoAcc = new javax.swing.JRadioButton();
-        jLabelProved1 = new javax.swing.JLabel();
-        jTextNoAcc = new javax.swing.JTextField();
         jToggleButtonNoActivity = new javax.swing.JToggleButton();
         jToggleButtonAllActivities = new javax.swing.JToggleButton();
         jLabelAcqWk2 = new javax.swing.JLabel();
         jScrollPaneWk9 = new javax.swing.JScrollPane();
         jTableActivityAcq = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        jPanelActivityInfo = new javax.swing.JPanel();
+        jLabeAccountCode = new javax.swing.JLabel();
+        jComboAccountCode = new javax.swing.JComboBox<>();
+        jLabelDonor = new javax.swing.JLabel();
+        jComboDonor = new javax.swing.JComboBox<>();
+        jLabelPrjCodeGL = new javax.swing.JLabel();
+        jComboProjectCodeGL = new javax.swing.JComboBox<>();
+        jLabelBudMainCode = new javax.swing.JLabel();
+        jComboBudMainCode = new javax.swing.JComboBox<>();
+        jLabelDialogWk1Site = new javax.swing.JLabel();
+        jTextFieldDialogWkSite = new javax.swing.JTextField();
+        jLabelWk1DialogActivityDesc = new javax.swing.JLabel();
+        jTextFieldWk1DialogActivityDesc = new javax.swing.JTextField();
+        jLabelPrjCodeProgramming = new javax.swing.JLabel();
+        jComboProjectCodeProgramming = new javax.swing.JComboBox<>();
+        jLabelRemain = new javax.swing.JLabel();
+        jCheckBoxDialogWk1Dinner = new javax.swing.JCheckBox();
+        jCheckBoxDialogWk1BrkFast = new javax.swing.JCheckBox();
+        jCheckBoxDialogWk1Lunch = new javax.swing.JCheckBox();
+        jCheckBoxDialogWk1Inc = new javax.swing.JCheckBox();
+        jCheckBoxDialogWk1Misc = new javax.swing.JCheckBox();
+        jLabelWk1Misc = new javax.swing.JLabel();
+        jTextFieldWk1Misc = new javax.swing.JTextField();
+        jLabelWk1MiscAmt = new javax.swing.JLabel();
+        jTextFieldWk1MiscAmt = new javax.swing.JTextField();
+        jPanel13 = new javax.swing.JPanel();
+        jCheckBoxDialogWk1AccUnProved = new javax.swing.JCheckBox();
+        jCheckBoxDialogWk1AccProved = new javax.swing.JCheckBox();
+        jCheckBoxNoAcc = new javax.swing.JCheckBox();
+        jLabelWk1Misc1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jTabbedPaneAcqAtt = new javax.swing.JTabbedPane();
         jPanelReport = new javax.swing.JPanel();
         jPanelReportDetails = new javax.swing.JPanel();
@@ -4222,384 +4220,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jPanelAcquittal.add(jLabelLineLogNam1);
         jLabelLineLogNam1.setBounds(1160, 40, 190, 30);
 
-        jPanelCaptureDetails.setLayout(null);
-
-        jDateChooserActivityAcq.setDateFormatString("yyyy-MM-dd");
-        jPanelCaptureDetails.add(jDateChooserActivityAcq);
-        jDateChooserActivityAcq.setBounds(110, 4, 130, 25);
-
-        jLabelActDate.setText("Activity Date");
-        jPanelCaptureDetails.add(jLabelActDate);
-        jLabelActDate.setBounds(10, 4, 70, 25);
-        jPanelCaptureDetails.add(jTextPurpose);
-        jTextPurpose.setBounds(10, 210, 260, 25);
-
-        jLabelBreakfast.setText("  $");
-        jPanelCaptureDetails.add(jLabelBreakfast);
-        jLabelBreakfast.setBounds(180, 330, 20, 20);
-
-        jTextAcqBreakfast.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextAcqBreakfastFocusLost(evt);
-            }
-        });
-        jTextAcqBreakfast.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextAcqBreakfastMouseClicked(evt);
-            }
-        });
-        jTextAcqBreakfast.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextAcqBreakfastActionPerformed(evt);
-            }
-        });
-        jTextAcqBreakfast.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextAcqBreakfastKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextAcqBreakfastKeyTyped(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextAcqBreakfast);
-        jTextAcqBreakfast.setBounds(200, 240, 70, 25);
-
-        jTextAcqLunch.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextAcqLunchFocusLost(evt);
-            }
-        });
-        jTextAcqLunch.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextAcqLunchMouseClicked(evt);
-            }
-        });
-        jTextAcqLunch.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextAcqLunchKeyPressed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextAcqLunch);
-        jTextAcqLunch.setBounds(200, 270, 70, 25);
-
-        jTextAcqDinner.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextAcqDinnerFocusLost(evt);
-            }
-        });
-        jTextAcqDinner.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextAcqDinnerMouseClicked(evt);
-            }
-        });
-        jTextAcqDinner.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextAcqDinnerKeyPressed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextAcqDinner);
-        jTextAcqDinner.setBounds(200, 300, 70, 25);
-
-        jTextMiscAmtAcq.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextMiscAmtAcqFocusLost(evt);
-            }
-        });
-        jTextMiscAmtAcq.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextMiscAmtAcqKeyPressed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextMiscAmtAcq);
-        jTextMiscAmtAcq.setBounds(200, 470, 70, 25);
-
-        jLabelMisc.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelMisc.setText("Miscellanous Activity & Amount");
-        jPanelCaptureDetails.add(jLabelMisc);
-        jLabelMisc.setBounds(10, 440, 190, 25);
-
-        jTextMiscActivityAcq.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextMiscActivityAcqActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextMiscActivityAcq);
-        jTextMiscActivityAcq.setBounds(10, 470, 140, 25);
-
-        jLabelSubAcc.setText("    $");
-        jPanelCaptureDetails.add(jLabelSubAcc);
-        jLabelSubAcc.setBounds(160, 460, 30, 25);
-
-        jTextAcqIncidental.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextAcqIncidentalFocusLost(evt);
-            }
-        });
-        jTextAcqIncidental.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextAcqIncidentalMouseClicked(evt);
-            }
-        });
-        jTextAcqIncidental.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextAcqIncidentalActionPerformed(evt);
-            }
-        });
-        jTextAcqIncidental.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextAcqIncidentalKeyPressed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextAcqIncidental);
-        jTextAcqIncidental.setBounds(200, 330, 70, 25);
-
-        jButtonAddActivity.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonAddActivity.setText("Add Activity");
-        jButtonAddActivity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActivityActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jButtonAddActivity);
-        jButtonAddActivity.setBounds(10, 500, 130, 23);
-
-        jButtonDeleted.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonDeleted.setText("Delete Activity");
-        jButtonDeleted.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDeletedActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jButtonDeleted);
-        jButtonDeleted.setBounds(160, 500, 117, 23);
-
-        jLabelActLinePurpose.setText("Purpose of Activity");
-        jPanelCaptureDetails.add(jLabelActLinePurpose);
-        jLabelActLinePurpose.setBounds(10, 190, 120, 20);
-
-        jCheckBreakfast.setText("  Breakfast");
-        jCheckBreakfast.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBreakfastActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jCheckBreakfast);
-        jCheckBreakfast.setBounds(10, 240, 90, 25);
-
-        jCheckIncidental.setText("  Incidental");
-        jCheckIncidental.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckIncidentalActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jCheckIncidental);
-        jCheckIncidental.setBounds(10, 330, 130, 25);
-
-        jCheckDinner.setText("   Dinner");
-        jCheckDinner.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckDinnerActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jCheckDinner);
-        jCheckDinner.setBounds(10, 300, 90, 25);
-
-        jLabelBreakfast1.setText("  $");
-        jPanelCaptureDetails.add(jLabelBreakfast1);
-        jLabelBreakfast1.setBounds(180, 240, 20, 20);
-
-        jLabelBreakfast2.setText("  $");
-        jPanelCaptureDetails.add(jLabelBreakfast2);
-        jLabelBreakfast2.setBounds(180, 270, 20, 20);
-
-        jLabelBreakfast3.setText("  $");
-        jPanelCaptureDetails.add(jLabelBreakfast3);
-        jLabelBreakfast3.setBounds(180, 300, 20, 20);
-
-        buttonGroupAcc.add(jRadioAccUnproved);
-        jRadioAccUnproved.setText("Unproved Accomodation ");
-        jRadioAccUnproved.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jRadioAccUnprovedFocusGained(evt);
-            }
-        });
-        jRadioAccUnproved.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jRadioAccUnprovedMouseClicked(evt);
-            }
-        });
-        jRadioAccUnproved.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioAccUnprovedActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jRadioAccUnproved);
-        jRadioAccUnproved.setBounds(10, 360, 160, 25);
-
-        jLabelUnproved.setText("$");
-        jPanelCaptureDetails.add(jLabelUnproved);
-        jLabelUnproved.setBounds(180, 360, 20, 20);
-
-        jTextAccUnprovedAcq.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextAccUnprovedAcqFocusLost(evt);
-            }
-        });
-        jTextAccUnprovedAcq.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextAccUnprovedAcqActionPerformed(evt);
-            }
-        });
-        jTextAccUnprovedAcq.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextAccUnprovedAcqKeyPressed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextAccUnprovedAcq);
-        jTextAccUnprovedAcq.setBounds(200, 360, 70, 25);
-
-        buttonGroupAcc.add(jRadioAccProved);
-        jRadioAccProved.setText("Proved Accomodation");
-        jRadioAccProved.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jRadioAccProvedFocusGained(evt);
-            }
-        });
-        jRadioAccProved.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jRadioAccProvedMouseClicked(evt);
-            }
-        });
-        jRadioAccProved.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioAccProvedActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jRadioAccProved);
-        jRadioAccProved.setBounds(10, 390, 160, 25);
-
-        jLabelProved.setText("$");
-        jPanelCaptureDetails.add(jLabelProved);
-        jLabelProved.setBounds(180, 390, 20, 20);
-
-        jTextAccProvedAcq.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextAccProvedAcqFocusLost(evt);
-            }
-        });
-        jTextAccProvedAcq.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextAccProvedAcqActionPerformed(evt);
-            }
-        });
-        jTextAccProvedAcq.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextAccProvedAcqKeyPressed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextAccProvedAcq);
-        jTextAccProvedAcq.setBounds(200, 390, 70, 25);
-
-        jLabelProjectName.setText("Project Name");
-        jPanelCaptureDetails.add(jLabelProjectName);
-        jLabelProjectName.setBounds(10, 40, 80, 20);
-
-        jComboProjectName.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboProjectNameMouseClicked(evt);
-            }
-        });
-        jComboProjectName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboProjectNameActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jComboProjectName);
-        jComboProjectName.setBounds(10, 60, 260, 25);
-
-        jLabelProjectTask.setText("Project Task");
-        jPanelCaptureDetails.add(jLabelProjectTask);
-        jLabelProjectTask.setBounds(10, 90, 80, 20);
-
-        jComboProjectTask.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboProjectTaskMouseClicked(evt);
-            }
-        });
-        jComboProjectTask.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboProjectTaskActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jComboProjectTask);
-        jComboProjectTask.setBounds(10, 110, 260, 25);
-
-        jLabelDialogWk1Site.setText("Site");
-        jPanelCaptureDetails.add(jLabelDialogWk1Site);
-        jLabelDialogWk1Site.setBounds(10, 140, 40, 20);
-
-        jTextFieldDialogSite.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextFieldDialogSiteMouseClicked(evt);
-            }
-        });
-        jTextFieldDialogSite.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDialogSiteActionPerformed(evt);
-            }
-        });
-        jTextFieldDialogSite.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldDialogSiteKeyTyped(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextFieldDialogSite);
-        jTextFieldDialogSite.setBounds(10, 160, 260, 25);
-
-        jCheckLunch.setText("   Lunch");
-        jCheckLunch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckLunchActionPerformed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jCheckLunch);
-        jCheckLunch.setBounds(10, 270, 90, 25);
-
-        buttonGroupAcc.add(jRadioNoAcc);
-        jRadioNoAcc.setText(" No Accomodation");
-        jRadioNoAcc.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jRadioNoAccMouseClicked(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jRadioNoAcc);
-        jRadioNoAcc.setBounds(10, 420, 160, 21);
-
-        jLabelProved1.setText("$");
-        jPanelCaptureDetails.add(jLabelProved1);
-        jLabelProved1.setBounds(180, 420, 20, 20);
-
-        jTextNoAcc.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextNoAccFocusLost(evt);
-            }
-        });
-        jTextNoAcc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextNoAccActionPerformed(evt);
-            }
-        });
-        jTextNoAcc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextNoAccKeyPressed(evt);
-            }
-        });
-        jPanelCaptureDetails.add(jTextNoAcc);
-        jTextNoAcc.setBounds(200, 420, 70, 25);
-
-        jPanelAcquittal.add(jPanelCaptureDetails);
-        jPanelCaptureDetails.setBounds(0, 115, 280, 530);
-
         jToggleButtonNoActivity.setBackground(new java.awt.Color(255, 0, 0));
         jToggleButtonNoActivity.setFont(new java.awt.Font("Verdana", 1, 9)); // NOI18N
         jToggleButtonNoActivity.setForeground(new java.awt.Color(255, 255, 255));
@@ -4648,6 +4268,203 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         jPanelAcquittal.add(jScrollPaneWk9);
         jScrollPaneWk9.setBounds(280, 120, 1080, 530);
+
+        jPanel6.setLayout(null);
+
+        jPanelActivityInfo.setBackground(new java.awt.Color(237, 235, 92));
+        jPanelActivityInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
+        jPanelActivityInfo.setLayout(null);
+
+        jLabeAccountCode.setText("Account Code");
+        jPanelActivityInfo.add(jLabeAccountCode);
+        jLabeAccountCode.setBounds(5, 0, 260, 20);
+
+        jComboAccountCode.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboAccountCodeMouseClicked(evt);
+            }
+        });
+        jComboAccountCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboAccountCodeActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboAccountCode);
+        jComboAccountCode.setBounds(2, 20, 265, 25);
+
+        jLabelDonor.setText("Donor");
+        jPanelActivityInfo.add(jLabelDonor);
+        jLabelDonor.setBounds(5, 45, 260, 20);
+
+        jComboDonor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboDonorMouseClicked(evt);
+            }
+        });
+        jComboDonor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboDonorActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboDonor);
+        jComboDonor.setBounds(2, 65, 265, 25);
+
+        jLabelPrjCodeGL.setText("Project Code (GL)");
+        jPanelActivityInfo.add(jLabelPrjCodeGL);
+        jLabelPrjCodeGL.setBounds(5, 90, 260, 20);
+
+        jComboProjectCodeGL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboProjectCodeGLMouseClicked(evt);
+            }
+        });
+        jComboProjectCodeGL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboProjectCodeGLActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboProjectCodeGL);
+        jComboProjectCodeGL.setBounds(2, 110, 265, 25);
+
+        jLabelBudMainCode.setText("Budget line");
+        jPanelActivityInfo.add(jLabelBudMainCode);
+        jLabelBudMainCode.setBounds(5, 180, 260, 20);
+
+        jComboBudMainCode.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBudMainCodeMouseClicked(evt);
+            }
+        });
+        jComboBudMainCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBudMainCodeActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboBudMainCode);
+        jComboBudMainCode.setBounds(2, 200, 265, 25);
+
+        jLabelDialogWk1Site.setText("Site to be Visited");
+        jPanelActivityInfo.add(jLabelDialogWk1Site);
+        jLabelDialogWk1Site.setBounds(5, 225, 260, 20);
+
+        jTextFieldDialogWkSite.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldDialogWkSiteMouseClicked(evt);
+            }
+        });
+        jTextFieldDialogWkSite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDialogWkSiteActionPerformed(evt);
+            }
+        });
+        jTextFieldDialogWkSite.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldDialogWkSiteKeyTyped(evt);
+            }
+        });
+        jPanelActivityInfo.add(jTextFieldDialogWkSite);
+        jTextFieldDialogWkSite.setBounds(2, 245, 265, 25);
+
+        jLabelWk1DialogActivityDesc.setText("Activity Descrpition");
+        jPanelActivityInfo.add(jLabelWk1DialogActivityDesc);
+        jLabelWk1DialogActivityDesc.setBounds(5, 270, 260, 20);
+        jPanelActivityInfo.add(jTextFieldWk1DialogActivityDesc);
+        jTextFieldWk1DialogActivityDesc.setBounds(2, 290, 265, 25);
+
+        jLabelPrjCodeProgramming.setText("Project Code (Programming)");
+        jPanelActivityInfo.add(jLabelPrjCodeProgramming);
+        jLabelPrjCodeProgramming.setBounds(5, 135, 260, 20);
+
+        jComboProjectCodeProgramming.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboProjectCodeProgrammingMouseClicked(evt);
+            }
+        });
+        jPanelActivityInfo.add(jComboProjectCodeProgramming);
+        jComboProjectCodeProgramming.setBounds(2, 155, 265, 25);
+
+        jLabelRemain.setFont(new java.awt.Font("Tahoma", 3, 9)); // NOI18N
+        jPanelActivityInfo.add(jLabelRemain);
+        jLabelRemain.setBounds(280, 350, 210, 20);
+
+        jCheckBoxDialogWk1Dinner.setText(" Dinner");
+        jPanelActivityInfo.add(jCheckBoxDialogWk1Dinner);
+        jCheckBoxDialogWk1Dinner.setBounds(190, 330, 70, 21);
+
+        jCheckBoxDialogWk1BrkFast.setText(" Breakfast");
+        jPanelActivityInfo.add(jCheckBoxDialogWk1BrkFast);
+        jCheckBoxDialogWk1BrkFast.setBounds(2, 330, 80, 21);
+
+        jCheckBoxDialogWk1Lunch.setText("Lunch");
+        jPanelActivityInfo.add(jCheckBoxDialogWk1Lunch);
+        jCheckBoxDialogWk1Lunch.setBounds(90, 330, 80, 21);
+
+        jCheckBoxDialogWk1Inc.setText("Incidental");
+        jPanelActivityInfo.add(jCheckBoxDialogWk1Inc);
+        jCheckBoxDialogWk1Inc.setBounds(2, 360, 110, 21);
+
+        jCheckBoxDialogWk1Misc.setText("Miscellaneous");
+        jCheckBoxDialogWk1Misc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxDialogWk1MiscActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jCheckBoxDialogWk1Misc);
+        jCheckBoxDialogWk1Misc.setBounds(130, 360, 110, 21);
+
+        jLabelWk1Misc.setText("Accommodation");
+        jPanelActivityInfo.add(jLabelWk1Misc);
+        jLabelWk1Misc.setBounds(0, 425, 160, 25);
+
+        jTextFieldWk1Misc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldWk1MiscActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jTextFieldWk1Misc);
+        jTextFieldWk1Misc.setBounds(2, 400, 110, 25);
+
+        jLabelWk1MiscAmt.setText("$");
+        jPanelActivityInfo.add(jLabelWk1MiscAmt);
+        jLabelWk1MiscAmt.setBounds(150, 400, 30, 25);
+        jPanelActivityInfo.add(jTextFieldWk1MiscAmt);
+        jTextFieldWk1MiscAmt.setBounds(190, 400, 70, 25);
+
+        jPanel13.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel13.setLayout(null);
+
+        jCheckBoxDialogWk1AccUnProved.setText(" Unproved ");
+        jPanel13.add(jCheckBoxDialogWk1AccUnProved);
+        jCheckBoxDialogWk1AccUnProved.setBounds(0, 5, 80, 21);
+
+        jCheckBoxDialogWk1AccProved.setText(" Proved ");
+        jPanel13.add(jCheckBoxDialogWk1AccProved);
+        jCheckBoxDialogWk1AccProved.setBounds(90, 5, 80, 21);
+
+        jCheckBoxNoAcc.setText("No Acc ");
+        jPanel13.add(jCheckBoxNoAcc);
+        jCheckBoxNoAcc.setBounds(180, 5, 80, 21);
+
+        jPanelActivityInfo.add(jPanel13);
+        jPanel13.setBounds(0, 450, 265, 30);
+
+        jLabelWk1Misc1.setText("Miscellaneous Desc");
+        jPanelActivityInfo.add(jLabelWk1Misc1);
+        jLabelWk1Misc1.setBounds(2, 380, 160, 25);
+
+        jButton1.setText("delete");
+        jPanelActivityInfo.add(jButton1);
+        jButton1.setBounds(130, 490, 90, 30);
+
+        jButton2.setText("Add");
+        jPanelActivityInfo.add(jButton2);
+        jButton2.setBounds(10, 490, 90, 30);
+
+        jPanel6.add(jPanelActivityInfo);
+        jPanelActivityInfo.setBounds(0, 0, 270, 530);
+
+        jPanelAcquittal.add(jPanel6);
+        jPanel6.setBounds(0, 120, 280, 530);
 
         jTabbedPaneAppSys.addTab("Perdiem Acquittal", jPanelAcquittal);
 
@@ -5579,320 +5396,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 //        //  mainPageTotUpdateAcq();
     }//GEN-LAST:event_jTextAcqRegNumFocusGained
 
-    private void jTextAcqBreakfastFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextAcqBreakfastFocusLost
-        //        if (jTextFieldBreakfast.getText().trim().length() == 0) {
-        //            jTextFieldBreakfast.setText("0.00");
-        //        }
-    }//GEN-LAST:event_jTextAcqBreakfastFocusLost
-
-    private void jTextAcqBreakfastMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextAcqBreakfastMouseClicked
-        //        jTextFieldBreakfast.setText("");
-    }//GEN-LAST:event_jTextAcqBreakfastMouseClicked
-
-    private void jTextAcqBreakfastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAcqBreakfastActionPerformed
-
-    }//GEN-LAST:event_jTextAcqBreakfastActionPerformed
-
-    private void jTextAcqBreakfastKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAcqBreakfastKeyPressed
-//        int key = evt.getKeyCode();
-//        if ((key >= evt.VK_0 && key <= evt.VK_9) || (key >= evt.VK_NUMPAD0 && key <= evt.VK_NUMPAD9)
-//            || key == KeyEvent.VK_BACK_SPACE || key == KeyEvent.VK_DECIMAL) {
-//            jTextAcqBreakfast.setEditable(true);
-//
-//        } else {
-//            jTextAcqBreakfast.setEditable(false);
-//
-//        }
-    }//GEN-LAST:event_jTextAcqBreakfastKeyPressed
-
-    private void jTextAcqBreakfastKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAcqBreakfastKeyTyped
-        //       char c = evt.getKeyChar();
-        //        if (!(Character.isDigit(c)) || (c == KeyEvent.VK_BACK_SPACE)
-        //                || (c == KeyEvent.VK_DELETE) ||  !(c == KeyEvent.VK_PERIOD)) {
-        //            getToolkit().beep();
-        //            evt.consume();
-        //        }
-    }//GEN-LAST:event_jTextAcqBreakfastKeyTyped
-
-    private void jTextAcqLunchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextAcqLunchFocusLost
-        //        if (jTextFieldLunch.getText().trim().length() == 0) {
-        //            jTextFieldLunch.setText("0.00");
-        //        }
-    }//GEN-LAST:event_jTextAcqLunchFocusLost
-
-    private void jTextAcqLunchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextAcqLunchMouseClicked
-        //        jTextFieldLunch.setText("");
-    }//GEN-LAST:event_jTextAcqLunchMouseClicked
-
-    private void jTextAcqLunchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAcqLunchKeyPressed
-        int key = evt.getKeyCode();
-        if ((key >= evt.VK_0 && key <= evt.VK_9) || (key >= evt.VK_NUMPAD0 && key <= evt.VK_NUMPAD9)
-                || key == KeyEvent.VK_BACK_SPACE || key == KeyEvent.VK_DECIMAL) {
-            jTextAcqLunch.setEditable(true);
-
-        } else {
-            jTextAcqLunch.setEditable(false);
-
-        }
-    }//GEN-LAST:event_jTextAcqLunchKeyPressed
-
-    private void jTextAcqDinnerFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextAcqDinnerFocusLost
-        //        if (jTextFieldDinner.getText().trim().length() == 0) {
-        //            jTextFieldDinner.setText("0.00");
-        //        }
-    }//GEN-LAST:event_jTextAcqDinnerFocusLost
-
-    private void jTextAcqDinnerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextAcqDinnerMouseClicked
-        //        jTextFieldDinner.setText("");
-    }//GEN-LAST:event_jTextAcqDinnerMouseClicked
-
-    private void jTextAcqDinnerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAcqDinnerKeyPressed
-        int key = evt.getKeyCode();
-        if ((key >= evt.VK_0 && key <= evt.VK_9) || (key >= evt.VK_NUMPAD0 && key <= evt.VK_NUMPAD9)
-                || key == KeyEvent.VK_BACK_SPACE || key == KeyEvent.VK_DECIMAL) {
-            jTextAcqDinner.setEditable(true);
-
-        } else {
-            jTextAcqDinner.setEditable(false);
-
-        }
-    }//GEN-LAST:event_jTextAcqDinnerKeyPressed
-
-    private void jTextMiscAmtAcqFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextMiscAmtAcqFocusLost
-        //        if (jTextFieldMiscAmt.getText().trim().length() == 0) {
-        //            jTextFieldMiscAmt.setText("0.00");
-        //        }
-    }//GEN-LAST:event_jTextMiscAmtAcqFocusLost
-
-    private void jTextMiscAmtAcqKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextMiscAmtAcqKeyPressed
-        int key = evt.getKeyCode();
-        if ((key >= evt.VK_0 && key <= evt.VK_9) || (key >= evt.VK_NUMPAD0 && key <= evt.VK_NUMPAD9)
-                || key == KeyEvent.VK_BACK_SPACE || key == KeyEvent.VK_DECIMAL) {
-            jTextMiscAmtAcq.setEditable(true);
-
-        } else {
-            jTextMiscAmtAcq.setEditable(false);
-
-        }
-    }//GEN-LAST:event_jTextMiscAmtAcqKeyPressed
-
-    private void jTextMiscActivityAcqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextMiscActivityAcqActionPerformed
-
-    }//GEN-LAST:event_jTextMiscActivityAcqActionPerformed
-
-    private void jTextAccUnprovedAcqFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextAccUnprovedAcqFocusLost
-        //        if (jTextFieldAccUnproved.getText().trim().length() == 0) {
-        //            jTextFieldAccUnproved.setText("0.00");
-        //        }
-    }//GEN-LAST:event_jTextAccUnprovedAcqFocusLost
-
-    private void jTextAccUnprovedAcqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAccUnprovedAcqActionPerformed
-
-    }//GEN-LAST:event_jTextAccUnprovedAcqActionPerformed
-
-    private void jTextAccUnprovedAcqKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAccUnprovedAcqKeyPressed
-        int key = evt.getKeyCode();
-        if ((key >= evt.VK_0 && key <= evt.VK_9) || (key >= evt.VK_NUMPAD0 && key <= evt.VK_NUMPAD9)
-                || key == KeyEvent.VK_BACK_SPACE || key == KeyEvent.VK_DECIMAL) {
-            jTextAccUnprovedAcq.setEditable(true);
-
-        } else {
-            jTextAccUnprovedAcq.setEditable(false);
-
-        }
-    }//GEN-LAST:event_jTextAccUnprovedAcqKeyPressed
-
-    private void jRadioAccUnprovedFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jRadioAccUnprovedFocusGained
-
-    }//GEN-LAST:event_jRadioAccUnprovedFocusGained
-
-    private void jRadioAccUnprovedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioAccUnprovedMouseClicked
-        jTextAccProvedAcq.setVisible(false);
-        jTextAccProvedAcq.setText("0");
-        jTextAccUnprovedAcq.setText(unProvedAll);
-        jTextAccUnprovedAcq.setVisible(true);
-        jTextNoAcc.setText("0");
-        jTextNoAcc.setVisible(false);
-
-    }//GEN-LAST:event_jRadioAccUnprovedMouseClicked
-
-    private void jRadioAccUnprovedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioAccUnprovedActionPerformed
-
-    }//GEN-LAST:event_jRadioAccUnprovedActionPerformed
-
-    private void jTextAcqIncidentalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextAcqIncidentalFocusLost
-        //        if (jTextFieldIncidental.getText().trim().length() == 0) {
-        //            jTextFieldIncidental.setText("0.00");
-        //        }
-    }//GEN-LAST:event_jTextAcqIncidentalFocusLost
-
-    private void jTextAcqIncidentalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextAcqIncidentalMouseClicked
-        //        jTextFieldIncidental.setText("");
-    }//GEN-LAST:event_jTextAcqIncidentalMouseClicked
-
-    private void jTextAcqIncidentalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAcqIncidentalActionPerformed
-
-    }//GEN-LAST:event_jTextAcqIncidentalActionPerformed
-
-    private void jTextAcqIncidentalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAcqIncidentalKeyPressed
-        int key = evt.getKeyCode();
-        if ((key >= evt.VK_0 && key <= evt.VK_9) || (key >= evt.VK_NUMPAD0 && key <= evt.VK_NUMPAD9)
-                || key == KeyEvent.VK_BACK_SPACE || key == KeyEvent.VK_DECIMAL) {
-            jTextAcqIncidental.setEditable(true);
-
-        } else {
-            jTextAcqIncidental.setEditable(false);
-
-        }
-    }//GEN-LAST:event_jTextAcqIncidentalKeyPressed
-
-    private void jButtonAddActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActivityActionPerformed
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        DefaultTableModel model = (DefaultTableModel) jTableActivityAcq.getModel();
-        int rowCount = jTableActivityAcq.getRowCount();
-
-        if (jDateChooserActivityAcq.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date cannot be blank. Please check your dates");
-            jDateChooserActivityAcq.requestFocusInWindow();
-            jDateChooserActivityAcq.setFocusable(true);
-        } else if (formatter.format(jDateChooserActivityAcq.getDate()).compareTo(lowDate) < 0) {
-            JOptionPane.showMessageDialog(this, "Activity date cannot be lower than the request lowest date. Please check your dates.");
-            jDateChooserActivityAcq.requestFocusInWindow();
-            jDateChooserActivityAcq.setFocusable(true);
-        } else if (jTextPurpose.getText().trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Please check day activity field.");
-            jTextPurpose.requestFocusInWindow();
-            jTextPurpose.setFocusable(true);
-        } else if ((jTextMiscActivityAcq.getText().trim().length() > 0)
-                && (jTextMiscAmtAcq.getText().trim().length() == 0)) {
-            JOptionPane.showMessageDialog(this, "Please misc amt detials.");
-            jTextMiscAmtAcq.requestFocusInWindow();
-            jTextMiscAmtAcq.setFocusable(true);
-        } else if (!jRadioAccUnproved.isSelected() && !jRadioAccProved.isSelected() && !jRadioNoAcc.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Please select accomodation type.");
-            jTextPurpose.requestFocusInWindow();
-            jTextPurpose.setFocusable(true);
-        } else {
-            //jTableActivityAcq.setEnabled(true);
-            java.util.Date jDateActivity = jDateChooserActivityAcq.getDate();
-            jLabelAcqPayBack.setText("");
-            jLabelAcqAmtPayBack.setText("");
-            jLabelBankAccNo.setText("");
-            jTextPaidAmt.setText("0.00");
-            String dateDayActivity = formatter.format(jDateActivity);
-            if (jTextAcqBreakfast.getText().trim().length() == 0) {
-                jTextAcqBreakfast.setText("0.00");
-            }
-            if (jTextAcqLunch.getText().trim().length() == 0) {
-                jTextAcqLunch.setText("0.00");
-            }
-            if (jTextAcqDinner.getText().trim().length() == 0) {
-                jTextAcqDinner.setText("0.00");
-            }
-            if (jTextAcqIncidental.getText().trim().length() == 0) {
-                jTextAcqIncidental.setText("0.00");
-            }
-            if (jTextMiscAmtAcq.getText().trim().length() == 0) {
-                jTextMiscAmtAcq.setText("0.00");
-            }
-            if (jTextAccProvedAcq.getText().trim().length() == 0) {
-                jTextAccProvedAcq.setText("0.00");
-            }
-            if (jTextAccUnprovedAcq.getText().trim().length() == 0) {
-                jTextAccUnprovedAcq.setText("0.00");
-            }
-
-            if (jRadioAccUnproved.isSelected()) {
-                accomodation = jTextAccUnprovedAcq.getText();
-            }
-
-            if (jRadioAccProved.isSelected()) {
-                accomodation = jTextAccProvedAcq.getText();
-            }
-
-            if (jRadioNoAcc.isSelected()) {
-                accomodation = jTextNoAcc.getText();
-            }
-            model.addRow(new Object[]{dateDayActivity, branchCode, prjCode, taskCode,
-                jTextFieldDialogSite.getText(), jTextPurpose.getText(), jTextAcqBreakfast.getText(), jTextAcqLunch.getText(),
-                jTextAcqDinner.getText(), jTextAcqIncidental.getText(),
-                jTextMiscActivityAcq.getText(), jTextMiscAmtAcq.getText(), jTextAccUnprovedAcq.getText(), jTextAccProvedAcq.getText(),
-                Double.toString((Double.parseDouble(jTextAcqBreakfast.getText()) + Double.parseDouble(jTextAcqLunch.getText())
-                + Double.parseDouble(jTextAcqDinner.getText()) + Double.parseDouble(jTextAcqIncidental.getText())
-                + Double.parseDouble(jTextMiscAmtAcq.getText()) + Double.parseDouble(accomodation)))});
-
-            mainPageTotUpdateAcq();
-            /**
-             * **** updating general segment
-             */
-
-            jDateChooserActivityAcq.setDate(null);
-
-            jTextPurpose.setText("");
-            jTextAcqBreakfast.setText("0.00");
-            jTextAcqLunch.setText("0.00");
-            jTextAcqDinner.setText("0.00");
-            jTextAcqIncidental.setText("0.00");
-            jTextMiscAmtAcq.setText("0.00");
-            jTextAccUnprovedAcq.setText("0.00");
-            jTextMiscActivityAcq.setText("");
-
-//            buttonGroupPayRec.clearSelection();
-            jCheckBreakfast.setSelected(false);
-            jCheckDinner.setSelected(false);
-
-            jCheckDinner.setSelected(false);
-            jCheckIncidental.setSelected(false);
-
-            jRadioAccUnproved.setSelected(false);
-
-        }
-    }//GEN-LAST:event_jButtonAddActivityActionPerformed
-
-    private void jButtonDeletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeletedActionPerformed
-        DefaultTableModel model = (DefaultTableModel) this.jTableActivityAcq.getModel();
-        int selectedOption = JOptionPane.showConfirmDialog(null,
-                "Do you want to delete selected activity line?",
-                "Choose",
-                JOptionPane.YES_NO_OPTION);
-        if (selectedOption == JOptionPane.YES_OPTION) {
-
-            int[] rows = jTableActivityAcq.getSelectedRows();
-            for (int i = 0; i < rows.length; i++) {
-                model.removeRow(rows[i] - i);
-            }
-        } else {
-            jButtonDeleted.requestFocusInWindow();
-            jButtonDeleted.setFocusable(true);
-        }
-        //mainPageTotUpdate();
-        mainPageTotUpdateAcq();
-    }//GEN-LAST:event_jButtonDeletedActionPerformed
-
-    private void jCheckBreakfastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBreakfastActionPerformed
-        if (jCheckBreakfast.isSelected()) {
-            jTextAcqBreakfast.setText(breakfastAll);
-        } else {
-            jTextAcqBreakfast.setText("0.00");
-        }
-    }//GEN-LAST:event_jCheckBreakfastActionPerformed
-
-    private void jCheckIncidentalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckIncidentalActionPerformed
-        if (jCheckIncidental.isSelected()) {
-            jTextAcqIncidental.setText(incidentalAll);
-        } else {
-            jTextAcqIncidental.setText("0.00");
-        }
-    }//GEN-LAST:event_jCheckIncidentalActionPerformed
-
-    private void jCheckDinnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckDinnerActionPerformed
-        if (jCheckDinner.isSelected()) {
-            jTextAcqDinner.setText(dinnerAll);
-        } else {
-            jTextAcqDinner.setText("0.00");
-        }
-    }//GEN-LAST:event_jCheckDinnerActionPerformed
-
     private void jButtonAuthOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthOkActionPerformed
 
         jDialogAuthority.setVisible(false);
@@ -6200,49 +5703,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jRadioButtonPayRecYesActionPerformed
 
-    private void jRadioAccProvedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioAccProvedMouseClicked
-
-        jTextAccProvedAcq.setVisible(true);
-        jTextAccProvedAcq.setText(provedAll);
-        jTextAccUnprovedAcq.setText("0");
-        jTextAccUnprovedAcq.setVisible(false);
-        jTextNoAcc.setText("0");
-        jTextNoAcc.setVisible(false);
-
-
-    }//GEN-LAST:event_jRadioAccProvedMouseClicked
-
-    private void jRadioAccProvedFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jRadioAccProvedFocusGained
-
-
-    }//GEN-LAST:event_jRadioAccProvedFocusGained
-
-    private void jTextAccProvedAcqKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAccProvedAcqKeyPressed
-        int key = evt.getKeyCode();
-        if ((key >= evt.VK_0 && key <= evt.VK_9) || (key >= evt.VK_NUMPAD0 && key <= evt.VK_NUMPAD9)
-                || key == KeyEvent.VK_BACK_SPACE || key == KeyEvent.VK_DECIMAL) {
-            jTextAccProvedAcq.setEditable(true);
-
-        } else {
-            jTextAccProvedAcq.setEditable(false);
-
-        }
-    }//GEN-LAST:event_jTextAccProvedAcqKeyPressed
-
-    private void jTextAccProvedAcqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAccProvedAcqActionPerformed
-
-    }//GEN-LAST:event_jTextAccProvedAcqActionPerformed
-
-    private void jTextAccProvedAcqFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextAccProvedAcqFocusLost
-        //        if ( jTextFieldAccProved.getText().trim().length() == 0) {
-        //            jTextFieldAccProved.setText("0.00");
-        //        }
-    }//GEN-LAST:event_jTextAccProvedAcqFocusLost
-
-    private void jRadioAccProvedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioAccProvedActionPerformed
-
-    }//GEN-LAST:event_jRadioAccProvedActionPerformed
-
     private void jPanelReportDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelReportDetailsMouseClicked
 
     }//GEN-LAST:event_jPanelReportDetailsMouseClicked
@@ -6298,66 +5758,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButtonDeleteDetailsActionPerformed
-
-    private void jComboProjectNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProjectNameMouseClicked
-
-    }//GEN-LAST:event_jComboProjectNameMouseClicked
-
-    private void jComboProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProjectNameActionPerformed
-        try {
-            int itemCount = jComboProjectTask.getItemCount();
-
-            for (int i = 0; i < itemCount; i++) {
-                jComboProjectTask.removeItemAt(0);
-            }
-            String prjName = jComboProjectName.getSelectedItem().toString();
-            String prjParts[] = prjName.split(" ", 2);
-            prjCode = prjParts[0];
-            findTask(prjCode);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jComboProjectNameActionPerformed
-
-    private void jComboProjectTaskMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProjectTaskMouseClicked
-
-        //        String prjName = jComboProjectName.getSelectedItem().toString();
-        //        String prjParts[] = prjName.split(" ", 2);
-        //        String prjCode = prjParts[0];
-        //        findTask(prjCode);
-    }//GEN-LAST:event_jComboProjectTaskMouseClicked
-
-    private void jComboProjectTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProjectTaskActionPerformed
-        try {
-
-            String taskName = jComboProjectTask.getSelectedItem().toString();
-            String taskParts[] = taskName.split(" ", 2);
-            taskCode = taskParts[0];
-            findBranch(taskCode);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jComboProjectTaskActionPerformed
-
-    private void jTextFieldDialogSiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDialogSiteMouseClicked
-        jDialogFacility.setVisible(true);
-    }//GEN-LAST:event_jTextFieldDialogSiteMouseClicked
-
-    private void jTextFieldDialogSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDialogSiteActionPerformed
-        jDialogFacility.setVisible(true);
-    }//GEN-LAST:event_jTextFieldDialogSiteActionPerformed
-
-    private void jTextFieldDialogSiteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDialogSiteKeyTyped
-        jDialogFacility.setVisible(true);
-    }//GEN-LAST:event_jTextFieldDialogSiteKeyTyped
-
-    private void jCheckLunchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckLunchActionPerformed
-        if (jCheckLunch.isSelected()) {
-            jTextAcqLunch.setText(lunchAll);
-        } else {
-            jTextAcqLunch.setText("0.00");
-        }
-    }//GEN-LAST:event_jCheckLunchActionPerformed
 
     private void jButtonOkFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkFacilityActionPerformed
         jTextFieldDialogSite.setText(jComboFacility.getSelectedItem().toString());
@@ -6506,27 +5906,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private void jComboFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboFacilityActionPerformed
 
     }//GEN-LAST:event_jComboFacilityActionPerformed
-
-    private void jTextNoAccFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextNoAccFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextNoAccFocusLost
-
-    private void jTextNoAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNoAccActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextNoAccActionPerformed
-
-    private void jTextNoAccKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextNoAccKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextNoAccKeyPressed
-
-    private void jRadioNoAccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioNoAccMouseClicked
-        jTextAccProvedAcq.setVisible(false);
-        jTextAccProvedAcq.setText("0");
-        jTextAccUnprovedAcq.setText("0");
-        jTextAccUnprovedAcq.setVisible(false);
-        jTextNoAcc.setText("0");
-        jTextNoAcc.setVisible(true);
-    }//GEN-LAST:event_jRadioNoAccMouseClicked
 
     private void jMenuFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFileActionPerformed
 
@@ -6718,6 +6097,94 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
+    private void jComboAccountCodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboAccountCodeMouseClicked
+
+    }//GEN-LAST:event_jComboAccountCodeMouseClicked
+
+    private void jComboAccountCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboAccountCodeActionPerformed
+
+    }//GEN-LAST:event_jComboAccountCodeActionPerformed
+
+    private void jComboDonorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboDonorMouseClicked
+
+        //        String prjName = jComboProjectName.getSelectedItem().toString();
+        //        String prjParts[] = prjName.split(" ", 2);
+        //        String prjCode = prjParts[0];
+        //        findTask(prjCode);
+    }//GEN-LAST:event_jComboDonorMouseClicked
+
+    private void jComboDonorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboDonorActionPerformed
+        try {
+            if (("D036 CDC-Zim-TTECH".equals(jComboDonor.getSelectedItem().toString()))
+                || ("D032 ZHI".equals(jComboDonor.getSelectedItem().toString()))
+                || ("D022 CDC".equals(jComboDonor.getSelectedItem().toString()))) {
+                jLabelPrjCodeProgramming.setVisible(true);
+                jComboProjectCodeProgramming.setVisible(true);
+            } else {
+                jLabelPrjCodeProgramming.setVisible(false);
+                jComboProjectCodeProgramming.setVisible(false);
+            }
+            String taskName = jComboDonor.getSelectedItem().toString();
+            String taskParts[] = taskName.split(" ", 2);
+            donorCode = taskParts[0];
+
+            findPrjCode(donorCode);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jComboDonorActionPerformed
+
+    private void jComboProjectCodeGLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProjectCodeGLMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboProjectCodeGLMouseClicked
+
+    private void jComboProjectCodeGLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProjectCodeGLActionPerformed
+
+    }//GEN-LAST:event_jComboProjectCodeGLActionPerformed
+
+    private void jComboBudMainCodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBudMainCodeMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBudMainCodeMouseClicked
+
+    private void jComboBudMainCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBudMainCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBudMainCodeActionPerformed
+
+    private void jTextFieldDialogWkSiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDialogWkSiteMouseClicked
+        facilityPOP();
+    }//GEN-LAST:event_jTextFieldDialogWkSiteMouseClicked
+
+    private void jTextFieldDialogWkSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDialogWkSiteActionPerformed
+
+    }//GEN-LAST:event_jTextFieldDialogWkSiteActionPerformed
+
+    private void jTextFieldDialogWkSiteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDialogWkSiteKeyTyped
+        facilityPOP();
+    }//GEN-LAST:event_jTextFieldDialogWkSiteKeyTyped
+
+    private void jComboProjectCodeProgrammingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProjectCodeProgrammingMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboProjectCodeProgrammingMouseClicked
+
+    private void jCheckBoxDialogWk1MiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDialogWk1MiscActionPerformed
+        if (jCheckBoxDialogWk1Misc.isSelected()) {
+            jTextFieldWk1Misc.setVisible(true);
+            jLabelWk1Misc.setVisible(true);
+            jLabelWk1MiscAmt.setVisible(true);
+            jTextFieldWk1MiscAmt.setVisible(true);
+        } else {
+            jTextFieldWk1Misc.setVisible(false);
+            jLabelWk1Misc.setVisible(false);
+            jTextFieldWk1Misc.setText("");
+            jLabelWk1MiscAmt.setVisible(false);
+            jTextFieldWk1MiscAmt.setVisible(false);
+        }
+    }//GEN-LAST:event_jCheckBoxDialogWk1MiscActionPerformed
+
+    private void jTextFieldWk1MiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWk1MiscActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldWk1MiscActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -6767,8 +6234,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroupChange;
     private javax.swing.ButtonGroup buttonGroupLunch;
     private javax.swing.ButtonGroup buttonGroupPayRec;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAdd;
-    private javax.swing.JButton jButtonAddActivity;
     private javax.swing.JButton jButtonAuthAllCancel;
     private javax.swing.JButton jButtonAuthAllOk;
     private javax.swing.JButton jButtonAuthCancel;
@@ -6784,25 +6252,30 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonDeleteAtt2;
     private javax.swing.JButton jButtonDeleteAtt3;
     private javax.swing.JButton jButtonDeleteDetails;
-    private javax.swing.JButton jButtonDeleted;
     private javax.swing.JButton jButtonGetDetails1;
     private javax.swing.JButton jButtonOkFacility;
     private javax.swing.JButton jButtonPayRecCont;
     private javax.swing.JButton jButtonSave;
     private javax.swing.JButton jButtonSelectFile;
-    private javax.swing.JCheckBox jCheckBreakfast;
-    private javax.swing.JCheckBox jCheckDinner;
-    private javax.swing.JCheckBox jCheckIncidental;
-    private javax.swing.JCheckBox jCheckLunch;
+    private javax.swing.JCheckBox jCheckBoxDialogWk1AccProved;
+    private javax.swing.JCheckBox jCheckBoxDialogWk1AccUnProved;
+    private javax.swing.JCheckBox jCheckBoxDialogWk1BrkFast;
+    private javax.swing.JCheckBox jCheckBoxDialogWk1Dinner;
+    private javax.swing.JCheckBox jCheckBoxDialogWk1Inc;
+    private javax.swing.JCheckBox jCheckBoxDialogWk1Lunch;
+    private javax.swing.JCheckBox jCheckBoxDialogWk1Misc;
+    private javax.swing.JCheckBox jCheckBoxNoAcc;
+    private javax.swing.JComboBox<String> jComboAccountCode;
     private javax.swing.JComboBox<String> jComboAuthNam;
     private javax.swing.JComboBox<String> jComboAuthNamAll;
     private javax.swing.JComboBox<String> jComboBankNam;
+    private javax.swing.JComboBox<String> jComboBudMainCode;
     private javax.swing.JComboBox<String> jComboDistrictFacility;
+    private javax.swing.JComboBox<String> jComboDonor;
     private javax.swing.JComboBox<String> jComboFacility;
-    private javax.swing.JComboBox<String> jComboProjectName;
-    private javax.swing.JComboBox<String> jComboProjectTask;
+    private javax.swing.JComboBox<String> jComboProjectCodeGL;
+    private javax.swing.JComboBox<String> jComboProjectCodeProgramming;
     private javax.swing.JComboBox<String> jComboProvinceFacility;
-    private com.toedter.calendar.JDateChooser jDateChooserActivityAcq;
     private com.toedter.calendar.JDateChooser jDateChooserDateRec;
     private com.toedter.calendar.JDateChooser jDateTripFrom;
     private com.toedter.calendar.JDateChooser jDateTripTo;
@@ -6813,6 +6286,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JDialog jDialogPayRec;
     private javax.swing.JDialog jDialogWaiting;
     private javax.swing.JDialog jDialogWaitingEmail;
+    private javax.swing.JLabel jLabeAccountCode;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;
@@ -6869,8 +6343,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAcqWk2;
     private javax.swing.JLabel jLabelAcqWk3;
     private javax.swing.JLabel jLabelAcqWk4;
-    private javax.swing.JLabel jLabelActDate;
-    private javax.swing.JLabel jLabelActLinePurpose;
     private javax.swing.JLabel jLabelActMainPurpose;
     private javax.swing.JLabel jLabelAllAcq;
     private javax.swing.JLabel jLabelAllBal;
@@ -6893,16 +6365,14 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelBankName;
     private javax.swing.JLabel jLabelBreakFastSub;
     private javax.swing.JLabel jLabelBreakFastSubTot;
-    private javax.swing.JLabel jLabelBreakfast;
-    private javax.swing.JLabel jLabelBreakfast1;
-    private javax.swing.JLabel jLabelBreakfast2;
-    private javax.swing.JLabel jLabelBreakfast3;
+    private javax.swing.JLabel jLabelBudMainCode;
     private javax.swing.JLabel jLabelDateRange;
     private javax.swing.JLabel jLabelDateRec;
     private javax.swing.JLabel jLabelDialogWk1Site;
     private javax.swing.JLabel jLabelDinnerSub;
     private javax.swing.JLabel jLabelDinnerSubTot;
     private javax.swing.JLabel jLabelDistrictFacility;
+    private javax.swing.JLabel jLabelDonor;
     private javax.swing.JLabel jLabelEmp;
     private javax.swing.JLabel jLabelEmpNum;
     private javax.swing.JLabel jLabelFacility;
@@ -6953,7 +6423,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelLogo6;
     private javax.swing.JLabel jLabelLunchSub;
     private javax.swing.JLabel jLabelLunchSubTot;
-    private javax.swing.JLabel jLabelMisc;
     private javax.swing.JLabel jLabelMiscAcq;
     private javax.swing.JLabel jLabelMiscReq;
     private javax.swing.JLabel jLabelMiscSubTot;
@@ -6969,25 +6438,26 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelPaidAmt;
     private javax.swing.JLabel jLabelPayRecHeader;
     private javax.swing.JLabel jLabelPayRecQues;
-    private javax.swing.JLabel jLabelProjectName;
-    private javax.swing.JLabel jLabelProjectTask;
-    private javax.swing.JLabel jLabelProved;
-    private javax.swing.JLabel jLabelProved1;
+    private javax.swing.JLabel jLabelPrjCodeGL;
+    private javax.swing.JLabel jLabelPrjCodeProgramming;
     private javax.swing.JLabel jLabelProvince;
     private javax.swing.JLabel jLabelProvinceFacility;
     private javax.swing.JLabel jLabelRegDateAcq;
     private javax.swing.JLabel jLabelRegNum;
     private javax.swing.JLabel jLabelRegYear;
     private javax.swing.JLabel jLabelRegYear1;
+    private javax.swing.JLabel jLabelRemain;
     private javax.swing.JLabel jLabelSepDetails;
     private javax.swing.JLabel jLabelSerial;
     private javax.swing.JLabel jLabelSerialAcq;
-    private javax.swing.JLabel jLabelSubAcc;
     private javax.swing.JLabel jLabelSupportAttachDoc;
     private javax.swing.JLabel jLabelTo;
     private javax.swing.JLabel jLabelTripDetails;
-    private javax.swing.JLabel jLabelUnproved;
     private javax.swing.JLabel jLabelVehReg;
+    private javax.swing.JLabel jLabelWk1DialogActivityDesc;
+    private javax.swing.JLabel jLabelWk1Misc;
+    private javax.swing.JLabel jLabelWk1Misc1;
+    private javax.swing.JLabel jLabelWk1MiscAmt;
     private javax.swing.JLabel jLabellogged;
     private javax.swing.JLabel jLabellogged1;
     private javax.swing.JLabel jLabellogged2;
@@ -7032,6 +6502,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
@@ -7039,6 +6510,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
@@ -7047,21 +6519,18 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelAcqDocAtt3;
     private javax.swing.JPanel jPanelAcqELog;
     private javax.swing.JPanel jPanelAcquittal;
+    private javax.swing.JPanel jPanelActivityInfo;
     private javax.swing.JPanel jPanelAtt1;
     private javax.swing.JPanel jPanelAtt2;
     private javax.swing.JPanel jPanelAtt3;
     private javax.swing.JPanel jPanelAtt4;
     private javax.swing.JPanel jPanelAttach;
-    private javax.swing.JPanel jPanelCaptureDetails;
     private javax.swing.JPanel jPanelGen;
     private javax.swing.JPanel jPanelReport;
     private javax.swing.JPanel jPanelReportDetails;
     private javax.swing.JPanel jPanelRequest;
-    private javax.swing.JRadioButton jRadioAccProved;
-    private javax.swing.JRadioButton jRadioAccUnproved;
     private javax.swing.JRadioButton jRadioButtonPayRecNo;
     private javax.swing.JRadioButton jRadioButtonPayRecYes;
-    private javax.swing.JRadioButton jRadioNoAcc;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -7104,24 +6573,17 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JTable jTableActivityAcq;
     private javax.swing.JTable jTableActivityReq;
     private javax.swing.JTable jTableTripDetails;
-    private javax.swing.JTextField jTextAccProvedAcq;
-    private javax.swing.JTextField jTextAccUnprovedAcq;
-    private javax.swing.JTextField jTextAcqBreakfast;
-    private javax.swing.JTextField jTextAcqDinner;
-    private javax.swing.JTextField jTextAcqIncidental;
-    private javax.swing.JTextField jTextAcqLunch;
     private javax.swing.JTextField jTextAcqRegNum;
     private javax.swing.JTextField jTextAmtRec;
     private javax.swing.JTextArea jTextAreaNamTravel;
     private javax.swing.JTextField jTextAttAcqDocName;
     private javax.swing.JTextField jTextAttDocDesc;
     private javax.swing.JTextField jTextAttDocFilePath;
-    private javax.swing.JTextField jTextFieldDialogSite;
-    private javax.swing.JTextField jTextMiscActivityAcq;
-    private javax.swing.JTextField jTextMiscAmtAcq;
-    private javax.swing.JTextField jTextNoAcc;
+    private javax.swing.JTextField jTextFieldDialogWkSite;
+    private javax.swing.JTextField jTextFieldWk1DialogActivityDesc;
+    private javax.swing.JTextField jTextFieldWk1Misc;
+    private javax.swing.JTextField jTextFieldWk1MiscAmt;
     private javax.swing.JTextField jTextPaidAmt;
-    private javax.swing.JTextField jTextPurpose;
     private javax.swing.JTextField jTextVehReg;
     private javax.swing.JToggleButton jToggleButtonAllActivities;
     private javax.swing.JToggleButton jToggleButtonNoActivity;
