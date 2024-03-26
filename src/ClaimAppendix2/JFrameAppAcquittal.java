@@ -98,7 +98,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     String sendTo, createUsrNam, supUsrMail, breakfastAll, lunchAll, lunchNPAll, lunchPAll, dinnerAll,
             incidentalAll, unProvedAll, provedAll, date1, date2, usrnam, searchRef, authUsrNam, authUsrNamAll,
             authNam1, authNam2, usrGrp, empNum, empNam, oldRefNum, oldRegBudCode, acqSta, lowDate,
-            empOff, branchCode, prjCode, taskCode, supNam, supEmpNum, accomodation, empAccNum;
+            empOff, branchCode, prjCode, taskCode, donorCode, grantCode, accCode, prjProgCode, donor, budLine, subBudLine,
+            donorName, accCodeName, prjCodeName, prjProgCodeName, budLineName, budcode, taskDonor, supNam, supEmpNum,
+            accomodation, empAccNum;
     String dayRegAfter = "2020-01-01";
     String depSlip = "N";
     String str = "";
@@ -150,21 +152,11 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         modelAtt = (DefaultTableModel) jTableAcquittalDocAtt.getModel();
 //        jTableTripDetails.getColumnModel().getColumn(1).setMinWidth(0);
 //        jTableTripDetails.getColumnModel().getColumn(1).setMaxWidth(0);
-        jTextAcqBreakfast.setText("");
-        jTextAcqLunch.setText("");
-        jTextAcqDinner.setText("");
-        jTextAcqIncidental.setText("");
-        jTextMiscAmtAcq.setText("");
-        jTextAccProvedAcq.setText("");
-        jTextAccUnprovedAcq.setText("");
-        jTextAccProvedAcq.setText("");
-//        jLabelProvedAcq.setVisible(false);
-        jTextAccProvedAcq.setVisible(false);
+
         jMenuItemSubmit.setVisible(false);
         jTextAttDocFilePath.setVisible(false);
         jSeparator25.setVisible(false);
         //  jLabelUnprovedAcq.setVisible(false);
-        jTextAccUnprovedAcq.setVisible(false);
         jToggleButtonNoActivity.setText("All Activities Not Done");
         jToggleButtonAllActivities.setText("All Activities Done As Per Request");
         jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
@@ -208,13 +200,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         modelAcq = (DefaultTableModel) jTableActivityAcq.getModel();
         modelTrip = (DefaultTableModel) jTableTripDetails.getModel();
         modelAtt = (DefaultTableModel) jTableAcquittalDocAtt.getModel();
-        jTextAcqBreakfast.setText("");
-        jTextAcqLunch.setText("");
-        jTextAcqDinner.setText("");
-        jTextAcqIncidental.setText("");
-        jTextMiscAmtAcq.setText("");
-        jTextAccProvedAcq.setText("");
-        jTextAccUnprovedAcq.setText("");
         jLabelAppWk1TotReq.setVisible(false);
         jLabelAcqAppWk1TotReqCost.setVisible(false);
         jLabelAppWk2TotReq.setVisible(false);
@@ -227,20 +212,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelAcqAppWk5TotReqCost.setVisible(false);
         jTextAreaNamTravel.setLineWrap(true);
         jTextAreaNamTravel.setWrapStyleWord(true);
-        // jLabelProvedAcq.setVisible(false);
-        jTextAccProvedAcq.setVisible(false);
-        //  jLabelUnprovedAcq.setVisible(false);
-        jTextAccUnprovedAcq.setVisible(false);
         jLabelEmp.setText(usrLogNum);
         jLabelEmp.setVisible(false);
         jTextAttDocFilePath.setVisible(false);
-        jTextAcqBreakfast.setEnabled(false);
-        jTextAcqLunch.setEnabled(false);
-        jTextAcqDinner.setEnabled(false);
-        jTextAcqIncidental.setEnabled(false);
-        jTextAccUnprovedAcq.setEnabled(false);
-        jTextAccProvedAcq.setEnabled(false);
-        jTextNoAcc.setEnabled(false);
         jToggleButtonNoActivity.setText("All Activities Not Done");
         jToggleButtonAllActivities.setText("All Activities Done As Per Request");
         jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
@@ -263,7 +237,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         findUserGrp();
         findBankName();
         findProvince();
-        findProject();
+
         allowanceRate();
 
         if (!"Administrator".equals(usrGrp)) {
@@ -532,58 +506,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         }
     }
 
-    void findProject() {
-        try {
-
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=HRLeaveSysZvandiri;user=" + c.usrNHR + ";password=" + c.usrPHR + ";");
-
-            Statement st = conn.createStatement();
-
-            jComboProjectName.setSelectedIndex(-1);
-
-            ResultSet r = st.executeQuery("SELECT concat(PROJ_ID,' ',PROJ_NAME) "
-                    + "FROM [HRLeaveSysZvandiri].[dbo].[ProjectTab] order by 1");
-
-            while (r.next()) {
-
-                jComboProjectName.addItem(r.getString(1));
-
-            }
-
-            conn.close();
-        } catch (Exception e) {
-            System.out.println();
-        }
-    }
-
-    void findTask(String prjCode) {
-        try {
-
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=HRLeaveSysZvandiri;user=" + c.usrNHR + ";password=" + c.usrPHR + ";");
-
-            Statement st = conn.createStatement();
-
-            jComboProjectTask.setSelectedIndex(-1);
-
-            ResultSet r = st.executeQuery("SELECT concat(PRJ_TASK_CODE,' ',TASK_DESC)  "
-                    + "FROM [HRLeaveSysZvandiri].[dbo].[ProjectTaskTab]  "
-                    + "where PRJ_CODE ='" + prjCode + "' order by 1");
-
-            while (r.next()) {
-
-                jComboProjectTask.addItem(r.getString(1));
-
-            }
-
-            conn.close();
-        } catch (Exception e) {
-            System.out.println();
-        }
-    }
-
-    void findBranch(String taskCode) {
+    void findAccCode() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -591,12 +514,13 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
 
-            ResultSet r = st.executeQuery("SELECT distinct BRANCH  FROM [ClaimsAppSysZvandiri].[dbo].[BudCodeTab] "
-                    + "where PRJ_TASK_CODE ='" + taskCode + "' order by 1");
+            jComboAccountCode.setSelectedIndex(-1);
+
+            ResultSet r = st.executeQuery("SELECT concat(ACC_CODE,' ',ACC_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudAccCodTab] order by 1 desc");
 
             while (r.next()) {
 
-                branchCode = r.getString(1);
+                jComboAccountCode.addItem(r.getString(1));
 
             }
 
@@ -604,6 +528,122 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println();
         }
+    }
+
+    void findDonorCode() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+
+            jComboDonor.setSelectedIndex(-1);
+
+            ResultSet r = st.executeQuery("SELECT distinct concat(DONOR_CODE,' ',DONOR_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] order by 1");
+
+            while (r.next()) {
+
+                jComboDonor.addItem(r.getString(1));
+
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+    void findPrjProgCode() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+
+            jComboProjectCodeProgramming.setSelectedIndex(-1);
+
+            ResultSet r = st.executeQuery("SELECT distinct concat(PRJ_CODE_PROG,' ',PRJ_PROG_DESC) "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[BudPrjProgTab] order by 1");
+
+            while (r.next()) {
+
+                jComboProjectCodeProgramming.addItem(r.getString(1));
+
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+    void findPrjCode(String donorCode) {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            int itemCount = jComboProjectCodeGL.getItemCount();
+
+            for (int i = 0; i < itemCount; i++) {
+                jComboProjectCodeGL.removeItemAt(0);
+            }
+
+            Statement st = conn.createStatement();
+//            jComboBudMainCode.setSelectedIndex(-1);
+
+            ResultSet r = st.executeQuery("SELECT distinct concat(PRJ_CODE,' ',PRJ_DESC) FROM "
+                    + "[ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where DONOR_CODE = '" + donorCode + "' order by 1");
+
+            while (r.next()) {
+
+                jComboProjectCodeGL.addItem(r.getString(1));
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+    void findGrantBud() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+            Statement st1 = conn.createStatement();
+            Statement st2 = conn.createStatement();
+
+            ResultSet r = st.executeQuery("SELECT GRANT_CODE  FROM [ClaimsAppSysZvandiri].[dbo].[BudGrantTab]");
+
+            while (r.next()) {
+
+                grantCode = r.getString(1);
+
+            }
+
+            ResultSet r1 = st1.executeQuery("SELECT concat(BUD_CODE,' ',BUD_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudMainCodTab] order by 1");
+
+            while (r1.next()) {
+
+                jComboBudMainCode.addItem(r1.getString(1));
+
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+    void facilityPOP() {
+        jDialogFacility.setVisible(true);
+        jDialogFacility.setVisible(false);
+        jDialogFacility.setVisible(true);
     }
 
     void findUser() {
@@ -1062,7 +1102,11 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 jTextAreaNamTravel.setText("");
                 recMinMax();
                 fetchdata();
-//                mainPageTotUpdate();
+                mainPageTotUpdate();
+                findAccCode();
+                findDonorCode();
+                findGrantBud();
+                findPrjProgCode();
 
             }
 
@@ -1555,9 +1599,11 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
 
-            st.executeQuery("SELECT b.ITM_NUM,b.ACT_DATE,b.BRANCH,b.PROJ_ID, b.PRJ_TASK_CODE,b.ACT_SITE,b.ACT_ITM_PUR, "
-                    + "b.BRK_AMT, b.LNC_AMT, b.DIN_AMT,b.INC_AMT, b.MSC_ACT,b.MSC_AMT, b.ACC_UNPROV_AMT, b.ACC_PRO_AMT, "
-                    + "b.ACT_ITM_TOT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a join "
+            st.executeQuery("SELECT  b.ITM_NUM,b.ACT_DATE,b.ACC_CODE,b.DONOR ,b.PRJ_CODE_GL , b.PRJ_CODE_PROG ,"
+                    + "b.PRJ_NAM_PROG ,"
+                    + "b.BUD_LINE ,b.BUD_CODE ,b.ACT_SITE , b.ACT_DESC ,b.BRK_AMT ,b.LNC_AMT ,b.DIN_AMT ,"
+                    + "b.INC_AMT ,b.MSC_ACT , b.MSC_AMT ,b.ACC_UNPROV_AMT ,b.ACC_PROV_AMT ,b.ACT_ITM_TOT "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a join "
                     + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL = b.SERIAL and a.REF_NUM=b.REF_NUM "
                     + "and a.DOC_VER=b.DOC_VER and a.ACT_REC_STA=b.ACT_REC_STA join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c "
                     + "on a.SERIAL = c.SERIAL and a.REF_NUM=c.REF_NUM where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' "
@@ -1568,8 +1614,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
             while (r.next()) {
                 modelAcq.insertRow(modelAcq.getRowCount(), new Object[]{r.getString(2), r.getString(3),
-                    r.getString(4), r.getString(5), r.getString(6), r.getString(7), "0", "0", "0", "0", "",
-                    "0", "0", "0", "0"});
+                    r.getString(4), r.getString(5), r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10),
+                    r.getString(11), "0", "0", "0", "0", "", "0", "0", "0", "0"});
 
             }
 
@@ -1756,8 +1802,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         if (jTableActivityAcq.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "At least one activity should be completed on the TAB \"Perdiem Acquittal\". Please check and correct.");
             jTabbedPaneAppSys.setSelectedIndex(2);
-            jDateChooserActivityAcq.requestFocusInWindow();
-            jDateChooserActivityAcq.setFocusable(true);
+            jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+            jDateChooserDialogActivityDateFrom.setFocusable(true);
         } else if ((("Total (Change)").equals(jLabelAppTotReq.getText())) && (jRadioButtonPayRecYes.isSelected())
                 && (("Select Bank".equals(jComboBankNam.getSelectedItem().toString()))
                 || ("".equals(jTextPaidAmt.getText()))
@@ -2769,7 +2815,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jDateChooserDateRec = new com.toedter.calendar.JDateChooser();
         buttonGroupPayRec = new javax.swing.ButtonGroup();
         jDialogFacility = new javax.swing.JDialog();
-        jPanel14 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
         jLabelHeader1 = new javax.swing.JLabel();
         jButtonOkFacility = new javax.swing.JButton();
         jButtonCancelFacility = new javax.swing.JButton();
@@ -2945,6 +2991,10 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelWk1Misc1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jDateChooserDialogActivityDateFrom = new com.toedter.calendar.JDateChooser();
+        jDateChooserDialogActivityDateTo = new com.toedter.calendar.JDateChooser();
+        jLabeAccountCode1 = new javax.swing.JLabel();
+        jLabeAccountCode2 = new javax.swing.JLabel();
         jTabbedPaneAcqAtt = new javax.swing.JTabbedPane();
         jPanelReport = new javax.swing.JPanel();
         jPanelReportDetails = new javax.swing.JPanel();
@@ -3442,13 +3492,13 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jDialogFacility.setMinimumSize(new java.awt.Dimension(600, 300));
         jDialogFacility.setResizable(false);
 
-        jPanel14.setBackground(new java.awt.Color(204, 153, 14));
-        jPanel14.setLayout(null);
+        jPanel15.setBackground(new java.awt.Color(204, 153, 14));
+        jPanel15.setLayout(null);
 
         jLabelHeader1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelHeader1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelHeader1.setText("FACILITY TO VISIT");
-        jPanel14.add(jLabelHeader1);
+        jPanel15.add(jLabelHeader1);
         jLabelHeader1.setBounds(170, 10, 230, 40);
 
         jButtonOkFacility.setText("Ok ");
@@ -3457,7 +3507,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 jButtonOkFacilityActionPerformed(evt);
             }
         });
-        jPanel14.add(jButtonOkFacility);
+        jPanel15.add(jButtonOkFacility);
         jButtonOkFacility.setBounds(180, 220, 80, 21);
 
         jButtonCancelFacility.setText("Cancel");
@@ -3466,12 +3516,12 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 jButtonCancelFacilityActionPerformed(evt);
             }
         });
-        jPanel14.add(jButtonCancelFacility);
+        jPanel15.add(jButtonCancelFacility);
         jButtonCancelFacility.setBounds(300, 220, 80, 21);
 
         jLabelProvinceFacility.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabelProvinceFacility.setText("Province");
-        jPanel14.add(jLabelProvinceFacility);
+        jPanel15.add(jLabelProvinceFacility);
         jLabelProvinceFacility.setBounds(20, 70, 70, 30);
 
         jComboProvinceFacility.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3489,7 +3539,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 jComboProvinceFacilityKeyPressed(evt);
             }
         });
-        jPanel14.add(jComboProvinceFacility);
+        jPanel15.add(jComboProvinceFacility);
         jComboProvinceFacility.setBounds(150, 70, 230, 30);
 
         jComboDistrictFacility.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3502,17 +3552,17 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 jComboDistrictFacilityActionPerformed(evt);
             }
         });
-        jPanel14.add(jComboDistrictFacility);
+        jPanel15.add(jComboDistrictFacility);
         jComboDistrictFacility.setBounds(150, 110, 230, 30);
 
         jLabelDistrictFacility.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabelDistrictFacility.setText("District");
-        jPanel14.add(jLabelDistrictFacility);
+        jPanel15.add(jLabelDistrictFacility);
         jLabelDistrictFacility.setBounds(20, 110, 70, 30);
 
         jLabelFacility.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabelFacility.setText("Facility");
-        jPanel14.add(jLabelFacility);
+        jPanel15.add(jLabelFacility);
         jLabelFacility.setBounds(20, 150, 70, 30);
 
         jComboFacility.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -3533,18 +3583,18 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 jComboFacilityActionPerformed(evt);
             }
         });
-        jPanel14.add(jComboFacility);
+        jPanel15.add(jComboFacility);
         jComboFacility.setBounds(150, 150, 320, 30);
 
         javax.swing.GroupLayout jDialogFacilityLayout = new javax.swing.GroupLayout(jDialogFacility.getContentPane());
         jDialogFacility.getContentPane().setLayout(jDialogFacilityLayout);
         jDialogFacilityLayout.setHorizontalGroup(
             jDialogFacilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+            .addComponent(jPanel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
         );
         jDialogFacilityLayout.setVerticalGroup(
             jDialogFacilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -4267,7 +4317,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jScrollPaneWk9.setViewportView(jTableActivityAcq);
 
         jPanelAcquittal.add(jScrollPaneWk9);
-        jScrollPaneWk9.setBounds(280, 120, 1080, 530);
+        jScrollPaneWk9.setBounds(300, 120, 1060, 530);
 
         jPanel6.setLayout(null);
 
@@ -4275,9 +4325,10 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jPanelActivityInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         jPanelActivityInfo.setLayout(null);
 
-        jLabeAccountCode.setText("Account Code");
+        jLabeAccountCode.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabeAccountCode.setText("To");
         jPanelActivityInfo.add(jLabeAccountCode);
-        jLabeAccountCode.setBounds(5, 0, 260, 20);
+        jLabeAccountCode.setBounds(160, 15, 20, 20);
 
         jComboAccountCode.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -4290,11 +4341,12 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
         });
         jPanelActivityInfo.add(jComboAccountCode);
-        jComboAccountCode.setBounds(2, 20, 265, 25);
+        jComboAccountCode.setBounds(5, 57, 290, 25);
 
+        jLabelDonor.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelDonor.setText("Donor");
         jPanelActivityInfo.add(jLabelDonor);
-        jLabelDonor.setBounds(5, 45, 260, 20);
+        jLabelDonor.setBounds(5, 79, 260, 20);
 
         jComboDonor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -4307,11 +4359,12 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
         });
         jPanelActivityInfo.add(jComboDonor);
-        jComboDonor.setBounds(2, 65, 265, 25);
+        jComboDonor.setBounds(5, 97, 290, 25);
 
+        jLabelPrjCodeGL.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelPrjCodeGL.setText("Project Code (GL)");
         jPanelActivityInfo.add(jLabelPrjCodeGL);
-        jLabelPrjCodeGL.setBounds(5, 90, 260, 20);
+        jLabelPrjCodeGL.setBounds(5, 120, 260, 20);
 
         jComboProjectCodeGL.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -4324,11 +4377,12 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
         });
         jPanelActivityInfo.add(jComboProjectCodeGL);
-        jComboProjectCodeGL.setBounds(2, 110, 265, 25);
+        jComboProjectCodeGL.setBounds(5, 140, 290, 25);
 
+        jLabelBudMainCode.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelBudMainCode.setText("Budget line");
         jPanelActivityInfo.add(jLabelBudMainCode);
-        jLabelBudMainCode.setBounds(5, 180, 260, 20);
+        jLabelBudMainCode.setBounds(5, 205, 260, 20);
 
         jComboBudMainCode.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -4341,11 +4395,12 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
         });
         jPanelActivityInfo.add(jComboBudMainCode);
-        jComboBudMainCode.setBounds(2, 200, 265, 25);
+        jComboBudMainCode.setBounds(5, 225, 290, 25);
 
+        jLabelDialogWk1Site.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelDialogWk1Site.setText("Site to be Visited");
         jPanelActivityInfo.add(jLabelDialogWk1Site);
-        jLabelDialogWk1Site.setBounds(5, 225, 260, 20);
+        jLabelDialogWk1Site.setBounds(5, 250, 260, 20);
 
         jTextFieldDialogWkSite.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -4363,17 +4418,19 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
         });
         jPanelActivityInfo.add(jTextFieldDialogWkSite);
-        jTextFieldDialogWkSite.setBounds(2, 245, 265, 25);
+        jTextFieldDialogWkSite.setBounds(5, 270, 290, 25);
 
+        jLabelWk1DialogActivityDesc.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelWk1DialogActivityDesc.setText("Activity Descrpition");
         jPanelActivityInfo.add(jLabelWk1DialogActivityDesc);
-        jLabelWk1DialogActivityDesc.setBounds(5, 270, 260, 20);
+        jLabelWk1DialogActivityDesc.setBounds(5, 292, 260, 20);
         jPanelActivityInfo.add(jTextFieldWk1DialogActivityDesc);
-        jTextFieldWk1DialogActivityDesc.setBounds(2, 290, 265, 25);
+        jTextFieldWk1DialogActivityDesc.setBounds(5, 310, 290, 25);
 
+        jLabelPrjCodeProgramming.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelPrjCodeProgramming.setText("Project Code (Programming)");
         jPanelActivityInfo.add(jLabelPrjCodeProgramming);
-        jLabelPrjCodeProgramming.setBounds(5, 135, 260, 20);
+        jLabelPrjCodeProgramming.setBounds(5, 161, 260, 20);
 
         jComboProjectCodeProgramming.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -4381,7 +4438,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
         });
         jPanelActivityInfo.add(jComboProjectCodeProgramming);
-        jComboProjectCodeProgramming.setBounds(2, 155, 265, 25);
+        jComboProjectCodeProgramming.setBounds(5, 180, 290, 25);
 
         jLabelRemain.setFont(new java.awt.Font("Tahoma", 3, 9)); // NOI18N
         jPanelActivityInfo.add(jLabelRemain);
@@ -4389,19 +4446,19 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         jCheckBoxDialogWk1Dinner.setText(" Dinner");
         jPanelActivityInfo.add(jCheckBoxDialogWk1Dinner);
-        jCheckBoxDialogWk1Dinner.setBounds(190, 330, 70, 21);
+        jCheckBoxDialogWk1Dinner.setBounds(190, 340, 70, 25);
 
         jCheckBoxDialogWk1BrkFast.setText(" Breakfast");
         jPanelActivityInfo.add(jCheckBoxDialogWk1BrkFast);
-        jCheckBoxDialogWk1BrkFast.setBounds(2, 330, 80, 21);
+        jCheckBoxDialogWk1BrkFast.setBounds(5, 340, 80, 25);
 
         jCheckBoxDialogWk1Lunch.setText("Lunch");
         jPanelActivityInfo.add(jCheckBoxDialogWk1Lunch);
-        jCheckBoxDialogWk1Lunch.setBounds(90, 330, 80, 21);
+        jCheckBoxDialogWk1Lunch.setBounds(90, 340, 80, 25);
 
         jCheckBoxDialogWk1Inc.setText("Incidental");
         jPanelActivityInfo.add(jCheckBoxDialogWk1Inc);
-        jCheckBoxDialogWk1Inc.setBounds(2, 360, 110, 21);
+        jCheckBoxDialogWk1Inc.setBounds(5, 370, 110, 25);
 
         jCheckBoxDialogWk1Misc.setText("Miscellaneous");
         jCheckBoxDialogWk1Misc.addActionListener(new java.awt.event.ActionListener() {
@@ -4410,11 +4467,12 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
         });
         jPanelActivityInfo.add(jCheckBoxDialogWk1Misc);
-        jCheckBoxDialogWk1Misc.setBounds(130, 360, 110, 21);
+        jCheckBoxDialogWk1Misc.setBounds(130, 370, 110, 25);
 
+        jLabelWk1Misc.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelWk1Misc.setText("Accommodation");
         jPanelActivityInfo.add(jLabelWk1Misc);
-        jLabelWk1Misc.setBounds(0, 425, 160, 25);
+        jLabelWk1Misc.setBounds(5, 430, 160, 20);
 
         jTextFieldWk1Misc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4422,13 +4480,13 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
         });
         jPanelActivityInfo.add(jTextFieldWk1Misc);
-        jTextFieldWk1Misc.setBounds(2, 400, 110, 25);
+        jTextFieldWk1Misc.setBounds(5, 407, 110, 25);
 
         jLabelWk1MiscAmt.setText("$");
         jPanelActivityInfo.add(jLabelWk1MiscAmt);
-        jLabelWk1MiscAmt.setBounds(150, 400, 30, 25);
+        jLabelWk1MiscAmt.setBounds(150, 407, 30, 25);
         jPanelActivityInfo.add(jTextFieldWk1MiscAmt);
-        jTextFieldWk1MiscAmt.setBounds(190, 400, 70, 25);
+        jTextFieldWk1MiscAmt.setBounds(190, 407, 70, 25);
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
         jPanel13.setLayout(null);
@@ -4439,32 +4497,56 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         jCheckBoxDialogWk1AccProved.setText(" Proved ");
         jPanel13.add(jCheckBoxDialogWk1AccProved);
-        jCheckBoxDialogWk1AccProved.setBounds(90, 5, 80, 21);
+        jCheckBoxDialogWk1AccProved.setBounds(100, 5, 80, 21);
 
         jCheckBoxNoAcc.setText("No Acc ");
         jPanel13.add(jCheckBoxNoAcc);
-        jCheckBoxNoAcc.setBounds(180, 5, 80, 21);
+        jCheckBoxNoAcc.setBounds(190, 5, 80, 21);
 
         jPanelActivityInfo.add(jPanel13);
-        jPanel13.setBounds(0, 450, 265, 30);
+        jPanel13.setBounds(2, 450, 290, 30);
 
+        jLabelWk1Misc1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabelWk1Misc1.setText("Miscellaneous Desc");
         jPanelActivityInfo.add(jLabelWk1Misc1);
-        jLabelWk1Misc1.setBounds(2, 380, 160, 25);
+        jLabelWk1Misc1.setBounds(5, 390, 160, 20);
 
         jButton1.setText("delete");
         jPanelActivityInfo.add(jButton1);
         jButton1.setBounds(130, 490, 90, 30);
 
         jButton2.setText("Add");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanelActivityInfo.add(jButton2);
         jButton2.setBounds(10, 490, 90, 30);
 
+        jDateChooserDialogActivityDateFrom.setDateFormatString("yyyy-MM-dd");
+        jPanelActivityInfo.add(jDateChooserDialogActivityDateFrom);
+        jDateChooserDialogActivityDateFrom.setBounds(35, 10, 120, 30);
+
+        jDateChooserDialogActivityDateTo.setDateFormatString("yyyy-MM-dd");
+        jPanelActivityInfo.add(jDateChooserDialogActivityDateTo);
+        jDateChooserDialogActivityDateTo.setBounds(175, 10, 120, 30);
+
+        jLabeAccountCode1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabeAccountCode1.setText("Account Code");
+        jPanelActivityInfo.add(jLabeAccountCode1);
+        jLabeAccountCode1.setBounds(5, 40, 260, 20);
+
+        jLabeAccountCode2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabeAccountCode2.setText("From");
+        jPanelActivityInfo.add(jLabeAccountCode2);
+        jLabeAccountCode2.setBounds(5, 15, 30, 20);
+
         jPanel6.add(jPanelActivityInfo);
-        jPanelActivityInfo.setBounds(0, 0, 270, 530);
+        jPanelActivityInfo.setBounds(0, 0, 300, 530);
 
         jPanelAcquittal.add(jPanel6);
-        jPanel6.setBounds(0, 120, 280, 530);
+        jPanel6.setBounds(0, 120, 300, 530);
 
         jTabbedPaneAppSys.addTab("Perdiem Acquittal", jPanelAcquittal);
 
@@ -5398,9 +5480,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
     private void jButtonAuthOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthOkActionPerformed
 
-        jDialogAuthority.setVisible(false);
-        jTextAcqLunch.setText(lunchAll);
-        authUsrNam = jComboAuthNam.getSelectedItem().toString();
+
     }//GEN-LAST:event_jButtonAuthOkActionPerformed
 
     private void jButtonAuthCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthCancelActionPerformed
@@ -5412,65 +5492,65 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAuthCancelActionPerformed
 
     private void jButtonAuthAllOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthAllOkActionPerformed
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        DefaultTableModel model = (DefaultTableModel) jTableActivityAcq.getModel();
-        java.util.Date jDateActivity = jDateChooserActivityAcq.getDate();
-
-        String dateDayActivity = formatter.format(jDateActivity);
-        if (jTextAcqBreakfast.getText().trim().length() == 0) {
-            jTextAcqBreakfast.setText("0.00");
-        }
-        if (jTextAcqLunch.getText().trim().length() == 0) {
-            jTextAcqLunch.setText("0.00");
-        }
-        if (jTextAcqDinner.getText().trim().length() == 0) {
-            jTextAcqDinner.setText("0.00");
-        }
-        if (jTextAcqIncidental.getText().trim().length() == 0) {
-            jTextAcqIncidental.setText("0.00");
-        }
-        if (jTextMiscAmtAcq.getText().trim().length() == 0) {
-            jTextMiscAmtAcq.setText("0.00");
-        }
-        if (jTextAccProvedAcq.getText().trim().length() == 0) {
-            jTextAccProvedAcq.setText("0.00");
-        }
-        if (jTextAccUnprovedAcq.getText().trim().length() == 0) {
-            jTextAccUnprovedAcq.setText("0.00");
-        }
-
-//        model.addRow(new Object[]{dateDayActivity, jTextAcqDestination.getText(), jLabelKMDisDB.getText(), jTextPurpose.getText(),
-//            jTextAcqBreakfast.getText(), jTextAcqLunch.getText(), jTextAcqDinner.getText(), jTextAcqIncidental.getText(),
-//            jTextMiscActivityAcq.getText(), jTextMiscAmtAcq.getText(), jTextAccProvedAcq.getText(), jTextAccUnprovedAcq.getText(),
-//            Double.toString((Double.parseDouble(jTextAcqBreakfast.getText()) + Double.parseDouble(jTextAcqLunch.getText())
-//            + Double.parseDouble(jTextAcqDinner.getText()) + Double.parseDouble(jTextAcqIncidental.getText())
-//            + Double.parseDouble(jTextMiscAmtAcq.getText()) + Double.parseDouble(jTextAccProvedAcq.getText())
-//            + Double.parseDouble(jTextAccUnprovedAcq.getText())))});
-        mainPageTotUpdateAcq();
-        /**
-         * **** updating general segment
-         */
-
-        jDateChooserActivityAcq.setDate(null);
-        jTextPurpose.setText("");
-        jTextAcqBreakfast.setText("0.00");
-        jTextAcqLunch.setText("0.00");
-        jTextAcqDinner.setText("0.00");
-        jTextAcqIncidental.setText("0.00");
-        jTextMiscAmtAcq.setText("0.00");
-        jTextAccProvedAcq.setText("0.00");
-        jTextAccUnprovedAcq.setText("0.00");
-        jTextMiscActivityAcq.setText("");
-        buttonGroupLunch.clearSelection();
-        jCheckBreakfast.setSelected(false);
-
-        jCheckDinner.setSelected(false);
-        jCheckIncidental.setSelected(false);
-        jRadioAccProved.setSelected(false);
-        jRadioAccUnproved.setSelected(false);
-
-        authUsrNamAll = jComboAuthNamAll.getSelectedItem().toString();
-        jDialogAuthorityAll.setVisible(false);
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        DefaultTableModel model = (DefaultTableModel) jTableActivityAcq.getModel();
+//        java.util.Date jDateActivity = jDateChooserDialogActivityDateFrom.getDate();
+//
+//        String dateDayActivity = formatter.format(jDateActivity);
+//        if (jTextAcqBreakfast.getText().trim().length() == 0) {
+//            jTextAcqBreakfast.setText("0.00");
+//        }
+//        if (jTextAcqLunch.getText().trim().length() == 0) {
+//            jTextAcqLunch.setText("0.00");
+//        }
+//        if (jTextAcqDinner.getText().trim().length() == 0) {
+//            jTextAcqDinner.setText("0.00");
+//        }
+//        if (jTextAcqIncidental.getText().trim().length() == 0) {
+//            jTextAcqIncidental.setText("0.00");
+//        }
+//        if (jTextMiscAmtAcq.getText().trim().length() == 0) {
+//            jTextMiscAmtAcq.setText("0.00");
+//        }
+//        if (jTextAccProvedAcq.getText().trim().length() == 0) {
+//            jTextAccProvedAcq.setText("0.00");
+//        }
+//        if (jTextAccUnprovedAcq.getText().trim().length() == 0) {
+//            jTextAccUnprovedAcq.setText("0.00");
+//        }
+//
+////        model.addRow(new Object[]{dateDayActivity, jTextAcqDestination.getText(), jLabelKMDisDB.getText(), jTextPurpose.getText(),
+////            jTextAcqBreakfast.getText(), jTextAcqLunch.getText(), jTextAcqDinner.getText(), jTextAcqIncidental.getText(),
+////            jTextMiscActivityAcq.getText(), jTextMiscAmtAcq.getText(), jTextAccProvedAcq.getText(), jTextAccUnprovedAcq.getText(),
+////            Double.toString((Double.parseDouble(jTextAcqBreakfast.getText()) + Double.parseDouble(jTextAcqLunch.getText())
+////            + Double.parseDouble(jTextAcqDinner.getText()) + Double.parseDouble(jTextAcqIncidental.getText())
+////            + Double.parseDouble(jTextMiscAmtAcq.getText()) + Double.parseDouble(jTextAccProvedAcq.getText())
+////            + Double.parseDouble(jTextAccUnprovedAcq.getText())))});
+//        mainPageTotUpdateAcq();
+//        /**
+//         * **** updating general segment
+//         */
+//
+//        jDateChooserDialogActivityDateFrom.setDate(null);
+//        jTextPurpose.setText("");
+//        jTextAcqBreakfast.setText("0.00");
+//        jTextAcqLunch.setText("0.00");
+//        jTextAcqDinner.setText("0.00");
+//        jTextAcqIncidental.setText("0.00");
+//        jTextMiscAmtAcq.setText("0.00");
+//        jTextAccProvedAcq.setText("0.00");
+//        jTextAccUnprovedAcq.setText("0.00");
+//        jTextMiscActivityAcq.setText("");
+//        buttonGroupLunch.clearSelection();
+//        jCheckBreakfast.setSelected(false);
+//
+//        jCheckDinner.setSelected(false);
+//        jCheckIncidental.setSelected(false);
+//        jRadioAccProved.setSelected(false);
+//        jRadioAccUnproved.setSelected(false);
+//
+//        authUsrNamAll = jComboAuthNamAll.getSelectedItem().toString();
+//        jDialogAuthorityAll.setVisible(false);
     }//GEN-LAST:event_jButtonAuthAllOkActionPerformed
 
     private void jButtonAuthAllCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthAllCancelActionPerformed
@@ -5759,154 +5839,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonDeleteDetailsActionPerformed
 
-    private void jButtonOkFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkFacilityActionPerformed
-        jTextFieldDialogSite.setText(jComboFacility.getSelectedItem().toString());
-        jDialogFacility.setVisible(false);
-    }//GEN-LAST:event_jButtonOkFacilityActionPerformed
-
-    private void jButtonCancelFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelFacilityActionPerformed
-        jDialogFacility.setVisible(false);
-    }//GEN-LAST:event_jButtonCancelFacilityActionPerformed
-
-    private void jComboProvinceFacilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProvinceFacilityMouseEntered
-        //        jComboDistrict.removeAllItems();
-        //        jComboFacility.removeAllItems();
-    }//GEN-LAST:event_jComboProvinceFacilityMouseEntered
-
-    private void jComboProvinceFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProvinceFacilityActionPerformed
-        try {
-
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
-            Statement st = conn.createStatement();
-
-            int itemCount = jComboDistrictFacility.getItemCount();
-
-            for (int i = 0; i < itemCount; i++) {
-                jComboDistrictFacility.removeItemAt(0);
-            }
-            jComboDistrictFacility.setSelectedIndex(-1);
-            String ProvNam = jComboProvinceFacility.getSelectedItem().toString();
-            st.executeQuery("SELECT distinct [district]\n"
-                    + "  FROM [ClaimsAppSysZvandiri].[dbo].[DistFacTab] WHERE [province] = \n" + "'" + ProvNam + "'");
-            ResultSet r = st.getResultSet();
-
-            while (r.next()) {
-
-                jComboDistrictFacility.addItem(r.getString("district"));
-            }
-
-            conn.close();
-        } catch (Exception e) {
-
-        }
-    }//GEN-LAST:event_jComboProvinceFacilityActionPerformed
-
-    private void jComboProvinceFacilityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboProvinceFacilityKeyPressed
-
-    }//GEN-LAST:event_jComboProvinceFacilityKeyPressed
-
-    private void jComboDistrictFacilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboDistrictFacilityMouseEntered
-        //        try {
-        //
-        //            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-        //                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + usrName + ";password=" + usrPass + ";");
-        //
-        //            Statement st = conn.createStatement();
-        //
-        //            int itemCount = jComboDistrictFacility.getItemCount();
-        //
-        //            for (int i = 0; i < itemCount; i++) {
-        //                jComboDistrictFacility.removeItemAt(0);
-        //            }
-        //            jComboDistrictFacility.setSelectedIndex(-1);
-        //            String ProvNam = jComboProvinceFacility.getSelectedItem().toString();
-        //            st.executeQuery("SELECT distinct [district]\n"
-        //                    + "  FROM [ClaimsAppSysZvandiri].[dbo].[DistFacTab] WHERE [province] = \n" + "'" + ProvNam + "'");
-        //            ResultSet r = st.getResultSet();
-        //
-        //            while (r.next()) {
-        //
-        //                jComboDistrictFacility.addItem(r.getString("district"));
-        //            }
-        //
-        //            conn.close();
-        //        } catch (Exception e) {
-        //
-        //        }
-    }//GEN-LAST:event_jComboDistrictFacilityMouseEntered
-
-    private void jComboDistrictFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboDistrictFacilityActionPerformed
-        try {
-
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
-            Statement st = conn.createStatement();
-            Statement st1 = conn.createStatement();
-            int itemCount = jComboFacility.getItemCount();
-
-            for (int i = 0; i < itemCount; i++) {
-                jComboFacility.removeItemAt(0);
-            }
-            jComboFacility.setSelectedIndex(-1);
-            String FacilityNam = jComboDistrictFacility.getSelectedItem().toString();
-            st.executeQuery("SELECT distinct [facility]\n"
-                    + "  FROM [ClaimsAppSysZvandiri].[dbo].[DistFacTab] WHERE [district] = \n" + "'" + FacilityNam + "'");
-            ResultSet r = st.getResultSet();
-
-            while (r.next()) {
-                // jLabelFacDist.setText(r.getString(1));
-                jComboFacility.addItem(r.getString("facility"));
-            }
-
-        } catch (Exception e) {
-
-        }
-    }//GEN-LAST:event_jComboDistrictFacilityActionPerformed
-
-    private void jComboFacilityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboFacilityFocusGained
-
-    }//GEN-LAST:event_jComboFacilityFocusGained
-
-    private void jComboFacilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboFacilityMouseEntered
-        //        try {
-        //
-        //            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-        //                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + usrName + ";password=" + usrPass + ";");
-        //
-        //            Statement st = conn.createStatement();
-        //            Statement st1 = conn.createStatement();
-        //            int itemCount = jComboFacility.getItemCount();
-        //
-        //            for (int i = 0; i < itemCount; i++) {
-        //                jComboFacility.removeItemAt(0);
-        //            }
-        //            jComboFacility.setSelectedIndex(-1);
-        //            String FacilityNam = jComboDistrictFacility.getSelectedItem().toString();
-        //            st.executeQuery("SELECT distinct [facility]\n"
-        //                    + "  FROM [ClaimsAppSysZvandiri].[dbo].[DistFacTab] WHERE [district] = \n" + "'" + FacilityNam + "'");
-        //            ResultSet r = st.getResultSet();
-        //
-        //            while (r.next()) {
-        //                // jLabelFacDist.setText(r.getString(1));
-        //                jComboFacility.addItem(r.getString("facility"));
-        //            }
-        //
-        //        } catch (Exception e) {
-        //
-        //        }
-    }//GEN-LAST:event_jComboFacilityMouseEntered
-
-    private void jComboFacilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboFacilityMouseReleased
-
-    }//GEN-LAST:event_jComboFacilityMouseReleased
-
-    private void jComboFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboFacilityActionPerformed
-
-    }//GEN-LAST:event_jComboFacilityActionPerformed
-
     private void jMenuFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFileActionPerformed
 
     }//GEN-LAST:event_jMenuFileActionPerformed
@@ -6116,8 +6048,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private void jComboDonorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboDonorActionPerformed
         try {
             if (("D036 CDC-Zim-TTECH".equals(jComboDonor.getSelectedItem().toString()))
-                || ("D032 ZHI".equals(jComboDonor.getSelectedItem().toString()))
-                || ("D022 CDC".equals(jComboDonor.getSelectedItem().toString()))) {
+                    || ("D032 ZHI".equals(jComboDonor.getSelectedItem().toString()))
+                    || ("D022 CDC".equals(jComboDonor.getSelectedItem().toString()))) {
                 jLabelPrjCodeProgramming.setVisible(true);
                 jComboProjectCodeProgramming.setVisible(true);
             } else {
@@ -6184,6 +6116,158 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private void jTextFieldWk1MiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWk1MiscActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldWk1MiscActionPerformed
+
+    private void jButtonOkFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkFacilityActionPerformed
+        jTextFieldDialogWkSite.setText(jComboFacility.getSelectedItem().toString());
+        jDialogFacility.setVisible(false);
+    }//GEN-LAST:event_jButtonOkFacilityActionPerformed
+
+    private void jButtonCancelFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelFacilityActionPerformed
+        jDialogFacility.setVisible(false);
+    }//GEN-LAST:event_jButtonCancelFacilityActionPerformed
+
+    private void jComboProvinceFacilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProvinceFacilityMouseEntered
+        //        jComboDistrict.removeAllItems();
+        //        jComboFacility.removeAllItems();
+    }//GEN-LAST:event_jComboProvinceFacilityMouseEntered
+
+    private void jComboProvinceFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProvinceFacilityActionPerformed
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+
+            int itemCount = jComboDistrictFacility.getItemCount();
+
+            for (int i = 0; i < itemCount; i++) {
+                jComboDistrictFacility.removeItemAt(0);
+            }
+            jComboDistrictFacility.setSelectedIndex(-1);
+            String ProvNam = jComboProvinceFacility.getSelectedItem().toString();
+            st.executeQuery("SELECT distinct [district]\n"
+                    + "  FROM [ClaimsAppSysZvandiri].[dbo].[DistFacTab] WHERE [province] = \n" + "'" + ProvNam + "'");
+            ResultSet r = st.getResultSet();
+
+            while (r.next()) {
+
+                jComboDistrictFacility.addItem(r.getString("district"));
+            }
+
+            conn.close();
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_jComboProvinceFacilityActionPerformed
+
+    private void jComboProvinceFacilityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboProvinceFacilityKeyPressed
+
+    }//GEN-LAST:event_jComboProvinceFacilityKeyPressed
+
+    private void jComboDistrictFacilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboDistrictFacilityMouseEntered
+        //        try {
+        //
+        //            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+        //                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + usrName + ";password=" + usrPass + ";");
+        //
+        //            Statement st = conn.createStatement();
+        //
+        //            int itemCount = jComboDistrictFacility.getItemCount();
+        //
+        //            for (int i = 0; i < itemCount; i++) {
+        //                jComboDistrictFacility.removeItemAt(0);
+        //            }
+        //            jComboDistrictFacility.setSelectedIndex(-1);
+        //            String ProvNam = jComboProvinceFacility.getSelectedItem().toString();
+        //            st.executeQuery("SELECT distinct [district]\n"
+        //                    + "  FROM [ClaimsAppSysZvandiri].[dbo].[DistFacTab] WHERE [province] = \n" + "'" + ProvNam + "'");
+        //            ResultSet r = st.getResultSet();
+        //
+        //            while (r.next()) {
+        //
+        //                jComboDistrictFacility.addItem(r.getString("district"));
+        //            }
+        //
+        //            conn.close();
+        //        } catch (Exception e) {
+        //
+        //        }
+    }//GEN-LAST:event_jComboDistrictFacilityMouseEntered
+
+    private void jComboDistrictFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboDistrictFacilityActionPerformed
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+            Statement st1 = conn.createStatement();
+            int itemCount = jComboFacility.getItemCount();
+
+            for (int i = 0; i < itemCount; i++) {
+                jComboFacility.removeItemAt(0);
+            }
+            jComboFacility.setSelectedIndex(-1);
+            String FacilityNam = jComboDistrictFacility.getSelectedItem().toString();
+            st.executeQuery("SELECT distinct [facility]\n"
+                    + "  FROM [ClaimsAppSysZvandiri].[dbo].[DistFacTab] WHERE [district] = \n" + "'" + FacilityNam + "'");
+            ResultSet r = st.getResultSet();
+
+            while (r.next()) {
+                // jLabelFacDist.setText(r.getString(1));
+                jComboFacility.addItem(r.getString("facility"));
+            }
+
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_jComboDistrictFacilityActionPerformed
+
+    private void jComboFacilityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboFacilityFocusGained
+
+    }//GEN-LAST:event_jComboFacilityFocusGained
+
+    private void jComboFacilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboFacilityMouseEntered
+        //        try {
+        //
+        //            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+        //                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + usrName + ";password=" + usrPass + ";");
+        //
+        //            Statement st = conn.createStatement();
+        //            Statement st1 = conn.createStatement();
+        //            int itemCount = jComboFacility.getItemCount();
+        //
+        //            for (int i = 0; i < itemCount; i++) {
+        //                jComboFacility.removeItemAt(0);
+        //            }
+        //            jComboFacility.setSelectedIndex(-1);
+        //            String FacilityNam = jComboDistrictFacility.getSelectedItem().toString();
+        //            st.executeQuery("SELECT distinct [facility]\n"
+        //                    + "  FROM [ClaimsAppSysZvandiri].[dbo].[DistFacTab] WHERE [district] = \n" + "'" + FacilityNam + "'");
+        //            ResultSet r = st.getResultSet();
+        //
+        //            while (r.next()) {
+        //                // jLabelFacDist.setText(r.getString(1));
+        //                jComboFacility.addItem(r.getString("facility"));
+        //            }
+        //
+        //        } catch (Exception e) {
+        //
+        //        }
+    }//GEN-LAST:event_jComboFacilityMouseEntered
+
+    private void jComboFacilityMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboFacilityMouseReleased
+
+    }//GEN-LAST:event_jComboFacilityMouseReleased
+
+    private void jComboFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboFacilityActionPerformed
+
+    }//GEN-LAST:event_jComboFacilityActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -6277,6 +6361,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboProjectCodeProgramming;
     private javax.swing.JComboBox<String> jComboProvinceFacility;
     private com.toedter.calendar.JDateChooser jDateChooserDateRec;
+    private com.toedter.calendar.JDateChooser jDateChooserDialogActivityDateFrom;
+    private com.toedter.calendar.JDateChooser jDateChooserDialogActivityDateTo;
     private com.toedter.calendar.JDateChooser jDateTripFrom;
     private com.toedter.calendar.JDateChooser jDateTripTo;
     private javax.swing.JDialog jDialogAuthority;
@@ -6287,6 +6373,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JDialog jDialogWaiting;
     private javax.swing.JDialog jDialogWaitingEmail;
     private javax.swing.JLabel jLabeAccountCode;
+    private javax.swing.JLabel jLabeAccountCode1;
+    private javax.swing.JLabel jLabeAccountCode2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;
@@ -6503,7 +6591,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel21;
