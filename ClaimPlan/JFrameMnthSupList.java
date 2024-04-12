@@ -26,7 +26,7 @@ import javax.swing.Timer;
  */
 public class JFrameMnthSupList extends javax.swing.JFrame {
 
-    String ipAdd =    "localhost:14575"       ;
+    String ipAdd =    "ophidutilapp.southafricanorth.cloudapp.azure.com:16432"       ;
     String usrName = "appfin";
     String usrPass = "542ytDYvynv$TVYb";
     String provNam, usrGrp, logUsrProv;

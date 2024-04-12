@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="http://appsaas.southafricanorth.cloudapp.azure.com:8080/ZvandiriFinTest/ZvandiriFin" href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>OPHID Finance System</title>
+        <vendor>OPHID</vendor>
+        <homepage href="http://www.ophid.org"/>
+        <description>Zvandiri Finance System</description>
+        <description kind="short">Zvandiri Finance System</description>
+        <icon href="COYLogo.jpg" kind="splash"/>
+        <icon href="COYLogo.jpg" kind="default"/>
+    </information>
+    <update check="always"/>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <j2se java-vm-args="-Xms2048m  -Xmx3012m -Djava.security.policy=applet.policy" version="1.8+"/>
+        <jar href="ZvandiriFinSys.jar" main="true"/>
+        <jar href="lib/AbsoluteLayout.jar"/>
+        <jar href="lib/TimeChooser.jar"/>
+        <jar href="lib/activation-1.1-rev-1.jar"/>
+        <jar href="lib/javax.mail-api-1.6.2.jar"/>
+        <jar href="lib/itextpdf-5.4.0.jar"/>
+        <jar href="lib/javax.mail-1.6.2.jar"/>
+        <jar href="lib/jcalendar-1.4.jar"/>
+        <jar href="lib/poi-3.9.jar"/>
+        <extension href="jnlpcomponent1.jnlp"/>
+    </resources>
+    <application-desc main-class="ClaimAppendix1.JFrameFinSysLogin">
+    </application-desc>
+</jnlp>

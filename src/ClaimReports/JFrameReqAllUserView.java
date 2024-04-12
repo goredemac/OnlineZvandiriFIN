@@ -64,7 +64,7 @@ public class JFrameReqAllUserView extends javax.swing.JFrame {
     String checker = "";
     String mailUsrNam = "finance@ophid.co.zw";
     String mailUsrPass = "MgqM5utyUr43x#";
-    String ipAdd =    "localhost:14575"       ;
+    String ipAdd =    "ophidutilapp.southafricanorth.cloudapp.azure.com:16432"       ;
     String usrName = "appfin";
     String usrPass = "542ytDYvynv$TVYb";
     SimpleDateFormat df = new SimpleDateFormat("yyyy");

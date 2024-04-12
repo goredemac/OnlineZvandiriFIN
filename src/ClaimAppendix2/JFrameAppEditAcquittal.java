@@ -91,7 +91,7 @@ public class JFrameAppEditAcquittal extends javax.swing.JFrame {
             incidentalAll, unProvedAll, date1, date2, usrnam, searchRef, authUsrNam, authUsrNamAll,
             authNam1, authNam2, regDocVersion, oldRegDocVersion, usrGrp, imgAttVer, actVersion, ackStatus, wkNum,
             paraone, paratwo, parathree, wkNumRep, curSta, docVerClearOld, docVerClearNew, lowDate, empOff;
-    String ipAdd = "localhost:14575";
+    String ipAdd = "ophidutilapp.southafricanorth.cloudapp.azure.com:16432";
     String usrName = "appfin";
     String usrPass = "542ytDYvynv$TVYb";
     String mailUsrNam = "finance@ophid.co.zw";

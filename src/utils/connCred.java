@@ -16,7 +16,7 @@ public class connCred {
 //    public String usrPFin = "542ytDYvynv$TVYb";
 //    public String usrNHR = "apphr";
     public String usrPHR = "287HjrAP%xMBx8Azy";
-    public String ipAdd = "localhost:14575";
+    public String ipAdd = "ophidutilapp.southafricanorth.cloudapp.azure.com:16432";
     public String usrNFin = "appfin";
     public String usrPFin = "542ytDYvynv$TVYb";
     public String usrNHR = "apphr";

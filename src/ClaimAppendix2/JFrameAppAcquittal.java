@@ -46,6 +46,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.sql.SQLException;
 import java.awt.Color;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.connCred;
@@ -94,6 +96,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     double wk4Amt = 0;
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
+   
     DefaultTableModel model, modelAcq, modelTrip, modelAtt;
     String sendTo, createUsrNam, supUsrMail, breakfastAll, lunchAll, lunchNPAll, lunchPAll, dinnerAll,
             incidentalAll, unProvedAll, provedAll, date1, date2, usrnam, searchRef, authUsrNam, authUsrNamAll,
@@ -481,6 +484,204 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             //  JOptionPane.showMessageDialog(null, "Failed to Connect to Database (Province).Try Again", "Error Connection", JOptionPane.WARNING_MESSAGE);
             System.out.println(e);
         }
+    }
+
+    void budCreate() {
+        String taskAccCode = jComboAccountCode.getSelectedItem().toString();
+        String taskPartsAccCode[] = taskAccCode.split(" ", 2);
+        accCode = taskPartsAccCode[0];
+        accCodeName = taskPartsAccCode[1];
+
+        taskDonor = jComboDonor.getSelectedItem().toString();
+        String taskPartsDonor[] = taskDonor.split(" ", 2);
+        donor = taskPartsDonor[0];
+        donorName = taskPartsDonor[1];
+
+        String taskPrjCode = jComboProjectCodeGL.getSelectedItem().toString();
+        String taskPartsPrjCode[] = taskPrjCode.split(" ", 2);
+        prjCode = taskPartsPrjCode[0];
+        prjCodeName = taskPartsPrjCode[1];
+
+        String taskPrjCodeProg = jComboProjectCodeProgramming.getSelectedItem().toString();
+        String taskPartsPrjCodeProg[] = taskPrjCodeProg.split(" ", 2);
+        prjProgCode = taskPartsPrjCodeProg[0];
+        prjProgCodeName = taskPartsPrjCodeProg[1];
+
+        String taskBudLine = jComboBudMainCode.getSelectedItem().toString();
+        String taskPartsBudLine[] = taskBudLine.split(" ", 2);
+        budLine = taskPartsBudLine[0];
+        budLineName = taskPartsBudLine[1];
+
+        subBudLine = "S071";
+
+        budcode = accCode + "/ZW/" + donor + "/" + prjCode + "/" + grantCode + "/" + budLine + "/" + subBudLine + "/NAT1";
+
+        String taskBudCode = budcode;
+        String taskPartsBudCode[] = taskBudCode.split("/", 5);
+        String budCodeStr = taskPartsBudCode[3];
+
+//        System.out.println("Budcode " + accCode + "/ZW/" + donor + "/" + prjCode + "/" + grantCode + "/" + budLine + "/" + subBudLine + "/NAT1" + "  " + accCodeName);
+        System.out.println("kvll " + budcode);
+        System.out.println("kvllgg " + budCodeStr);
+    }
+
+    void addWkItmLine() {
+        try {
+
+            String Wk1Brk = "0.00";
+            String Wk1Lnch = "0.00";
+            String Wk1Dinner = "0.00";
+            String Wk1UnProvedAcc = "0.00";
+            String Wk1Inc = "0.00";
+            String Wk1Misc = "0.00";
+            String Wk1MiscDesc = "";
+            String WkDTBrk = "0.00";
+            String WkDTLnch = "0.00";
+            String WkDTDinner = "0.00";
+            String WkRTBrk = "0.00";
+            String WkRTLnch = "0.00";
+            String WkRTDinner = "0.00";
+            String Wk1ProvedAcc = "0.00";
+            String WkRTUnProvedAcc = "0.00";
+            String WkRTProvedAcc = "0.00";
+            String WkRTInc = "0.00";
+
+            if (jDateChooserDialogActivityDateFrom.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Date cannot be blank. Please check your dates");
+                jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                jDateChooserDialogActivityDateFrom.setFocusable(true);
+            } else if (jDateChooserDialogActivityDateTo.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Date cannot be blank. Please check your dates");
+                jDateChooserDialogActivityDateTo.requestFocusInWindow();
+                jDateChooserDialogActivityDateTo.setFocusable(true);
+            
+            }
+
+            try {
+                if (jCheckBoxDialogWk1BrkFast.isSelected()) {
+                    Wk1Brk = breakfastAll;
+                } else {
+                    Wk1Brk = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1Lunch.isSelected()) {
+                    Wk1Lnch = lunchAll;
+                } else {
+                    Wk1Lnch = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1Dinner.isSelected()) {
+                    Wk1Dinner = dinnerAll;
+                } else {
+                    Wk1Dinner = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1AccUnProved.isSelected()) {
+                    Wk1UnProvedAcc = unProvedAll;
+                } else {
+                    Wk1UnProvedAcc = "0.00";
+                }
+                if (jCheckBoxDialogWk1AccProved.isSelected()) {
+                    Wk1ProvedAcc = provedAll;
+                } else {
+                    Wk1ProvedAcc = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1Inc.isSelected()) {
+                    Wk1Inc = incidentalAll;
+                } else {
+                    Wk1Inc = "0.00";
+                }
+
+                if (jCheckBoxDialogWk1Misc.isSelected()) {
+                    Wk1MiscDesc = jTextFieldWk1Misc.getText();
+                    Wk1Misc = jTextFieldWk1MiscAmt.getText();
+                } else {
+                    Wk1Misc = "0.00";
+                }
+
+                if (jDateChooserDialogActivityDateFrom.getDate() == null) {
+                    JOptionPane.showMessageDialog(this, "Date cannot be blank. Please check your dates");
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if (jDateChooserDialogActivityDateTo.getDate() == null) {
+                    JOptionPane.showMessageDialog(this, "Date cannot be blank. Please check your dates");
+                    jDateChooserDialogActivityDateTo.requestFocusInWindow();
+                    jDateChooserDialogActivityDateTo.setFocusable(true);
+                } else if (jDateChooserDialogActivityDateFrom.getDate().after(jDateChooserDialogActivityDateTo.getDate())) {
+                    JOptionPane.showMessageDialog(this, "End Date cannot be lower than start date.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    jDateChooserDialogActivityDateFrom.setDate(null);
+                    jDateChooserDialogActivityDateTo.setDate(null);
+                    jDateChooserDialogActivityDateFrom.requestFocusInWindow();
+                    jDateChooserDialogActivityDateFrom.setFocusable(true);
+                } else if ("".equals(jTextFieldWk1DialogActivityDesc.getText())) {
+                    JOptionPane.showMessageDialog(this, "Activity description cannot be blank. Please check and correct");
+                    jTextFieldWk1DialogActivityDesc.requestFocusInWindow();
+                    jTextFieldWk1DialogActivityDesc.setFocusable(true);
+                } else {
+
+                    DateFormat dfYear = new SimpleDateFormat("yyyy");
+                    DateFormat dfMon = new SimpleDateFormat("MM");
+                    DateFormat dfDay = new SimpleDateFormat("dd");
+                    int yearF = Integer.parseInt(dfYear.format(jDateChooserDialogActivityDateFrom.getDate()));
+                    int monF = Integer.parseInt(dfMon.format(jDateChooserDialogActivityDateFrom.getDate()));
+                    int dayF = Integer.parseInt(dfDay.format(jDateChooserDialogActivityDateFrom.getDate()));
+                    int yearT = Integer.parseInt(dfYear.format(jDateChooserDialogActivityDateTo.getDate()));
+                    int monT = Integer.parseInt(dfMon.format(jDateChooserDialogActivityDateTo.getDate()));
+                    int dayT = Integer.parseInt(dfDay.format(jDateChooserDialogActivityDateTo.getDate()));
+
+                    LocalDate start = LocalDate.of(yearF, monF, dayF);
+                    LocalDate end = LocalDate.of(yearT, monT, dayT).minusDays(1);
+
+                    if ((!"D036 CDC-Zim-TTECH".equals(taskDonor))
+                            && (!"D032 ZHI".equals(taskDonor))
+                            && (!"D022 CDC".equals(taskDonor))) {
+                        String donorName = jComboDonor.getSelectedItem().toString();
+                        prjProgCodeName = "";
+                        prjProgCode = "";
+
+                    }
+
+                
+                        modelAcq.addRow(new Object[]{dfDate.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
+                            prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),  WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                            Wk1ProvedAcc});
+
+                        Calendar c = Calendar.getInstance();
+                        Date startDate = jDateChooserDialogActivityDateFrom.getDate();
+
+                        c.setTime(startDate);
+                        c.add(Calendar.DATE, 1);
+                        startDate = c.getTime();
+
+                        for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+                            c.setTime(startDate);
+
+                            modelAcq.addRow(new Object[]{dfDate.format(startDate), accCodeName, donorName, prjCodeName,
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),  Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc});
+                            c.add(Calendar.DAY_OF_MONTH, 1);
+                            startDate = c.getTime();
+
+                        }
+
+                        modelAcq.addRow(new Object[]{dfDate.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                            prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),  Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
+                            WkRTProvedAcc});
+                    
+//                    addItem();
+//                    resetField();
+
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     void findProvince() {
@@ -6266,7 +6467,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboFacilityActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        budCreate();
+        addWkItmLine();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
