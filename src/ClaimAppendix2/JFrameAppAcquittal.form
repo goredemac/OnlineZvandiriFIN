@@ -3086,7 +3086,7 @@
                 <Container class="javax.swing.JPanel" name="jPanelActivityInfo">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="5c" green="eb" red="ed" type="rgb"/>
+                      <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
@@ -3433,6 +3433,9 @@
                       <SubComponents>
                         <Component class="javax.swing.JCheckBox" name="jCheckBoxDialogWk1AccUnProved">
                           <Properties>
+                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                              <ComponentRef name="buttonGroupAccAcq"/>
+                            </Property>
                             <Property name="text" type="java.lang.String" value=" Unproved "/>
                           </Properties>
                           <Constraints>
@@ -3443,6 +3446,9 @@
                         </Component>
                         <Component class="javax.swing.JCheckBox" name="jCheckBoxDialogWk1AccProved">
                           <Properties>
+                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                              <ComponentRef name="buttonGroupAccAcq"/>
+                            </Property>
                             <Property name="text" type="java.lang.String" value=" Proved "/>
                           </Properties>
                           <Constraints>
@@ -3453,6 +3459,9 @@
                         </Component>
                         <Component class="javax.swing.JCheckBox" name="jCheckBoxNoAcc">
                           <Properties>
+                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                              <ComponentRef name="buttonGroupAccAcq"/>
+                            </Property>
                             <Property name="text" type="java.lang.String" value="No Acc "/>
                           </Properties>
                           <Constraints>
@@ -3476,22 +3485,25 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton1">
+                    <Component class="javax.swing.JButton" name="jButtonDeleteActivity">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="delete"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDeleteActivityActionPerformed"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="130" y="490" width="90" height="30"/>
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton2">
+                    <Component class="javax.swing.JButton" name="jButtonAddActivity">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Add"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAddActivityActionPerformed"/>
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

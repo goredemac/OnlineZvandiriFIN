@@ -726,9 +726,6 @@
               <SubComponents>
                 <Component class="javax.swing.JCheckBox" name="jCheckBoxDialogWk1AccUnProved">
                   <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="buttonGroupAcc"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value=" Unproved Acc"/>
                   </Properties>
                   <Constraints>
@@ -739,9 +736,6 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="jCheckBoxDialogWk1AccProved">
                   <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="buttonGroupAcc"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value=" Proved Acc"/>
                   </Properties>
                   <Constraints>
@@ -752,9 +746,6 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="jCheckBoxNoAcc">
                   <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="buttonGroupAcc"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="No Acc Required"/>
                   </Properties>
                   <Constraints>

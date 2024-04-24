@@ -96,7 +96,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     double wk4Amt = 0;
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
-   
+
     DefaultTableModel model, modelAcq, modelTrip, modelAtt;
     String sendTo, createUsrNam, supUsrMail, breakfastAll, lunchAll, lunchNPAll, lunchPAll, dinnerAll,
             incidentalAll, unProvedAll, provedAll, date1, date2, usrnam, searchRef, authUsrNam, authUsrNamAll,
@@ -174,6 +174,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jButtonChooseAtt3.setText("Select Other Documents");
         jButtonDeleteAtt3.setText("Delete Other Documents");
         jLabelVehReg.setText("<html>Vehicle Reg No. </html>");
+        jTextFieldWk1Misc.setEditable(false);
+        jTextFieldWk1MiscAmt.setEditable(false);
 //        jTableTripDetails.getColumnModel().getColumn(1).setMinWidth(0);
 //        jTableTripDetails.getColumnModel().getColumn(1).setMaxWidth(0);
 
@@ -233,9 +235,10 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jButtonDeleteAtt3.setText("Delete Other Documents");
         jLabelVehReg.setText("<html>Vehicle Reg No. </html>");
         jTabbedPaneAcqAtt.setEnabledAt(1, false);
+
 //        jTableTripDetails.getColumnModel().getColumn(1).setMinWidth(0);
 //        jTableTripDetails.getColumnModel().getColumn(1).setMaxWidth(0);
-
+        disableField();
         findUser();
         findUserGrp();
         findBankName();
@@ -280,7 +283,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
 
-            ResultSet r = st.executeQuery("SELECT Lunch,Dinner,Incidental,Unproved_Accommodation "
+            ResultSet r = st.executeQuery("SELECT Lunch,Dinner,Incidental,Unproved_Accommodation,Proved_Accommodation "
                     + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAllowanceTab] ");
 
             while (r.next()) {
@@ -289,6 +292,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 dinnerAll = r.getString(2);
                 incidentalAll = r.getString(3);
                 unProvedAll = r.getString(4);
+                provedAll = r.getString(5);
 
             }
             //                 conn.close();
@@ -554,12 +558,12 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Date cannot be blank. Please check your dates");
                 jDateChooserDialogActivityDateTo.requestFocusInWindow();
                 jDateChooserDialogActivityDateTo.setFocusable(true);
-            
+
             }
 
             try {
                 if (jCheckBoxDialogWk1BrkFast.isSelected()) {
-                    Wk1Brk = breakfastAll;
+                    Wk1Brk = "0.00";
                 } else {
                     Wk1Brk = "0.00";
                 }
@@ -642,11 +646,14 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                         prjProgCode = "";
 
                     }
-
-                
+                    if (!(dfDate.format(jDateChooserDialogActivityDateFrom.getDate()).equals(dfDate.format(jDateChooserDialogActivityDateTo.getDate())))) {
                         modelAcq.addRow(new Object[]{dfDate.format(jDateChooserDialogActivityDateFrom.getDate()), accCodeName, donorName, prjCodeName,
-                            prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),  WkDTBrk, WkDTLnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                            Wk1ProvedAcc});
+                            prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),
+                            Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                            Wk1ProvedAcc, Double.toString((Double.parseDouble(Wk1Brk) + Double.parseDouble(Wk1Lnch)
+                            + Double.parseDouble(Wk1Dinner) + Double.parseDouble(Wk1Inc)
+                            + Double.parseDouble(Wk1Misc) + Double.parseDouble(Wk1UnProvedAcc)
+                            + Double.parseDouble(Wk1ProvedAcc)))});
 
                         Calendar c = Calendar.getInstance();
                         Date startDate = jDateChooserDialogActivityDateFrom.getDate();
@@ -655,24 +662,42 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                         c.add(Calendar.DATE, 1);
                         startDate = c.getTime();
 
+                        //   System.out.println("ss "+dfDate.format(jDateChooserDialogActivityDateFrom.getDate()).equals(dfDate.format(jDateChooserDialogActivityDateTo.getDate())));
                         for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
                             c.setTime(startDate);
 
                             modelAcq.addRow(new Object[]{dfDate.format(startDate), accCodeName, donorName, prjCodeName,
-                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),  Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
-                                Wk1ProvedAcc});
+                                prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),
+                                Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                                Wk1ProvedAcc, Double.toString((Double.parseDouble(Wk1Brk) + Double.parseDouble(Wk1Lnch)
+                                + Double.parseDouble(Wk1Dinner) + Double.parseDouble(Wk1Inc)
+                                + Double.parseDouble(Wk1Misc) + Double.parseDouble(Wk1UnProvedAcc)
+                                + Double.parseDouble(Wk1ProvedAcc)))});
                             c.add(Calendar.DAY_OF_MONTH, 1);
                             startDate = c.getTime();
 
                         }
 
                         modelAcq.addRow(new Object[]{dfDate.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
-                            prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),  Wk1Brk, WkRTLnch, WkRTDinner, WkRTInc, Wk1MiscDesc, Wk1Misc, WkRTUnProvedAcc,
-                            WkRTProvedAcc});
-                    
+                            prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),
+                            Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                            Wk1ProvedAcc, Double.toString((Double.parseDouble(Wk1Brk) + Double.parseDouble(Wk1Lnch)
+                            + Double.parseDouble(Wk1Dinner) + Double.parseDouble(Wk1Inc)
+                            + Double.parseDouble(Wk1Misc) + Double.parseDouble(Wk1UnProvedAcc)
+                            + Double.parseDouble(Wk1ProvedAcc)))});
+                    } else {
+                        modelAcq.addRow(new Object[]{dfDate.format(jDateChooserDialogActivityDateTo.getDate()), accCodeName, donorName, prjCodeName,
+                            prjProgCode, prjProgCodeName, budLineName, budcode, jTextFieldDialogWkSite.getText(), jTextFieldWk1DialogActivityDesc.getText(),
+                            Wk1Brk, Wk1Lnch, Wk1Dinner, Wk1Inc, Wk1MiscDesc, Wk1Misc, Wk1UnProvedAcc,
+                            Wk1ProvedAcc, Double.toString((Double.parseDouble(Wk1Brk) + Double.parseDouble(Wk1Lnch)
+                            + Double.parseDouble(Wk1Dinner) + Double.parseDouble(Wk1Inc)
+                            + Double.parseDouble(Wk1Misc) + Double.parseDouble(Wk1UnProvedAcc)
+                            + Double.parseDouble(Wk1ProvedAcc)))});
+                    }
+                    mainPageTotUpdateAcq();
+
 //                    addItem();
 //                    resetField();
-
                 }
 
             } catch (Exception e) {
@@ -1301,6 +1326,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 }
 
                 jTextAreaNamTravel.setText("");
+
                 recMinMax();
                 fetchdata();
                 mainPageTotUpdate();
@@ -2194,6 +2220,14 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         modelTrip.getDataVector().removeAllElements();
         modelTrip.fireTableDataChanged();
+    }
+
+    void disableField() {
+        jTextFieldWk1Misc.setEditable(false);
+        jTextFieldWk1MiscAmt.setEditable(false);
+        jCheckBoxDialogWk1BrkFast.setEnabled(false);
+        jCheckBoxDialogWk1AccProved.setEnabled(false);
+        jCheckBoxNoAcc.setEnabled(false);
     }
 
     void addTrips() {
@@ -3190,8 +3224,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jCheckBoxDialogWk1AccProved = new javax.swing.JCheckBox();
         jCheckBoxNoAcc = new javax.swing.JCheckBox();
         jLabelWk1Misc1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonDeleteActivity = new javax.swing.JButton();
+        jButtonAddActivity = new javax.swing.JButton();
         jDateChooserDialogActivityDateFrom = new com.toedter.calendar.JDateChooser();
         jDateChooserDialogActivityDateTo = new com.toedter.calendar.JDateChooser();
         jLabeAccountCode1 = new javax.swing.JLabel();
@@ -4522,7 +4556,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         jPanel6.setLayout(null);
 
-        jPanelActivityInfo.setBackground(new java.awt.Color(237, 235, 92));
+        jPanelActivityInfo.setBackground(new java.awt.Color(204, 204, 204));
         jPanelActivityInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         jPanelActivityInfo.setLayout(null);
 
@@ -4692,14 +4726,17 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
         jPanel13.setLayout(null);
 
+        buttonGroupAccAcq.add(jCheckBoxDialogWk1AccUnProved);
         jCheckBoxDialogWk1AccUnProved.setText(" Unproved ");
         jPanel13.add(jCheckBoxDialogWk1AccUnProved);
         jCheckBoxDialogWk1AccUnProved.setBounds(0, 5, 80, 21);
 
+        buttonGroupAccAcq.add(jCheckBoxDialogWk1AccProved);
         jCheckBoxDialogWk1AccProved.setText(" Proved ");
         jPanel13.add(jCheckBoxDialogWk1AccProved);
         jCheckBoxDialogWk1AccProved.setBounds(100, 5, 80, 21);
 
+        buttonGroupAccAcq.add(jCheckBoxNoAcc);
         jCheckBoxNoAcc.setText("No Acc ");
         jPanel13.add(jCheckBoxNoAcc);
         jCheckBoxNoAcc.setBounds(190, 5, 80, 21);
@@ -4712,18 +4749,23 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jPanelActivityInfo.add(jLabelWk1Misc1);
         jLabelWk1Misc1.setBounds(5, 390, 160, 20);
 
-        jButton1.setText("delete");
-        jPanelActivityInfo.add(jButton1);
-        jButton1.setBounds(130, 490, 90, 30);
-
-        jButton2.setText("Add");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDeleteActivity.setText("delete");
+        jButtonDeleteActivity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonDeleteActivityActionPerformed(evt);
             }
         });
-        jPanelActivityInfo.add(jButton2);
-        jButton2.setBounds(10, 490, 90, 30);
+        jPanelActivityInfo.add(jButtonDeleteActivity);
+        jButtonDeleteActivity.setBounds(130, 490, 90, 30);
+
+        jButtonAddActivity.setText("Add");
+        jButtonAddActivity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActivityActionPerformed(evt);
+            }
+        });
+        jPanelActivityInfo.add(jButtonAddActivity);
+        jButtonAddActivity.setBounds(10, 490, 90, 30);
 
         jDateChooserDialogActivityDateFrom.setDateFormatString("yyyy-MM-dd");
         jPanelActivityInfo.add(jDateChooserDialogActivityDateFrom);
@@ -5604,6 +5646,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
     private void jTextAcqRegNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextAcqRegNumActionPerformed
         regInitCheck();
+        disableField();
     }//GEN-LAST:event_jTextAcqRegNumActionPerformed
 
     private void jTextAcqRegNumFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextAcqRegNumFocusLost
@@ -6301,16 +6344,17 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
     private void jCheckBoxDialogWk1MiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDialogWk1MiscActionPerformed
         if (jCheckBoxDialogWk1Misc.isSelected()) {
-            jTextFieldWk1Misc.setVisible(true);
-            jLabelWk1Misc.setVisible(true);
-            jLabelWk1MiscAmt.setVisible(true);
-            jTextFieldWk1MiscAmt.setVisible(true);
+            jTextFieldWk1Misc.setEditable(true);
+//            jLabelWk1Misc.setVisible(true);
+//            jLabelWk1MiscAmt.setVisible(true);
+            jTextFieldWk1MiscAmt.setEditable(true);
         } else {
-            jTextFieldWk1Misc.setVisible(false);
-            jLabelWk1Misc.setVisible(false);
+            jTextFieldWk1Misc.setEditable(false);
+//            jLabelWk1Misc.setVisible(false);
             jTextFieldWk1Misc.setText("");
-            jLabelWk1MiscAmt.setVisible(false);
-            jTextFieldWk1MiscAmt.setVisible(false);
+            jTextFieldWk1MiscAmt.setText("");
+//            jLabelWk1MiscAmt.setVisible(false);
+            jTextFieldWk1MiscAmt.setEditable(false);
         }
     }//GEN-LAST:event_jCheckBoxDialogWk1MiscActionPerformed
 
@@ -6421,7 +6465,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }//GEN-LAST:event_jComboDistrictFacilityActionPerformed
 
@@ -6466,10 +6510,36 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jComboFacilityActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonAddActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActivityActionPerformed
         budCreate();
         addWkItmLine();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonAddActivityActionPerformed
+
+    private void jButtonDeleteActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActivityActionPerformed
+        DefaultTableModel model = (DefaultTableModel) this.jTableActivityAcq.getModel();
+        if (jTableActivityAcq.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please note that they are no records to delete.");
+            jButtonDeleteActivity.requestFocusInWindow();
+            jButtonDeleteActivity.setFocusable(true);
+        } else {
+            int selectedOption = JOptionPane.showConfirmDialog(null,
+                    "Do you want to delete selected activity line?",
+                    "Choose",
+                    JOptionPane.YES_NO_OPTION);
+            if (selectedOption == JOptionPane.YES_OPTION) {
+
+                int[] rows = jTableActivityAcq.getSelectedRows();
+                for (int i = 0; i < rows.length; i++) {
+                    model.removeRow(rows[i] - i);
+                }
+            } else {
+                jButtonDeleteActivity.requestFocusInWindow();
+                jButtonDeleteActivity.setFocusable(true);
+            }
+        }
+        //mainPageTotUpdate();
+        mainPageTotUpdateAcq();
+    }//GEN-LAST:event_jButtonDeleteActivityActionPerformed
 
     /**
      * @param args the command line arguments
@@ -6520,9 +6590,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroupChange;
     private javax.swing.ButtonGroup buttonGroupLunch;
     private javax.swing.ButtonGroup buttonGroupPayRec;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonAddActivity;
     private javax.swing.JButton jButtonAuthAllCancel;
     private javax.swing.JButton jButtonAuthAllOk;
     private javax.swing.JButton jButtonAuthCancel;
@@ -6534,6 +6603,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonChooseAtt2;
     private javax.swing.JButton jButtonChooseAtt3;
     private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonDeleteActivity;
     private javax.swing.JButton jButtonDeleteAtt1;
     private javax.swing.JButton jButtonDeleteAtt2;
     private javax.swing.JButton jButtonDeleteAtt3;
