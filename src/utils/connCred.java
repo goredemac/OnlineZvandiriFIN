@@ -11,7 +11,7 @@ package utils;
  */
 public class connCred {
 
-//    public String ipAdd = "appsaas.southafricanorth.cloudapp.azure.com:14575";
+//    public String ipAdd = "ophidutilapp.southafricanorth.cloudapp.azure.com:16432";
 //    public String usrNFin = "appfin";
 //    public String usrPFin = "542ytDYvynv$TVYb";
 //    public String usrNHR = "apphr";

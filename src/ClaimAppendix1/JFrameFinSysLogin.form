@@ -342,7 +342,7 @@
               <Font name="Times New Roman" size="30" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Zvandiri FIN SYSTEM "/>
+            <Property name="text" type="java.lang.String" value="Zvandiri FIN SYSTEM - TEST SYSTEM"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

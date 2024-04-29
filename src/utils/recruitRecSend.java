@@ -510,7 +510,7 @@ public class recruitRecSend {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(c.FinMailUsrN));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("central_finance@ophid.co.zw"));
+                    InternetAddress.parse(c.FinGrpMail));
             message.setSubject(mailTitle);
 
             DataSource fds;

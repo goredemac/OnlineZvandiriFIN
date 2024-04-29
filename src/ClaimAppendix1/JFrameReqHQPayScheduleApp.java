@@ -62,7 +62,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
     connCred c = new connCred();
     PreparedStatement pst = null;
     PreparedStatement pst1 = null;
-    DefaultTableModel model, modelBank;
+    DefaultTableModel modelSummary, modelDetailed;
     int itmNum = 1;
     int month, finyear;
     int batVer = 1;
@@ -85,8 +85,8 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
         initComponents();
         showDate();
         showTime();
-        model = (DefaultTableModel) jTableActivityFinSchedule.getModel();
-        modelBank = (DefaultTableModel) jTableActivityFinBankSchedule.getModel();
+        modelSummary = (DefaultTableModel) jTableActivityFinSummarySch.getModel();
+        modelDetailed = (DefaultTableModel) jTableActivityFinDetailedSch.getModel();
         computerName();
         folderCreate();
 
@@ -96,8 +96,8 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
         initComponents();
         showDate();
         showTime();
-        model = (DefaultTableModel) jTableActivityFinSchedule.getModel();
-        modelBank = (DefaultTableModel) jTableActivityFinBankSchedule.getModel();
+        modelSummary = (DefaultTableModel) jTableActivityFinSummarySch.getModel();
+        modelDetailed = (DefaultTableModel) jTableActivityFinDetailedSch.getModel();
         jLabelEmp.setVisible(false);
         jLabelEmp.setText(usrLogNum);
 
@@ -105,7 +105,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
         findUserGrp();
         computerName();
         folderCreate();
-        
+
         jButtonDisplaySpecialAcqResults.setVisible(false);
         jButtonGenExcelSpecialAcquittal.setVisible(false);
 
@@ -137,7 +137,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
 
     }
 
-  void findUserGrp() {
+    void findUserGrp() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -152,7 +152,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -434,16 +434,16 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
     }
 
     void clearTable() {
-        int rowCount = model.getRowCount();
+        int rowCount = modelSummary.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
-            model.removeRow(i);
+            modelSummary.removeRow(i);
         }
 
-        int rowCountBank = modelBank.getRowCount();
+        int rowCountBank = modelDetailed.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
-            modelBank.removeRow(i);
+            modelDetailed.removeRow(i);
         }
     }
 
@@ -455,46 +455,55 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
-            st.executeQuery("SELECT 'Prepayment' Type,'' \"Reference Nbr\",'MAIN' Branch,CONVERT(varchar(20), GETDATE(), 103) \"Application Date\", "
-                    + "concat(MONTH(GETDATE()),'-', YEAR(GETDATE())) \"Application Period\", concat(a.SERIAL,' ',a.REF_NUM) \"Payment Ref\","
-                    + "VENDOR_NUM \"Vendor Num\", IIF(a.EMP_BNK_NAM='Mukuru', 'Cash', 'Bank') 'Payment Method','' 'Cash Account','USD' 'Currency',"
-                    + "a.ACT_MAIN_PUR Description, (sum(b.BRK_AMT) + sum(b.LNC_AMT) +sum(b.DIN_AMT) + sum(b.INC_AMT) + sum(b.MSC_AMT)+  sum(b.ACC_PRO_AMT) +  sum(b.ACC_UNPROV_AMT)) 'Payment Amount' ,"
-                    + "'USD' 'Currency ID' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a  join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b "
-                    + "on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA  join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c "
-                    + "on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM and b.ACT_REC_STA = c.ACT_REC_STA join [ClaimsAppSysZvandiri].[dbo].[EmpBankDetTab] d "
-                    + "on a.EMP_NUM=d.EMP_NUM where c.DOC_STATUS='HODApprove'  and a.ACT_REC_STA = 'A' and a.SERIAL = 'R' and a.REF_NUM not in "
-                    + "(SELECT distinct  REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS in ('Paid','Not Paid')) "
-                    + "group by a.SERIAL,a.REF_NUM,a.REF_DAT,VENDOR_NUM,a.EMP_BNK_NAM,a.ACT_MAIN_PUR");
+            st.executeQuery("SELECT a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),"
+                    + "a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,'Refer to activity detail sheet',"
+                    + "a.ACT_MAIN_PUR, sum(b.ACC_UNPROV_AMT),SUM(b.LNC_AMT) ,SUM(b.DIN_AMT),SUM(b.INC_AMT),"
+                    + "SUM(b.MSC_AMT), (sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT)+  sum(b.INC_AMT) + "
+                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and "
+                    + "a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA  inner "
+                    + "join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM "
+                    + "and b.ACT_REC_STA = c.ACT_REC_STA where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' "
+                    + "and a.SERIAL = 'R' and a.REF_NUM not in (SELECT distinct  REF_NUM "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS in ('Paid','Not Paid')) "
+                    + "group by a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM,"
+                    + "a.ACC_NUM,a.EMP_PROV,a.BUD_COD,a.ACT_MAIN_PUR");
 
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                model.insertRow(model.getRowCount(), new Object[]{r.getString(1), r.getString(2), r.getString(3),
+                modelSummary.insertRow(modelSummary.getRowCount(), new Object[]{r.getString(1), r.getString(2), r.getString(3),
                     r.getString(4), r.getString(5), r.getString(6), r.getString(7), r.getString(8), r.getString(9),
-                    r.getString(10), r.getString(11), r.getString(12), r.getString(13)});
+                    r.getString(10), r.getString(11), r.getString(12), r.getString(13), r.getString(14),
+                    r.getString(15), r.getString(16), r.getString(17)});
 
             }
 
-            st1.executeQuery("SELECT a.EMP_NAM,a.ACC_NUM, (sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT) + "
-                    + "sum(b.INC_AMT)+sum(b.MSC_AMT)  + sum(b.ACC_PRO_AMT) + sum(b.ACC_UNPROV_AMT)) 'Payment Amount' ,"
-                    + " concat('Per Diems ',a.EMP_NAM) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
-                    + " join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM "
-                    + "and a.ACT_REC_STA = b.ACT_REC_STA  join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c "
-                    + "on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM and b.ACT_REC_STA = c.ACT_REC_STA "
-                    + "join [ClaimsAppSysZvandiri].[dbo].[EmpBankDetTab] d on a.EMP_NUM=d.EMP_NUM "
-                    + "where c.DOC_STATUS='HODApprove'  and a.ACT_REC_STA = 'A' and a.SERIAL = 'R' and a.REF_NUM "
-                    + "not in (SELECT distinct  REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' "
-                    + "and STATUS in ('Paid','Not Paid')) group by a.EMP_NAM,a.ACC_NUM order by 1");
+            st1.executeQuery("SELECT  a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM, "
+                    + "d.BNK_CODE ,a.ACC_NUM,a.EMP_PROV,b.ACT_DATE, b.[BUD_CODE] ,b.ACT_DESC,"
+                    + "b.ACC_UNPROV_AMT, SUM(b.LNC_AMT) ,SUM(b.DIN_AMT),SUM(b.INC_AMT),b.MSC_ACT,SUM(b.MSC_AMT), "
+                    + "(sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT) + sum(b.INC_AMT) + "
+                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and "
+                    + "a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA  inner join "
+                    + "[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM and "
+                    + "b.ACT_REC_STA = c.ACT_REC_STA inner join [ClaimsAppSysZvandiri].[dbo].[EmpBankDetTab] d on "
+                    + "d.EMP_NUM=a.EMP_NUM where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' and a.SERIAL = 'R' "
+                    + "and a.REF_NUM not in (SELECT distinct  REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] "
+                    + "where SERIAL = 'R' and STATUS in ('Paid','Not Paid')) group by a.SERIAL,a.REF_NUM,a.REF_DAT,"
+                    + "a.EMP_NUM,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,b.ACT_DATE, "
+                    + "a.BUD_COD,a.ACT_MAIN_PUR,d.BNK_CODE,b.BUD_CODE,b.ACT_DESC,b.ACC_UNPROV_AMT,b.MSC_ACT");
 
             ResultSet r1 = st1.getResultSet();
 
             while (r1.next()) {
-                modelBank.insertRow(modelBank.getRowCount(), new Object[]{r1.getString(1), r1.getString(2), r1.getString(3),
-                    r1.getString(4)});
-
+                modelDetailed.insertRow(modelDetailed.getRowCount(), new Object[]{r1.getString(1), r1.getString(2), r1.getString(3),
+                    r1.getString(4), r1.getString(5), r1.getString(6), r1.getString(7), r1.getString(8),
+                    r1.getString(9), r1.getString(10), r1.getString(11), r1.getString(12), r1.getString(13), r1.getString(14),
+                    r1.getString(15), r1.getString(16), r1.getString(17), r1.getString(18), r1.getString(19), r1.getString(20)});
             }
 
-            if (model.getRowCount() == 0) {
+            if (modelSummary.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "No records available to display.");
 
             }
@@ -512,70 +521,98 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
-            st.executeQuery("SELECT 'Prepayment' Type,'' \"Reference Nbr\",'MAIN' Branch,CONVERT(varchar(20), GETDATE(), 103) \"Application Date\", "
-                    + "concat(MONTH(GETDATE()),'-', YEAR(GETDATE())) \"Application Period\", concat(a.SERIAL,' ',a.REF_NUM) \"Payment Ref\","
-                    + "VENDOR_NUM \"Vendor Num\", IIF(a.EMP_BNK_NAM='Mukuru', 'Cash', 'Bank') 'Payment Method','' 'Cash Account','USD' 'Currency',"
-                    + "a.ACT_MAIN_PUR Description, (sum(b.BRK_AMT) + sum(b.LNC_AMT) +sum(b.DIN_AMT) + sum(b.INC_AMT) + sum(b.MSC_AMT) +  sum(b.ACC_PRO_AMT) "
-                    + "+  sum(b.ACC_UNPROV_AMT)) 'Payment Amount' ,"
-                    + "'USD' 'Currency ID' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a  join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b "
-                    + "on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA  join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c "
-                    + "on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM and b.ACT_REC_STA = c.ACT_REC_STA join [ClaimsAppSysZvandiri].[dbo].[EmpBankDetTab] d "
-                    + "on a.EMP_NUM=d.EMP_NUM where c.DOC_STATUS='HODApprove'  and a.ACT_REC_STA = 'A' and a.SERIAL = 'R' and a.REF_NUM not in "
-                    + "(SELECT distinct  REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS in ('Paid','Not Paid')) "
-                    + "group by a.SERIAL,a.REF_NUM,a.REF_DAT,VENDOR_NUM,a.EMP_BNK_NAM,a.ACT_MAIN_PUR");
+            st.executeQuery("SELECT a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),"
+                    + "a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,'Refer to activity detail sheet',"
+                    + "a.ACT_MAIN_PUR, sum(b.ACC_UNPROV_AMT),SUM(b.LNC_AMT) ,SUM(b.DIN_AMT),SUM(b.INC_AMT),"
+                    + "SUM(b.MSC_AMT), (sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT)+  sum(b.INC_AMT) + "
+                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and "
+                    + "a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA  inner "
+                    + "join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM "
+                    + "and b.ACT_REC_STA = c.ACT_REC_STA where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' "
+                    + "and a.SERIAL = 'R' and a.REF_NUM not in (SELECT distinct  REF_NUM "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS in ('Paid','Not Paid')) "
+                    + "group by a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM,"
+                    + "a.ACC_NUM,a.EMP_PROV,a.BUD_COD,a.ACT_MAIN_PUR");
 
             ResultSet rs = st.getResultSet();
 
-            st1.executeQuery("SELECT a.EMP_NAM,a.ACC_NUM, (sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT) + "
-                    + "sum(b.INC_AMT)+sum(b.MSC_AMT)  + sum(b.ACC_PRO_AMT) + sum(b.ACC_UNPROV_AMT)) 'Payment Amount' ,"
-                    + " concat('Per Diems ',a.EMP_NAM) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
-                    + " join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM "
-                    + "and a.ACT_REC_STA = b.ACT_REC_STA  join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c "
-                    + "on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM and b.ACT_REC_STA = c.ACT_REC_STA "
-                    + "join [ClaimsAppSysZvandiri].[dbo].[EmpBankDetTab] d on a.EMP_NUM=d.EMP_NUM "
-                    + "where c.DOC_STATUS='HODApprove'  and a.ACT_REC_STA = 'A' and a.SERIAL = 'R' and a.REF_NUM "
-                    + "not in (SELECT distinct  REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' "
-                    + "and STATUS in ('Paid','Not Paid')) group by a.EMP_NAM,a.ACC_NUM order by 1");
+            st1.executeQuery("SELECT  a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM, "
+                    + "d.BNK_CODE ,a.ACC_NUM,a.EMP_PROV,b.ACT_DATE, b.[BUD_CODE] ,b.ACT_DESC,"
+                    + "b.ACC_UNPROV_AMT, SUM(b.LNC_AMT) ,SUM(b.DIN_AMT),SUM(b.INC_AMT),b.MSC_ACT,SUM(b.MSC_AMT), "
+                    + "(sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT) + sum(b.INC_AMT) + "
+                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and "
+                    + "a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA  inner join "
+                    + "[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM and "
+                    + "b.ACT_REC_STA = c.ACT_REC_STA inner join [ClaimsAppSysZvandiri].[dbo].[EmpBankDetTab] d on "
+                    + "d.EMP_NUM=a.EMP_NUM where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' and a.SERIAL = 'R' "
+                    + "and a.REF_NUM not in (SELECT distinct  REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] "
+                    + "where SERIAL = 'R' and STATUS in ('Paid','Not Paid')) group by a.SERIAL,a.REF_NUM,a.REF_DAT,"
+                    + "a.EMP_NUM,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,b.ACT_DATE, "
+                    + "a.BUD_COD,a.ACT_MAIN_PUR,d.BNK_CODE,b.BUD_CODE,b.ACT_DESC,b.ACC_UNPROV_AMT,b.MSC_ACT");
 
             ResultSet rs1 = st1.getResultSet();
 
             HSSFWorkbook workbook = new HSSFWorkbook();
 
-            HSSFSheet sheet = workbook.createSheet("Fin - For ERP");
-            HSSFSheet sheet2 = workbook.createSheet("Fin - For Bank Payment");
+            HSSFSheet sheet = workbook.createSheet("Fin - For Payment Summary");
+            HSSFSheet sheet2 = workbook.createSheet("Fin - For Payment Detailed");
 
             HSSFRow rowhead1 = sheet.createRow((short) 0);
-            HSSFRow rowhead2 = sheet2.createRow((short) 0);
+            HSSFRow rowhead2 = sheet2.createRow((short) 2);
+            HSSFRow rowhead3 = sheet2.createRow((short) 0);
 
             rowhead1.createCell((short) 8).setCellValue("Payment Batch Number " + batNum + " Version 1");
+            rowhead3.createCell((short) 8).setCellValue("Payment Batch Number " + batNum + " Version 1");
 
             HSSFRow rowhead = sheet.createRow((short) 2);
 
-            rowhead.createCell((short) 0).setCellValue("Type");
+            rowhead.createCell((short) 0).setCellValue("Serial.");
             rowhead.createCell((short) 1).setCellValue("Reference No.");
-            rowhead.createCell((short) 2).setCellValue("Branch");
-            rowhead.createCell((short) 3).setCellValue("Application Date");
-            rowhead.createCell((short) 4).setCellValue("Application Period");
-            rowhead.createCell((short) 5).setCellValue("Payment Ref");
-            rowhead.createCell((short) 6).setCellValue("Vendor");
-            rowhead.createCell((short) 7).setCellValue("Payment Method");
-            rowhead.createCell((short) 8).setCellValue("Cash Account");
-            rowhead.createCell((short) 9).setCellValue("Currency");
-            rowhead.createCell((short) 10).setCellValue("Description");
-            rowhead.createCell((short) 11).setCellValue("Payment Amount");
-            rowhead.createCell((short) 12).setCellValue("Currency ID");
+            rowhead.createCell((short) 2).setCellValue("Reference Date");
+            rowhead.createCell((short) 3).setCellValue("Employee Number");
+            rowhead.createCell((short) 4).setCellValue("Prog Adv Acc");
+            rowhead.createCell((short) 5).setCellValue("Employee Name");
+            rowhead.createCell((short) 6).setCellValue("Bank Name");
+            rowhead.createCell((short) 7).setCellValue("Account Number");
+            rowhead.createCell((short) 8).setCellValue("Province");
+            rowhead.createCell((short) 9).setCellValue("Budget Code");
+            rowhead.createCell((short) 10).setCellValue("Main Activity Purpose");
+            rowhead.createCell((short) 11).setCellValue("Accomodation");
+            rowhead.createCell((short) 12).setCellValue("Lunch");
+            rowhead.createCell((short) 13).setCellValue("Dinner ");
+            rowhead.createCell((short) 14).setCellValue("Incidental");
+            rowhead.createCell((short) 15).setCellValue("Misc Amt");
+            rowhead.createCell((short) 16).setCellValue("Total");
 
-            rowhead2.createCell((short) 0).setCellValue("Name and Surname");
-            rowhead2.createCell((short) 1).setCellValue("Account Number");
-            rowhead2.createCell((short) 2).setCellValue("Payment Amount");
-            rowhead2.createCell((short) 2).setCellValue("Description");
+            rowhead2.createCell((short) 0).setCellValue("Serial.");
+            rowhead2.createCell((short) 1).setCellValue("Reference No.");
+            rowhead2.createCell((short) 2).setCellValue("Reference Date");
+            rowhead2.createCell((short) 3).setCellValue("Employee Number");
+            rowhead2.createCell((short) 4).setCellValue("Prog Adv Acc");
+            rowhead2.createCell((short) 5).setCellValue("Employee Name");
+            rowhead2.createCell((short) 6).setCellValue("Bank Name");
+            rowhead2.createCell((short) 7).setCellValue("Branch");
+            rowhead2.createCell((short) 8).setCellValue("Account Number");
+            rowhead2.createCell((short) 9).setCellValue("Province");
+            rowhead2.createCell((short) 10).setCellValue("Activity Date");
+            rowhead2.createCell((short) 11).setCellValue("Budget Code");
+            rowhead2.createCell((short) 12).setCellValue("Activity Purpose");
+            rowhead2.createCell((short) 13).setCellValue("Accomodation");
+            rowhead2.createCell((short) 14).setCellValue("Lunch");
+            rowhead2.createCell((short) 15).setCellValue("Dinner ");
+            rowhead2.createCell((short) 16).setCellValue("Incidental");
+            rowhead2.createCell((short) 17).setCellValue("Misc Desc");
+            rowhead2.createCell((short) 18).setCellValue("Misc Amt");
+            rowhead2.createCell((short) 19).setCellValue("Total");
 
             int i = 3;
             while (rs.next()) {
 
                 HSSFRow row = sheet.createRow((short) i);
                 row.createCell((short) 0).setCellValue(rs.getString(1));
-                row.createCell((short) 1).setCellValue(rs.getString(2));
+                row.createCell((short) 1).setCellValue(Integer.toString(rs.getInt(2)));
                 row.createCell((short) 2).setCellValue(rs.getString(3));
                 row.createCell((short) 3).setCellValue(rs.getString(4));
                 row.createCell((short) 4).setCellValue(rs.getString(5));
@@ -587,18 +624,38 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
                 row.createCell((short) 10).setCellValue(rs.getString(11));
                 row.createCell((short) 11).setCellValue(rs.getString(12));
                 row.createCell((short) 12).setCellValue(rs.getString(13));
+                row.createCell((short) 13).setCellValue(rs.getString(14));
+                row.createCell((short) 14).setCellValue(rs.getString(15));
+                row.createCell((short) 15).setCellValue(rs.getString(16));
+                row.createCell((short) 16).setCellValue(rs.getString(17));
 
                 i++;
             }
 
-            int x = 1;
+            int x = 3;
 
             while (rs1.next()) {
                 HSSFRow row2 = sheet2.createRow((short) x);
                 row2.createCell((short) 0).setCellValue(rs1.getString(1));
-                row2.createCell((short) 1).setCellValue(rs1.getInt(2));
+                row2.createCell((short) 1).setCellValue(Integer.toString(rs1.getInt(2)));
                 row2.createCell((short) 2).setCellValue(rs1.getString(3));
                 row2.createCell((short) 3).setCellValue(rs1.getString(4));
+                row2.createCell((short) 4).setCellValue(rs1.getString(5));
+                row2.createCell((short) 5).setCellValue(rs1.getString(6));
+                row2.createCell((short) 6).setCellValue(rs1.getString(7));
+                row2.createCell((short) 7).setCellValue(rs1.getString(8));
+                row2.createCell((short) 8).setCellValue(rs1.getString(9));
+                row2.createCell((short) 9).setCellValue(rs1.getString(10));
+                row2.createCell((short) 10).setCellValue(rs1.getString(11));
+                row2.createCell((short) 11).setCellValue(rs1.getString(12));
+                row2.createCell((short) 12).setCellValue(rs1.getString(13));
+                row2.createCell((short) 13).setCellValue(rs1.getString(14));
+                row2.createCell((short) 14).setCellValue(rs1.getString(15));
+                row2.createCell((short) 15).setCellValue(rs1.getString(16));
+                row2.createCell((short) 16).setCellValue(rs1.getString(17));
+                row2.createCell((short) 17).setCellValue(rs1.getString(18));
+                row2.createCell((short) 18).setCellValue(rs1.getString(19));
+                row2.createCell((short) 19).setCellValue(rs1.getString(20));
 
                 x++;
             }
@@ -613,7 +670,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
                     + "<b>" + batNum + "</b> version <b>" + batVer + "</b> generated by<b> " + jLabelGenLogNam.getText() + "</b>.";
 
             //batchUpd();
-//            recSend.sendMailExtract(mailHeader, reportFile, mailMsg, fileName);
+            recSend.sendMailExtract(mailHeader, reportFile, mailMsg, fileName);
             jDialogWaiting.setVisible(false);
             JOptionPane.showMessageDialog(this, "Your excel file PaymentSchBat # " + batNum + " version  " + batVer + ".xls has been generated"
                     + " and email sent to the finance team");
@@ -637,7 +694,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT count(*) FROM  ClaimsAppSysZimTTECH.dbo.ClaimsWFActTab "
+            st.executeQuery("SELECT count(*) FROM  ClaimsAppSysZvandiri.dbo.ClaimsWFActTab "
                     + "where DOC_STATUS='HODApprove' and ACT_REC_STA = 'A' and SERIAL = 'R' "
                     + "and REF_NUM not in (SELECT distinct  REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] "
                     + "where SERIAL = 'R' and STATUS in ('Paid','Not Paid'))");
@@ -659,7 +716,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
                     System.out.println("errf " + batNum + " " + jLabelDate.getText() + " " + jLabelTime.getText() + " " + hostName);
                     String sql = "insert into [ClaimsAppSysZvandiri].[dbo].[BatRunTab] ( SERIAL,REF_NUM,BAT_TYP ,BAT_NUM,BAT_VER,RUN_BY,STATUS,RUN_DAT,RUN_TIME,ACTIONED_ON_COMPUTER)"
                             + "SELECT a.SERIAL,a.REF_NUM,'payBat','" + batNum + "','1','" + jLabelGenLogNam.getText() + "' ,'Paid','" + jLabelDate.getText() + "','" + jLabelTime.getText() + "','" + hostName + "'"
-                            + "FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab a,ClaimsAppSysZimTTECH.dbo.ClaimAppItmTab b, ClaimsAppSysZimTTECH.dbo.ClaimsWFActTab c "
+                            + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab a,ClaimsAppSysZvandiri.dbo.ClaimAppItmTab b, ClaimsAppSysZvandiri.dbo.ClaimsWFActTab c "
                             + "where (a.REF_NUM = b.REF_NUM and a.DOC_VER =b.DOC_VER and a.REF_NUM = c.REF_NUM and a.DOC_VER =c.DOC_VER) and c.DOC_STATUS='HODApprove' "
                             + "and a.ACT_REC_STA = 'A'"
                             + "and a.SERIAL = 'R'"
@@ -723,11 +780,10 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
         jButtonDisplaySpecialAcqResults = new javax.swing.JButton();
         jButtonGenExcelSpecialAcquittal = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableActivityFinSchedule = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableActivityFinBankSchedule = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableActivityFinSummarySch = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTableActivityFinDetailedSch = new javax.swing.JTable();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuNew = new javax.swing.JMenu();
@@ -889,78 +945,101 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
         jPanelItem1.add(jButtonGenExcelSpecialAcquittal);
         jButtonGenExcelSpecialAcquittal.setBounds(660, 630, 180, 40);
 
-        jTableActivityFinSchedule.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jTableActivityFinSchedule.setModel(new javax.swing.table.DefaultTableModel(
+        jTableActivityFinSummarySch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jTableActivityFinSummarySch.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Type", "Reference No.", "Branch", "Application Date", "Application Period", "Payment Ref", "Vendor", "Payment Method", "Cash Account", "Currency", "Description", "Payment Amount", "Currency ID"
+                "Serial", "Reference No.", "Reference Date", "Employee Number", "Prog Adv Acc", "Employee Name", "Bank Name", "Account Number", "Province", "Budget Code", "Main Activity Purpose", "Accomodation", "Lunch", "Dinner", "Incidental", "Misc Amt", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableActivityFinSchedule.setDragEnabled(true);
-        jTableActivityFinSchedule.setGridColor(new java.awt.Color(255, 255, 255));
-        jTableActivityFinSchedule.setMinimumSize(new java.awt.Dimension(180, 64));
-        jTableActivityFinSchedule.setRowHeight(25);
-        jTableActivityFinSchedule.setSelectionBackground(new java.awt.Color(214, 246, 247));
-        jTableActivityFinSchedule.getTableHeader().setReorderingAllowed(false);
-        jTableActivityFinSchedule.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTableActivityFinSummarySch.setDragEnabled(true);
+        jTableActivityFinSummarySch.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableActivityFinSummarySch.setMinimumSize(new java.awt.Dimension(180, 64));
+        jTableActivityFinSummarySch.setRowHeight(25);
+        jTableActivityFinSummarySch.setSelectionBackground(new java.awt.Color(214, 246, 247));
+        jTableActivityFinSummarySch.getTableHeader().setReorderingAllowed(false);
+        jTableActivityFinSummarySch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTableActivityFinScheduleFocusLost(evt);
+                jTableActivityFinSummarySchFocusLost(evt);
             }
         });
-        jTableActivityFinSchedule.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableActivityFinSummarySch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableActivityFinScheduleMouseClicked(evt);
+                jTableActivityFinSummarySchMouseClicked(evt);
             }
         });
-        jTableActivityFinSchedule.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTableActivityFinSummarySch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTableActivityFinScheduleKeyPressed(evt);
+                jTableActivityFinSummarySchKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTableActivityFinScheduleKeyReleased(evt);
+                jTableActivityFinSummarySchKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTableActivityFinScheduleKeyTyped(evt);
+                jTableActivityFinSummarySchKeyTyped(evt);
             }
         });
-        jScrollPane2.setViewportView(jTableActivityFinSchedule);
+        jScrollPane3.setViewportView(jTableActivityFinSummarySch);
 
-        jTabbedPane1.addTab("ERP", jScrollPane2);
+        jTabbedPane1.addTab("Per Diem Summary", jScrollPane3);
 
-        jPanel1.setLayout(null);
-
-        jTableActivityFinBankSchedule.setModel(new javax.swing.table.DefaultTableModel(
+        jTableActivityFinDetailedSch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jTableActivityFinDetailedSch.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Name and Surname", "Account No.", "Payment Amount", "Description"
+                "Serial", "Reference No.", "Reference Date", "Employee Number", "Prog Adv Acc", "Employee Name", "Bank Name", "Branch", "Account Number", "Province", "Activity Date", "Budget Code", "Main Activity Purpose", "Accommodation", "Lunch", "Dinner", "Incidental", "Misc Desc.", "Misc Amt", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableActivityFinBankSchedule);
+        jTableActivityFinDetailedSch.setDragEnabled(true);
+        jTableActivityFinDetailedSch.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableActivityFinDetailedSch.setMinimumSize(new java.awt.Dimension(180, 64));
+        jTableActivityFinDetailedSch.setRowHeight(25);
+        jTableActivityFinDetailedSch.setSelectionBackground(new java.awt.Color(214, 246, 247));
+        jTableActivityFinDetailedSch.getTableHeader().setReorderingAllowed(false);
+        jTableActivityFinDetailedSch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTableActivityFinDetailedSchFocusLost(evt);
+            }
+        });
+        jTableActivityFinDetailedSch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableActivityFinDetailedSchMouseClicked(evt);
+            }
+        });
+        jTableActivityFinDetailedSch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTableActivityFinDetailedSchKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableActivityFinDetailedSchKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTableActivityFinDetailedSchKeyTyped(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jTableActivityFinDetailedSch);
 
-        jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(0, 10, 1320, 460);
-
-        jTabbedPane1.addTab("Bank & Cash", jPanel1);
+        jTabbedPane1.addTab("Per Diem Detailed", jScrollPane4);
 
         jPanelItem1.add(jTabbedPane1);
         jTabbedPane1.setBounds(10, 120, 1330, 500);
@@ -1225,26 +1304,6 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
     }//GEN-LAST:event_formFocusGained
 
 
-    private void jTableActivityFinScheduleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableActivityFinScheduleFocusLost
-
-    }//GEN-LAST:event_jTableActivityFinScheduleFocusLost
-
-    private void jTableActivityFinScheduleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableActivityFinScheduleMouseClicked
-
-    }//GEN-LAST:event_jTableActivityFinScheduleMouseClicked
-
-    private void jTableActivityFinScheduleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableActivityFinScheduleKeyPressed
-
-    }//GEN-LAST:event_jTableActivityFinScheduleKeyPressed
-
-    private void jTableActivityFinScheduleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableActivityFinScheduleKeyReleased
-
-    }//GEN-LAST:event_jTableActivityFinScheduleKeyReleased
-
-    private void jTableActivityFinScheduleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableActivityFinScheduleKeyTyped
-
-    }//GEN-LAST:event_jTableActivityFinScheduleKeyTyped
-
     private void jButtonGenExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenExcelActionPerformed
         //  retriveData();
         jDialogWaiting.setVisible(true);
@@ -1252,7 +1311,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGenExcelActionPerformed
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-   
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jButtonDisplaySpecialAcqResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisplaySpecialAcqResultsActionPerformed
@@ -1265,7 +1324,9 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGenExcelSpecialAcquittalActionPerformed
 
     private void jButtonDisplayResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisplayResultsActionPerformed
+        jDialogWaiting.setVisible(true);
         fetchdata();
+        jDialogWaiting.setVisible(false);
     }//GEN-LAST:event_jButtonDisplayResultsActionPerformed
 
     private void jMenuItemPlanPerDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanPerDiemActionPerformed
@@ -1384,6 +1445,46 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
         new JFrameUserProfileUpdate(jLabelEmp.getText()).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenuItemUserProfUpdActionPerformed
+
+    private void jTableActivityFinSummarySchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableActivityFinSummarySchKeyTyped
+
+    }//GEN-LAST:event_jTableActivityFinSummarySchKeyTyped
+
+    private void jTableActivityFinSummarySchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableActivityFinSummarySchKeyReleased
+
+    }//GEN-LAST:event_jTableActivityFinSummarySchKeyReleased
+
+    private void jTableActivityFinSummarySchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableActivityFinSummarySchKeyPressed
+
+    }//GEN-LAST:event_jTableActivityFinSummarySchKeyPressed
+
+    private void jTableActivityFinSummarySchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableActivityFinSummarySchMouseClicked
+
+    }//GEN-LAST:event_jTableActivityFinSummarySchMouseClicked
+
+    private void jTableActivityFinSummarySchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableActivityFinSummarySchFocusLost
+
+    }//GEN-LAST:event_jTableActivityFinSummarySchFocusLost
+
+    private void jTableActivityFinDetailedSchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableActivityFinDetailedSchFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableActivityFinDetailedSchFocusLost
+
+    private void jTableActivityFinDetailedSchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableActivityFinDetailedSchMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableActivityFinDetailedSchMouseClicked
+
+    private void jTableActivityFinDetailedSchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableActivityFinDetailedSchKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableActivityFinDetailedSchKeyPressed
+
+    private void jTableActivityFinDetailedSchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableActivityFinDetailedSchKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableActivityFinDetailedSchKeyReleased
+
+    private void jTableActivityFinDetailedSchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableActivityFinDetailedSchKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableActivityFinDetailedSchKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1529,10 +1630,9 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
     public javax.swing.JMenu jMenuPlanApproval;
     public javax.swing.JMenu jMenuReports;
     public javax.swing.JMenu jMenuRequest;
-    public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanelItem1;
-    public javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JScrollPane jScrollPane3;
+    public javax.swing.JScrollPane jScrollPane4;
     public javax.swing.JPopupMenu.Separator jSeparator10;
     public javax.swing.JPopupMenu.Separator jSeparator11;
     public javax.swing.JPopupMenu.Separator jSeparator13;
@@ -1551,7 +1651,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
     public javax.swing.JPopupMenu.Separator jSeparator63;
     public javax.swing.JPopupMenu.Separator jSeparator8;
     public javax.swing.JTabbedPane jTabbedPane1;
-    public javax.swing.JTable jTableActivityFinBankSchedule;
-    public javax.swing.JTable jTableActivityFinSchedule;
+    public javax.swing.JTable jTableActivityFinDetailedSch;
+    public javax.swing.JTable jTableActivityFinSummarySch;
     // End of variables declaration//GEN-END:variables
 }

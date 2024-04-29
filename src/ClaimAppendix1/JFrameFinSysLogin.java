@@ -588,7 +588,7 @@ public class JFrameFinSysLogin extends javax.swing.JFrame {
 
         jLabelHeading1.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
         jLabelHeading1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelHeading1.setText("Zvandiri FIN SYSTEM ");
+        jLabelHeading1.setText("Zvandiri FIN SYSTEM - TEST SYSTEM");
         jPanel1.add(jLabelHeading1);
         jLabelHeading1.setBounds(60, 40, 630, 40);
 
