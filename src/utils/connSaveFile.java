@@ -297,7 +297,7 @@ public class connSaveFile {
             pstmt.setBinaryStream(8, fis, len);
             pstmt.setString(9, "1");
             pstmt.setString(10, "1");
-            pstmt.setString(11, "A");
+            pstmt.setString(11, "Q");
             pstmt.executeUpdate();
 
         } catch (Exception e) {

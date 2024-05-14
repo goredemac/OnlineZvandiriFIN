@@ -1957,7 +1957,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                         jLabelAcqProvince.setText(r1.getString(7));
                         jLabelAcqOffice.setText(r1.getString(8));
                         jLabelAcqBankName.setText(r1.getString(9));
-//                        jLabelAcqAccNum.setText(r1.getString(10));
+                        jLabelAcqAccNum.setText(r1.getString(10));
                         jLabelAcqActMainPurpose.setText(r1.getString(11));
                         allActTot = r1.getDouble(12);
 
@@ -1965,11 +1965,11 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                         empAccNum = r1.getString(10);
                         bankAccLen = r1.getInt(16);
 
-                        if (bankAccLen == 13) {
-                            maskAcc(empAccNum, "xxxxxxxxx####");
-                        } else if (bankAccLen == 11) {
-                            maskAcc(empAccNum, "xxxxxxx####");
-                        }
+//                        if (bankAccLen == 13) {
+//                            maskAcc(empAccNum, "xxxxxxxxx####");
+//                        } else if (bankAccLen == 11) {
+//                            maskAcc(empAccNum, "xxxxxxx####");
+//                        }
                     }
 
                     if (minWkNum == 1) {
@@ -2085,27 +2085,27 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
                 insGenTab();
                 insItmTab();
-                imgSaveFile1();
-                imgSaveFile2();
-                imgSaveFile3();
+//                imgSaveFile1();
+//                imgSaveFile2();
+//                imgSaveFile3();
                 createAction();
                 createReport();
                 createAttDoc();
-                wkUpdate();
-                wkClearedUpdate();
-                payRecAck();
-
+//                wkUpdate();
+//                wkClearedUpdate();
+//                payRecAck();
 //
-                if (!("".equals(jLabelAcqPayBack.getText()))) {
-                    chgBank();
-                }
+////
+//                if (!("".equals(jLabelAcqPayBack.getText()))) {
+//                    chgBank();
+//                }
+////
+//                if ("Y".equals(depSlip)) {
+//                    createDepSlipRec();
+//                }
+//                refNumUpdate();
 //
-                if ("Y".equals(depSlip)) {
-                    createDepSlipRec();
-                }
-                refNumUpdate();
-
-                checkRegistration();
+//                checkRegistration();
             }
         } catch (Exception e) {
 //            sqlError = e.getErrorCode();
@@ -2500,7 +2500,35 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         }
     }
 
-    void createReport() {
+//    void createReport() {
+//
+//        try {
+//            Connection conn = DriverManager.getConnection("jdbc:sqlserver:"
+//                    + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+//
+//            String sqlRepCreate = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimTripReport] "
+//                    + "(PREV_SERIAL,PREV_REF_NUM,SERIAL,REF_NUM,NAM_TRAVEL,PLAN_WK,DOC_VER,REG_MOD_VER,ACT_REC_STA)"
+//                    + " VALUES (?,?,?,?,?,?,?,?,?)";
+//
+//            pst1 = conn.prepareStatement(sqlRepCreate);
+//
+//            pst1.setString(1, jLabelSerial.getText());
+//            pst1.setString(2, jTextAcqRegNum.getText());
+//            pst1.setString(3, jLabelSerialAcq.getText());
+//            pst1.setString(4, jLabelRegNum.getText());
+//            pst1.setString(5, jTextAreaNamTravel.getText());
+//            pst1.setString(6, Integer.toString(minWkNum));
+//            pst1.setString(7, "1");
+//            pst1.setString(8, "1");
+//            pst1.setString(9, "Q");
+//            pst1.executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    
+     void createReport() {
 
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver:"
@@ -2523,10 +2551,14 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             pst1.setString(9, "Q");
             pst1.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
-
+    
+    
+    
+    
+    
     void insGenTab() {
         try {
             String sql = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] "
@@ -2579,23 +2611,19 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     void insItmTab() {
         itmNum = 1;
         try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
             for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
 
                 String sqlitm = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                        + "(REF_YEAR ,SERIAL ,REF_NUM ,ITM_NUM ,ACT_DATE ,BRANCH ,PROJ_ID ,"
-                        + "PRJ_TASK_CODE ,ACT_SITE ,ACT_ITM_PUR ,BRK_AMT ,LNC_AMT ,DIN_AMT ,"
-                        + "INC_AMT ,MSC_ACT ,MSC_AMT ,ACC_UNPROV_AMT ,ACC_PRO_AMT ,ACT_ITM_TOT ,"
-                        + "PLAN_WK ,REG_MOD_VER ,DOC_VER ,ACT_REC_STA)"
-                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                Connection conn1 = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                        + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-                pst1 = conn1.prepareStatement(sqlitm);
-                // JOptionPane.showMessageDialog(null, jTextYear.getText());
-                pst1.setString(1, jLabelRegYear.getText());
+                pst1 = conn.prepareStatement(sqlitm);
+
+                pst1.setString(1, String.valueOf(jLabelRegYear.getText()));
                 pst1.setString(2, jLabelSerialAcq.getText());
-                pst1.setString(3, jLabelRegNum.getText());
-                pst1.setString(4, Integer.toString(itmNum));
+                pst1.setString(3, String.valueOf(jLabelRegNum.getText()));
+                pst1.setString(4, String.valueOf(itmNum));
                 pst1.setString(5, jTableActivityAcq.getValueAt(i, 0).toString());
                 pst1.setString(6, jTableActivityAcq.getValueAt(i, 1).toString());
                 pst1.setString(7, jTableActivityAcq.getValueAt(i, 2).toString());
@@ -2611,10 +2639,14 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 pst1.setString(17, jTableActivityAcq.getValueAt(i, 12).toString());
                 pst1.setString(18, jTableActivityAcq.getValueAt(i, 13).toString());
                 pst1.setString(19, jTableActivityAcq.getValueAt(i, 14).toString());
-                pst1.setString(20, Integer.toString(minWkNum));
-                pst1.setString(21, "1");
-                pst1.setString(22, "1");
-                pst1.setString(23, "Q");
+                pst1.setString(20, jTableActivityAcq.getValueAt(i, 15).toString());
+                pst1.setString(21, jTableActivityAcq.getValueAt(i, 16).toString());
+                pst1.setString(22, jTableActivityAcq.getValueAt(i, 17).toString());
+                pst1.setString(23, jTableActivityAcq.getValueAt(i, 18).toString());
+                pst1.setString(24, "1");
+                pst1.setString(25, "1");
+                pst1.setString(26, "1");
+                pst1.setString(27, "Q");
 
                 pst1.executeUpdate();
                 itmNum = itmNum + 1;
@@ -2664,7 +2696,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         }
     }
 
-    void createAttDoc() {
+     void createAttDoc() {
         try {
             int itmNumAtt = 1;
 
