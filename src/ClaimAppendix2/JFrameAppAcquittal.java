@@ -972,7 +972,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             Statement st = conn.createStatement();
 
             //  jComboBankNam.setSelectedIndex(-1);
-            ResultSet r = st.executeQuery("SELECT ACCOUNT_NAME FROM [ClaimsAppSysZvandiri].[dbo].[refundBankAccTab]");
+            ResultSet r = st.executeQuery("SELECT ACCOUNT_NAME FROM [ClaimsAppSysZvandiri].[dbo].[ClaimRefundBankAccTab]");
 //jComboBankNam.removeAllItems();
             while (r.next()) {
 
@@ -2031,7 +2031,17 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             jTabbedPaneAppSys.setSelectedIndex(2);
             jDateChooserDialogActivityDateFrom.requestFocusInWindow();
             jDateChooserDialogActivityDateFrom.setFocusable(true);
-        } else if ((("Total (Change)").equals(jLabelAppTotReq.getText())) && (jRadioButtonPayRecYes.isSelected())
+        } else if (jTableAcquittalDocAtt.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please attach at least one report.");
+            jTabbedPaneAppSys.setSelectedIndex(3);
+            jTextAreaNamTravel.requestFocusInWindow();
+            jTextAreaNamTravel.setFocusable(true);
+        } else if (jTextAreaNamTravel.getText().trim().length()==0) {
+            JOptionPane.showMessageDialog(this, "Pleas include names of people who travelled.");
+            jTabbedPaneAppSys.setSelectedIndex(3);
+            jTextAreaNamTravel.requestFocusInWindow();
+            jTextAreaNamTravel.setFocusable(true);
+        }else if ((("Total (Change)").equals(jLabelAppTotReq.getText())) && (jRadioButtonPayRecYes.isSelected())
                 && (("Select Bank".equals(jComboBankNam.getSelectedItem().toString()))
                 || ("".equals(jTextPaidAmt.getText()))
                 || ("0.00".equals(jTextPaidAmt.getText())))) {
@@ -2085,27 +2095,27 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
                 insGenTab();
                 insItmTab();
-//                imgSaveFile1();
-//                imgSaveFile2();
-//                imgSaveFile3();
+                imgSaveFile1();
+                imgSaveFile2();
+                imgSaveFile3();
                 createAction();
                 createReport();
                 createAttDoc();
-//                wkUpdate();
-//                wkClearedUpdate();
-//                payRecAck();
+                wkUpdate();
+                wkClearedUpdate();
+                payRecAck();
+
+
+                if (!("".equals(jLabelAcqPayBack.getText()))) {
+                    chgBank();
+                }
+
+                if ("Y".equals(depSlip)) {
+                    createDepSlipRec();
+                }
+                refNumUpdate();
 //
-////
-//                if (!("".equals(jLabelAcqPayBack.getText()))) {
-//                    chgBank();
-//                }
-////
-//                if ("Y".equals(depSlip)) {
-//                    createDepSlipRec();
-//                }
-//                refNumUpdate();
-//
-//                checkRegistration();
+                checkRegistration();
             }
         } catch (Exception e) {
 //            sqlError = e.getErrorCode();
@@ -2411,7 +2421,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             String sqlWkCleared = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimWkReqAcqTab] "
                     + "(PREV_SERIAL,PREV_REF_NUM,SERIAL,REF_NUM,PLAN_WK,REQ_AMT,CLEARED_AMT,REQ_STA,ACQ_STA,DOC_VER)"
                     + " VALUES (?,?,?,?,?,?,?,?,?,?)";
-
+            
+     
             pst1 = conn.prepareStatement(sqlWkCleared);
 
             pst1.setString(1, jLabelSerial.getText());
@@ -2935,7 +2946,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                         + "Please check your Finance System inbox and action<br><br> Kind Regards <br><br>"
                         + " Finance Management System </body></html>";
 
-                String MailMsgTitle = "Per Diem Acquittal - Reference No. " + jLabelSerial.getText() + " " + jLabelRegNum.getText() + " ";
+                String MailMsgTitle = "Per Diem Acquittal - Reference No. " + jLabelSerialAcq.getText() + " " + jLabelRegNum.getText() + " for "
+                        + "Request Ref. No. "+ jLabelSerial.getText() + " " + jTextAcqRegNum.getText() + "";
 
                 emSend.sendMail(MailMsgTitle, supUsrMail, mailMsg, "");
 
@@ -4956,7 +4968,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jPanelReport.setLayout(jPanelReportLayout);
         jPanelReportLayout.setHorizontalGroup(
             jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelReportDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 1358, Short.MAX_VALUE)
+            .addComponent(jPanelReportDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 1338, Short.MAX_VALUE)
         );
         jPanelReportLayout.setVerticalGroup(
             jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -5644,7 +5656,10 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPaneAppSys)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPaneAppSys, javax.swing.GroupLayout.DEFAULT_SIZE, 1348, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -338,15 +338,15 @@ public class JFrameSupAcqList extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
-
-            st.executeQuery("SELECT distinct a.REF_YEAR,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NAM, "
+            
+              st.executeQuery("SELECT distinct a.REF_YEAR,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NAM, "
                     + "a.ACT_MAIN_PUR, a.ACT_TOT_AMT,b.ACTION_VER,b.DOC_STATUS,a.PREV_SERIAL,a.PREV_REF_NUM,"
                     + "a.PREV_REF_DAT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a join "
                     + "[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM "
                     + "and a.ACT_REC_STA = b.ACT_REC_STA and a.DOC_VER=b.DOC_VER where  a.DOC_VER = 1 and a.ACT_REC_STA = 'Q'  "
-                    + "and  a.SERIAL in ('A','MA') and b.SEND_TO_EMP_NUM='" + jLabelEmp.getText() + "' and b.DOC_STATUS in ('AcqRegistered') "
+                    + "and  a.SERIAL in ('A','MA','S') and b.SEND_TO_EMP_NUM='" + jLabelEmp.getText() + "' and b.DOC_STATUS in ('AcqRegistered') "
                     + "and concat(a.REF_NUM,a.REG_MOD_VER) in (select * from (SELECT concat(REF_NUM,max(REG_MOD_VER)) \"mod\" "
-                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] where DOC_VER = 1 and SERIAL in ('A','MA') group by REF_NUM ) a)");
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] where DOC_VER = 1 and SERIAL in ('A','MA','S') group by REF_NUM ) a)");
 
             ResultSet r = st.getResultSet();
 
@@ -358,7 +358,8 @@ public class JFrameSupAcqList extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
+        
         }
     }
 
@@ -474,7 +475,7 @@ public class JFrameSupAcqList extends javax.swing.JFrame {
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequest.add(jLabelLogo1);
-        jLabelLogo1.setBounds(10, 10, 220, 100);
+        jLabelLogo1.setBounds(10, 5, 220, 110);
 
         jLabelHeaderLine.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine.setText("TRAVEL AND SUBSISTENCE CLAIM");

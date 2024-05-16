@@ -458,7 +458,7 @@ public class connSaveFile {
        
         try {
             query = "SELECT fileImage,fileName FROM [ClaimsAppSysZvandiri].[dbo].[ClaimReportAttDocTab] "
-                    + " where concat(SERIAL,REF_NUM,ACT_ITM) ='" + refNum + "' and ACT_REC_STA = 'A' ";
+                    + " where concat(SERIAL,REF_NUM,ACT_ITM) ='" + refNum + "' and ACT_REC_STA = 'Q' ";
 
             Statement state = conn.createStatement();
             ResultSet rs = state.executeQuery(query);

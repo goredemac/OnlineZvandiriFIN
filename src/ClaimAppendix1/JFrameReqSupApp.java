@@ -1578,7 +1578,7 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
             pst1.executeUpdate();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+             System.out.println(e);
         }
     }
 

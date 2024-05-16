@@ -118,7 +118,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         computerName();
 //        allowanceRate();
 
-        model = (DefaultTableModel) jTableActivityReq.getModel();
+        model = (DefaultTableModel) jTableActivityReqAcq.getModel();
         modelAcq = (DefaultTableModel) jTableActivityAcq.getModel();
         modelMonAttRep = (DefaultTableModel) jTableMonDistAcquitalAttRep.getModel();
         fetchdata();
@@ -138,10 +138,10 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         jLabelEmp.setText(usrLogNum);
         jLabelEmp.setVisible(false);
         jLabelReqRefNum.setText(yearRef);
-        model = (DefaultTableModel) jTableActivityReq.getModel();
+        model = (DefaultTableModel) jTableActivityReqAcq.getModel();
         modelAcq = (DefaultTableModel) jTableActivityAcq.getModel();
         modelTrip = (DefaultTableModel) jTableTripDetails.getModel();
-         modelMonAttRep = (DefaultTableModel) jTableMonDistAcquitalAttRep.getModel();
+        modelMonAttRep = (DefaultTableModel) jTableMonDistAcquitalAttRep.getModel();
         jTableTripDetails.getColumnModel().getColumn(1).setMinWidth(0);
         jTableTripDetails.getColumnModel().getColumn(1).setMaxWidth(0);
         checkRef = yearRef;
@@ -192,9 +192,11 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
             jTabbedPaneAcqAtt.setTitleAt(5, "");
             jTabbedPaneAcqAtt.setTitleAt(6, "");
         }
-        fetchMonDistAttDocRep();
+
         mainPageTotUpdate();
         mainPageTotUpdateAcq();
+        fetchMonDistAttDocRep();
+        fetchImgCount();
         findApplicantUser();
 
         if (!"Administrator".equals(usrGrp)) {
@@ -254,7 +256,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -813,11 +815,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
             for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
 
                 String sqlitm = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                        + "(REF_YEAR ,SERIAL ,REF_NUM ,ITM_NUM ,ACT_DATE ,BRANCH ,PROJ_ID ,"
-                        + "PRJ_TASK_CODE ,ACT_SITE ,ACT_ITM_PUR ,BRK_AMT ,LNC_AMT ,DIN_AMT ,"
-                        + "INC_AMT ,MSC_ACT ,MSC_AMT ,ACC_UNPROV_AMT ,ACC_PRO_AMT ,ACT_ITM_TOT ,"
-                        + "PLAN_WK ,REG_MOD_VER ,DOC_VER ,ACT_REC_STA)"
-                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
+                        + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 pst = conn.prepareStatement(sqlitm);
                 pst.setString(1, jLabelAcqYear.getText());
@@ -839,10 +837,14 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                 pst.setString(17, jTableActivityAcq.getValueAt(i, 12).toString());
                 pst.setString(18, jTableActivityAcq.getValueAt(i, 13).toString());
                 pst.setString(19, jTableActivityAcq.getValueAt(i, 14).toString());
-                pst.setString(20, Integer.toString(minWkNum));
-                pst.setString(21, preModNum);
-                pst.setString(22, docVersion);
-                pst.setString(23, "Q");
+                pst.setString(20, jTableActivityAcq.getValueAt(i, 15).toString());
+                pst.setString(21, jTableActivityAcq.getValueAt(i, 16).toString());
+                pst.setString(22, jTableActivityAcq.getValueAt(i, 17).toString());
+                pst.setString(23, jTableActivityAcq.getValueAt(i, 18).toString());
+                pst.setString(24, Integer.toString(minWkNum));
+                pst.setString(25, preModNum);
+                pst.setString(26, docVersion);
+                pst.setString(27, "Q");
 
                 pst.executeUpdate();
                 itmNum = itmNum + 1;
@@ -940,53 +942,112 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         }
     }
 
+//    void mainPageTotUpdate() {
+//        breakfastsubtotal = 0;
+//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+//            double breakfastamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 6));
+//            breakfastsubtotal += breakfastamount;
+//
+//        }
+//        jLabelBreakFastSubTot.setText(Double.toString(breakfastsubtotal));
+//
+//        lunchsubtotal = 0;
+//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+//            double lunchamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 7));
+//            lunchsubtotal += lunchamount;
+//        }
+//        jLabelLunchSubTot.setText(Double.toString(lunchsubtotal));
+//
+//        dinnersubtotal = 0;
+//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+//            double dinneramount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 8));
+//            dinnersubtotal += dinneramount;
+//        }
+//        jLabelDinnerSubTot.setText(Double.toString(dinnersubtotal));
+//
+//        incidentalsubtotal = 0;
+//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+//            double incidentalamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 9));
+//            incidentalsubtotal += incidentalamount;
+//        }
+//        jLabelIncidentalSubTot.setText(Double.toString(incidentalsubtotal));
+//
+//        miscSubTot = 0;
+//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+//            double miscamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 11));
+//            miscSubTot += miscamount;
+//        }
+//        jLabelMiscSubTot.setText(Double.toString(miscSubTot));
+//
+//        unprovedSubTot = 0;
+//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+//            double unprovedamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 12));
+//            unprovedSubTot += unprovedamount;
+//        }
+//        jLabelAccUnprovedSubTot.setText(Double.toString(unprovedSubTot));
+//
+//        provedSubTot = 0;
+//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+//            double provedamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 13));
+//            provedSubTot += provedamount;
+//        }
+//        jLabelAccProvedSubTot.setText(String.format("%.2f", provedSubTot));
+//
+//        allTotal = 0;
+//        allTotal = unprovedSubTot + provedSubTot + miscSubTot + incidentalsubtotal
+//                + dinnersubtotal + lunchsubtotal + breakfastsubtotal;
+//
+//        jLabelAcqAppTotPlannedCost.setText(String.format("%.2f", allTotal));
+//
+//    }
+//show claimed and actual amount for district
     void mainPageTotUpdate() {
         breakfastsubtotal = 0;
-        for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 6));
+        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+            double breakfastamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
 
         }
-        jLabelBreakFastSubTot.setText(Double.toString(breakfastsubtotal));
+        jLabelBreakFastSubTot.setText(String.format("%.2f", breakfastsubtotal));
 
         lunchsubtotal = 0;
-        for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 7));
+        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+            double lunchamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
-        jLabelLunchSubTot.setText(Double.toString(lunchsubtotal));
+        jLabelLunchSubTot.setText(String.format("%.2f", lunchsubtotal));
 
         dinnersubtotal = 0;
-        for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 8));
+        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+            double dinneramount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
-        jLabelDinnerSubTot.setText(Double.toString(dinnersubtotal));
+        jLabelDinnerSubTot.setText(String.format("%.2f", dinnersubtotal));
 
         incidentalsubtotal = 0;
-        for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 9));
+        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+            double incidentalamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
-        jLabelIncidentalSubTot.setText(Double.toString(incidentalsubtotal));
+        jLabelIncidentalSubTot.setText(String.format("%.2f", incidentalsubtotal));
 
         miscSubTot = 0;
-        for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 11));
+        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+            double miscamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
-        jLabelMiscSubTot.setText(Double.toString(miscSubTot));
+        jLabelMiscSubTot.setText(String.format("%.2f", miscSubTot));
 
         unprovedSubTot = 0;
-        for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 12));
+        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+            double unprovedamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
-        jLabelAccUnprovedSubTot.setText(Double.toString(unprovedSubTot));
+        jLabelAccUnprovedSubTot.setText(String.format("%.2f", unprovedSubTot));
 
         provedSubTot = 0;
-        for (int i = 0; i < jTableActivityReq.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableActivityReq.getValueAt(i, 13));
+        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
+            double provedamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
         jLabelAccProvedSubTot.setText(String.format("%.2f", provedSubTot));
@@ -995,15 +1056,13 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         allTotal = unprovedSubTot + provedSubTot + miscSubTot + incidentalsubtotal
                 + dinnersubtotal + lunchsubtotal + breakfastsubtotal;
 
-        jLabelAcqAppTotPlannedCost.setText(String.format("%.2f", allTotal));
-
+//        System.out.println("req amt " + allTotal + " main tot " + allActTot);
     }
-//show claimed and actual amount for district
 
     void mainPageTotUpdateAcq() {
         breakfastsubtotalAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double breakfastamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 6));
+            double breakfastamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 10));
             breakfastsubtotalAcq += breakfastamountAcq;
 
         }
@@ -1011,7 +1070,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         lunchsubtotalAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double lunchamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 7));
+            double lunchamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 11));
             lunchsubtotalAcq += lunchamountAcq;
 
         }
@@ -1019,35 +1078,35 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         dinnersubtotalAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double dinneramountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 8));
+            double dinneramountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 12));
             dinnersubtotalAcq += dinneramountAcq;
         }
         jLabelAcqDinnerSubTot.setText(Double.toString(dinnersubtotalAcq));
 
         incidentalsubtotalAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double incidentalamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 9));
+            double incidentalamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 13));
             incidentalsubtotalAcq += incidentalamountAcq;
         }
         jLabelAcqIncidentalSubTot.setText(Double.toString(incidentalsubtotalAcq));
 
         miscSubTotAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double miscamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 11));
+            double miscamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 15));
             miscSubTotAcq += miscamountAcq;
         }
         jLabelAcqMiscSubTot.setText(Double.toString(miscSubTotAcq));
 
         unprovedSubTotAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double unprovedamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 12));
+            double unprovedamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 16));
             unprovedSubTotAcq += unprovedamountAcq;
         }
         jLabelAcqAccUnprovedSubTot.setText(Double.toString(unprovedSubTotAcq));
 
         provedSubTotAcq = 0;
         for (int i = 0; i < jTableActivityAcq.getRowCount(); i++) {
-            double provedamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 13));
+            double provedamountAcq = Double.parseDouble((String) jTableActivityAcq.getValueAt(i, 17));
             provedSubTotAcq += provedamountAcq;
         }
 
@@ -1078,6 +1137,8 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
             if (("R".equals((jLabelReqSerial.getText())))) {
                 if (balAmt > 0) {
                     jLabelAppTotReq1.setText("Total (Change)");
+                    jLabelAcqAppTotReqCost1.setText(Double.toString(balAmt * -1));
+                    jLabelAcqAppTotReqCost1.setForeground(Color.red);
                 } else if (balAmt < 0) {
                     jLabelAppTotReq1.setText("Total (Shortfall)");
                 } else if (balAmt == 0) {
@@ -1097,7 +1158,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
 
-            st.executeQuery("SELECT count(*) FROM[ClaimsAppSysZimTTECH].[dbo].[ChgPaidTab]"
+            st.executeQuery("SELECT count(*) FROM[ClaimsAppSysZvandiri].[dbo].[ChgPaidTab]"
                     + " where concat(PREV_SERIAL,PREV_REF_NUM) = "
                     + "'" + jLabelReqSerial.getText() + jLabelReqRefNum.getText() + "' "
                     + "and REG_MOD_VER = (select REG_MOD_VER FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] "
@@ -1154,7 +1215,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
             st1.executeQuery("select top 1 SERIAL,REF_YEAR, REF_NUM,REF_DAT,EMP_NUM,EMP_NAM,"
                     + "EMP_TTL,EMP_PROV,EMP_OFF,EMP_BNK_NAM,ACC_NUM,BUD_COD,ACT_MAIN_PUR,"
                     + "ACT_TOT_AMT,PREV_REF_NUM,PREV_REF_DAT,ACT_REC_STA,DOC_VER + 1,DOC_VER "
-                    + "FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+                    + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
                     + "where concat(SERIAL,REF_NUM) = '" + jLabelReqRefNum.getText() + "'"
                     + " and ACT_REC_STA = 'Q' ");
 
@@ -1241,7 +1302,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                     + "EMP_TTL,EMP_PROV,EMP_OFF,EMP_BNK_NAM,ACC_NUM,ACT_MAIN_PUR,"
                     + "ACT_TOT_AMT,PREV_REF_NUM,PREV_REF_DAT,ACT_REC_STA,DOC_VER + 1,"
                     + "DOC_VER,REG_MOD_VER,SERIAL,PREV_SERIAL "
-                    + "FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+                    + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
                     + "where concat(SERIAL,REF_NUM) = '" + jLabelReqRefNum.getText() + "'"
                     + " and ACT_REC_STA = 'Q' ");
 
@@ -1273,33 +1334,45 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
             }
 
-            st2.executeQuery("SELECT  ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,"
-                    + "PRJ_TASK_CODE,ACT_SITE,ACT_ITM_PUR, BRK_AMT,"
-                    + "LNC_AMT, DIN_AMT,INC_AMT, MSC_ACT,MSC_AMT, "
-                    + "ACC_UNPROV_AMT, ACC_PRO_AMT, ACT_ITM_TOT  FROM "
-                    + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                    + "  where concat(SERIAL,REF_NUM)='" + jLabelReqSerial.getText() + jLabelReqRefNum.getText() + "' "
-                    + "and ACT_REC_STA='A' and DOC_VER=4 and PLAN_WK=(select distinct PLAN_WK "
-                    + "from [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                    + "where concat(SERIAL,REF_NUM)='" + checkRef + "')"
-                    + "order by ACT_DATE");
+            st.executeQuery("SELECT  b.ITM_NUM,b.ACT_DATE,b.ACC_CODE,b.DONOR ,b.PRJ_CODE_GL , b.PRJ_CODE_PROG ,"
+                    + "b.PRJ_NAM_PROG ,"
+                    + "b.BUD_LINE ,b.BUD_CODE ,b.ACT_SITE , b.ACT_DESC ,b.BRK_AMT ,b.LNC_AMT ,b.DIN_AMT ,"
+                    + "b.INC_AMT ,b.MSC_ACT , b.MSC_AMT ,b.ACC_UNPROV_AMT ,b.ACC_PROV_AMT ,b.ACT_ITM_TOT "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL = b.SERIAL "
+                    + "and a.REF_NUM=b.REF_NUM and a.DOC_VER=b.DOC_VER and a.ACT_REC_STA=b.ACT_REC_STA "
+                    + "join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c on a.SERIAL = c.SERIAL "
+                    + "and a.REF_NUM=c.REF_NUM where c.DOC_STATUS='HODApprove' and b.plan_wk =" + minWkNum + "    "
+                    + "and a.ACT_REC_STA = 'A' and c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A'  "
+                    + "and concat(a.SERIAL,a.REF_NUM) ='" + jLabelReqSerial.getText() + jLabelReqRefNum.getText() + "' "
+                    + "and a.REF_NUM in (Select REF_NUM from [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where STATUS = 'Paid') "
+                    + "order by b.ACT_DATE"
+            );
 
-            ResultSet r2 = st2.getResultSet();
+            ResultSet r = st.getResultSet();
 
-            while (r2.next()) {
-                model.insertRow(model.getRowCount(), new Object[]{r2.getString(2), r2.getString(3),
-                    r2.getString(4), r2.getString(5), r2.getString(6), r2.getString(7),
-                    r2.getString(8), r2.getString(9), r2.getString(10), r2.getString(11), r2.getString(12), r2.getString(13),
-                    r2.getString(14), r2.getString(15), r2.getString(16)});
+            while (r.next()) {
+                model.insertRow(model.getRowCount(), new Object[]{r.getString(2), r.getString(3),
+                    r.getString(4), r.getString(5), r.getString(6), r.getString(7),
+                    r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12), r.getString(13),
+                    r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                    r.getString(20)});
+
             }
 
-            st3.executeQuery("SELECT  ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,"
-                    + "PRJ_TASK_CODE,ACT_SITE,ACT_ITM_PUR, BRK_AMT,"
-                    + "LNC_AMT, DIN_AMT,INC_AMT, MSC_ACT,MSC_AMT, "
-                    + "ACC_UNPROV_AMT, ACC_PRO_AMT, ACT_ITM_TOT,PLAN_WK  FROM "
-                    + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                    + "where concat(SERIAL,REF_NUM)='" + checkRef + "' "
-                    + "and ACT_REC_STA='Q' order by ACT_DATE");
+            st3.executeQuery("SELECT  b.ITM_NUM,b.ACT_DATE,b.ACC_CODE,b.DONOR ,b.PRJ_CODE_GL , b.PRJ_CODE_PROG ,"
+                    + "b.PRJ_NAM_PROG ,"
+                    + "b.BUD_LINE ,b.BUD_CODE ,b.ACT_SITE , b.ACT_DESC ,b.BRK_AMT ,b.LNC_AMT ,b.DIN_AMT ,"
+                    + "b.INC_AMT ,b.MSC_ACT , b.MSC_AMT ,b.ACC_UNPROV_AMT ,b.ACC_PROV_AMT ,b.ACT_ITM_TOT "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL = b.SERIAL "
+                    + "and a.REF_NUM=b.REF_NUM and a.DOC_VER=b.DOC_VER and a.ACT_REC_STA=b.ACT_REC_STA "
+                    + "join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c on a.SERIAL = c.SERIAL "
+                    + "and a.REF_NUM=c.REF_NUM where c.DOC_STATUS='AcqRegistered' and b.plan_wk =" + minWkNum + "    "
+                    + "and a.ACT_REC_STA = 'Q'  "
+                    + "and concat(a.SERIAL,a.REF_NUM) ='" + checkRef + "' "
+                    + "order by b.ACT_DATE"
+            );
 
             ResultSet r3 = st3.getResultSet();
 
@@ -1307,12 +1380,12 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                 modelAcq.insertRow(modelAcq.getRowCount(), new Object[]{r3.getString(2), r3.getString(3),
                     r3.getString(4), r3.getString(5), r3.getString(6), r3.getString(7),
                     r3.getString(8), r3.getString(9), r3.getString(10), r3.getString(11), r3.getString(12), r3.getString(13),
-                    r3.getString(14), r3.getString(15), r3.getString(16)});
+                    r3.getString(14), r3.getString(15), r3.getString(16), r3.getString(17), r3.getString(18), r3.getString(19),
+                    r3.getString(20)});
 
-                minWkNum = r3.getInt(17);
             }
 
-            st4.executeQuery("SELECT NAM_TRAVEL,NAM_VISITED,TRIP_BRIEF FROM"
+            st4.executeQuery("SELECT NAM_TRAVEL FROM"
                     + " [ClaimsAppSysZvandiri].[dbo].[ClaimTripReport] where concat"
                     + "(SERIAL,REF_NUM)='" + jLabelAcqSerial.getText() + jLabelAcqRefNum.getText() + "' ");
 
@@ -1322,8 +1395,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                 jTextAreaNamTravel.setText(r4.getString(1));
             }
 
-            fetchImgCount();
-
+//            fetchImgCount();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -1365,11 +1437,11 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
     void fetchMonDistAttDocRep() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-            System.out.println("run "+checkRef);
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+            System.out.println("run " + checkRef);
             Statement st = conn.createStatement();
             st.executeQuery("SELECT ACT_ITM,fileName ,attDesc  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimReportAttDocTab] "
-                    + " where concat(SERIAL,REF_NUM) ='" + checkRef + "'  and ACT_REC_STA = 'A' ");
+                    + " where concat(SERIAL,REF_NUM) ='" + checkRef + "'  and ACT_REC_STA = 'Q' ");
 
             ResultSet r = st.getResultSet();
             while (r.next()) {
@@ -1419,7 +1491,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
     }
 
     void createAction() {
-
+hjkhkhkkhhk
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver:"
@@ -1857,8 +1929,8 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         jLabelLineTime = new javax.swing.JLabel();
         jLabellogged = new javax.swing.JLabel();
         jLabelLineLogNam = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableActivityReq = new javax.swing.JTable();
+        jScrollPaneWk8 = new javax.swing.JScrollPane();
+        jTableActivityReqAcq = new javax.swing.JTable();
         jPanelAcquittal = new javax.swing.JPanel();
         jLabelLogo2 = new javax.swing.JLabel();
         jLabelHeaderLine1 = new javax.swing.JLabel();
@@ -1869,7 +1941,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         jButtonSave = new javax.swing.JButton();
         jLabellogged1 = new javax.swing.JLabel();
         jLabelLineLogNam1 = new javax.swing.JLabel();
-        jScrollPane8 = new javax.swing.JScrollPane();
+        jScrollPaneWk9 = new javax.swing.JScrollPane();
         jTableActivityAcq = new javax.swing.JTable();
         jTabbedPaneAcqAtt = new javax.swing.JTabbedPane();
         jPanelReport = new javax.swing.JPanel();
@@ -2215,7 +2287,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelGen.add(jLabelLogo);
-        jLabelLogo.setBounds(10, 10, 220, 100);
+        jLabelLogo.setBounds(10, 10, 220, 110);
 
         jLabelHeaderGen.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderGen.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -2612,17 +2684,14 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         jLabelEmp.setBounds(1140, 80, 80, 30);
 
         jLabelAcqRegDate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelAcqRegDate.setForeground(new java.awt.Color(255, 0, 0));
         jPanelGen.add(jLabelAcqRegDate);
         jLabelAcqRegDate.setBounds(950, 130, 110, 30);
 
         jLabelAcqRefNum.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelAcqRefNum.setForeground(new java.awt.Color(255, 0, 0));
         jPanelGen.add(jLabelAcqRefNum);
         jLabelAcqRefNum.setBounds(890, 130, 50, 30);
 
         jLabelAcqSerial.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelAcqSerial.setForeground(new java.awt.Color(255, 0, 0));
         jPanelGen.add(jLabelAcqSerial);
         jLabelAcqSerial.setBounds(840, 130, 25, 30);
 
@@ -2632,7 +2701,6 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         jLabelNumAcq.setBounds(700, 130, 90, 30);
 
         jLabelAcqYear.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelAcqYear.setForeground(new java.awt.Color(255, 0, 0));
         jPanelGen.add(jLabelAcqYear);
         jLabelAcqYear.setBounds(790, 130, 40, 30);
 
@@ -2704,7 +2772,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequest.add(jLabelLogo1);
-        jLabelLogo1.setBounds(10, 10, 220, 100);
+        jLabelLogo1.setBounds(10, 10, 220, 110);
 
         jLabelHeaderLine.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -2730,31 +2798,26 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         jPanelRequest.add(jLabelLineLogNam);
         jLabelLineLogNam.setBounds(1155, 40, 190, 30);
 
-        jTableActivityReq.setModel(new javax.swing.table.DefaultTableModel(
+        jTableActivityReqAcq.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableActivityReq.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableActivityReqMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableActivityReq);
+        jScrollPaneWk8.setViewportView(jTableActivityReqAcq);
 
-        jPanelRequest.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 150, 1340, 480);
+        jPanelRequest.add(jScrollPaneWk8);
+        jScrollPaneWk8.setBounds(10, 150, 1340, 490);
 
         jTabbedPaneAppSys.addTab("Perdiem Request", jPanelRequest);
 
@@ -2765,7 +2828,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         jLabelLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelAcquittal.add(jLabelLogo2);
-        jLabelLogo2.setBounds(10, 10, 220, 100);
+        jLabelLogo2.setBounds(10, 10, 220, 110);
 
         jLabelHeaderLine1.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine1.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -2838,26 +2901,21 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Branch", "Project Code", "Task Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
+                "Date", "Account Code", "Donor", "Project Code GL", "Project Code Program", "Project Name Program", "Budget Line", "Budget Code", "Site to Visit", "Activity", "Breakfast", "Lunch", "Dinner", "Incidental", "Misc Desc", "Misc Amt", "Unproved Acc", "Proved Acc", "Line Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableActivityAcq.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableActivityAcqMouseClicked(evt);
-            }
-        });
-        jScrollPane8.setViewportView(jTableActivityAcq);
+        jScrollPaneWk9.setViewportView(jTableActivityAcq);
 
-        jPanelAcquittal.add(jScrollPane8);
-        jScrollPane8.setBounds(0, 120, 1320, 440);
+        jPanelAcquittal.add(jScrollPaneWk9);
+        jScrollPaneWk9.setBounds(10, 120, 1340, 440);
 
         jTabbedPaneAppSys.addTab("Perdiem Acquittal", jPanelAcquittal);
 
@@ -2935,7 +2993,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         jLabelLogo8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelAcqELog.add(jLabelLogo8);
-        jLabelLogo8.setBounds(10, 10, 220, 100);
+        jLabelLogo8.setBounds(10, 10, 220, 110);
 
         jLabelHeaderLine7.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine7.setForeground(new java.awt.Color(255, 255, 255));
@@ -2998,7 +3056,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         jLabelLogo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelAcqDocAtt1.add(jLabelLogo3);
-        jLabelLogo3.setBounds(10, 10, 220, 100);
+        jLabelLogo3.setBounds(10, 5, 220, 110);
 
         jLabelHeaderLine2.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine2.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -3058,9 +3116,9 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         jPanelAcqDocAtt2.setMinimumSize(new java.awt.Dimension(1270, 671));
         jPanelAcqDocAtt2.setLayout(null);
 
-        jLabelLogo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogoOld (2).jpg"))); // NOI18N
+        jLabelLogo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelAcqDocAtt2.add(jLabelLogo4);
-        jLabelLogo4.setBounds(10, 10, 220, 100);
+        jLabelLogo4.setBounds(10, 5, 220, 105);
 
         jLabelHeaderLine4.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine4.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -3120,7 +3178,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         jLabelLogo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelAcqDocAtt3.add(jLabelLogo5);
-        jLabelLogo5.setBounds(10, 10, 220, 100);
+        jLabelLogo5.setBounds(10, 5, 220, 105);
 
         jLabelHeaderLine5.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine5.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -3180,7 +3238,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         jLabelLogo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelAcqDocAtt4.add(jLabelLogo6);
-        jLabelLogo6.setBounds(10, 10, 220, 100);
+        jLabelLogo6.setBounds(10, 5, 220, 105);
 
         jLabelHeaderLine6.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine6.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -3240,7 +3298,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
         jLabelLogo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelAcqDocAtt5.add(jLabelLogo7);
-        jLabelLogo7.setBounds(10, 10, 220, 100);
+        jLabelLogo7.setBounds(10, 5, 220, 105);
 
         jLabelHeaderLine3.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine3.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -3653,7 +3711,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonClearBudActionPerformed
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-       
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
@@ -3674,136 +3732,6 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
     private void jTextReasonRejectKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextReasonRejectKeyTyped
         jButtonReasonDialogOk.setVisible(true);
     }//GEN-LAST:event_jTextReasonRejectKeyTyped
-
-    private void jTableActivityReqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableActivityReqMouseClicked
-        //        if (evt.getClickCount() == 2) {
-        //            resetField();
-        //            int row = jTableWk1Activities.getSelectedRow();
-        //
-        //            int col1 = 1;
-        //            int col3 = 3;
-        //            int col4 = 4;
-        //            int col5 = 5;
-        //            int col6 = 6;
-        //            int col7 = 7;
-        //            int col8 = 8;
-        //            int col9 = 9;
-        //            int col10 = 10;
-        //            int col11 = 11;
-        //            int col12 = 12;
-        //            int col13 = 13;
-        //            int col14 = 14;
-        //            int col15 = 15;
-        //            int col16 = 16;
-        //            int col17 = 17;
-        //            int col18 = 18;
-        //            int col19 = 19;
-        //
-        //            Object id1 = jTableWk1Activities.getValueAt(row, col1);
-        //            Object id2 = jTableWk1Activities.getValueAt(row, col3);
-        //            Object id3 = jTableWk1Activities.getValueAt(row, col4);
-        //            Object id4 = jTableWk1Activities.getValueAt(row, col5);
-        //            Object id5 = jTableWk1Activities.getValueAt(row, col6);
-        //            Object id6 = jTableWk1Activities.getValueAt(row, col7);
-        //            Object id7 = jTableWk1Activities.getValueAt(row, col8);
-        //            Object id8 = jTableWk1Activities.getValueAt(row, col9);
-        //            Object id9 = jTableWk1Activities.getValueAt(row, col10);
-        //            Object id10 = jTableWk1Activities.getValueAt(row, col11);
-        //            Object id11 = jTableWk1Activities.getValueAt(row, col12);
-        //            Object id12 = jTableWk1Activities.getValueAt(row, col13);
-        //            Object id13 = jTableWk1Activities.getValueAt(row, col14);
-        //            Object id14 = jTableWk1Activities.getValueAt(row, col15);
-        //            Object id15 = jTableWk1Activities.getValueAt(row, col16);
-        //            Object id16 = jTableWk1Activities.getValueAt(row, col17);
-        //            Object id17 = jTableWk1Activities.getValueAt(row, col18);
-        //            Object id18 = jTableWk1Activities.getValueAt(row, col19);
-        //
-        //            jLabelActWk1Date.setText(id1.toString());
-        //            //            jLabelPrjNameDet.setText(id2.toString());
-        //            //            jLabelPrjTaskDet.setText(id3.toString());
-        //            jTextFieldDialogWk1Site.setText(id4.toString());
-        //            jTextFieldWk1DialogActivityDesc.setText(id5.toString());
-        //            jTextAreaWk1DialogJustification.setText(id6.toString());
-        //            //            jTextFieldWk1DialogStaffName1
-        //            //            jLabelStaff.setText(id7.toString());
-        //
-        //            if ((Double.parseDouble(id7.toString())) > 0) {
-        //                jCheckBoxDialogWk1BrkFast.setSelected(true);
-        //            }
-        //            if ((Double.parseDouble(id8.toString())) > 0) {
-        //                jCheckBoxDialogWk1Lunch.setSelected(true);
-        //            }
-        //            if ((Double.parseDouble(id9.toString())) > 0) {
-        //                jCheckBoxDialogWk1Dinner.setSelected(true);
-        //            }
-        //
-        //            if ((Double.parseDouble(id10.toString())) > 0) {
-        //                jCheckBoxDialogWk1Inc.setSelected(true);
-        //            }
-        //
-        //            if ((Double.parseDouble(id12.toString())) > 0) {
-        //                jCheckBoxDialogWk1Misc.setSelected(true);
-        //                jTextFieldWk1Misc.setText(id11.toString());
-        //                jTextFieldWk1MiscAmt.setText(id12.toString());
-        //            }
-        //
-        //            if ((Double.parseDouble(id13.toString())) > 0) {
-        //                jCheckBoxDialogWk1AccUnProved.setSelected(true);
-        //                jCheckBoxDialogWk1AccProved.setSelected(false);
-        //                jCheckBoxNoAcc.setSelected(false);
-        //
-        //            }
-        //            if ((Double.parseDouble(id14.toString())) > 0) {
-        //                jCheckBoxDialogWk1AccProved.setSelected(true);
-        //                jCheckBoxNoAcc.setSelected(false);
-        //                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-        //
-        //            }
-        //            if (((Double.parseDouble(id13.toString())) == 0) && ((Double.parseDouble(id14.toString())) == 0)) {
-        //                jCheckBoxNoAcc.setSelected(true);
-        //                jCheckBoxDialogWk1AccUnProved.setSelected(false);
-        //                jCheckBoxDialogWk1AccProved.setSelected(false);
-        //
-        //            }
-        //            jTextFieldWk1DialogStaffName1.setText(id15.toString());
-        //            jTextFieldWk1DialogStaffName2.setText(id16.toString());
-        //            jTextFieldWk1DialogStaffName3.setText(id17.toString());
-        //            jTextFieldWk1DialogStaffName4.setText(id18.toString());
-        //
-        //            jDialogWk1.setVisible(true);
-        //            findProject(id2.toString());
-        //            findTask(id3.toString());
-        //            if (("NATIONAL".equals(jLabelDistrict.getText()))) {
-        //                jDialogWk1.setTitle("Per Diem Week 1");
-        //            } else {
-        //                jDialogWk1.setTitle("Month Per Diem ");
-        //            }
-        //            jTextAreaWk1DialogJustification.setLineWrap(true);
-        //            jTextAreaWk1DialogJustification.setWrapStyleWord(true);
-        //            jTextFieldDialogWk1Site.setEditable(false);
-        //            jTextFieldWk1DialogActivityDesc.setEditable(false);
-        //            jTextAreaWk1DialogJustification.setEditable(false);
-        //            jTextFieldWk1DialogStaffName1.setEditable(false);
-        //            jTextFieldWk1DialogStaffName2.setEditable(false);
-        //            jTextFieldWk1DialogStaffName3.setEditable(false);
-        //            jTextFieldWk1DialogStaffName4.setEditable(false);
-        //            jTextFieldWk1Misc.setEditable(false);
-        //            jTextFieldWk1MiscAmt.setEditable(false);
-        //            jCheckBoxDialogWk1BrkFast.setEnabled(false);
-        //            jCheckBoxDialogWk1Lunch.setEnabled(false);
-        //            jCheckBoxDialogWk1Dinner.setEnabled(false);
-        //            jCheckBoxDialogWk1Inc.setEnabled(false);
-        //            jCheckBoxDialogWk1AccUnProved.setEnabled(false);
-        //            jCheckBoxDialogWk1AccProved.setEnabled(false);
-        //            jCheckBoxNoAcc.setEnabled(false);
-        //            jCheckBoxDialogWk1Misc.setEnabled(false);
-        //
-        //        }
-    }//GEN-LAST:event_jTableActivityReqMouseClicked
-
-    private void jTableActivityAcqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableActivityAcqMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableActivityAcqMouseClicked
 
     private void jButtonReasonDialogOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReasonDialogOkActionPerformed
         if ("".equals(jTextReasonReject.getText())) {
@@ -3949,7 +3877,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
             connSaveFile pdfRetrive = new connSaveFile();
             try {
                 Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                        + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+                        + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
                 int row = jTableMonDistAcquitalAttRep.getSelectedRow();
 
                 int col = 0;
@@ -4250,16 +4178,16 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelReport;
     private javax.swing.JPanel jPanelReportDetails;
     private javax.swing.JPanel jPanelRequest;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPaneAtt1;
     private javax.swing.JScrollPane jScrollPaneAtt2;
     private javax.swing.JScrollPane jScrollPaneAtt3;
     private javax.swing.JScrollPane jScrollPaneAtt4;
     private javax.swing.JScrollPane jScrollPaneAtt5;
+    private javax.swing.JScrollPane jScrollPaneWk8;
+    private javax.swing.JScrollPane jScrollPaneWk9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
@@ -4288,7 +4216,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPaneAcqAtt;
     public javax.swing.JTabbedPane jTabbedPaneAppSys;
     private javax.swing.JTable jTableActivityAcq;
-    private javax.swing.JTable jTableActivityReq;
+    private javax.swing.JTable jTableActivityReqAcq;
     private javax.swing.JTable jTableMonDistAcquitalAttRep;
     private javax.swing.JTable jTableTripDetails;
     private javax.swing.JTextField jTextActMainPurpose;
