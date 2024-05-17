@@ -26,6 +26,8 @@ import javax.swing.table.DefaultTableModel;
 import ClaimAppendix1.*;
 import ClaimReports.*;
 import ClaimPlan.*;
+import java.util.ArrayList;
+import java.util.List;
 import utils.connCred;
 import utils.connSaveFile;
 import utils.savePDFToDB;
@@ -42,8 +44,9 @@ public class JFrameHeadAcqList extends javax.swing.JFrame {
     PreparedStatement pst1 = null;
     int itmNum = 1;
     int month, finyear;
+    int prjListCount = 0;
     Date curYear = new Date();
-    String provNam, provNam1, provNam2;
+    String provNam, provNam1, provNam2, HODPrjList;
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     DefaultTableModel model;
     double breakfastsubtotalAcq = 0;
@@ -88,8 +91,12 @@ public class JFrameHeadAcqList extends javax.swing.JFrame {
 
         findUser();
         findUserGrp();
-        fetchdata();
-        
+        getProjList();
+        System.out.println("count "+prjListCount);
+        if (prjListCount > 0) {
+            fetchdata();
+            System.out.println("222");
+        }
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
@@ -143,7 +150,7 @@ public class JFrameHeadAcqList extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -221,7 +228,7 @@ public class JFrameHeadAcqList extends javax.swing.JFrame {
             if ("usrSupAcc".equals(usrGrp)) {
 
                 jMenuItemHeadApp.setEnabled(false);
-                  jMenuItemAcqHeadApp.setEnabled(false);
+                jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanHODApproval.setEnabled(false);
 
             }
@@ -293,6 +300,33 @@ public class JFrameHeadAcqList extends javax.swing.JFrame {
         }
     }
 
+    void getProjList() {
+        try {
+
+            List<String> prjlist = new ArrayList<>();
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+            ResultSet r = st.executeQuery("SELECT concat(DONOR_DESC,PRJ_DESC) FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] "
+                    + "where concat(DONOR_CODE,PRJ_CODE) in (SELECT concat(DONOR_CODE,PRJ_CODE_GL) FROM "
+                    + "[ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] where EMP_NUM ='" + jLabelEmp.getText() + "')");
+
+            while (r.next()) {
+                prjlist.add("'" + r.getString(1) + "'");
+                prjListCount = prjlist.size();
+
+            }
+
+            HODPrjList = String.join(",", prjlist);
+            System.out.println("fff " + HODPrjList);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     void findUser() {
         try {
 
@@ -328,13 +362,22 @@ public class JFrameHeadAcqList extends javax.swing.JFrame {
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
 
+//            st.executeQuery("SELECT distinct a.REF_YEAR,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NAM, "
+//                    + "a.ACT_MAIN_PUR, a.ACT_TOT_AMT,b.ACTION_VER,b.DOC_STATUS,a.PREV_SERIAL,"
+//                    + "a.PREV_REF_NUM,a.PREV_REF_DAT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a"
+//                    + " join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b on a.SERIAL=b.SERIAL "
+//                    + "and a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA and a.DOC_VER=b.DOC_VER "
+//                    + "where  a.DOC_VER = 3 and a.ACT_REC_STA = 'Q'  and  a.SERIAL in ('A','MA') and b.SEND_TO_EMP_NUM='" + jLabelEmp.getText() + "'"
+//                    + " and b.DOC_STATUS in ('FinAcqApprove')");
+
             st.executeQuery("SELECT distinct a.REF_YEAR,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NAM, "
                     + "a.ACT_MAIN_PUR, a.ACT_TOT_AMT,b.ACTION_VER,b.DOC_STATUS,a.PREV_SERIAL,"
-                    + "a.PREV_REF_NUM,a.PREV_REF_DAT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a"
-                    + " join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b on a.SERIAL=b.SERIAL "
-                    + "and a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA and a.DOC_VER=b.DOC_VER "
-                    + "where  a.DOC_VER = 3 and a.ACT_REC_STA = 'Q'  and  a.SERIAL in ('A','MA') and b.SEND_TO_EMP_NUM='" + jLabelEmp.getText() + "'"
-                    + " and b.DOC_STATUS in ('FinAcqApprove')");
+                    + "a.PREV_REF_NUM,a.PREV_REF_DAT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a, "
+                    + "[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b where  (a.DOC_VER = 3 and a.ACT_REC_STA = 'Q') and "
+                    + " a.SERIAL = 'A' and concat(SEND_TO_EMP_NUM,SEND_TO_NAM) in (" + HODPrjList + ")  and (a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM and "
+                    + "a.ACT_REC_STA = b.ACT_REC_STA and a.DOC_VER=b.DOC_VER)  and b.DOC_STATUS in ('FinAcqApprove')"
+                    + " order by a.REF_YEAR,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NAM, a.ACT_MAIN_PUR,a.ACT_TOT_AMT, "
+                    + "b.ACTION_VER,b.DOC_STATUS ");
 
             ResultSet r = st.getResultSet();
 
@@ -346,7 +389,7 @@ public class JFrameHeadAcqList extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
@@ -460,7 +503,7 @@ public class JFrameHeadAcqList extends javax.swing.JFrame {
 
         jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelRequest.add(jLabelLogo1);
-        jLabelLogo1.setBounds(10, 10, 220, 100);
+        jLabelLogo1.setBounds(10, 5, 220, 110);
 
         jLabelHeaderLine.setFont(new java.awt.Font("Times New Roman", 1, 34)); // NOI18N
         jLabelHeaderLine.setText("TRAVEL AND SUBSISTENCE CLAIM");
@@ -807,17 +850,17 @@ public class JFrameHeadAcqList extends javax.swing.JFrame {
             String yearRef = (Serial + ref);
 
             jLabelXtrsRef.setText(yearRef);
-            
-                jDialogPleaseWait.setVisible(true);
-                new JFrameAppHeadAcquittal(yearRef, jLabelEmp.getText()).setVisible(true);
-                setVisible(false);
-                jDialogPleaseWait.setVisible(false);
-            
+
+            jDialogPleaseWait.setVisible(true);
+            new JFrameAppHeadAcquittal(yearRef, jLabelEmp.getText()).setVisible(true);
+            setVisible(false);
+            jDialogPleaseWait.setVisible(false);
+
         }
     }//GEN-LAST:event_jTableActivityActionListMouseClicked
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-       
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jMenuItemPlanPerDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanPerDiemActionPerformed

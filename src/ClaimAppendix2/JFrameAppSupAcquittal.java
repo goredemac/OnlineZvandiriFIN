@@ -892,8 +892,9 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                             + " Finance Management System </body></html>";
                 }
 
-                String MailMsgTitle = "Per Diem Approval Acquittal - Reference No. " + jLabelAcqSerial.getText() + " " + jLabelAcqRefNum.getText() + " ";
-
+                   String MailMsgTitle = "Per Diem Acquittal - Reference No. " + jLabelAcqSerial.getText() + " " + jLabelAcqRefNum.getText() + " for "
+                        + "Request Ref. No. "+ jLabelReqSerial.getText() + " " + jLabelReqRefNum.getText() + "";
+                   
                 emSend.sendMail(MailMsgTitle, c.FinGrpMail, mailMsg, reqUsrMail);
 
                 jDialogWaitingEmail.setVisible(false);
@@ -913,7 +914,8 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                         + "Kind Regards <br><br>"
                         + " Finance Management System </body></html>";
 
-                String MailMsgTitle = "Per Diem Rejected - Reference No. A" + jLabelAcqRefNum.getText() + " ";
+                String MailMsgTitle = "Per Diem Rejected - Reference No. "+ jLabelAcqSerial.getText() + " " + jLabelAcqRefNum.getText() + " for "
+                        + "Request Ref. No. "+ jLabelReqSerial.getText() + " " + jLabelReqRefNum.getText() + " ";
 
                 emSend.sendMail(MailMsgTitle, reqUsrMail, mailMsg, "");
 
@@ -922,7 +924,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Email notification has been send to " + reqUsrNam + " for rejection of acquittal No. A "
                         + jLabelAcqRefNum.getText());
 
-                new JFrameAccAcqList(jLabelEmp.getText()).setVisible(true);
+                new JFrameSupAcqList(jLabelEmp.getText()).setVisible(true);
                 setVisible(false);
 
             }
@@ -942,64 +944,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         }
     }
 
-//    void mainPageTotUpdate() {
-//        breakfastsubtotal = 0;
-//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
-//            double breakfastamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 6));
-//            breakfastsubtotal += breakfastamount;
-//
-//        }
-//        jLabelBreakFastSubTot.setText(Double.toString(breakfastsubtotal));
-//
-//        lunchsubtotal = 0;
-//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
-//            double lunchamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 7));
-//            lunchsubtotal += lunchamount;
-//        }
-//        jLabelLunchSubTot.setText(Double.toString(lunchsubtotal));
-//
-//        dinnersubtotal = 0;
-//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
-//            double dinneramount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 8));
-//            dinnersubtotal += dinneramount;
-//        }
-//        jLabelDinnerSubTot.setText(Double.toString(dinnersubtotal));
-//
-//        incidentalsubtotal = 0;
-//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
-//            double incidentalamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 9));
-//            incidentalsubtotal += incidentalamount;
-//        }
-//        jLabelIncidentalSubTot.setText(Double.toString(incidentalsubtotal));
-//
-//        miscSubTot = 0;
-//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
-//            double miscamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 11));
-//            miscSubTot += miscamount;
-//        }
-//        jLabelMiscSubTot.setText(Double.toString(miscSubTot));
-//
-//        unprovedSubTot = 0;
-//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
-//            double unprovedamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 12));
-//            unprovedSubTot += unprovedamount;
-//        }
-//        jLabelAccUnprovedSubTot.setText(Double.toString(unprovedSubTot));
-//
-//        provedSubTot = 0;
-//        for (int i = 0; i < jTableActivityReqAcq.getRowCount(); i++) {
-//            double provedamount = Double.parseDouble((String) jTableActivityReqAcq.getValueAt(i, 13));
-//            provedSubTot += provedamount;
-//        }
-//        jLabelAccProvedSubTot.setText(String.format("%.2f", provedSubTot));
-//
-//        allTotal = 0;
-//        allTotal = unprovedSubTot + provedSubTot + miscSubTot + incidentalsubtotal
-//                + dinnersubtotal + lunchsubtotal + breakfastsubtotal;
-//
-//        jLabelAcqAppTotPlannedCost.setText(String.format("%.2f", allTotal));
-//
-//    }
+
 //show claimed and actual amount for district
     void mainPageTotUpdate() {
         breakfastsubtotal = 0;
@@ -1491,7 +1436,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
     }
 
     void createAction() {
-hjkhkhkkhhk
+
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver:"

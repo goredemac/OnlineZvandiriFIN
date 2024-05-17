@@ -70,7 +70,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
     String sendToProv, sendToFin, reqUsrMail, finUsrMail, reqUsrNam, reqEmpNum, createUsrNam,
             HODUsrNam, HODUsrEmail, HODUsrEmpNum, docVersion,
             oldDocVersion, actVersion, statusCodeApp, statusCodeDisApp, checkRef,
-            authNam1, authNam2, usrGrp, empOff, searchRef, HODPrjNam,HODPrjCodeGL;
+            authNam1, authNam2, usrGrp, empOff, searchRef, HODPrjNam, HODPrjCodeGL;
     String province = "";
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     DefaultTableModel modelWk1, modelWk2, modelWk3, modelWk4, modelWk5;
@@ -174,7 +174,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
             HODPrjNam = modelWk5.getValueAt(0, 3).toString();
             HODPrjCodeGL = modelWk5.getValueAt(0, 4).toString();
         }
-        
+
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
@@ -514,6 +514,8 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
+
+  
 
     void computerName() {
 
