@@ -146,7 +146,7 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -487,26 +487,23 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
 
                 Statement st = conn.createStatement();
 
-                st.executeQuery("SELECT distinct a.PREV_SERIAL,a.PREV_REF_NUM ,a.PREV_REF_DAT,a.EMP_NAM,a.ACT_TOT_AMT,a.ACT_MAIN_PUR,b.USR_ACTION,ACTIONED_BY_NAM,ACTIONED_ON_DATE,"
-                        + "DATEDIFF(day, a.REF_DAT, getDate())  ,b.ACTIONED_ON_DATE,DATEDIFF(day, b.ACTIONED_ON_DATE, getDate()),a.PREV_REF_NUM \n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b\n"
-                        + "on a.serial = b.serial and a.ref_num = b.ref_num and a.ACT_REC_STA = b.ACT_REC_STA and a.doc_ver = b.doc_ver  \n"
-                        + "where (a.ACT_REC_STA = 'Q' and a.SERIAL = 'A')   \n"
-                        + "and CONCAT(a.PREV_SERIAL,a.PREV_REF_NUM) in (SELECT distinct CONCAT(c.PREV_SERIAL,c.PREV_REF_NUM)\n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] c join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] d\n"
-                        + "on c.serial = d.serial and c.ref_num = d.ref_num and c.ACT_REC_STA = d.ACT_REC_STA and c.doc_ver = d.doc_ver  \n"
-                        + "where (c.ACT_REC_STA = 'Q' and c.SERIAL = 'A')  \n"
-                        + "and d.USR_ACTION not like '%Reject%' and d.USR_ACTION ='Acquittal- Head Approved')  and  b.USR_ACTION  not like '%Reject%'  \n"
-                        + "and a.EMP_NUM = '" + jLabelEmp.getText() + "'\n"
-                        + " and a.PREV_REF_DAT != '1900-01-01' and a.PREV_REF_NUM != 0 and a.REF_DAT between '" + s.format(jDateFrom.getDate()) + "' and '" + s.format(jDateTo.getDate()) + "'\n"
-                        + "order by 2"
-                );
+                st.executeQuery("SELECT distinct a.SERIAL,a.REF_NUM ,a.REF_DAT,a.EMP_NAM,a.ACT_TOT_AMT,a.ACT_MAIN_PUR,b.USR_ACTION,"
+                        + "ACTIONED_BY_NAM,ACTIONED_ON_DATE,DATEDIFF"
+                        + "(day, a.REF_DAT, getDate())  ,b.ACTIONED_ON_DATE,DATEDIFF(day, b.ACTIONED_ON_DATE, getDate()),a.PREV_SERIAL,a.PREV_REF_NUM ,a.PREV_REF_DAT "
+                        + " FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b"
+                        + " on a.serial = b.serial and a.ref_num = b.ref_num and a.ACT_REC_STA = b.ACT_REC_STA and a.doc_ver = b.doc_ver  "
+                        + "where (a.ACT_REC_STA = 'Q' and a.SERIAL = 'A')"
+                        + "and a.EMP_NAM = '" + jLabelEmp.getText() + "'"
+                        + "and a.REF_DAT between '" + s.format(jDateFrom.getDate()) + "' and '" + s.format(jDateTo.getDate()) + "'"
+                        + " and a.PREV_REF_DAT != '1900-01-01' and a.PREV_REF_NUM != 0"
+                        + "order by 2");
 
                 ResultSet r = st.getResultSet();
 
                 while (r.next()) {
                     model.insertRow(model.getRowCount(), new Object[]{r.getString(1), r.getString(2), r.getString(3),
-                        r.getString(4), r.getString(5), r.getString(6), r.getString(7), r.getString(8), r.getString(9)});
+                        r.getString(4), r.getString(5), r.getString(6), r.getString(7), r.getString(8), r.getString(9),
+                        r.getString(13), r.getString(14), r.getString(15)});
 
                 }
 
@@ -655,17 +652,12 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
 
                 Statement st = conn.createStatement();
 
-                st.executeQuery("SELECT distinct a.PREV_SERIAL,a.PREV_REF_NUM ,a.PREV_REF_DAT,a.EMP_NAM,a.ACT_TOT_AMT,a.ACT_MAIN_PUR,b.USR_ACTION,"
+                st.executeQuery("SELECT distinct a.SERIAL,a.REF_NUM ,a.REF_DAT,a.EMP_NAM,a.ACT_TOT_AMT,a.ACT_MAIN_PUR,b.USR_ACTION,"
                         + "ACTIONED_BY_NAM,ACTIONED_ON_DATE,DATEDIFF"
-                        + "(day, a.REF_DAT, getDate())  ,b.ACTIONED_ON_DATE,DATEDIFF(day, b.ACTIONED_ON_DATE, getDate()) "
+                        + "(day, a.REF_DAT, getDate())  ,b.ACTIONED_ON_DATE,DATEDIFF(day, b.ACTIONED_ON_DATE, getDate()),a.PREV_SERIAL,a.PREV_REF_NUM ,a.PREV_REF_DAT "
                         + " FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b"
                         + " on a.serial = b.serial and a.ref_num = b.ref_num and a.ACT_REC_STA = b.ACT_REC_STA and a.doc_ver = b.doc_ver  "
                         + "where (a.ACT_REC_STA = 'Q' and a.SERIAL = 'A')"
-                        + "and CONCAT(a.PREV_SERIAL,a.PREV_REF_NUM)  in (SELECT distinct CONCAT(c.PREV_SERIAL,c.PREV_REF_NUM)\n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] c join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] d\n"
-                        + "on c.serial = d.serial and c.ref_num = d.ref_num and c.ACT_REC_STA = d.ACT_REC_STA and c.doc_ver = d.doc_ver  \n"
-                        + "where (c.ACT_REC_STA = 'Q' and c.SERIAL = 'A') and  b.USR_ACTION  not like '%Reject%'  \n"
-                        + "and d.USR_ACTION not like '%Reject%' and d.USR_ACTION ='Acquittal- Head Approved')  "
                         + "and a.EMP_NAM = '" + jTextSearchEmpNam.getText() + "'"
                         + "and a.REF_DAT between '" + s.format(jDateFrom.getDate()) + "' and '" + s.format(jDateTo.getDate()) + "'"
                         + " and a.PREV_REF_DAT != '1900-01-01' and a.PREV_REF_NUM != 0"
@@ -675,7 +667,8 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
 
                 while (r.next()) {
                     model.insertRow(model.getRowCount(), new Object[]{r.getString(1), r.getString(2), r.getString(3),
-                        r.getString(4), r.getString(5), r.getString(6), r.getString(7), r.getString(8), r.getString(9)});
+                        r.getString(4), r.getString(5), r.getString(6), r.getString(7), r.getString(8), r.getString(9),
+                        r.getString(13), r.getString(14), r.getString(15)});
 
                 }
 
@@ -702,6 +695,7 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
             try {
                 clearTable();
                 radioNormSpec();
+                System.out.println("statu " + actStatus + " kk " + reqSerial + "");
                 Connection conn = DriverManager.getConnection("jdbc:sqlserver:"
                         + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
@@ -901,17 +895,12 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
                         + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
                 Statement st = conn.createStatement();
-
-                st.executeQuery("SELECT distinct a.PREV_SERIAL,a.PREV_REF_NUM ,a.PREV_REF_DAT,a.EMP_NAM,a.ACT_TOT_AMT,a.ACT_MAIN_PUR,b.USR_ACTION,ACTIONED_BY_NAM,ACTIONED_ON_DATE,DATEDIFF"
-                        + "(day, a.REF_DAT, getDate())  ,b.ACTIONED_ON_DATE,DATEDIFF(day, b.ACTIONED_ON_DATE, getDate()) "
+                st.executeQuery("SELECT distinct a.SERIAL,a.REF_NUM ,a.REF_DAT,a.EMP_NAM,a.ACT_TOT_AMT,a.ACT_MAIN_PUR,b.USR_ACTION,"
+                        + "ACTIONED_BY_NAM,ACTIONED_ON_DATE,DATEDIFF"
+                        + "(day, a.REF_DAT, getDate())  ,b.ACTIONED_ON_DATE,DATEDIFF(day, b.ACTIONED_ON_DATE, getDate()),a.PREV_SERIAL,a.PREV_REF_NUM ,a.PREV_REF_DAT "
                         + " FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b"
                         + " on a.serial = b.serial and a.ref_num = b.ref_num and a.ACT_REC_STA = b.ACT_REC_STA and a.doc_ver = b.doc_ver  "
                         + "where (a.ACT_REC_STA = 'Q' and a.SERIAL = 'A')"
-                        + "and CONCAT(a.PREV_SERIAL,a.PREV_REF_NUM)  in (SELECT distinct CONCAT(c.PREV_SERIAL,c.PREV_REF_NUM)\n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] c join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] d\n"
-                        + "on c.serial = d.serial and c.ref_num = d.ref_num and c.ACT_REC_STA = d.ACT_REC_STA and c.doc_ver = d.doc_ver  \n"
-                        + "where (c.ACT_REC_STA = 'Q' and c.SERIAL = 'A')  \n"
-                        + "and d.USR_ACTION not like '%Reject%' and d.USR_ACTION ='Acquittal- Head Approved')  and  b.USR_ACTION  not like '%Reject%' "
                         + "and a.REF_DAT between '" + s.format(jDateFrom.getDate()) + "' and '" + s.format(jDateTo.getDate()) + "'"
                         + " and a.PREV_REF_DAT != '1900-01-01' and a.PREV_REF_NUM != 0"
                         + "order by 2");
@@ -920,7 +909,8 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
 
                 while (r.next()) {
                     model.insertRow(model.getRowCount(), new Object[]{r.getString(1), r.getString(2), r.getString(3),
-                        r.getString(4), r.getString(5), r.getString(6), r.getString(7), r.getString(8), r.getString(9)});
+                        r.getString(4), r.getString(5), r.getString(6), r.getString(7), r.getString(8), r.getString(9),
+                        r.getString(13), r.getString(14), r.getString(15)});
 
                 }
 
@@ -1193,11 +1183,11 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Serial", "Reference No.", "Registration Date", "Employee Name", "Requested Amount", "Activity Main Description", "Current Status", "Actioned  By", "Action Date"
+                "Serial", "Reference No.", "Registration Date", "Employee Name", "Requested Amount", "Activity Main Description", "Current Status", "Last Actioned  By", "Last Action Date", "Request Serial", "Request Ref. No.", "Request Date"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1275,7 +1265,7 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
         jPanel1.add(jDateTo);
         jDateTo.setBounds(70, 50, 140, 25);
 
-        jComboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Created Requests", "Outstanding Requests" }));
+        jComboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Created Requests", "Acquitted Requests", "Outstanding Requests" }));
         jComboBoxStatus.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jComboBoxStatusMouseClicked(evt);
@@ -1320,12 +1310,12 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
         jRadioButtonNormal.setSelected(true);
         jRadioButtonNormal.setText(" Normal");
         jPanel1.add(jRadioButtonNormal);
-        jRadioButtonNormal.setBounds(10, 400, 80, 21);
+        jRadioButtonNormal.setBounds(10, 400, 80, 25);
 
         buttonGroupReqType.add(jRadioButtonSpecial);
         jRadioButtonSpecial.setText(" Special");
         jPanel1.add(jRadioButtonSpecial);
-        jRadioButtonSpecial.setBounds(100, 400, 89, 21);
+        jRadioButtonSpecial.setBounds(100, 400, 89, 25);
 
         jCheckBoxAllEmp.setFont(new java.awt.Font("Tahoma", 3, 10)); // NOI18N
         jCheckBoxAllEmp.setForeground(new java.awt.Color(204, 0, 0));
@@ -1616,7 +1606,7 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
 
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-       
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jTextFieldSearchNamFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSearchNamFocusGained
@@ -1704,13 +1694,13 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
             jTableActivityAllUser.getColumnModel().getColumn(8).setHeaderValue("");
         }
 
-        if ((("usrGen").equals(usrGrp)) && ("All Created Requests".equals(jComboBoxStatus.getSelectedItem().toString()))) {
+        if ((("usrGen").equals(usrGrp)) && ("Created Requests".equals(jComboBoxStatus.getSelectedItem().toString()))) {
             fetchdataAllbyUser();
         } else if ((("usrGen").equals(usrGrp)) && ("Outstanding Requests".equals(jComboBoxStatus.getSelectedItem().toString()))) {
             fetchdataOutstandingbyUser();
         } else if ((("usrGen").equals(usrGrp)) && ("Acquitted Requests".equals(jComboBoxStatus.getSelectedItem().toString()))) {
             fetchdataAcquittedbyUser();
-        } else if ((!(("usrGen").equals(usrGrp))) && ("All Created Requests".equals(jComboBoxStatus.getSelectedItem().toString()))
+        } else if ((!(("usrGen").equals(usrGrp))) && ("Created Requests".equals(jComboBoxStatus.getSelectedItem().toString()))
                 && (!(jCheckBoxAllEmp.isSelected()))) {
             fetchdataMgtAllbyUser();
         } else if ((!(("usrGen").equals(usrGrp))) && ("Outstanding Requests".equals(jComboBoxStatus.getSelectedItem().toString()))
@@ -1719,7 +1709,7 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
         } else if ((!(("usrGen").equals(usrGrp))) && ("Acquitted Requests".equals(jComboBoxStatus.getSelectedItem().toString()))
                 && (!(jCheckBoxAllEmp.isSelected()))) {
             fetchdataMgtAcquittedbyUser();
-        } else if ((!(("usrGen").equals(usrGrp))) && ("All Created Requests".equals(jComboBoxStatus.getSelectedItem().toString()))
+        } else if ((!(("usrGen").equals(usrGrp))) && ("Created Requests".equals(jComboBoxStatus.getSelectedItem().toString()))
                 && (jCheckBoxAllEmp.isSelected()) && ("".equals(jTextSearchEmpNam.getText()))) {
             fetchdataAllUsers();
         } else if ((!(("usrGen").equals(usrGrp))) && ("Outstanding Requests".equals(jComboBoxStatus.getSelectedItem().toString()))
@@ -1770,23 +1760,27 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
             int col = 0;
             int col1 = 1;
             int col6 = 6;
-
+int col10 = 10;
             Object id = jTableActivityAllUser.getValueAt(row, col);
             Object id1 = jTableActivityAllUser.getValueAt(row, col1);
             Object id2 = jTableActivityAllUser.getValueAt(row, col6);
+             Object id3 = jTableActivityAllUser.getValueAt(row, col10);
 
-            String ref = id.toString();
-            String Serial = id1.toString();
+            String Serial = id.toString();
+            String ref = id1.toString();
             String str = id2.toString().substring(0, 9);
+            String refAcq = id3.toString();
+            
+            System.out.println("ref "+ref +" serial "+ Serial+" "+refAcq);
 
             // jLabeltest.setText(tt + " " + tt1);
             String yearRef = (ref + Serial);
             jLabelXtrsRef.setText(yearRef);
-            if ("Acquittal".equals(str)) {
-                new JFrameAppAllUserAcquittal(yearRef, jLabelEmp.getText()).setVisible(true);
+            if ("A".equals(Serial)) {
+                new JFrameAppRepAcquittalView(jLabelEmp.getText(), refAcq).setVisible(true);
                 setVisible(false);
             } else {
-                new JFrameReqAllUserView(yearRef, jLabelEmp.getText()).setVisible(true);
+                new JFrameReqRepViewApp( jLabelEmp.getText(),ref).setVisible(true);
                 setVisible(false);
             }
         }

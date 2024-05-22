@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ClaimAppendix2;
+package ClaimReports;
 
+import ClaimAppendix2.*;
 import ClaimPlanPerDiem.JFrameMnthPlanPerDiemEdit;
 import ClaimPlanPerDiem.JFrameMnthPlanPerDiemCreate;
 import ClaimAppendix1.JFrameAccMgrAppList;
@@ -43,6 +44,7 @@ import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.sun.tools.doclint.Entity;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.print.Printable;
@@ -71,12 +73,11 @@ import utils.connSaveFile;
 import utils.savePDFToDB;
 import utils.StockVehicleMgt;
 
-
 /**
  *
  * @author cgoredema
  */
-public class JFrameAppAcquittalView extends javax.swing.JFrame {
+public class JFrameAppRepAcquittalView extends javax.swing.JFrame {
 
     connCred c = new connCred();
     timeHost tH = new timeHost();
@@ -152,7 +153,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
     /**
      * Creates new form JFrameTabApp1
      */
-    public JFrameAppAcquittalView() {
+    public JFrameAppRepAcquittalView() {
         initComponents();
         showDate();
         showTime();
@@ -164,7 +165,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
     }
 
-    public JFrameAppAcquittalView(String usrLogNum) {
+    public JFrameAppRepAcquittalView(String usrLogNum, String acqRef) {
         initComponents();
 //        showDate();
         showTime();
@@ -215,10 +216,11 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jLabelLineDate5.setText(tH.internetDate);
         jLabelLineDate6.setText(tH.internetDate);
         jLabelLineDate7.setText(tH.internetDate);
-
+        jRadioNormal.setSelected(true);
         findUser();
         findUserGrp();
-
+        jTextAcqRegNum.setText(acqRef);
+        acquittalData();
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
@@ -302,7 +304,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -1093,7 +1095,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     st1.executeQuery("select SERIAL,REF_YEAR, REF_NUM,REF_DAT,EMP_NUM,EMP_NAM,"
                             + "EMP_TTL,EMP_PROV,EMP_OFF,EMP_BNK_NAM,ACC_NUM,ACT_MAIN_PUR,"
                             + "ACT_TOT_AMT,PREV_REF_NUM,PREV_REF_DAT "
-                            + "FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+                            + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
                             + "where concat(SERIAL,REF_NUM) ='" + jLabelAcqSerial.getText() + jLabelAcqRefNum.getText() + "' "
                             + " and ACT_REC_STA = 'Q' ");
 
@@ -1122,7 +1124,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
                     fetchItmData(jLabelSerial.getText() + jTextAcqRegNum.getText(), wkNum, "A", "model");
 
-                    fetchItmData(jLabelAcqSerial.getText() + jLabelAcqRefNum.getText(), wkNum, "Q", "modelAq");
+                    fetchItmData(jLabelAcqSerial.getText() + jLabelAcqRefNum.getText(), wkNum, "Q", "modelAcq");
 
                     getRepDet(jLabelAcqSerial.getText() + jLabelAcqRefNum.getText());
 
@@ -1181,7 +1183,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
             st.executeQuery("SELECT ACT_ITM,fileName ,attDesc  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimReportAttDocTab] "
-                    + " where concat(SERIAL,REF_NUM) ='" + refNum + "'  and ACT_REC_STA = 'A' ");
+                    + " where concat(SERIAL,REF_NUM) ='" + refNum + "'  and ACT_REC_STA = 'Q' ");
 
             ResultSet r = st.getResultSet();
             while (r.next()) {
@@ -1240,7 +1242,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     st1.executeQuery("select SERIAL,REF_YEAR, REF_NUM,REF_DAT,EMP_NUM,EMP_NAM,"
                             + "EMP_TTL,EMP_PROV,EMP_OFF,EMP_BNK_NAM,ACC_NUM,ACT_MAIN_PUR,"
                             + "ACT_TOT_AMT,PREV_REF_NUM,PREV_REF_DAT "
-                            + "FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+                            + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
                             + "where concat(SERIAL,REF_NUM) = '" + searchRef + "'"
                             + " and ACT_REC_STA = 'Q' ");
 
@@ -1295,14 +1297,17 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             //  String model = tabModel;
             Statement st = conn.createStatement();
             System.out.println("val " + refNo + " " + actSta + " " + wkNo + " " + tabModel);
-            st.executeQuery("SELECT  ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,"
-                    + "PRJ_TASK_CODE,ACT_SITE,ACT_ITM_PUR, BRK_AMT,"
-                    + "LNC_AMT, DIN_AMT,INC_AMT, MSC_ACT,MSC_AMT, "
-                    + "ACC_UNPROV_AMT, ACC_PRO_AMT, ACT_ITM_TOT  FROM "
-                    + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
-                    + "  where concat(SERIAL,REF_NUM)='" + refNo + "' "
-                    + "and ACT_REC_STA='" + actSta + "' and PLAN_WK='" + wkNo + "'"
-                    + "order by ACT_DATE");
+          
+            st.executeQuery("SELECT  distinct b.ITM_NUM,b.ACT_DATE,b.ACC_CODE,b.DONOR ,b.PRJ_CODE_GL , b.PRJ_CODE_PROG ,"
+                    + "b.PRJ_NAM_PROG ,"
+                    + "b.BUD_LINE ,b.BUD_CODE ,b.ACT_SITE , b.ACT_DESC ,b.BRK_AMT ,b.LNC_AMT ,b.DIN_AMT ,"
+                    + "b.INC_AMT ,b.MSC_ACT , b.MSC_AMT ,b.ACC_UNPROV_AMT ,b.ACC_PROV_AMT ,b.ACT_ITM_TOT "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL = b.SERIAL "
+                    + "and a.REF_NUM=b.REF_NUM and a.DOC_VER=b.DOC_VER and a.ACT_REC_STA=b.ACT_REC_STA "
+                    + "join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c on a.SERIAL = c.SERIAL "
+                    + "and a.REF_NUM=c.REF_NUM where concat(a.SERIAL,a.REF_NUM)='" + refNo + "' "
+                    + "and a.ACT_REC_STA='" + actSta + "' and PLAN_WK='" + wkNo + "' order by b.ACT_DATE");
 
             ResultSet r = st.getResultSet();
             if ("model".equals(tabModel)) {
@@ -1310,14 +1315,16 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     model.insertRow(model.getRowCount(), new Object[]{r.getString(2), r.getString(3),
                         r.getString(4), r.getString(5), r.getString(6), r.getString(7),
                         r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12), r.getString(13),
-                        r.getString(14), r.getString(15), r.getString(16)});
+                        r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                        r.getString(20)});
                 }
             } else {
                 while (r.next()) {
                     modelAcq.insertRow(modelAcq.getRowCount(), new Object[]{r.getString(2), r.getString(3),
                         r.getString(4), r.getString(5), r.getString(6), r.getString(7),
                         r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12), r.getString(13),
-                        r.getString(14), r.getString(15), r.getString(16)});
+                        r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                        r.getString(20)});
                 }
             }
 
@@ -1333,7 +1340,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT distinct b.USR_ACTION,b.REJECT_COMMENTS FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab a,[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b\n"
+            st.executeQuery("SELECT distinct b.USR_ACTION,b.REJECT_COMMENTS FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab a,[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b\n"
                     + "where  ( a.serial=b.serial and a.REF_NUM = b.REF_NUM and a.DOC_VER=b.DOC_VER) and\n"
                     + "concat(a.SERIAL,a.REF_NUM)='" + refNo + "' \n"
                     + "and a.ACT_REC_STA = 'Q' ");
@@ -1573,6 +1580,15 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    void acquittalData() {
+        try {
+            refreshTab();
+            acqWeek();
+            regInitCheck();
+        } catch (Exception e) {
         }
     }
 
@@ -2611,6 +2627,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jLabelNum.setBounds(290, 125, 90, 30);
 
         jLabelSerial.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSerial.setText("R");
         jPanelGen.add(jLabelSerial);
         jLabelSerial.setBounds(390, 125, 30, 30);
 
@@ -3794,7 +3811,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel8FocusGained
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-        
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jButtonBankCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBankCancelActionPerformed
@@ -4013,29 +4030,29 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
     private void jRadioDistrictActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioDistrictActionPerformed
 //        if (jRadioDistrict.isSelected()) {
-            jLabelSerial.setText("MA");
-            jLabelHeaderGen.setText("TRAVEL AND SUBSISTENCE CLAIM");
-            jTextAcqRegNum.setText("");
-            getMonEnvSet();
-            refreshTab();
-            jLabelAcqAppTotPlannedCost.setVisible(true);
-            jLabelAppTotPlannedReq.setVisible(true);
-            jTabbedPaneAppSys.setTitleAt(3, "Report & Attachments");
-            jTabbedPaneAcqAtt.setEnabledAt(0, true);
-            jTabbedPaneAcqAtt.setEnabledAt(1, false);
-            jTabbedPaneAcqAtt.setEnabledAt(2, false);
-            jTabbedPaneAcqAtt.setEnabledAt(3, false);
-            jTabbedPaneAcqAtt.setEnabledAt(4, false);
-            jTabbedPaneAcqAtt.setEnabledAt(5, false);
-            jTabbedPaneAcqAtt.setEnabledAt(6, false);
-            jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
-            jTabbedPaneAcqAtt.setTitleAt(1, "");
-            jTabbedPaneAcqAtt.setTitleAt(2, "");
-            jTabbedPaneAcqAtt.setTitleAt(3, "");
-            jTabbedPaneAcqAtt.setTitleAt(4, "");
-            jTabbedPaneAcqAtt.setTitleAt(5, "");
-            jTabbedPaneAcqAtt.setTitleAt(6, "");
-            jLabelAppTotCleared.setText("Total Claimed");
+        jLabelSerial.setText("MA");
+        jLabelHeaderGen.setText("TRAVEL AND SUBSISTENCE CLAIM");
+        jTextAcqRegNum.setText("");
+        getMonEnvSet();
+        refreshTab();
+        jLabelAcqAppTotPlannedCost.setVisible(true);
+        jLabelAppTotPlannedReq.setVisible(true);
+        jTabbedPaneAppSys.setTitleAt(3, "Report & Attachments");
+        jTabbedPaneAcqAtt.setEnabledAt(0, true);
+        jTabbedPaneAcqAtt.setEnabledAt(1, false);
+        jTabbedPaneAcqAtt.setEnabledAt(2, false);
+        jTabbedPaneAcqAtt.setEnabledAt(3, false);
+        jTabbedPaneAcqAtt.setEnabledAt(4, false);
+        jTabbedPaneAcqAtt.setEnabledAt(5, false);
+        jTabbedPaneAcqAtt.setEnabledAt(6, false);
+        jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
+        jTabbedPaneAcqAtt.setTitleAt(1, "");
+        jTabbedPaneAcqAtt.setTitleAt(2, "");
+        jTabbedPaneAcqAtt.setTitleAt(3, "");
+        jTabbedPaneAcqAtt.setTitleAt(4, "");
+        jTabbedPaneAcqAtt.setTitleAt(5, "");
+        jTabbedPaneAcqAtt.setTitleAt(6, "");
+        jLabelAppTotCleared.setText("Total Claimed");
 
 //        }
     }//GEN-LAST:event_jRadioDistrictActionPerformed
@@ -4254,14 +4271,78 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrameAppAcquittalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameAppRepAcquittalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrameAppAcquittalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameAppRepAcquittalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrameAppAcquittalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameAppRepAcquittalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrameAppAcquittalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameAppRepAcquittalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -4330,7 +4411,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrameAppAcquittalView().setVisible(true);
+                new JFrameAppRepAcquittalView().setVisible(true);
 
             }
         });

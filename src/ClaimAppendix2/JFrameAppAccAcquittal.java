@@ -935,7 +935,7 @@ public class JFrameAppAccAcquittal extends javax.swing.JFrame {
 
                 jDialogWaitingEmail.setVisible(false);
 
-                JOptionPane.showMessageDialog(null, "Email has been forwarded to Finance for approval of Acquittal No. "
+                JOptionPane.showMessageDialog(null, "Email has been forwarded to <b>"+modelAcq.getValueAt(0, 2).toString()+" project  HOD</b>  for approval of Acquittal No. "
                         + jLabelAcqSerial.getText() + " " + jLabelAcqRefNum.getText());
                 new JFrameSupAcqList(jLabelEmp.getText()).setVisible(true);
                 setVisible(false);
@@ -957,7 +957,7 @@ public class JFrameAppAccAcquittal extends javax.swing.JFrame {
 
                 jDialogWaitingEmail.setVisible(false);
 
-                JOptionPane.showMessageDialog(this, "Email notification has been send to " + reqUsrNam + " for rejection of acquittal No. A "
+                JOptionPane.showMessageDialog(this, "Email notification has been send to " + reqUsrNam + " with rejection rejection status of acquittal No. A "
                         + jLabelAcqRefNum.getText());
 
                 new JFrameSupAcqList(jLabelEmp.getText()).setVisible(true);
