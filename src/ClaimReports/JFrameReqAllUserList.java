@@ -88,6 +88,8 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
         jRadioButtonSpecial.setSelected(false);
         jRadioButtonNormal.setVisible(false);
         jRadioButtonSpecial.setVisible(false);
+        jSeparator22.setVisible(false);
+        jMenuItemUserProfUpd.setVisible(false);
         findUser();
         findUserGrp();
         computerName();
@@ -1760,27 +1762,28 @@ public class JFrameReqAllUserList extends javax.swing.JFrame {
             int col = 0;
             int col1 = 1;
             int col6 = 6;
-int col10 = 10;
+            int col10 = 10;
             Object id = jTableActivityAllUser.getValueAt(row, col);
             Object id1 = jTableActivityAllUser.getValueAt(row, col1);
             Object id2 = jTableActivityAllUser.getValueAt(row, col6);
-             Object id3 = jTableActivityAllUser.getValueAt(row, col10);
+            Object id3 = jTableActivityAllUser.getValueAt(row, col10);
 
             String Serial = id.toString();
             String ref = id1.toString();
             String str = id2.toString().substring(0, 9);
-            String refAcq = id3.toString();
-            
-            System.out.println("ref "+ref +" serial "+ Serial+" "+refAcq);
 
-            // jLabeltest.setText(tt + " " + tt1);
-            String yearRef = (ref + Serial);
-            jLabelXtrsRef.setText(yearRef);
+//            System.out.println("ref "+ref +" serial "+ Serial+" "+refAcq);
+//
+//            // jLabeltest.setText(tt + " " + tt1);
+//           
+//            jLabelXtrsRef.setText(yearRef);
             if ("A".equals(Serial)) {
+                String refAcq = id3.toString();
                 new JFrameAppRepAcquittalView(jLabelEmp.getText(), refAcq).setVisible(true);
                 setVisible(false);
             } else {
-                new JFrameReqRepViewApp( jLabelEmp.getText(),ref).setVisible(true);
+                String yearRef = (ref + Serial);
+                new JFrameReqRepViewApp(jLabelEmp.getText(), ref).setVisible(true);
                 setVisible(false);
             }
         }

@@ -81,7 +81,10 @@ public class JFrameMain extends javax.swing.JFrame {
 
         findUserGrp();
         computerName();
-
+        jSeparator24.setVisible(false);
+        jSeparator22.setVisible(false);
+        jMenuItemUserCreate.setVisible(false);
+        jMenuItemUserProfUpd.setVisible(false);
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
             jMenuItemUserCreate.setEnabled(false);
@@ -137,7 +140,7 @@ public class JFrameMain extends javax.swing.JFrame {
 
             while (r.next()) {
 
-                System.out.println("ff "+r.getString(1));
+                System.out.println("ff " + r.getString(1));
                 jLabelGenLogNam.setText(r.getString(1));
                 empOff = r.getString(2);
                 dialogEmpNam = r.getString(1);

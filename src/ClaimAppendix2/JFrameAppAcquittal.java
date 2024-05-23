@@ -220,6 +220,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelEmp.setText(usrLogNum);
         jLabelEmp.setVisible(false);
         jTextAttDocFilePath.setVisible(false);
+        jPanel12.setVisible(false);
         jToggleButtonNoActivity.setText("All Activities Not Done");
         jToggleButtonAllActivities.setText("All Activities Done As Per Request");
         jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");

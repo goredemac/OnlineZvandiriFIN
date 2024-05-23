@@ -185,21 +185,35 @@ public class JFrameAppRepAcquittalView extends javax.swing.JFrame {
         jTextAreaNamTravel.setLineWrap(true);
         jTextAreaNamTravel.setWrapStyleWord(true);
         jTextAreaNamTravel.setEditable(false);
-        jTabbedPaneAcqAtt.setTitleAt(0, "");
-        jTabbedPaneAcqAtt.setTitleAt(1, "");
-        jTabbedPaneAcqAtt.setTitleAt(2, "");
-        jTabbedPaneAcqAtt.setTitleAt(3, "");
-        jTabbedPaneAcqAtt.setTitleAt(4, "");
-        jTabbedPaneAcqAtt.setTitleAt(5, "");
-        jTabbedPaneAcqAtt.setTitleAt(6, "");
-        jTabbedPaneAcqAtt.setEnabledAt(0, false);
+//        jTabbedPaneAcqAtt.setTitleAt(0, "");
+//        jTabbedPaneAcqAtt.setTitleAt(1, "");
+//        jTabbedPaneAcqAtt.setTitleAt(2, "");
+//        jTabbedPaneAcqAtt.setTitleAt(3, "");
+//        jTabbedPaneAcqAtt.setTitleAt(4, "");
+//        jTabbedPaneAcqAtt.setTitleAt(5, "");
+//        jTabbedPaneAcqAtt.setTitleAt(6, "");
+//        jTabbedPaneAcqAtt.setEnabledAt(0, false);
+//        jTabbedPaneAcqAtt.setEnabledAt(1, false);
+//        jTabbedPaneAcqAtt.setEnabledAt(2, false);
+//        jTabbedPaneAcqAtt.setEnabledAt(3, false);
+//        jTabbedPaneAcqAtt.setEnabledAt(4, false);
+//        jTabbedPaneAcqAtt.setEnabledAt(5, false);
+//        jTabbedPaneAcqAtt.setEnabledAt(6, false);
+//        jRadioParticpant.setVisible(false);
+jTabbedPaneAcqAtt.setEnabledAt(0, true);
         jTabbedPaneAcqAtt.setEnabledAt(1, false);
-        jTabbedPaneAcqAtt.setEnabledAt(2, false);
-        jTabbedPaneAcqAtt.setEnabledAt(3, false);
-        jTabbedPaneAcqAtt.setEnabledAt(4, false);
+        jTabbedPaneAcqAtt.setEnabledAt(2, true);
+        jTabbedPaneAcqAtt.setEnabledAt(3, true);
+        jTabbedPaneAcqAtt.setEnabledAt(4, true);
         jTabbedPaneAcqAtt.setEnabledAt(5, false);
         jTabbedPaneAcqAtt.setEnabledAt(6, false);
-//        jRadioParticpant.setVisible(false);
+        jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
+//            jTabbedPaneAcqAtt.setTitleAt(1, "E-Log Book");
+        jTabbedPaneAcqAtt.setTitleAt(2, "Vehicle Log Sheet");
+        jTabbedPaneAcqAtt.setTitleAt(3, "Proven Expenses");
+        jTabbedPaneAcqAtt.setTitleAt(4, "Other e.g. Log Book Extra Page");
+        jTabbedPaneAcqAtt.setTitleAt(5, "");
+        jTabbedPaneAcqAtt.setTitleAt(6, "");
         try {
             tH.intShowDate();
         } catch (IOException ex) {
@@ -1180,10 +1194,10 @@ public class JFrameAppRepAcquittalView extends javax.swing.JFrame {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
+            System.out.println("ddddd "+refNum);
             Statement st = conn.createStatement();
             st.executeQuery("SELECT ACT_ITM,fileName ,attDesc  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimReportAttDocTab] "
-                    + " where concat(SERIAL,REF_NUM) ='" + refNum + "'  and ACT_REC_STA = 'Q' ");
+                    + " where REF_NUM ='" + refNum + "'  and ACT_REC_STA = 'Q' ");
 
             ResultSet r = st.getResultSet();
             while (r.next()) {

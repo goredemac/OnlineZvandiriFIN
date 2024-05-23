@@ -1491,7 +1491,7 @@ public class JFrameAppHeadAcquittal extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
             st.executeQuery("SELECT ACT_ITM,fileName ,attDesc  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimReportAttDocTab] "
-                    + " where REF_NUM =" + jLabelAcqRefNum.getText() + "  and ACT_REC_STA = 'A' ");
+                    + " where REF_NUM =" + jLabelAcqRefNum.getText() + "  and ACT_REC_STA = 'Q' ");
 
             ResultSet r = st.getResultSet();
             while (r.next()) {
