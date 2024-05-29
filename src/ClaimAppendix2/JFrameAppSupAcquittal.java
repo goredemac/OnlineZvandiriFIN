@@ -33,6 +33,8 @@ import ClaimAppendix1.*;
 import ClaimReports.*;
 import ClaimPlan.*;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -71,6 +73,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
     int genCount = 0;
     int itmCount = 0;
     int wfCount = 0;
+    List<String> list = new ArrayList<>();
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     DefaultTableModel model;
     DefaultTableModel modelAcq;
@@ -78,7 +81,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
     DefaultTableModel modelMonAttRep;
     String sendTo, sendToProv, sendToFin, reqUsrMail, finUsrMail, createUsrNam, breakfastAll, lunchAll,
             docVersion, actVersion, oldDocVersion, preModNum, dinnerAll, incidentalAll, unProvedAll,
-            searchRef, statusCodeApp, statusCodeDisApp, checkRef, amtReq,
+            searchRef, statusCodeApp, statusCodeDisApp, checkRef, amtReq,FinUsrEmail,
             authNam1, authNam2, usrGrp, reqUsrNam, usrRejNam, searchEmpNam, empNum, empNam, empOff;
     String province = "";
     String actRef = "";
@@ -198,6 +201,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         fetchMonDistAttDocRep();
         fetchImgCount();
         findApplicantUser();
+        findFinApprove();
 
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
@@ -440,6 +444,33 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
 
             }
 
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    void findFinApprove() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+
+            ResultSet r = st.executeQuery("SELECT EMP_MAIL FROM [ClaimsAppSysZvandiri].[dbo].[EmpDetTab] "
+                    + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
+                    + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
+                    + "(SELECT distinct CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
+                    + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'Q' and ITM_NUM = 1   )) and DEPT ='HOD')");
+
+            while (r.next()) {
+                list.add(r.getString(1));
+                System.out.println("list " + r.getString(1));
+            }
+
+            FinUsrEmail = String.join(",", list);
+           
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -892,10 +923,10 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                             + " Finance Management System </body></html>";
                 }
 
-                   String MailMsgTitle = "Per Diem Acquittal - Reference No. " + jLabelAcqSerial.getText() + " " + jLabelAcqRefNum.getText() + " for "
-                        + "Request Ref. No. "+ jLabelReqSerial.getText() + " " + jLabelReqRefNum.getText() + "";
-                   
-                emSend.sendMail(MailMsgTitle, c.FinGrpMail, mailMsg, reqUsrMail);
+                String MailMsgTitle = "Per Diem Acquittal - Reference No. " + jLabelAcqSerial.getText() + " " + jLabelAcqRefNum.getText() + " for "
+                        + "Request Ref. No. " + jLabelReqSerial.getText() + " " + jLabelReqRefNum.getText() + "";
+                
+                emSend.sendMail(MailMsgTitle, FinUsrEmail, mailMsg, reqUsrMail);
 
                 jDialogWaitingEmail.setVisible(false);
 
@@ -914,8 +945,8 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                         + "Kind Regards <br><br>"
                         + " Finance Management System </body></html>";
 
-                String MailMsgTitle = "Per Diem Rejected - Reference No. "+ jLabelAcqSerial.getText() + " " + jLabelAcqRefNum.getText() + " for "
-                        + "Request Ref. No. "+ jLabelReqSerial.getText() + " " + jLabelReqRefNum.getText() + " ";
+                String MailMsgTitle = "Per Diem Rejected - Reference No. " + jLabelAcqSerial.getText() + " " + jLabelAcqRefNum.getText() + " for "
+                        + "Request Ref. No. " + jLabelReqSerial.getText() + " " + jLabelReqRefNum.getText() + " ";
 
                 emSend.sendMail(MailMsgTitle, reqUsrMail, mailMsg, "");
 
@@ -943,7 +974,6 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
             System.out.println("Hostname can not be resolved");
         }
     }
-
 
 //show claimed and actual amount for district
     void mainPageTotUpdate() {

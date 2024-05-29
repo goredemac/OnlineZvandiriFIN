@@ -399,7 +399,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
                         + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
                         + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
                         + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
-                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
+                        + "(SELECT distinct CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
                         + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='HOD')");
 
                 while (r.next()) {
@@ -411,7 +411,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
                         + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
                         + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
                         + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
-                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
+                        + "(SELECT distinct CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab] "
                         + "where concat(SERIAL,REF_NUM)='" + searchRef + "'  and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='HOD')");
 
                 while (r.next()) {
@@ -423,7 +423,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
                         + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
                         + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
                         + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
-                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
+                        + "(SELECT distinct CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab] "
                         + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='HOD')");
 
                 while (r.next()) {
@@ -435,7 +435,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
                         + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
                         + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
                         + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
-                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
+                        + "(SELECT distinct CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab] "
                         + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='HOD')");
 
                 while (r.next()) {
@@ -447,7 +447,7 @@ public class JFrameReqAccMgrApp extends javax.swing.JFrame {
                         + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
                         + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
                         + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
-                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
+                        + "(SELECT distinct CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab] "
                         + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'A' and ITM_NUM = 1   )) and DEPT ='HOD')");
 
                 while (r.next()) {

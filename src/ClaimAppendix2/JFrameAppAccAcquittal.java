@@ -259,7 +259,7 @@ public class JFrameAppAccAcquittal extends javax.swing.JFrame {
                         + "where EMP_NUM in (SELECT EMP_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PrjFinHODTab] "
                         + "where CONCAT(DONOR_CODE,PRJ_CODE_GL)=(SELECT concat(DONOR_CODE,PRJ_CODE) "
                         + "FROM [ClaimsAppSysZvandiri].[dbo].[BudDonPrjTab] where concat(DONOR_DESC,PRJ_DESC) = "
-                        + "(SELECT CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
+                        + "(SELECT distinct CONCAT(DONOR,PRJ_CODE_GL) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
                         + "where concat(SERIAL,REF_NUM)='" + searchRef + "'   and ACT_REC_STA = 'Q' and ITM_NUM = 1   )) and DEPT ='HOD')");
 
                 while (r.next()) {
