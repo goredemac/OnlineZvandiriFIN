@@ -3000,7 +3000,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
                     }
 
-                    if (Integer.parseInt(beforeFirstDotRT) >= 14) {
+                    if (Integer.parseInt(beforeFirstDotRT) >= 13) {
                         WkRTLnch = Wk1Lnch;
 
                     }

@@ -2032,17 +2032,22 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             jTabbedPaneAppSys.setSelectedIndex(2);
             jDateChooserDialogActivityDateFrom.requestFocusInWindow();
             jDateChooserDialogActivityDateFrom.setFocusable(true);
+        } else if ((jLabelImgFile1.getIcon() == null)) {
+            JOptionPane.showMessageDialog(this, "Please attach at least one vehicle log book.");
+            jTabbedPaneAppSys.setSelectedIndex(3);
+            jTextAreaNamTravel.requestFocusInWindow();
+            jTextAreaNamTravel.setFocusable(true);
         } else if (jTableAcquittalDocAtt.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Please attach at least one report.");
             jTabbedPaneAppSys.setSelectedIndex(3);
             jTextAreaNamTravel.requestFocusInWindow();
             jTextAreaNamTravel.setFocusable(true);
-        } else if (jTextAreaNamTravel.getText().trim().length()==0) {
+        } else if (jTextAreaNamTravel.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Pleas include names of people who travelled.");
             jTabbedPaneAppSys.setSelectedIndex(3);
             jTextAreaNamTravel.requestFocusInWindow();
             jTextAreaNamTravel.setFocusable(true);
-        }else if ((("Total (Change)").equals(jLabelAppTotReq.getText())) && (jRadioButtonPayRecYes.isSelected())
+        } else if ((("Total (Change)").equals(jLabelAppTotReq.getText())) && (jRadioButtonPayRecYes.isSelected())
                 && (("Select Bank".equals(jComboBankNam.getSelectedItem().toString()))
                 || ("".equals(jTextPaidAmt.getText()))
                 || ("0.00".equals(jTextPaidAmt.getText())))) {
@@ -2105,7 +2110,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 wkUpdate();
                 wkClearedUpdate();
                 payRecAck();
-
 
                 if (!("".equals(jLabelAcqPayBack.getText()))) {
                     chgBank();
@@ -2422,8 +2426,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             String sqlWkCleared = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimWkReqAcqTab] "
                     + "(PREV_SERIAL,PREV_REF_NUM,SERIAL,REF_NUM,PLAN_WK,REQ_AMT,CLEARED_AMT,REQ_STA,ACQ_STA,DOC_VER)"
                     + " VALUES (?,?,?,?,?,?,?,?,?,?)";
-            
-     
+
             pst1 = conn.prepareStatement(sqlWkCleared);
 
             pst1.setString(1, jLabelSerial.getText());
@@ -2538,9 +2541,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 //            e.printStackTrace();
 //        }
 //    }
-
-    
-     void createReport() {
+    void createReport() {
 
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver:"
@@ -2566,11 +2567,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-    
-    
-    
-    
-    
+
     void insGenTab() {
         try {
             String sql = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] "
@@ -2708,7 +2705,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         }
     }
 
-     void createAttDoc() {
+    void createAttDoc() {
         try {
             int itmNumAtt = 1;
 
@@ -2948,7 +2945,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                         + " Finance Management System </body></html>";
 
                 String MailMsgTitle = "Per Diem Acquittal - Reference No. " + jLabelSerialAcq.getText() + " " + jLabelRegNum.getText() + " for "
-                        + "Request Ref. No. "+ jLabelSerial.getText() + " " + jTextAcqRegNum.getText() + "";
+                        + "Request Ref. No. " + jLabelSerial.getText() + " " + jTextAcqRegNum.getText() + "";
 
                 emSend.sendMail(MailMsgTitle, supUsrMail, mailMsg, "");
 

@@ -3047,7 +3047,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jPanel7.setLayout(null);
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 11)); // NOI18N
-        jLabel7.setText("<html>I shall acquit this perdiem request within five days, after the last activity.If I fail to submit an acquittal for this perdiem request in<br> the prescribed period, I authorise Zvandiri to deduct the unacquitted perdiem request amount from my salary without further notice.<br><br>I acknowledge that failure to submit acquittal for this perdiem request  <b>may</b> result in a displinary action. </html>");
+        jLabel7.setText("<html>I shall acquit this perdiem request within five days, after the week of the completed activity.If I fail to submit an acquittal for this perdiem request in<br> the prescribed period, I authorise Zvandiri to deduct the unacquitted perdiem request amount from my salary without further notice.<br><br>I acknowledge that failure to submit acquittal for this perdiem request  <b>may</b> result in a displinary action. </html>");
         jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel7.add(jLabel7);
         jLabel7.setBounds(10, 50, 590, 80);

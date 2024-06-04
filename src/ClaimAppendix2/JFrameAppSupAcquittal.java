@@ -940,7 +940,7 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
                 jDialogWaitingEmail.setVisible(true);
 
                 String mailMsg = "<html><body> Dear " + reqUsrNam + " <br><br><b>"
-                        + jLabelGenLogNam.getText() + "</b> form Finance team has rejected your per diem acquittal No. A " + jLabelAcqRefNum.getText() + ".<br><br>"
+                        + jLabelGenLogNam.getText() + "</b> has rejected your per diem acquittal No. A " + jLabelAcqRefNum.getText() + ".<br><br>"
                         + "<b>Supervisor Reject Comments</b><br>" + jTextReasonReject.getText() + "<br><br> "
                         + "Kind Regards <br><br>"
                         + " Finance Management System </body></html>";
