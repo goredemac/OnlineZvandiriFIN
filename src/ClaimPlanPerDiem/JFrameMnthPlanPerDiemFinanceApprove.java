@@ -1189,9 +1189,9 @@ public class JFrameMnthPlanPerDiemFinanceApprove extends javax.swing.JFrame {
 
             }
 
-            if (modelWk1.getRowCount() == 0) {
-                jTabbedPaneMain.setEnabledAt(0, false);
-            }
+//            if (modelWk1.getRowCount() == 0) {
+//                jTabbedPaneMain.setEnabledAt(0, false);
+//            }
 
         } catch (Exception e) {
 

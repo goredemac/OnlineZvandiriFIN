@@ -380,7 +380,7 @@ public class JFrameMnthHODList extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
-           st.executeQuery("SELECT distinct a.PLAN_REF_NUM,DISTRICT,"
+            st.executeQuery("SELECT distinct a.PLAN_REF_NUM,DISTRICT,"
                     + "Wk1_PLAN_START_DATE,Wk1_PLAN_END_DATE, Wk2_PLAN_START_DATE,"
                     + "Wk2_PLAN_END_DATE,Wk3_PLAN_START_DATE, Wk3_PLAN_END_DATE,"
                     + "Wk4_PLAN_START_DATE,Wk4_PLAN_END_DATE, Wk5_PLAN_START_DATE,"
@@ -390,12 +390,40 @@ public class JFrameMnthHODList extends javax.swing.JFrame {
                     + "and a.ACT_REC_STA = b.ACT_REC_STA and a.ACT_VER = b.ACT_VER where "
                     + " a.ACT_REC_STA = 'A' and "
                     + "b.DOC_STATUS in ('ApprovedFin') and a.PLAN_REF_NUM in "
-                    + "(SELECT distinct PLAN_REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab]"
+                    + "(SELECT distinct PLAN_REF_NUM FROM (SELECT distinct PLAN_REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk1Tab]"
                     + " where ACT_REC_STA ='A' and PLAN_REF_NUM in (SELECT distinct PLAN_REF_NUM "
                     + "from [ClaimsAppSysZvandiri].[dbo].[PlanActTab]where  ACT_REC_STA = 'A' "
-                   + "and DOC_STATUS  in ('ApprovedFin') ) "
+                    + "and DOC_STATUS  in ('ApprovedFin') ) "
                     + "and concat(DONOR,PRJ_CODE_GL) in  "
-                    + "("+HODPrjList+")) order by 1");
+                    + "(" + HODPrjList + ")  "
+                    + "union "
+                    + " SELECT distinct PLAN_REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk2Tab]"
+                    + " where ACT_REC_STA ='A' and PLAN_REF_NUM in (SELECT distinct PLAN_REF_NUM "
+                    + "from [ClaimsAppSysZvandiri].[dbo].[PlanActTab]where  ACT_REC_STA = 'A' "
+                    + "and DOC_STATUS  in ('ApprovedFin') ) "
+                    + "and concat(DONOR,PRJ_CODE_GL) in  "
+                    + "(" + HODPrjList + ")  "
+                    + "union "
+                    + " SELECT distinct PLAN_REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk3Tab]"
+                    + " where ACT_REC_STA ='A' and PLAN_REF_NUM in (SELECT distinct PLAN_REF_NUM "
+                    + "from [ClaimsAppSysZvandiri].[dbo].[PlanActTab]where  ACT_REC_STA = 'A' "
+                    + "and DOC_STATUS  in ('ApprovedFin') ) "
+                    + "and concat(DONOR,PRJ_CODE_GL) in  "
+                    + "(" + HODPrjList + ")  "
+                    + "union "
+                    + " SELECT distinct PLAN_REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk4Tab]"
+                    + " where ACT_REC_STA ='A' and PLAN_REF_NUM in (SELECT distinct PLAN_REF_NUM "
+                    + "from [ClaimsAppSysZvandiri].[dbo].[PlanActTab]where  ACT_REC_STA = 'A' "
+                    + "and DOC_STATUS  in ('ApprovedFin') ) "
+                    + "and concat(DONOR,PRJ_CODE_GL) in  "
+                    + "(" + HODPrjList + ")  "
+                    + "union "
+                    + " SELECT distinct PLAN_REF_NUM FROM [ClaimsAppSysZvandiri].[dbo].[PlanWk5Tab]"
+                    + " where ACT_REC_STA ='A' and PLAN_REF_NUM in (SELECT distinct PLAN_REF_NUM "
+                    + "from [ClaimsAppSysZvandiri].[dbo].[PlanActTab]where  ACT_REC_STA = 'A' "
+                    + "and DOC_STATUS  in ('ApprovedFin') ) "
+                    + "and concat(DONOR,PRJ_CODE_GL) in  "
+                    + "(" + HODPrjList + ") ) x) order by 1");
 
             ResultSet r = st.getResultSet();
 
