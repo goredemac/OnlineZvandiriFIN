@@ -71,7 +71,6 @@ import utils.connSaveFile;
 import utils.savePDFToDB;
 import utils.StockVehicleMgt;
 
-
 /**
  *
  * @author cgoredema
@@ -171,7 +170,11 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         computerName();
         allowanceRate();
         jRadioParticpant.setVisible(false);
-        jRadioParticpant.setSelected(true);
+        jRadioParticpant.setSelected(false);
+        jRadioNormal.setSelected(false);
+        jRadioDistrict.setVisible(false);
+        jRadioDistrict.setSelected(false);
+        jLabelSerial.setText("R");
         model = (DefaultTableModel) jTableActivityReqAcq.getModel();
         modelAcq = (DefaultTableModel) jTableActivityAcq.getModel();
         modelTrip = (DefaultTableModel) jTableTripDetails.getModel();
@@ -179,25 +182,28 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jTableTripDetails.getColumnModel().getColumn(1).setMinWidth(0);
         jTableTripDetails.getColumnModel().getColumn(1).setMaxWidth(0);
         jLabelEmp.setText(usrLogNum);
+        
         jLabelEmp.setVisible(false);
         jMenuItemAcqSchGen.setEnabled(false);
         jTextAreaNamTravel.setLineWrap(true);
         jTextAreaNamTravel.setWrapStyleWord(true);
         jTextAreaNamTravel.setEditable(false);
-        jTabbedPaneAcqAtt.setTitleAt(0, "");
-        jTabbedPaneAcqAtt.setTitleAt(1, "");
-        jTabbedPaneAcqAtt.setTitleAt(2, "");
-        jTabbedPaneAcqAtt.setTitleAt(3, "");
-        jTabbedPaneAcqAtt.setTitleAt(4, "");
-        jTabbedPaneAcqAtt.setTitleAt(5, "");
-        jTabbedPaneAcqAtt.setTitleAt(6, "");
-        jTabbedPaneAcqAtt.setEnabledAt(0, false);
+//        jLabelAcqAppTotPlannedCost.setVisible(false);
+       // jLabelAppTotPlannedReq.setVisible(false);
+        jTabbedPaneAcqAtt.setEnabledAt(0, true);
         jTabbedPaneAcqAtt.setEnabledAt(1, false);
-        jTabbedPaneAcqAtt.setEnabledAt(2, false);
-        jTabbedPaneAcqAtt.setEnabledAt(3, false);
-        jTabbedPaneAcqAtt.setEnabledAt(4, false);
+        jTabbedPaneAcqAtt.setEnabledAt(2, true);
+        jTabbedPaneAcqAtt.setEnabledAt(3, true);
+        jTabbedPaneAcqAtt.setEnabledAt(4, true);
         jTabbedPaneAcqAtt.setEnabledAt(5, false);
         jTabbedPaneAcqAtt.setEnabledAt(6, false);
+        jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
+//            jTabbedPaneAcqAtt.setTitleAt(1, "E-Log Book");
+        jTabbedPaneAcqAtt.setTitleAt(2, "Vehicle Log Sheet");
+        jTabbedPaneAcqAtt.setTitleAt(3, "Proven Expenses");
+        jTabbedPaneAcqAtt.setTitleAt(4, "Other e.g. Log Book Extra Page");
+        jTabbedPaneAcqAtt.setTitleAt(5, "");
+        jTabbedPaneAcqAtt.setTitleAt(6, "");
 //        jRadioParticpant.setVisible(false);
         try {
             tH.intShowDate();
@@ -302,7 +308,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -745,6 +751,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     mainPageTotUpdateAcq();
                     fetchImgCount();
                     imgCount();
+                   
 
                 }
             } else {
@@ -1093,7 +1100,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     st1.executeQuery("select SERIAL,REF_YEAR, REF_NUM,REF_DAT,EMP_NUM,EMP_NAM,"
                             + "EMP_TTL,EMP_PROV,EMP_OFF,EMP_BNK_NAM,ACC_NUM,ACT_MAIN_PUR,"
                             + "ACT_TOT_AMT,PREV_REF_NUM,PREV_REF_DAT "
-                            + "FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+                            + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
                             + "where concat(SERIAL,REF_NUM) ='" + jLabelAcqSerial.getText() + jLabelAcqRefNum.getText() + "' "
                             + " and ACT_REC_STA = 'Q' ");
 
@@ -1130,7 +1137,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     if ("MA".equals(jLabelAcqSerial.getText())) {
                         fetchReqItmData();
                     }
-                    fetchMonDistAttDocRep(jLabelAcqRefNum.getText());
+                    fetchMonDistAttDocRep();
 
                 } catch (Exception e1) {
                     e1.printStackTrace();
@@ -1174,14 +1181,35 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         }
     }
 
-    void fetchMonDistAttDocRep(String refNum) {
+//    void fetchMonDistAttDocRep(String refNum) {
+//        try {
+//            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+//                    + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+//
+//            Statement st = conn.createStatement();
+//            st.executeQuery("SELECT ACT_ITM,fileName ,attDesc  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimReportAttDocTab] "
+//                    + " where concat(SERIAL,REF_NUM) ='" + refNum + "'  and ACT_REC_STA = 'A' ");
+//
+//            ResultSet r = st.getResultSet();
+//            while (r.next()) {
+//                modelMonAttRep.insertRow(modelMonAttRep.getRowCount(), new Object[]{r.getString(1), r.getString(2),
+//                    r.getString(3)});
+//
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//    }
+    
+    void fetchMonDistAttDocRep() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
-                    + "DataBaseName=ClaimsAppSys;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+            System.out.println("run " + checkRef);
             Statement st = conn.createStatement();
             st.executeQuery("SELECT ACT_ITM,fileName ,attDesc  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimReportAttDocTab] "
-                    + " where concat(SERIAL,REF_NUM) ='" + refNum + "'  and ACT_REC_STA = 'A' ");
+                    + " where concat(SERIAL,REF_NUM) ='" +jLabelAcqSerial.getText()+jLabelAcqRefNum.getText() + "'  and ACT_REC_STA = 'Q' ");
 
             ResultSet r = st.getResultSet();
             while (r.next()) {
@@ -1240,7 +1268,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     st1.executeQuery("select SERIAL,REF_YEAR, REF_NUM,REF_DAT,EMP_NUM,EMP_NAM,"
                             + "EMP_TTL,EMP_PROV,EMP_OFF,EMP_BNK_NAM,ACC_NUM,ACT_MAIN_PUR,"
                             + "ACT_TOT_AMT,PREV_REF_NUM,PREV_REF_DAT "
-                            + "FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
+                            + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
                             + "where concat(SERIAL,REF_NUM) = '" + searchRef + "'"
                             + " and ACT_REC_STA = 'Q' ");
 
@@ -1275,7 +1303,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
                     getRepDet(jLabelAcqSerial.getText() + jLabelAcqRefNum.getText());
 
-                    fetchMonDistAttDocRep(jLabelAcqSerial.getText() + jLabelAcqRefNum.getText());
+                    fetchMonDistAttDocRep();
 
                 } catch (Exception e1) {
                     e1.printStackTrace();
@@ -1295,10 +1323,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             //  String model = tabModel;
             Statement st = conn.createStatement();
             System.out.println("val " + refNo + " " + actSta + " " + wkNo + " " + tabModel);
-            st.executeQuery("SELECT  ITM_NUM,ACT_DATE,BRANCH,PROJ_ID,"
-                    + "PRJ_TASK_CODE,ACT_SITE,ACT_ITM_PUR, BRK_AMT,"
-                    + "LNC_AMT, DIN_AMT,INC_AMT, MSC_ACT,MSC_AMT, "
-                    + "ACC_UNPROV_AMT, ACC_PRO_AMT, ACT_ITM_TOT  FROM "
+            st.executeQuery("SELECT  *  FROM "
                     + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] "
                     + "  where concat(SERIAL,REF_NUM)='" + refNo + "' "
                     + "and ACT_REC_STA='" + actSta + "' and PLAN_WK='" + wkNo + "'"
@@ -1307,17 +1332,17 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
             if ("model".equals(tabModel)) {
                 while (r.next()) {
-                    model.insertRow(model.getRowCount(), new Object[]{r.getString(2), r.getString(3),
-                        r.getString(4), r.getString(5), r.getString(6), r.getString(7),
-                        r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12), r.getString(13),
-                        r.getString(14), r.getString(15), r.getString(16)});
+                    model.insertRow(model.getRowCount(), new Object[]{r.getString(5),
+                        r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
+                        r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                        r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
                 }
             } else {
                 while (r.next()) {
-                    modelAcq.insertRow(modelAcq.getRowCount(), new Object[]{r.getString(2), r.getString(3),
-                        r.getString(4), r.getString(5), r.getString(6), r.getString(7),
-                        r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12), r.getString(13),
-                        r.getString(14), r.getString(15), r.getString(16)});
+                    modelAcq.insertRow(modelAcq.getRowCount(), new Object[]{r.getString(5),
+                        r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
+                        r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
+                        r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
                 }
             }
 
@@ -1333,7 +1358,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT distinct b.USR_ACTION,b.REJECT_COMMENTS FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab a,[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b\n"
+            st.executeQuery("SELECT distinct b.USR_ACTION,b.REJECT_COMMENTS FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab a,[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b\n"
                     + "where  ( a.serial=b.serial and a.REF_NUM = b.REF_NUM and a.DOC_VER=b.DOC_VER) and\n"
                     + "concat(a.SERIAL,a.REF_NUM)='" + refNo + "' \n"
                     + "and a.ACT_REC_STA = 'Q' ");
@@ -1350,7 +1375,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                 if ("Acquittal- HOD Approved".equals(jLabelStatusView.getText())) {
                     jLabelStatusView.setVisible(true);
                     jPanelStatusView.setVisible(true);
-                    jLabelStatusView.setForeground(new java.awt.Color(0, 153, 0));
+                    jLabelStatusView.setForeground(new java.awt.Color(255, 255, 255));
                     jPanelStatusView.setVisible(true);
                 } else {
                     jLabelStatusView.setVisible(true);
@@ -3794,7 +3819,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel8FocusGained
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-        
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jButtonBankCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBankCancelActionPerformed
@@ -4013,29 +4038,29 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
     private void jRadioDistrictActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioDistrictActionPerformed
 //        if (jRadioDistrict.isSelected()) {
-            jLabelSerial.setText("MA");
-            jLabelHeaderGen.setText("TRAVEL AND SUBSISTENCE CLAIM");
-            jTextAcqRegNum.setText("");
-            getMonEnvSet();
-            refreshTab();
-            jLabelAcqAppTotPlannedCost.setVisible(true);
-            jLabelAppTotPlannedReq.setVisible(true);
-            jTabbedPaneAppSys.setTitleAt(3, "Report & Attachments");
-            jTabbedPaneAcqAtt.setEnabledAt(0, true);
-            jTabbedPaneAcqAtt.setEnabledAt(1, false);
-            jTabbedPaneAcqAtt.setEnabledAt(2, false);
-            jTabbedPaneAcqAtt.setEnabledAt(3, false);
-            jTabbedPaneAcqAtt.setEnabledAt(4, false);
-            jTabbedPaneAcqAtt.setEnabledAt(5, false);
-            jTabbedPaneAcqAtt.setEnabledAt(6, false);
-            jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
-            jTabbedPaneAcqAtt.setTitleAt(1, "");
-            jTabbedPaneAcqAtt.setTitleAt(2, "");
-            jTabbedPaneAcqAtt.setTitleAt(3, "");
-            jTabbedPaneAcqAtt.setTitleAt(4, "");
-            jTabbedPaneAcqAtt.setTitleAt(5, "");
-            jTabbedPaneAcqAtt.setTitleAt(6, "");
-            jLabelAppTotCleared.setText("Total Claimed");
+        jLabelSerial.setText("MA");
+        jLabelHeaderGen.setText("TRAVEL AND SUBSISTENCE CLAIM");
+        jTextAcqRegNum.setText("");
+        getMonEnvSet();
+        refreshTab();
+        jLabelAcqAppTotPlannedCost.setVisible(true);
+        jLabelAppTotPlannedReq.setVisible(true);
+        jTabbedPaneAppSys.setTitleAt(3, "Report & Attachments");
+        jTabbedPaneAcqAtt.setEnabledAt(0, true);
+        jTabbedPaneAcqAtt.setEnabledAt(1, false);
+        jTabbedPaneAcqAtt.setEnabledAt(2, false);
+        jTabbedPaneAcqAtt.setEnabledAt(3, false);
+        jTabbedPaneAcqAtt.setEnabledAt(4, false);
+        jTabbedPaneAcqAtt.setEnabledAt(5, false);
+        jTabbedPaneAcqAtt.setEnabledAt(6, false);
+        jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
+        jTabbedPaneAcqAtt.setTitleAt(1, "");
+        jTabbedPaneAcqAtt.setTitleAt(2, "");
+        jTabbedPaneAcqAtt.setTitleAt(3, "");
+        jTabbedPaneAcqAtt.setTitleAt(4, "");
+        jTabbedPaneAcqAtt.setTitleAt(5, "");
+        jTabbedPaneAcqAtt.setTitleAt(6, "");
+        jLabelAppTotCleared.setText("Total Claimed");
 
 //        }
     }//GEN-LAST:event_jRadioDistrictActionPerformed
