@@ -39,6 +39,10 @@ import java.sql.SQLException;
 import ClaimAppendix1.*;
 import ClaimReports.*;
 import ClaimPlan.*;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import utils.connCred;
 import utils.connSaveFile;
 import utils.savePDFToDB;
@@ -67,6 +71,7 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
             batCount, usrGrp, provNam, provNam1, provNam2, empOff;
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sDateTime = new SimpleDateFormat("ddMMyyyy_HHMMSS");
     String hostName = "";
 
     /**
@@ -100,7 +105,12 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
         jLabelRangeSelect.setVisible(false);
         jLabelDateFrom.setVisible(false);
         jLabelDateTo.setVisible(false);
-
+        jLabelSingleUser.setVisible(false);
+        jLabelWeek.setVisible(false);
+        jTextWeek.setVisible(false);
+        jLabelUserRef.setVisible(false);
+        jTextAcqRegNum.setVisible(false);
+        jButtonUsrFile.setVisible(false);
         if (!"Administrator".equals(usrGrp)) {
             jMenuItemUserProfUpd.setEnabled(false);
         }
@@ -129,7 +139,7 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
 
     }
 
-      void findUserGrp() {
+    void findUserGrp() {
         try {
 
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -144,7 +154,7 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
                 usrGrp = r.getString(1);
 
             }
-            
+
             if ("usrGenSp".equals(usrGrp)) {
 
                 jMenuItemSupApp.setEnabled(false);
@@ -320,9 +330,9 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
             while (r.next()) {
 
                 jLabelGenLogNam.setText(r.getString(2));
-                provNam = r.getString(16);
-                provNam1 = r.getString(18);
-                provNam2 = r.getString(19);
+//                provNam = r.getString(16);
+//                provNam1 = r.getString(18);
+//                provNam2 = r.getString(19);
 
             }
 
@@ -389,8 +399,8 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
             Statement st = conn.createStatement();
 
-            ResultSet r = st.executeQuery("SELECT count(*) FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab "
-                    + "a,ClaimsAppSysZimTTECH.dbo.ClaimAppItmTab b, ClaimsAppSysZimTTECH.dbo.ClaimsWFActTab c "
+            ResultSet r = st.executeQuery("SELECT count(*) FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab "
+                    + "a,ClaimsAppSysZvandiri.dbo.ClaimAppItmTab b, ClaimsAppSysZvandiri.dbo.ClaimsWFActTab c "
                     + "where (a.SERIAL = b.SERIAL and a.REF_NUM = b.REF_NUM and "
                     + "a.DOC_VER =b.DOC_VER and a.SERIAL = c.SERIAL and a.REF_NUM = c.REF_NUM and "
                     + "a.DOC_VER =c.DOC_VER) and c.DOC_STATUS='HeadApprove' "
@@ -439,16 +449,16 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
             Statement st = conn.createStatement();
             Statement st1 = conn.createStatement();
 
-            st.executeQuery("SELECT a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_PROV,a.EMP_OFF,a.BUD_COD,a.ACT_MAIN_PUR,b.PLAN_WK,\n"
+            st.executeQuery("SELECT a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_PROV,a.EMP_OFF,BUD_CODE,a.ACT_MAIN_PUR,b.PLAN_WK,\n"
                     + "                     (sum(b.BRK_AMT) + sum(b.LNC_AMT) + sum(b.DIN_AMT) + sum(b.INC_AMT) + sum(b.MSC_AMT)+ sum(b.ACC_UNPROV_AMT)) \"total\"\n"
                     + "                     FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM \n"
                     + "                     and a.ACT_REC_STA = b.ACT_REC_STA  inner join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM \n"
                     + "                     and b.ACT_REC_STA = c.ACT_REC_STA \n"
-                    + "                     where c.DOC_STATUS='HeadApprove' \n"
+                    + "                     where c.DOC_STATUS='HODAcqApprove' \n"
                     + "                     and a.ACT_REC_STA = 'Q' and a.SERIAL = 'A'\n"
                     + "                              and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct  concat(REF_NUM,PLAN_WK) FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted'\n"
                     + "                     )\n"
-                    + "                      group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.EMP_NUM,a.EMP_NUM,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,a.BUD_COD,a.ACT_MAIN_PUR,b.PLAN_WK");
+                    + "                      group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.EMP_NUM,a.EMP_NUM,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,BUD_CODE,a.ACT_MAIN_PUR,b.PLAN_WK");
 
             ResultSet r = st.getResultSet();
 
@@ -470,99 +480,104 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
 
     void retriveData() {
         try {
+            folderCreate();
             findBatNum();
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
-            Statement st1 = conn.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT a.SERIAL,a.REF_NUM,a.REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,a.BUD_COD,a.ACT_MAIN_PUR,"
-                    + "(sum(b.BRK_AMT)+ sum(b.LNC_AMT)+sum(b.DIN_AMT)+ sum(b.INC_AMT) + sum(b.MSC_AMT) +  sum(b.ACC_UNPROV_AMT)) \"total\""
-                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM "
-                    + "and a.ACT_REC_STA = b.ACT_REC_STA  inner join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM "
-                    + "and b.ACT_REC_STA = c.ACT_REC_STA "
-                    + "where c.DOC_STATUS='HeadApprove' "
-                    + "and a.ACT_REC_STA = 'A'"
-                    + " and a.REF_NUM in (SELECT distinct a.PREV_REF_NUM\n"
-                    + "                     FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM \n"
-                    + "                     and a.ACT_REC_STA = b.ACT_REC_STA  inner join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM \n"
-                    + "                     and b.ACT_REC_STA = c.ACT_REC_STA \n"
-                    + "                     where c.DOC_STATUS='HeadApprove' \n"
-                    + "                     and a.ACT_REC_STA = 'Q'\n"
-                    + "and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct  concat(REF_NUM,PLAN_WK) FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted')"
-                    + "                    and a.SERIAL = 'A' )"
-                    + "and a.SERIAL = 'R' "
-                    + " group by a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,a.EMP_NUM,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,a.BUD_COD,a.ACT_MAIN_PUR");
+//
+//            Statement st1 = conn.createStatement();
+//            ResultSet rs1 = st1.executeQuery("SELECT a.SERIAL,a.REF_NUM,a.REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,BUD_CODE,a.ACT_MAIN_PUR,"
+//                    + "(sum(b.BRK_AMT)+ sum(b.LNC_AMT)+sum(b.DIN_AMT)+ sum(b.INC_AMT) + sum(b.MSC_AMT) +  sum(b.ACC_UNPROV_AMT)) \"total\""
+//                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM "
+//                    + "and a.ACT_REC_STA = b.ACT_REC_STA  inner join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM "
+//                    + "and b.ACT_REC_STA = c.ACT_REC_STA "
+//                    + "where c.DOC_STATUS='HODApprove' "
+//                    + "and a.ACT_REC_STA = 'A'"
+//                    + " and a.REF_NUM in (SELECT distinct a.PREV_REF_NUM\n"
+//                    + "                     FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM \n"
+//                    + "                     and a.ACT_REC_STA = b.ACT_REC_STA  inner join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM \n"
+//                    + "                     and b.ACT_REC_STA = c.ACT_REC_STA \n"
+//                    + "                     where c.DOC_STATUS='HODAcqApprove' \n"
+//                    + "                     and a.ACT_REC_STA = 'Q'\n"
+//                    + "and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct  concat(REF_NUM,PLAN_WK) FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted')"
+//                    + "                    and a.SERIAL = 'A' )"
+//                    + "and a.SERIAL = 'R' "
+//                    + " group by a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,a.EMP_NUM,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,BUD_CODE,a.ACT_MAIN_PUR");
 
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_PROV,a.EMP_OFF,a.BUD_COD,a.ACT_MAIN_PUR,b.PLAN_WK,"
+            ResultSet rs = st.executeQuery("SELECT a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL,a.REF_NUM,a.REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_PROV,a.EMP_OFF,BUD_CODE,a.ACT_MAIN_PUR,b.PLAN_WK,"
                     + "(sum(b.BRK_AMT)+ sum(b.LNC_AMT)+sum(b.DIN_AMT)+ sum(b.INC_AMT) + sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)) \"total\""
                     + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM "
                     + "and a.ACT_REC_STA = b.ACT_REC_STA  inner join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM "
                     + "and b.ACT_REC_STA = c.ACT_REC_STA "
-                    + "where c.DOC_STATUS='HeadApprove' "
+                    + "where c.DOC_STATUS='HODAcqApprove' "
                     + "and a.ACT_REC_STA = 'Q'"
                     + "and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct  concat(REF_NUM,PLAN_WK) FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted')"
                     + "and a.SERIAL = 'A' "
-                    + " group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.EMP_NUM,a.EMP_NUM,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,a.BUD_COD,a.ACT_MAIN_PUR,b.PLAN_WK");
+                    + " group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,a.EMP_NUM,a.EMP_NAM,a.EMP_BNK_NAM,"
+                    + "a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,BUD_CODE,a.ACT_MAIN_PUR,b.PLAN_WK");
 
             Statement st2 = conn.createStatement();
-            ResultSet rs2 = st2.executeQuery("SELECT a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_PROV,a.EMP_OFF,b.ACT_DATE,b.LN_BUD_CODE,b.ACT_ITM_PUR,b.PLAN_WK,\n"
+            ResultSet rs2 = st2.executeQuery("SELECT a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_PROV,a.EMP_OFF,b.ACT_DATE,BUD_CODE,b.ACT_DESC,b.PLAN_WK,\n"
                     + "                     (b.BRK_AMT+ b.LNC_AMT+b.DIN_AMT+ b.INC_AMT + b.MSC_AMT + b.ACC_UNPROV_AMT ) \"total\"\n"
                     + "                    FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM \n"
                     + "                     and a.ACT_REC_STA = b.ACT_REC_STA  inner join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM \n"
                     + "                     and b.ACT_REC_STA = c.ACT_REC_STA \n"
-                    + "                     where c.DOC_STATUS='HeadApprove' \n"
+                    + "                     where c.DOC_STATUS='HODAcqApprove' \n"
                     + "                     and a.ACT_REC_STA = 'Q'\n"
                     + "                     and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct  concat(REF_NUM,PLAN_WK) FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted')"
                     + "and a.SERIAL = 'A' ");
 
-            Statement st3 = conn.createStatement();
-            ResultSet rs3 = st3.executeQuery("SELECT PREV_SERIAL,PREV_REF_NUM,SERIAL,REF_NUM,concat('E',EMP_NUM),"
-                    + "EMP_NAM,PLAN_WK FROM [ClaimsAppSysZvandiri].[dbo].[ClaimRefundDepositTab] where CONCAT(serial,ref_num) "
-                    + "in (SELECT CONCAT(a.SERIAL,a.REF_NUM) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join "
-                    + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM  and "
-                    + "a.ACT_REC_STA = b.ACT_REC_STA  inner join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c on b.SERIAL=c.SERIAL "
-                    + "and b.REF_NUM=c.REF_NUM and b.ACT_REC_STA = c.ACT_REC_STA  where c.DOC_STATUS='HeadApprove'"
-                    + "and a.ACT_REC_STA = 'Q' and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct "
-                    + "concat(REF_NUM,PLAN_WK) FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted') "
-                    + "and a.SERIAL = 'A' group by  a.SERIAL,a.REF_NUM,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,"
-                    + "a.EMP_NUM,a.EMP_NUM,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,a.BUD_COD,a.ACT_MAIN_PUR,b.PLAN_WK)");
-
+//            Statement st3 = conn.createStatement();
+//            ResultSet rs3 = st3.executeQuery("SELECT PREV_SERIAL,PREV_REF_NUM,SERIAL,REF_NUM,concat('E',EMP_NUM),"
+//                    + "EMP_NAM,PLAN_WK FROM [ClaimsAppSysZvandiri].[dbo].[ClaimRefundDepositTab] where CONCAT(serial,ref_num) "
+//                    + "in (SELECT CONCAT(a.SERIAL,a.REF_NUM) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join "
+//                    + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM  and "
+//                    + "a.ACT_REC_STA = b.ACT_REC_STA  inner join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c on b.SERIAL=c.SERIAL "
+//                    + "and b.REF_NUM=c.REF_NUM and b.ACT_REC_STA = c.ACT_REC_STA  where c.DOC_STATUS='HODAcqApprove'"
+//                    + "and a.ACT_REC_STA = 'Q' and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct "
+//                    + "concat(REF_NUM,PLAN_WK) FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted') "
+//                    + "and a.SERIAL = 'A' group by  a.SERIAL,a.REF_NUM,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,"
+//                    + "a.EMP_NUM,a.EMP_NUM,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,"
+//                    + "BUD_CODE,a.ACT_MAIN_PUR,b.PLAN_WK)");
             HSSFWorkbook workbook = new HSSFWorkbook();
-            HSSFSheet sheet1 = workbook.createSheet("Fin - Request Details");
+//            HSSFSheet sheet1 = workbook.createSheet("Fin - Request Details");
             HSSFSheet sheet2 = workbook.createSheet("Fin - Acquittal (Summarised)");
             HSSFSheet sheet3 = workbook.createSheet("Fin - Acquittal (Detailed)");
-            HSSFSheet sheet4 = workbook.createSheet("Fin - Refund Deposit Slips");
+//            HSSFSheet sheet4 = workbook.createSheet("Fin - Refund Deposit Slips");
 
-            HSSFRow rowhead1 = sheet1.createRow((short) 0);
+//            HSSFRow rowhead1 = sheet1.createRow((short) 0);
             HSSFRow rowhead2 = sheet2.createRow((short) 2);
             HSSFRow rowhead3 = sheet2.createRow((short) 0);
             HSSFRow rowhead4 = sheet3.createRow((short) 0);
-            HSSFRow rowhead5 = sheet4.createRow((short) 0);
+//            HSSFRow rowhead5 = sheet4.createRow((short) 0);
 
             rowhead3.createCell((short) 8).setCellValue("Acquittal Batch Number " + batNum + " Version 1");
-            rowhead1.createCell((short) 0).setCellValue("Serial.");
-            rowhead1.createCell((short) 1).setCellValue("Reference No.");
-            rowhead1.createCell((short) 2).setCellValue("Reference Date");
-            rowhead1.createCell((short) 3).setCellValue("Prog Adv Acc");
-            rowhead1.createCell((short) 4).setCellValue("Employee Name");
-            rowhead1.createCell((short) 5).setCellValue("Province");
-            rowhead1.createCell((short) 6).setCellValue("District/Facility");
-            rowhead1.createCell((short) 7).setCellValue("Budget Code");
-            rowhead1.createCell((short) 8).setCellValue("Main Activity Purpose");
-            rowhead1.createCell((short) 9).setCellValue("Total");
+//            rowhead1.createCell((short) 0).setCellValue("Serial.");
+//            rowhead1.createCell((short) 1).setCellValue("Reference No.");
+//            rowhead1.createCell((short) 2).setCellValue("Reference Date");
+//            rowhead1.createCell((short) 3).setCellValue("Prog Adv Acc");
+//            rowhead1.createCell((short) 4).setCellValue("Employee Name");
+//            rowhead1.createCell((short) 5).setCellValue("Province");
+//            rowhead1.createCell((short) 6).setCellValue("District/Facility");
+//            rowhead1.createCell((short) 7).setCellValue("Budget Code");
+//            rowhead1.createCell((short) 8).setCellValue("Main Activity Purpose");
+//            rowhead1.createCell((short) 9).setCellValue("Total");
 
             rowhead2.createCell((short) 0).setCellValue("Serial.");
             rowhead2.createCell((short) 1).setCellValue("Reference No.");
             rowhead2.createCell((short) 2).setCellValue("Reference Date");
-            rowhead2.createCell((short) 3).setCellValue("Prog Adv Acc");
-            rowhead2.createCell((short) 4).setCellValue("Employee Name");
-            rowhead2.createCell((short) 5).setCellValue("Province");
-            rowhead2.createCell((short) 6).setCellValue("District/Facility");
-            rowhead2.createCell((short) 7).setCellValue("Budget Code");
-            rowhead2.createCell((short) 8).setCellValue("Main Activity Purpose");
-            rowhead4.createCell((short) 9).setCellValue("Week Acquitted");
-            rowhead2.createCell((short) 10).setCellValue("Total");
+            rowhead2.createCell((short) 3).setCellValue("Acq. Serial.");
+            rowhead2.createCell((short) 4).setCellValue("Acq Ref. No.");
+            rowhead2.createCell((short) 5).setCellValue("Acq Ref. Date");
+            rowhead2.createCell((short) 6).setCellValue("Prog Adv Acc");
+            rowhead2.createCell((short) 7).setCellValue("Employee Name");
+            rowhead2.createCell((short) 8).setCellValue("Province");
+            rowhead2.createCell((short) 9).setCellValue("District/Facility");
+            rowhead2.createCell((short) 10).setCellValue("Budget Code");
+            rowhead2.createCell((short) 11).setCellValue("Main Activity Purpose");
+            rowhead4.createCell((short) 12).setCellValue("Week Acquitted");
+            rowhead2.createCell((short) 13).setCellValue("Total");
 
             rowhead4.createCell((short) 0).setCellValue("Serial.");
             rowhead4.createCell((short) 1).setCellValue("Reference No.");
@@ -577,31 +592,30 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
             rowhead4.createCell((short) 10).setCellValue("Week Acquitted");
             rowhead4.createCell((short) 11).setCellValue("Activity Line Total");
 
-            rowhead5.createCell((short) 0).setCellValue("Request Serial.");
-            rowhead5.createCell((short) 1).setCellValue("Request Reference No.");
-            rowhead5.createCell((short) 2).setCellValue("Acquittal Serial.");
-            rowhead5.createCell((short) 3).setCellValue("Acquittal Reference No.");
-            rowhead5.createCell((short) 4).setCellValue("Prog Adv Acc");
-            rowhead5.createCell((short) 5).setCellValue("Employee Name");
-            rowhead5.createCell((short) 6).setCellValue("Week Acquitted");
-
+//            rowhead5.createCell((short) 0).setCellValue("Request Serial.");
+//            rowhead5.createCell((short) 1).setCellValue("Request Reference No.");
+//            rowhead5.createCell((short) 2).setCellValue("Acquittal Serial.");
+//            rowhead5.createCell((short) 3).setCellValue("Acquittal Reference No.");
+//            rowhead5.createCell((short) 4).setCellValue("Prog Adv Acc");
+//            rowhead5.createCell((short) 5).setCellValue("Employee Name");
+//            rowhead5.createCell((short) 6).setCellValue("Week Acquitted");
             int i = 1;
-            while (rs1.next()) {
-
-                HSSFRow row1 = sheet1.createRow((short) i);
-                row1.createCell((short) 0).setCellValue(rs1.getString(1));
-                row1.createCell((short) 1).setCellValue(Integer.toString(rs1.getInt(2)));
-                row1.createCell((short) 2).setCellValue(rs1.getString(3));
-                row1.createCell((short) 3).setCellValue(rs1.getString(4));
-                row1.createCell((short) 4).setCellValue(rs1.getString(5));
-                row1.createCell((short) 5).setCellValue(rs1.getString(8));
-                row1.createCell((short) 6).setCellValue(rs1.getString(9));
-                row1.createCell((short) 7).setCellValue(rs1.getString(10));
-                row1.createCell((short) 8).setCellValue(rs1.getString(11));
-                row1.createCell((short) 9).setCellValue(rs1.getString(12));
-
-                i++;
-            }
+//            while (rs1.next()) {
+//
+//                HSSFRow row1 = sheet1.createRow((short) i);
+//                row1.createCell((short) 0).setCellValue(rs1.getString(1));
+//                row1.createCell((short) 1).setCellValue(Integer.toString(rs1.getInt(2)));
+//                row1.createCell((short) 2).setCellValue(rs1.getString(3));
+//                row1.createCell((short) 3).setCellValue(rs1.getString(4));
+//                row1.createCell((short) 4).setCellValue(rs1.getString(5));
+//                row1.createCell((short) 5).setCellValue(rs1.getString(8));
+//                row1.createCell((short) 6).setCellValue(rs1.getString(9));
+//                row1.createCell((short) 7).setCellValue(rs1.getString(10));
+//                row1.createCell((short) 8).setCellValue(rs1.getString(11));
+//                row1.createCell((short) 9).setCellValue(rs1.getString(12));
+//
+//                i++;
+//            }
 
             int n = 3;
             while (rs.next()) {
@@ -618,6 +632,9 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
                 row2.createCell((short) 8).setCellValue(rs.getString(9));
                 row2.createCell((short) 9).setCellValue(rs.getString(10));
                 row2.createCell((short) 10).setCellValue(rs.getString(11));
+                row2.createCell((short) 8).setCellValue(rs.getString(12));
+                row2.createCell((short) 9).setCellValue(rs.getString(13));
+                row2.createCell((short) 10).setCellValue(rs.getString(14));
 
                 n++;
             }
@@ -643,32 +660,34 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
             }
 
             int y = 1;
-            while (rs3.next()) {
+//            while (rs3.next()) {
+//
+//                HSSFRow row4 = sheet4.createRow((short) y);
+//                row4.createCell((short) 0).setCellValue(rs3.getString(1));
+//                row4.createCell((short) 1).setCellValue(Integer.toString(rs3.getInt(2)));
+//                row4.createCell((short) 2).setCellValue(rs3.getString(3));
+//                row4.createCell((short) 3).setCellValue(Integer.toString(rs3.getInt(4)));
+//                row4.createCell((short) 4).setCellValue(rs3.getString(5));
+//                row4.createCell((short) 5).setCellValue(rs3.getString(6));
+//                row4.createCell((short) 6).setCellValue(rs3.getString(7));
+//
+//                y++;
+//            }
 
-                HSSFRow row4 = sheet4.createRow((short) y);
-                row4.createCell((short) 0).setCellValue(rs3.getString(1));
-                row4.createCell((short) 1).setCellValue(Integer.toString(rs3.getInt(2)));
-                row4.createCell((short) 2).setCellValue(rs3.getString(3));
-                row4.createCell((short) 3).setCellValue(Integer.toString(rs3.getInt(4)));
-                row4.createCell((short) 4).setCellValue(rs3.getString(5));
-                row4.createCell((short) 5).setCellValue(rs3.getString(6));
-                row4.createCell((short) 6).setCellValue(rs3.getString(7));
+            Date today = new Date();
 
-                y++;
-            }
-
-            String reportFile = "C:\\LeaveReport\\AcquttalSchBat #" + batNum + " Version 1.xls";
+            String reportFile = "C:\\Finance System Reports\\Acquittal Schedule\\AcquttalSchBat #" + batNum + " Version 1 - Generated " + sDateTime.format(today) + ".xls";
             FileOutputStream fileOut = new FileOutputStream(reportFile);
             workbook.write(fileOut);
             fileOut.close();
-            String fileName = "AcquttalSchBat #" + batNum + " Version 1.xls";
+            String fileName = "AcquttalSchBat #" + batNum + " Version 1 - Generated " + sDateTime.format(today) + ".xls";
             String mailHeader = "Acquttal extraction batch# " + batNum + " version " + batVer;
             String mailMsg = "Please find acquttal schedule attachment for batch# "
                     + "<b>" + batNum + "</b> version <b>" + batVer + "</b> generated by<b> " + jLabelGenLogNam.getText() + "</b>.";
 
             recSend.sendMailExtract(mailHeader, reportFile, mailMsg, fileName);
             jDialogWaiting.setVisible(false);
-            JOptionPane.showMessageDialog(this, "Your excel file AcquttalSchBat # " + batNum + " version  " + batVer + ".xls has been generated"
+            JOptionPane.showMessageDialog(this, "Your excel file AcquttalSchBat # " + batNum + " version  " + batVer + " - Generated " + sDateTime.format(today) + ".xls has been generated"
                     + " and email sent to the finance team");
 
             new JFrameReqHQAcqScheduleApp(jLabelEmp.getText()).setVisible(true);
@@ -691,7 +710,7 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_PROV,a.EMP_OFF,a.BUD_COD,a.ACT_MAIN_PUR,b.PLAN_WK,"
+            st.executeQuery("SELECT a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_PROV,a.EMP_OFF,BUD_CODE,a.ACT_MAIN_PUR,b.PLAN_WK,"
                     + "(sum(b.BRK_AMT)+ sum(b.LNC_AMT)+sum(b.DIN_AMT)+ sum(b.INC_AMT) + sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)) \"total\""
                     + " ,max(a.DOC_VER) "
                     + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and a.REF_NUM=b.REF_NUM "
@@ -701,7 +720,7 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
                     + "and a.ACT_REC_STA = 'Q'"
                     + "and a.PREV_REF_NUM ='" + jTextAcqRegNum.getText() + "'"
                     + "and b.PLAN_WK ='" + jTextWeek.getText() + "'"
-                    + " group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM) ,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,a.BUD_COD,a.ACT_MAIN_PUR,b.PLAN_WK");
+                    + " group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM) ,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.EMP_OFF,BUD_CODE,a.ACT_MAIN_PUR,b.PLAN_WK");
 
             ResultSet rs = st.getResultSet();
             HSSFWorkbook workbook = new HSSFWorkbook();
@@ -739,7 +758,7 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
                 i++;
             }
 
-            String reportFile = "C:\\LeaveReport\\AcquttalSchBat # " + usrBatNum + " Version " + newBatVer + ".xls";
+            String reportFile = "C:\\Finance System Reports\\Acquittal Schedule\\AcquttalSchBat # " + usrBatNum + " Version " + newBatVer + ".xls";
             FileOutputStream fileOut = new FileOutputStream(reportFile);
             workbook.write(fileOut);
             fileOut.close();
@@ -758,6 +777,25 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
         }
     }
 
+    void folderCreate() {
+        File tmpDir = new File("C:\\Finance System Reports\\Acquittal Schedule");
+        boolean exists = tmpDir.exists();
+        if (exists) {
+
+            System.out.println("Folder exists");
+
+        } else {
+            try {
+                Path path = Paths.get("C:\\Finance System Reports\\Acquittal Schedule");
+
+                Files.createDirectories(path);
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
     void batchUpd() {
 
         try {
@@ -766,12 +804,12 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
             st.executeQuery("SELECT count(*) "
-                    + "FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab a,ClaimsAppSysZimTTECH.dbo.ClaimAppItmTab b, ClaimsAppSysZimTTECH.dbo.ClaimsWFActTab c "
-                    + "where (a.REF_NUM = b.REF_NUM and a.DOC_VER =b.DOC_VER and a.REF_NUM = c.REF_NUM and a.DOC_VER =c.DOC_VER) and c.DOC_STATUS='HeadApprove' "
+                    + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab a,ClaimsAppSysZvandiri.dbo.ClaimAppItmTab b, ClaimsAppSysZvandiri.dbo.ClaimsWFActTab c "
+                    + "where (a.REF_NUM = b.REF_NUM and a.DOC_VER =b.DOC_VER and a.REF_NUM = c.REF_NUM and a.DOC_VER =c.DOC_VER) and c.DOC_STATUS='HODAcqApprove' "
                     + "and a.ACT_REC_STA = 'Q'"
                     + "and a.PREV_SERIAL = 'R'  and a.SERIAL = 'A'"
                     + "and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct concat(REF_NUM,PLAN_WK) FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted')"
-                    + "group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM) ,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.BUD_COD,a.ACT_MAIN_PUR,b.PLAN_WK");
+                    + "group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM) ,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,BUD_CODE,a.ACT_MAIN_PUR,b.PLAN_WK");
 
             ResultSet r = st.getResultSet();
 
@@ -787,19 +825,23 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
                 try {
                     retriveData();
 
-                    String sql = "insert into [ClaimsAppSysZvandiri].[dbo].[BatRunTab] ( SERIAL,REF_NUM,BAT_TYP ,BAT_NUM,BAT_VER,RUN_BY,STATUS,RUN_DAT,RUN_TIME,ACTIONED_ON_COMPUTER,PLAN_WK)\n"
-                            + "SELECT a.PREV_SERIAL,a.PREV_REF_NUM,'acqBat','" + batNum + "','1','" + jLabelGenLogNam.getText() + "' ,'Acquitted','" + jLabelDate.getText() + "','" + jLabelTime.getText() + "','" + hostName + "',b.PLAN_WK\n"
-                            + "                             FROM ClaimsAppSysZimTTECH.dbo.ClaimAppGenTab a,ClaimsAppSysZimTTECH.dbo.ClaimAppItmTab b, ClaimsAppSysZimTTECH.dbo.ClaimsWFActTab c \n"
-                            + "                             where (a.REF_NUM = b.REF_NUM and a.DOC_VER =b.DOC_VER and a.REF_NUM = c.REF_NUM and a.DOC_VER =c.DOC_VER) and c.DOC_STATUS='HeadApprove' \n"
-                            + "                             and a.ACT_REC_STA = 'Q'\n"
-                            + "                             and a.PREV_SERIAL = 'R'\n"
-                            + "                             and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct  concat(REF_NUM,PLAN_WK) FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted')\n"
-                            + "                             group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM) ,a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,a.BUD_COD,a.ACT_MAIN_PUR,b.PLAN_WK";
-
+                    String sql = "insert into [ClaimsAppSysZvandiri].[dbo].[BatRunTab] "
+                            + "( SERIAL,REF_NUM,BAT_TYP ,BAT_NUM,BAT_VER,RUN_BY,STATUS,RUN_DAT,RUN_TIME,ACTIONED_ON_COMPUTER,PLAN_WK) "
+                            + "SELECT a.PREV_SERIAL,a.PREV_REF_NUM,'acqBat','"+ batNum + "','1','"+ jLabelGenLogNam.getText() +" ' ,"
+                            + "'Acquitted','" + jLabelDate.getText() + "',' "+ jLabelTime.getText() + "',' "+ hostName + "',b.PLAN_WK  "
+                            + "FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab a join ClaimsAppSysZvandiri.dbo.ClaimAppItmTab b "
+                            + "on a.Serial=b.SERIAL and a.REF_NUM = b.REF_NUM and a.DOC_VER =b.DOC_VER and a.ACT_REC_STA=b.ACT_REC_STA "
+                            + "join ClaimsAppSysZvandiri.dbo.ClaimsWFActTab c on c.Serial=b.SERIAL and c.REF_NUM = b.REF_NUM "
+                            + "and c.DOC_VER =b.DOC_VER and c.ACT_REC_STA=b.ACT_REC_STA where  c.DOC_STATUS='HODAcqApprove' "
+                            + "and c.DOC_STATUS='HODAcqApprove'  and a.ACT_REC_STA = 'Q' and a.PREV_SERIAL = 'R'  "
+                            + "and concat(a.PREV_REF_NUM,b.PLAN_WK) not in (SELECT distinct  concat(REF_NUM,PLAN_WK) "
+                            + "FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS = 'Acquitted')  "
+                            + "group by a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM) ,a.EMP_NAM,"
+                            + "a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,BUD_CODE,a.ACT_MAIN_PUR,b.PLAN_WK;";
+                           
                     pst = conn.prepareStatement(sql);
 
                     pst.executeUpdate();
-
                     System.out.println("two");
                 } catch (Exception e) {
                     System.out.println(e);
@@ -1039,25 +1081,26 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
 
         jDateTo.setDateFormatString("dd-MM-yyyy");
         jPanelItem1.add(jDateTo);
-        jDateTo.setBounds(150, 630, 160, 25);
+        jDateTo.setBounds(770, 630, 160, 25);
 
         jLabelRangeSelect.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelRangeSelect.setText("Please Select date Range");
         jPanelItem1.add(jLabelRangeSelect);
-        jLabelRangeSelect.setBounds(20, 570, 170, 25);
+        jLabelRangeSelect.setBounds(640, 570, 170, 25);
 
         jLabelDateTo.setText("Date To");
         jPanelItem1.add(jLabelDateTo);
-        jLabelDateTo.setBounds(20, 630, 80, 25);
+        jLabelDateTo.setBounds(640, 630, 80, 25);
 
         jLabelDateFrom.setText("Date From");
         jPanelItem1.add(jLabelDateFrom);
-        jLabelDateFrom.setBounds(20, 600, 80, 25);
+        jLabelDateFrom.setBounds(640, 600, 80, 25);
 
         jDateFrom.setDateFormatString("dd-MM-yyyy");
         jPanelItem1.add(jDateFrom);
-        jDateFrom.setBounds(150, 600, 160, 25);
+        jDateFrom.setBounds(770, 600, 160, 25);
 
+        jButtonGenExcel.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jButtonGenExcel.setText("<html>Generate batch <br> Excel Spreadsheet </html>");
         jButtonGenExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1065,16 +1108,17 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
             }
         });
         jPanelItem1.add(jButtonGenExcel);
-        jButtonGenExcel.setBounds(430, 620, 150, 35);
+        jButtonGenExcel.setBounds(330, 600, 150, 40);
 
-        jButtonDisplayResults.setText("Display Results ");
+        jButtonDisplayResults.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jButtonDisplayResults.setText("<html>Display Acquittal <br>Results</html>");
         jButtonDisplayResults.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDisplayResultsActionPerformed(evt);
             }
         });
         jPanelItem1.add(jButtonDisplayResults);
-        jButtonDisplayResults.setBounds(430, 590, 130, 21);
+        jButtonDisplayResults.setBounds(120, 600, 150, 40);
 
         jLabelEmp.setForeground(new java.awt.Color(255, 255, 255));
         jPanelItem1.add(jLabelEmp);
@@ -1087,15 +1131,15 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
         jLabelSingleUser.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelSingleUser.setText("Single User File");
         jPanelItem1.add(jLabelSingleUser);
-        jLabelSingleUser.setBounds(740, 580, 100, 30);
+        jLabelSingleUser.setBounds(930, 580, 100, 30);
 
         jLabelUserRef.setText("Request Ref. Number");
         jPanelItem1.add(jLabelUserRef);
-        jLabelUserRef.setBounds(740, 620, 140, 30);
+        jLabelUserRef.setBounds(930, 620, 140, 30);
 
         jTextAcqRegNum.setToolTipText("Enter Perdiem Request Number");
         jPanelItem1.add(jTextAcqRegNum);
-        jTextAcqRegNum.setBounds(890, 620, 59, 30);
+        jTextAcqRegNum.setBounds(1080, 620, 59, 30);
 
         jButtonUsrFile.setText("Generate File");
         jButtonUsrFile.addActionListener(new java.awt.event.ActionListener() {
@@ -1108,9 +1152,9 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
 
         jLabelWeek.setText("Week No.");
         jPanelItem1.add(jLabelWeek);
-        jLabelWeek.setBounds(980, 620, 60, 30);
+        jLabelWeek.setBounds(1140, 580, 60, 30);
         jPanelItem1.add(jTextWeek);
-        jTextWeek.setBounds(1050, 620, 40, 30);
+        jTextWeek.setBounds(1210, 580, 40, 30);
 
         jMenuFile.setText("File");
         jMenuFile.setPreferredSize(new java.awt.Dimension(60, 19));
@@ -1430,7 +1474,7 @@ public class JFrameReqHQAcqScheduleApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonUsrFileActionPerformed
 
     private void jMenuPlanApprovalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanApprovalActionPerformed
-       
+
     }//GEN-LAST:event_jMenuPlanApprovalActionPerformed
 
     private void jMenuItemPlanPerDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPlanPerDiemActionPerformed
