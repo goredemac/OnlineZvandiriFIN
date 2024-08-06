@@ -26,7 +26,7 @@ public class connCred {
 //    public String HRmailUsrN = "zvandiriHR@zvandiri.org";
     public String HRmailUsrN = "zvandiriHR@zvandiri.org";
     public String HRmailUsrP = "Raf41629";
-//     public String FinGrpMail = "nyashak@zvandiri.org";
-     public String FinGrpMail = "cgoredema@ophid.co.zw";
+     public String FinGrpMail = "nyashak@zvandiri.org";
+//     public String FinGrpMail = "cgoredema@ophid.co.zw";
 
 }

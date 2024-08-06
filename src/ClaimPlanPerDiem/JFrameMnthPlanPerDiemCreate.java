@@ -113,7 +113,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
     String hostName = "";
 
     String breakfastAll, lunchAll, lunchNPAll, lunchPAll, dinnerAll,
-            incidentalAll, unProvedAll, provedAll, date1, date2, usrnam, sendToProvMgr, supNam, supEmpNum,
+            incidentalAll, unProvedAll, provedAll, unProvedZimTTECH, date1, date2, usrnam, sendToProvMgr, supNam, supEmpNum,
             supUsrMail, provMgrMail, createUsrNam, usrRecNam, usrActType, UsrRecWk, actDate, duplicateUser1Count,
             duplicateUser2Count, duplicateUser3Count, duplicateUser4Count, duplicateUser5Count, usrGrp,
             planWk, empNamNum1, empNam1, empNamNum2, empNam2, empNamNum3, empNam3, empNamNum4,
@@ -1260,20 +1260,15 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
     void allowanceRate() {
         try {
-            String rateCat;
-            if ("National Office".equals(jLabelDistrict.getText())) {
-                rateCat = "A";
-            } else {
-                rateCat = "B";
-            }
-            System.out.println("cat " + rateCat + " " + jLabelDistrict.getText());
+         
+          
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             Statement st = conn.createStatement();
 
-            ResultSet r = st.executeQuery("SELECT Lunch,Dinner,Incidental,Unproved_Accommodation,Proved_Accommodation  "
-                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAllowanceTab] ");
+            ResultSet r = st.executeQuery("SELECT Lunch,Dinner,Incidental,Unproved_Accommodation,Proved_Accommodation,"
+                    + "Unproved_ZimTTECH_Acc  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAllowanceTab] ");
 
             while (r.next()) {
 
@@ -1282,6 +1277,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                 incidentalAll = r.getString(3);
                 unProvedAll = r.getString(4);
                 provedAll = r.getString(5);
+                unProvedZimTTECH = r.getString(6);
+                
 
             }
             //                 conn.close();
@@ -1816,6 +1813,7 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
             String Wk1Lnch = "0.00";
             String Wk1Dinner = "0.00";
             String Wk1UnProvedAcc = "0.00";
+            String WkZimTTECHUnprovedAcc = "0.00";
             String Wk1Inc = "0.00";
             String Wk1Misc = "0.00";
             String Wk1MiscDesc = "";
@@ -1881,9 +1879,11 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
 
                 if (jCheckBoxDialogWk1AccUnProved.isSelected()) {
                     Wk1UnProvedAcc = unProvedAll;
+                    WkZimTTECHUnprovedAcc = unProvedZimTTECH;
                 } else {
                     Wk1UnProvedAcc = "0.00";
                 }
+                
                 if (jCheckBoxDialogWk1AccProved.isSelected()) {
                     Wk1ProvedAcc = provedAll;
                 } else {
@@ -2068,6 +2068,13 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
                         String donorName = jComboDonor.getSelectedItem().toString();
                         prjProgCodeName = "";
                         prjProgCode = "";
+                        
+
+                    }
+
+                    if (("D036 CDC-Zim-TTECH".equals(taskDonor))) {
+                        Wk1UnProvedAcc = WkZimTTECHUnprovedAcc;
+                       
 
                     }
 
@@ -3004,8 +3011,8 @@ public class JFrameMnthPlanPerDiemCreate extends javax.swing.JFrame {
         jTextFieldWk1MiscAmt.setVisible(false);
         jTextFieldWk1MiscAmt.setText("");
         jTextFieldDialogWkSite.setText("");
-        while (jTableDocAtt.getRowCount()>0){
-        modelAtt.removeRow(0);
+        while (jTableDocAtt.getRowCount() > 0) {
+            modelAtt.removeRow(0);
         }
     }
 

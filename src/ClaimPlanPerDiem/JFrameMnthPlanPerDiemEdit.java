@@ -114,7 +114,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
     String delWk5 = "N";
     String hostName = "";
     String breakfastAll, lunchAll, lunchNPAll, lunchPAll, dinnerAll, usrGrp, supNam, supUsrMail,
-            incidentalAll, unProvedAll, provedAll, date1, date2, usrnam, docVer, actVer, actNextVer, editName, planStatus,
+            incidentalAll, unProvedAll, provedAll, unProvedZimTTECH, date1, date2, usrnam, docVer, actVer, actNextVer, editName, planStatus,
             sendToProvMgr, provMgrMail, usrRecNam, UsrRecWk, actDate, SupNamSend, usrActType, staffName1, staffName2,
             staffName3, staffName4, branchCode, prjCode, taskCode, lastDateofMonth, createUsrNam, supEmpNum, fetchStringWk1,
             fetchStringWk2, fetchStringWk3, fetchStringWk4, fetchStringWk5, donorName, donorCode, accCodeName,
@@ -810,8 +810,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
             Statement st = conn.createStatement();
 
-            ResultSet r = st.executeQuery("SELECT Lunch,Dinner,Incidental,Unproved_Accommodation "
-                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAllowanceTab] ");
+            ResultSet r = st.executeQuery("SELECT Lunch,Dinner,Incidental,Unproved_Accommodation,Proved_Accommodation,"
+                    + "Unproved_ZimTTECH_Acc  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAllowanceTab] ");
 
             while (r.next()) {
 
@@ -819,6 +819,8 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                 dinnerAll = r.getString(2);
                 incidentalAll = r.getString(3);
                 unProvedAll = r.getString(4);
+                provedAll = r.getString(5);
+                unProvedZimTTECH = r.getString(6);
 
             }
             //                 conn.close();
@@ -2763,6 +2765,7 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
             String Wk1Lnch = "0.00";
             String Wk1Dinner = "0.00";
             String Wk1UnProvedAcc = "0.00";
+            String WkZimTTECHUnprovedAcc="0.00";
             String Wk1Inc = "0.00";
             String Wk1Misc = "0.00";
             String Wk1MiscDesc = "";
@@ -2829,9 +2832,11 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
 
                 if (jCheckBoxDialogWk1AccUnProved.isSelected()) {
                     Wk1UnProvedAcc = unProvedAll;
+                    WkZimTTECHUnprovedAcc = unProvedZimTTECH;
                 } else {
                     Wk1UnProvedAcc = "0.00";
                 }
+
                 if (jCheckBoxDialogWk1AccProved.isSelected()) {
                     Wk1ProvedAcc = provedAll;
                 } else {
@@ -3016,6 +3021,11 @@ public class JFrameMnthPlanPerDiemEdit extends javax.swing.JFrame {
                         String donorName = jComboDonor.getSelectedItem().toString();
                         prjProgCodeName = "";
                         prjProgCode = "";
+
+                    }
+
+                    if (("D036 CDC-Zim-TTECH".equals(taskDonor))) {
+                        Wk1UnProvedAcc = WkZimTTECHUnprovedAcc;
 
                     }
 
