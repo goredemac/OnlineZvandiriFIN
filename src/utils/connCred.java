@@ -11,7 +11,8 @@ package utils;
  */
 public class connCred {
 
-    public String ipAdd = "ophidutilapp.southafricanorth.cloudapp.azure.com:16432";
+        public String ipAdd ="appsaas.southafricanorth.cloudapp.azure.com:14575";
+//    public String ipAdd = "ophidutilapp.southafricanorth.cloudapp.azure.com:16432";
 //    public String usrNFin = "appfin";
 //    public String usrPFin = "542ytDYvynv$TVYb";
 //    public String usrNHR = "apphr";
@@ -26,7 +27,7 @@ public class connCred {
 //    public String HRmailUsrN = "zvandiriHR@zvandiri.org";
     public String HRmailUsrN = "zvandiriHR@zvandiri.org";
     public String HRmailUsrP = "Raf41629";
-     public String FinGrpMail = "nyashak@zvandiri.org";
+     public String FinGrpMail = "financegroup@zvandiri.org";
 //     public String FinGrpMail = "cgoredema@ophid.co.zw";
 
 }

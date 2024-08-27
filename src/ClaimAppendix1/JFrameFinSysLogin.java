@@ -586,11 +586,12 @@ public class JFrameFinSysLogin extends javax.swing.JFrame {
         jPanel1.add(jLabelTime);
         jLabelTime.setBounds(710, 0, 90, 30);
 
-        jLabelHeading1.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
+        jLabelHeading1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jLabelHeading1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelHeading1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelHeading1.setText("Zvandiri FIN SYSTEM - TEST SYSTEM");
+        jLabelHeading1.setText("Zvandiri Expense and Planning System ");
         jPanel1.add(jLabelHeading1);
-        jLabelHeading1.setBounds(60, 40, 630, 40);
+        jLabelHeading1.setBounds(40, 30, 660, 50);
 
         jLabelUsrPass1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabelUsrPass1.setText("New Password");
@@ -641,7 +642,7 @@ public class JFrameFinSysLogin extends javax.swing.JFrame {
 
         jLabelVerson.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelVerson.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelVerson.setText("Cloud Ver.  4.1.0");
+        jLabelVerson.setText("Cloud Ver.  4.2.0");
         jPanel1.add(jLabelVerson);
         jLabelVerson.setBounds(670, 320, 110, 20);
 

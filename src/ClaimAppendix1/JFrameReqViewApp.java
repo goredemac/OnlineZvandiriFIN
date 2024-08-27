@@ -37,10 +37,31 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JFrame;
 import utils.connCred;
 import utils.connSaveFile;
 import utils.savePDFToDB;
 import utils.StockVehicleMgt;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.view.JRViewer;
 
 /**
  *
@@ -65,6 +86,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             authUsrNam, authUsrNamAll, authNam1, authNam2, usrGrp, empOff;
     String province = "";
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
+    SimpleDateFormat sDateTime = new SimpleDateFormat("ddMMyyyy_HHMMSS");
     DefaultTableModel modelWk1, modelWk2, modelWk3, modelWk4, modelWk5;
     double breakfastsubtotalAcq = 0;
     double lunchsubtotalAcq = 0;
@@ -93,6 +115,8 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         showDate();
         showTime();
         jLabelRegYear.setVisible(false);
+        jLabelBreakFastSubTot.setVisible(false);
+        jLabelBreakFastSub.setVisible(false);
 
     }
 
@@ -104,6 +128,8 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         jLabelRegYear.setVisible(false);
         jLabelReject.setVisible(false);
         jLabelRejectComments.setVisible(false);
+        jLabelBreakFastSubTot.setVisible(false);
+        jLabelBreakFastSub.setVisible(false);
 
     }
 
@@ -122,6 +148,10 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         jLabelHeaderGen.setText("TRAVEL AND SUBSISTENCE CLAIM");
         jRadioPartAllow.setVisible(false);
         jRadioPerDiem.setSelected(true);
+        jLabelBreakFastSubTot.setVisible(false);
+        jLabelBreakFastSub.setVisible(false);
+        jButtonGenerateReport.setVisible(false);
+        jButtonGenerateReport.setBounds(970, 120, 270, 30);
         modelWk1 = (DefaultTableModel) jTableWk1Activities.getModel();
         modelWk2 = (DefaultTableModel) jTableWk2Activities.getModel();
         modelWk3 = (DefaultTableModel) jTableWk3Activities.getModel();
@@ -290,9 +320,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             }
 
             if ("usrFinReq".equals(usrGrp)) {
-                jMenuItemAccMgrRev.setEnabled(false);//can remove
-                jMenuItemAcqAccApp.setEnabled(false);//can remove
-                jMenuItemPlanFinApproval.setEnabled(false);//can remove
+
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqSupApp.setEnabled(false);
@@ -304,9 +332,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             }
 
             if ("usrFinSup".equals(usrGrp)) {
-                jMenuItemAccMgrRev.setEnabled(false);//can remove
-                jMenuItemAcqAccApp.setEnabled(false);//can remove
-                jMenuItemPlanFinApproval.setEnabled(false);//can remove
+
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanView.setEnabled(false);
@@ -345,6 +371,25 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         } catch (Exception e) {
             //  JOptionPane.showMessageDialog(null, "Failed to Connect to Database (Province).Try Again", "Error Connection", JOptionPane.WARNING_MESSAGE);
             System.out.println(e);
+        }
+    }
+
+    void folderCreate() {
+        File tmpDir = new File("C:\\Finance System Reports\\Request PDF");
+        boolean exists = tmpDir.exists();
+        if (exists) {
+
+            System.out.println("Folder exists");
+
+        } else {
+            try {
+                Path path = Paths.get("C:\\Finance System Reports\\Request PDF");
+
+                Files.createDirectories(path);
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
     }
 
@@ -435,6 +480,145 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         allTotal = 0;
     }
 
+    void generateView() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver:"
+                    + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            String query = "select  x.SERIAL, x.REF_NUM ,Format(REF_DAT, 'dd MMM yyyy') REF_DAT ,EMP_NUM ,"
+                    + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT , "
+                    + "x.Breakfast, x.Lunch,x.Dinner,x.[Proven Acc],x.[Unproven Acc],x.Incidental,x.[Misc Amt],"
+                    + "y.Creator,y.Supervisor,y.Finance,y.HOD,'" + jLabelGenLogNam.getText() + "' GENUSER from (SELECT  a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,"
+                    + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT , "
+                    + "SUM(b.BRK_AMT) 'Breakfast',SUM(b.LNC_AMT) 'Lunch',SUM(b.DIN_AMT) 'Dinner',SUM(b.ACC_PROV_AMT) 'Proven Acc',"
+                    + "SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',SUM(b.INC_AMT) 'Incidental' ,SUM(b.MSC_AMT) 'Misc Amt' "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b "
+                    + "on a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA "
+                    + "WHERE a.REF_NUM = " + jTextRegNum.getText() + " AND a.SERIAL = 'R' AND a.ACT_REC_STA = 'A' and a.DOC_VER =4 GROUP BY a.SERIAL, a.REF_NUM ,"
+                    + "REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT) x "
+                    + "join (select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',"
+                    + "' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  "
+                    + "where DOC_STATUS ='Registered' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R') a join (SELECT distinct REF_NUM,'' 'Creator',"
+                    + "ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  "
+                    + "where DOC_STATUS ='SupApprove' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R' ) b on a.REF_NUM = b.REF_NUM join "
+                    + "(SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD' "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinApprove' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R') c "
+                    + "on b.REF_NUM = c.REF_NUM join (SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',"
+                    + "ACTIONED_BY_NAM 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODApprove' and REF_NUM = " + jTextRegNum.getText() + "  and SERIAL = 'R') d "
+                    + "on c.REF_NUM = d.REF_NUM) y on x.REF_NUM=y.REF_NUM";
+
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+//            preparedStatement.setString(1, employeeNumber);
+            ResultSet r = preparedStatement.executeQuery();
+//            ResultSet r = st.getResultSet();
+//
+            while (r.next()) {
+                System.out.println(" ff " + r.getString(1));
+
+            }
+            folderCreate();
+
+//            InputStream input = new FileInputStream(new File("src/JasperReports/ZimTTECH_Request.jrxml"));
+//            JasperDesign jdesign = JRXmlLoader.load(input);
+//
+//            JRDesignQuery updateQuery = new JRDesignQuery();
+//
+//            updateQuery.setText(query);
+//
+//            jdesign.setQuery(updateQuery);
+//
+//            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
+//
+//            JasperPrint jprint = JasperFillManager.fillReport(jreport, null, conn);
+//
+//            JasperExportManager.exportReportToPdfFile(jprint, "C:\\Finance System Reports\\Request PDF\\Request Report " + jLabelSerial.getText() + " " + jTextRegNum.getText() + ".pdf");
+//            JasperViewer jv = new JasperViewer(jprint, false);
+//            jv.setTitle("ZimTTECH Request ");
+//            jv.setVisible(true);
+//            JasperViewer.viewReport(jprint);
+//            JRViewer viewer = new JRViewer(jprint);
+//            JFrame frame = new JFrame("ZimTTECH Request");
+//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            frame.getContentPane().add(viewer);
+//            frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+////            frame.setAlwaysOnTop(true); 
+//            frame.pack();
+//            frame.setVisible(true);
+//            InputStream input = new FileInputStream(new File("http://apps.ophid.co.zw:8080/hr/ZimTTECH_Request.jrxml"));
+//            Date today = new Date();
+//
+//            URL url = new URL("http://service.zimttech.org:8080/zimttech/zimttechfin/ZimTTECH_Request.jrxml");
+//            URLConnection connection = url.openConnection();
+//            InputStream input = connection.getInputStream();
+////            JasperDesign jdesign = JRXmlLoader.load(input);
+//
+//            JasperDesign jdesign = JRXmlLoader.load(input);
+//
+//            JRDesignQuery updateQuery = new JRDesignQuery();
+//
+//            updateQuery.setText(query);
+//
+//            jdesign.setQuery(updateQuery);
+//
+//            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
+//
+//            JasperPrint jprint = JasperFillManager.fillReport(jreport, null, conn);
+//
+//            JasperExportManager.exportReportToPdfFile(jprint, "C:\\Finance System Reports\\Request PDF\\Request Report " + jLabelSerial.getText() + " " + jTextRegNum.getText() + " - Generated " + sDateTime.format(today) + ".pdf");
+//
+//            JRViewer viewer = new JRViewer(jprint);
+//            JFrame frame = new JFrame("ZimTTECH Acquittal");
+//            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//            frame.getContentPane().add(viewer);
+//            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+////            frame.setAlwaysOnTop(true); 
+//            frame.pack();
+//            frame.setVisible(true);
+            Date today = new Date();
+
+            // Load the JRXML from URL
+            URL url = new URL("http://apps.ophid.co.zw:8080/ZvandiriFin/ZvandiriFin/Zvandiri_Request.jrxml");
+            URLConnection connection = url.openConnection();
+            InputStream input = connection.getInputStream();
+
+            // URL for the image
+            String imageURL = "http://apps.ophid.co.zw:8080/ZvandiriFin/ZvandiriFin/COYLogo.jpg";
+
+            // Set parameters
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("ImageURL", imageURL);
+
+            // Load the design
+            JasperDesign jdesign = JRXmlLoader.load(input);
+
+            // Update the query (assuming 'query' is a valid SQL query string defined elsewhere)
+            JRDesignQuery updateQuery = new JRDesignQuery();
+            updateQuery.setText(query);
+            jdesign.setQuery(updateQuery);
+
+            // Compile the report
+            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
+
+            // Fill the report
+            JasperPrint jprint = JasperFillManager.fillReport(jreport, parameters, conn);
+
+            // Export the report to a PDF file
+            JasperExportManager.exportReportToPdfFile(jprint, "C:\\Finance System Reports\\Request PDF\\Request Report " + jLabelSerial.getText() + " " + jTextRegNum.getText() + " - Generated " + sDateTime.format(today) + ".pdf");
+
+            // View the report
+            JRViewer viewer = new JRViewer(jprint);
+            JFrame frame = new JFrame("ZimTTECH Acquittal");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.getContentPane().add(viewer);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.pack();
+            frame.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     void fetchGenData() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -494,7 +678,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
                         rejComments = r1.getString(17);
 
                         jLabelStatusView.setText(r1.getString(16));
-                        if ("Request - HOD Approved".equals(jLabelStatusView.getText())) {
+//                        if ("Request - HOD Approved".equals(jLabelStatusView.getText())) {
+//                            jLabelStatusView.setVisible(true);
+//                            jPanelStatusView.setVisible(true);
+//                            jLabelStatusView.setForeground(new java.awt.Color(0, 153, 0));
+//                            jPanelStatusView.setVisible(true);
+//                        } else {
+//                            jLabelStatusView.setVisible(true);
+//                            jPanelStatusView.setVisible(true);
+//                            jLabelStatusView.setForeground(new java.awt.Color(255, 0, 0));
+//                            jPanelStatusView.setVisible(true);
+//                        }
+                        if (("Request - HOD Approved".equals(jLabelStatusView.getText())) && (("usrProvMgr".equals(usrGrp)
+                                || ("usrAccMgr".equals(usrGrp)) || ("usrFinReq".equals(usrGrp)) || ("usrFinSup".equals(usrGrp)))
+                                || ("usrFinAcq".equals(usrGrp)) || ("Administrator".equals(usrGrp)))) {
+                            jLabelStatusView.setVisible(false);
+                            jPanelStatusView.setVisible(false);
+                            jLabelStatusView.setForeground(new java.awt.Color(0, 153, 0));
+                            jPanelStatusView.setVisible(false);
+                            jButtonGenerateReport.setVisible(true);
+                            jButtonGenerateReport.setBounds(970, 160, 270, 30);
+                        } else if ("Request - HOD Approved".equals(jLabelStatusView.getText())) {
                             jLabelStatusView.setVisible(true);
                             jPanelStatusView.setVisible(true);
                             jLabelStatusView.setForeground(new java.awt.Color(0, 153, 0));
@@ -666,7 +870,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{ r.getString(5),
+                modelWk1.insertRow(modelWk1.getRowCount(), new Object[]{r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
@@ -675,7 +879,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             if (modelWk1.getRowCount() == 0) {
                 jTabbedPaneAppSys.setEnabledAt(1, false);
-            } 
+            }
 
         } catch (Exception e) {
             System.out.println(e);
@@ -697,7 +901,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{ r.getString(5),
+                modelWk2.insertRow(modelWk2.getRowCount(), new Object[]{r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
@@ -706,7 +910,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             if (modelWk2.getRowCount() == 0) {
                 jTabbedPaneAppSys.setEnabledAt(2, false);
-            } 
+            }
 
         } catch (Exception e) {
             System.out.println(e);
@@ -728,7 +932,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{ r.getString(5),
+                modelWk3.insertRow(modelWk3.getRowCount(), new Object[]{r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
@@ -737,7 +941,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             if (modelWk3.getRowCount() == 0) {
                 jTabbedPaneAppSys.setEnabledAt(3, false);
-            } 
+            }
 
         } catch (Exception e) {
             System.out.println(e);
@@ -789,7 +993,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             ResultSet r = st.getResultSet();
 
             while (r.next()) {
-                modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{ r.getString(5),
+                modelWk5.insertRow(modelWk5.getRowCount(), new Object[]{r.getString(5),
                     r.getString(6), r.getString(7), r.getString(8), r.getString(9), r.getString(10), r.getString(11), r.getString(12),
                     r.getString(13), r.getString(14), r.getString(15), r.getString(16), r.getString(17), r.getString(18), r.getString(19),
                     r.getString(20), r.getString(21), r.getString(22), r.getString(23)});
@@ -798,7 +1002,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             if (modelWk5.getRowCount() == 0) {
                 jTabbedPaneAppSys.setEnabledAt(5, false);
-            } 
+            }
 
         } catch (Exception e) {
             System.out.println(e);
@@ -811,27 +1015,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         numFormat = new DecimalFormat("000.##");
         double breakfastsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 11));
+            double breakfastamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 11));
+            double breakfastamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 11));
+            double breakfastamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 11));
+            double breakfastamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double breakfastamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 11));
+            double breakfastamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 10));
             breakfastsubtotal += breakfastamount;
         }
 
@@ -839,27 +1043,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double lunchsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 12));
+            double lunchamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 12));
+            double lunchamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 12));
+            double lunchamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 12));
+            double lunchamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double lunchamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 12));
+            double lunchamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 11));
             lunchsubtotal += lunchamount;
         }
 
@@ -867,28 +1071,28 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double dinnersubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 13));
+            double dinneramount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 13));
+            double dinneramount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
         //jLabelDinnerSubTot.setText(Double.toString(dinnersubtotal));
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 13));
+            double dinneramount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 13));
+            double dinneramount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double dinneramount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 13));
+            double dinneramount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 12));
             dinnersubtotal += dinneramount;
         }
 
@@ -896,27 +1100,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double incidentalsubtotal = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 14));
+            double incidentalamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 14));
+            double incidentalamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 14));
+            double incidentalamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 14));
+            double incidentalamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double incidentalamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 14));
+            double incidentalamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 13));
             incidentalsubtotal += incidentalamount;
         }
 
@@ -924,27 +1128,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double miscSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 16));
+            double miscamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 16));
+            double miscamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 16));
+            double miscamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 16));
+            double miscamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double miscamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 16));
+            double miscamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 15));
             miscSubTot += miscamount;
         }
 
@@ -952,54 +1156,54 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double unprovedSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 17));
+            double unprovedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 17));
+            double unprovedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 17));
+            double unprovedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 17));
+            double unprovedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double unprovedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 17));
+            double unprovedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 16));
             unprovedSubTot += unprovedamount;
         }
         jLabelAccUnprovedSubTot.setText(String.format("%.2f", unprovedSubTot));
 
         double provedSubTot = 0;
         for (int i = 0; i < jTableWk1Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 18));
+            double provedamount = Double.parseDouble((String) jTableWk1Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk2Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 18));
+            double provedamount = Double.parseDouble((String) jTableWk2Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk3Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 18));
+            double provedamount = Double.parseDouble((String) jTableWk3Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk4Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 18));
+            double provedamount = Double.parseDouble((String) jTableWk4Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
 
         for (int i = 0; i < jTableWk5Activities.getRowCount(); i++) {
-            double provedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 18));
+            double provedamount = Double.parseDouble((String) jTableWk5Activities.getValueAt(i, 17));
             provedSubTot += provedamount;
         }
 
@@ -1024,6 +1228,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         buttonGroupPartAllowance = new javax.swing.ButtonGroup();
         jDialogPleaseWait = new javax.swing.JDialog();
+        jDialogPleaseWaitReport = new javax.swing.JDialog();
         jTabbedPaneAppSys = new javax.swing.JTabbedPane();
         jPanelGen = new javax.swing.JPanel();
         jLabelLogo = new javax.swing.JLabel();
@@ -1055,11 +1260,11 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabelBreakFastSub = new javax.swing.JLabel();
         jLabelLunchSubTot = new javax.swing.JLabel();
         jLabelDinnerSubTot = new javax.swing.JLabel();
-        jLabelBreakFastSubTot = new javax.swing.JLabel();
         jLabelAllReq = new javax.swing.JLabel();
+        jLabelBreakFastSub = new javax.swing.JLabel();
+        jLabelBreakFastSubTot = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabelMiscSubTot = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
@@ -1099,6 +1304,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         jLabelRejectComments = new javax.swing.JLabel();
         jRadioPartAllow = new javax.swing.JRadioButton();
         jRadioPerDiem = new javax.swing.JRadioButton();
+        jButtonGenerateReport = new javax.swing.JButton();
         jPanelRequestWk1 = new javax.swing.JPanel();
         jLabelLogo2 = new javax.swing.JLabel();
         jLabelHeaderLine1 = new javax.swing.JLabel();
@@ -1247,6 +1453,29 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             .addGap(0, 50, Short.MAX_VALUE)
         );
 
+        jDialogPleaseWaitReport.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        jDialogPleaseWaitReport.setTitle("                    Generating report.  Please Wait.....");
+        jDialogPleaseWaitReport.setAlwaysOnTop(true);
+        jDialogPleaseWaitReport.setBackground(new java.awt.Color(51, 255, 51));
+        jDialogPleaseWaitReport.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jDialogPleaseWaitReport.setFont(new java.awt.Font("Agency FB", 1, 14)); // NOI18N
+        jDialogPleaseWaitReport.setForeground(new java.awt.Color(255, 0, 0));
+        jDialogPleaseWaitReport.setIconImages(null);
+        jDialogPleaseWaitReport.setLocation(new java.awt.Point(650, 375));
+        jDialogPleaseWaitReport.setMinimumSize(new java.awt.Dimension(500, 50));
+        jDialogPleaseWaitReport.setResizable(false);
+
+        javax.swing.GroupLayout jDialogPleaseWaitReportLayout = new javax.swing.GroupLayout(jDialogPleaseWaitReport.getContentPane());
+        jDialogPleaseWaitReport.getContentPane().setLayout(jDialogPleaseWaitReportLayout);
+        jDialogPleaseWaitReportLayout.setHorizontalGroup(
+            jDialogPleaseWaitReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 453, Short.MAX_VALUE)
+        );
+        jDialogPleaseWaitReportLayout.setVerticalGroup(
+            jDialogPleaseWaitReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PERDIEM REQUEST -VIEW STATUS");
         addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1360,19 +1589,19 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         jLabelIncidentalSub.setText("Incidental");
         jPanel1.add(jLabelIncidentalSub);
-        jLabelIncidentalSub.setBounds(10, 120, 60, 25);
+        jLabelIncidentalSub.setBounds(10, 90, 60, 25);
 
         jLabelIncidentalSubTot.setText("0.00");
         jPanel1.add(jLabelIncidentalSubTot);
-        jLabelIncidentalSubTot.setBounds(100, 120, 50, 25);
+        jLabelIncidentalSubTot.setBounds(100, 90, 50, 25);
 
         jLabelLunchSub.setText("Lunch");
         jPanel1.add(jLabelLunchSub);
-        jLabelLunchSub.setBounds(10, 60, 60, 25);
+        jLabelLunchSub.setBounds(10, 30, 60, 25);
 
         jLabelDinnerSub.setText("Dinner");
         jPanel1.add(jLabelDinnerSub);
-        jLabelDinnerSub.setBounds(10, 90, 60, 25);
+        jLabelDinnerSub.setBounds(10, 60, 60, 25);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel2.setLayout(null);
@@ -1406,27 +1635,27 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         jPanel1.add(jLabel22);
         jLabel22.setBounds(8, 5, 80, 25);
 
-        jLabelBreakFastSub.setText("Breakfast");
-        jPanel1.add(jLabelBreakFastSub);
-        jLabelBreakFastSub.setBounds(10, 30, 60, 25);
-
         jLabelLunchSubTot.setText("0.00");
         jPanel1.add(jLabelLunchSubTot);
-        jLabelLunchSubTot.setBounds(100, 60, 50, 25);
+        jLabelLunchSubTot.setBounds(100, 30, 50, 25);
 
         jLabelDinnerSubTot.setText("0.00");
         jPanel1.add(jLabelDinnerSubTot);
-        jLabelDinnerSubTot.setBounds(100, 90, 50, 25);
-
-        jLabelBreakFastSubTot.setText("0.00");
-        jPanel1.add(jLabelBreakFastSubTot);
-        jLabelBreakFastSubTot.setBounds(100, 30, 50, 25);
+        jLabelDinnerSubTot.setBounds(100, 60, 50, 25);
 
         jLabelAllReq.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelAllReq.setForeground(new java.awt.Color(0, 102, 0));
         jLabelAllReq.setText("Req");
         jPanel1.add(jLabelAllReq);
         jLabelAllReq.setBounds(100, 5, 22, 25);
+
+        jLabelBreakFastSub.setText("Breakfast");
+        jPanel1.add(jLabelBreakFastSub);
+        jLabelBreakFastSub.setBounds(10, 110, 60, 25);
+
+        jLabelBreakFastSubTot.setText("0.00");
+        jPanel1.add(jLabelBreakFastSubTot);
+        jLabelBreakFastSubTot.setBounds(100, 110, 50, 25);
 
         jPanelGen.add(jPanel1);
         jPanel1.setBounds(10, 430, 250, 150);
@@ -1655,6 +1884,15 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         });
         jPanelGen.add(jRadioPerDiem);
         jRadioPerDiem.setBounds(10, 130, 100, 30);
+
+        jButtonGenerateReport.setText("HOD Approved - Click to Generate Report");
+        jButtonGenerateReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenerateReportActionPerformed(evt);
+            }
+        });
+        jPanelGen.add(jButtonGenerateReport);
+        jButtonGenerateReport.setBounds(970, 120, 270, 30);
 
         jTabbedPaneAppSys.addTab("User and Accounting Details", jPanelGen);
 
@@ -2626,6 +2864,13 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jMenuItemUserProfUpdActionPerformed
 
+    private void jButtonGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateReportActionPerformed
+        jDialogPleaseWaitReport.setVisible(true);
+        generateView();
+        jDialogPleaseWaitReport.setVisible(false);
+        setState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_jButtonGenerateReportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2792,7 +3037,9 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupPartAllowance;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonGenerateReport;
     private javax.swing.JDialog jDialogPleaseWait;
+    private javax.swing.JDialog jDialogPleaseWaitReport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;

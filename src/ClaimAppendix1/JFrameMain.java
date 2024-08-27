@@ -78,7 +78,7 @@ public class JFrameMain extends javax.swing.JFrame {
         findUser();
         showDate();
         showTime();
-
+        System.out.println("unsr "+usrNum);
         findUserGrp();
         computerName();
         jSeparator24.setVisible(false);
@@ -128,7 +128,7 @@ public class JFrameMain extends javax.swing.JFrame {
     void findUser() {
         try {
 
-//            
+             System.out.println("one " + jLabelEmp.getText());
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
@@ -140,7 +140,7 @@ public class JFrameMain extends javax.swing.JFrame {
 
             while (r.next()) {
 
-                System.out.println("ff " + r.getString(1));
+              
                 jLabelGenLogNam.setText(r.getString(1));
                 empOff = r.getString(2);
                 dialogEmpNam = r.getString(1);
@@ -194,6 +194,7 @@ public class JFrameMain extends javax.swing.JFrame {
             while (r.next()) {
 
                 usrGrp = r.getString(1);
+                System.out.println("grp "+usrGrp);
 
             }
             if ("usrGenSp".equals(usrGrp)) {
@@ -299,9 +300,9 @@ public class JFrameMain extends javax.swing.JFrame {
             }
 
             if ("usrFinReq".equals(usrGrp)) {
-                jMenuItemAccMgrRev.setEnabled(false);//can remove
-                jMenuItemAcqAccApp.setEnabled(false);//can remove
-                jMenuItemPlanFinApproval.setEnabled(false);//can remove
+                
+                
+            
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqSupApp.setEnabled(false);
@@ -313,9 +314,9 @@ public class JFrameMain extends javax.swing.JFrame {
             }
 
             if ("usrFinSup".equals(usrGrp)) {
-                jMenuItemAccMgrRev.setEnabled(false);//can remove
-                jMenuItemAcqAccApp.setEnabled(false);//can remove
-                jMenuItemPlanFinApproval.setEnabled(false);//can remove
+                
+                
+            
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanView.setEnabled(false);

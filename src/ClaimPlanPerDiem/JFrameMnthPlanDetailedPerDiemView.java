@@ -932,7 +932,7 @@ public class JFrameMnthPlanDetailedPerDiemView extends javax.swing.JFrame {
         jPanelWkOne.add(jSeparator2);
         jSeparator2.setBounds(30, 160, 1280, 10);
 
-        jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ophidlog.jpg"))); // NOI18N
+        jLabelLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/COYLogo.jpg"))); // NOI18N
         jPanelWkOne.add(jLabelLogo1);
         jLabelLogo1.setBounds(10, 10, 220, 100);
 

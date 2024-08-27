@@ -433,9 +433,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
 
             if ("usrFinReq".equals(usrGrp)) {
-                jMenuItemAccMgrRev.setEnabled(false);//can remove
-                jMenuItemAcqAccApp.setEnabled(false);//can remove
-                jMenuItemPlanFinApproval.setEnabled(false);//can remove
+                
+                
+            
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqSupApp.setEnabled(false);
@@ -447,9 +447,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
 
             if ("usrFinSup".equals(usrGrp)) {
-                jMenuItemAccMgrRev.setEnabled(false);//can remove
-                jMenuItemAcqAccApp.setEnabled(false);//can remove
-                jMenuItemPlanFinApproval.setEnabled(false);//can remove
+                
+                
+            
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanView.setEnabled(false);
@@ -3613,7 +3613,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jButtonBankCancel.setBounds(310, 240, 80, 21);
 
         jLabelBankName.setFont(new java.awt.Font("Times New Roman", 1, 10)); // NOI18N
-        jLabelBankName.setText("OPHID Bank Account");
+        jLabelBankName.setText("Zvandiri Bank Account");
         jPanel10.add(jLabelBankName);
         jLabelBankName.setBounds(20, 110, 110, 30);
 
@@ -5656,7 +5656,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPaneAppSys, javax.swing.GroupLayout.DEFAULT_SIZE, 1348, Short.MAX_VALUE)
+                .addComponent(jTabbedPaneAppSys)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

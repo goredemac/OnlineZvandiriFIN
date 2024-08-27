@@ -324,9 +324,9 @@ public class JFrameMnthDistrictAcquittal extends javax.swing.JFrame {
             }
 
             if ("usrFinReq".equals(usrGrp)) {
-                jMenuItemAccMgrRev.setEnabled(false);//can remove
-                jMenuItemAcqAccApp.setEnabled(false);//can remove
-                jMenuItemPlanFinApproval.setEnabled(false);//can remove
+                
+                
+            
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqSupApp.setEnabled(false);
@@ -338,9 +338,9 @@ public class JFrameMnthDistrictAcquittal extends javax.swing.JFrame {
             }
 
             if ("usrFinSup".equals(usrGrp)) {
-                jMenuItemAccMgrRev.setEnabled(false);//can remove
-                jMenuItemAcqAccApp.setEnabled(false);//can remove
-                jMenuItemPlanFinApproval.setEnabled(false);//can remove
+                
+                
+            
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanView.setEnabled(false);
