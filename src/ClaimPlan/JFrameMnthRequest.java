@@ -77,6 +77,8 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     int itmDateCountWk1 = 0, itmDateCountWk2, itmDateCountWk3, itmDateCountWk4, itmDateCountWk5;
     double totSeg1 = 0;
     double totSeg2 = 0;
+    double bankChgAmt = 0;
+    double bankChg;
     Date curYear = new Date();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat formatterGen = new SimpleDateFormat("dd MMM yyyy");
@@ -141,6 +143,8 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jTableWk3Activities.getTableHeader().setReorderingAllowed(false);
         jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
         jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
+        jLabelBreakFastSub.setVisible(false);
+        jLabelBreakFastSubTot.setVisible(false);
         SearchRef = ref;
         jLabelEmp.setText(usrLogNam);
         jLabelEmp.setVisible(false);
@@ -166,6 +170,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         computerName();
         findUser();
         findUserGrp();
+        allowanceBankRate();
         fetchdataGenWk1();
         fetchdataWk1();
         fetchdataWk2();
@@ -359,9 +364,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             }
 
             if ("usrFinReq".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqSupApp.setEnabled(false);
@@ -373,9 +376,7 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             }
 
             if ("usrFinSup".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanView.setEnabled(false);
@@ -453,6 +454,28 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
             }
 
+            //                 conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    void allowanceBankRate() {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            Statement st = conn.createStatement();
+
+            ResultSet r = st.executeQuery("SELECT BankChg  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAllowanceTab] ");
+
+            while (r.next()) {
+
+                bankChg = r.getDouble(1);
+                System.out.println("bank "+bankChg);
+
+            }
             //                 conn.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -1678,6 +1701,11 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             pst = conn.prepareStatement(sqlDeleteAck);
             pst.executeUpdate();
 
+            String sqlDeleteBankChg = "delete [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] where "
+                    + "concat(SERIAL,REF_NUM) ='" + jLabelSerial.getText() + jLabelRegNum.getText() + "'";
+            pst = conn.prepareStatement(sqlDeleteBankChg);
+            pst.executeUpdate();
+
             String sqlDeletePlanClr = "delete [ClaimsAppSysZvandiri].[dbo].[PlanReqClearTab] where "
                     + "concat(REQ_SERIAL,REF_NUM) ='" + jLabelSerial.getText() + jLabelRegNum.getText() + "'";
             pst = conn.prepareStatement(sqlDeletePlanClr);
@@ -1696,6 +1724,33 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
             pst = conn.prepareStatement(sqlPlanRec);
             pst.executeUpdate();
 
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    void insBankChgTab() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            String sql = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
+                    + "(REF_YEAR,SERIAL,REF_NUM,REF_DAT,EMP_NUM,BANK_CHG_AMT,REG_MOD_VER,DOC_VER,ACT_REC_STA) "
+                    + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?)";
+
+            pst = conn.prepareStatement(sql);
+
+            pst.setString(1, String.valueOf(jLabelRegYear.getText()));
+            pst.setString(2, jLabelSerial.getText());
+            pst.setString(3, String.valueOf(jLabelRegNum.getText()));
+            pst.setString(4, jLabelGenDate.getText());
+            pst.setString(5, jLabelEmpNum.getText());
+            pst.setString(6, String.valueOf(bankChgAmt));
+            pst.setString(7, "1");
+            pst.setString(8, "1");
+            pst.setString(9, "A");
+
+            pst.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -2133,6 +2188,8 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
                 insAckTab();
 
+                insBankChgTab();
+
                 WkPlanActionUpd();
 
                 PlanReqClearAction();
@@ -2502,6 +2559,13 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         double allTotal = unprovedSubTot + miscSubTot + incidentalsubtotal
                 + dinnersubtotal + lunchsubtotal + breakfastsubtotal + provedSubTot;
+
+        bankChgAmt = ((double) bankChg / 100) * allTotal;
+//
+        jLabelBankChgSubTot.setText(String.format("%.2f", bankChgAmt));
+//
+        allTotal = allTotal + bankChgAmt;
+
         numFormat.format(allTotal);
 
         jLabelAppTotReqCost.setText(String.format("%.2f", allTotal));
@@ -2683,14 +2747,16 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabelBreakFastSub = new javax.swing.JLabel();
-        jLabelBreakFastSubTot = new javax.swing.JLabel();
         jLabelLunchSubTot = new javax.swing.JLabel();
         jLabelDinnerSubTot = new javax.swing.JLabel();
+        jLabelBreakFastSub = new javax.swing.JLabel();
+        jLabelBreakFastSubTot = new javax.swing.JLabel();
         jPanelMiscSubTot = new javax.swing.JPanel();
         jLabelMiscSubTot = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabelMscSub = new javax.swing.JLabel();
+        jLabelBankChgSub = new javax.swing.JLabel();
+        jLabelBankChgSubTot = new javax.swing.JLabel();
         jPanelAccSubTot = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabelAccUnprovedSubTot = new javax.swing.JLabel();
@@ -3914,19 +3980,19 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
 
         jLabelIncidentalSub.setText("Incidental");
         jPanelAllowanceSubTot.add(jLabelIncidentalSub);
-        jLabelIncidentalSub.setBounds(10, 120, 60, 25);
+        jLabelIncidentalSub.setBounds(10, 90, 60, 25);
 
         jLabelIncidentalSubTot.setText("0.00");
         jPanelAllowanceSubTot.add(jLabelIncidentalSubTot);
-        jLabelIncidentalSubTot.setBounds(140, 120, 60, 25);
+        jLabelIncidentalSubTot.setBounds(140, 90, 60, 25);
 
         jLabelLunchSub.setText("Lunch");
         jPanelAllowanceSubTot.add(jLabelLunchSub);
-        jLabelLunchSub.setBounds(10, 60, 60, 25);
+        jLabelLunchSub.setBounds(10, 30, 60, 25);
 
         jLabelDinnerSub.setText("Dinner");
         jPanelAllowanceSubTot.add(jLabelDinnerSub);
-        jLabelDinnerSub.setBounds(10, 90, 60, 25);
+        jLabelDinnerSub.setBounds(10, 60, 60, 25);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel4.setLayout(null);
@@ -3960,21 +4026,21 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jPanelAllowanceSubTot.add(jLabel23);
         jLabel23.setBounds(8, 5, 120, 25);
 
-        jLabelBreakFastSub.setText("Breakfast");
-        jPanelAllowanceSubTot.add(jLabelBreakFastSub);
-        jLabelBreakFastSub.setBounds(10, 30, 60, 25);
-
-        jLabelBreakFastSubTot.setText("0.00");
-        jPanelAllowanceSubTot.add(jLabelBreakFastSubTot);
-        jLabelBreakFastSubTot.setBounds(140, 30, 60, 25);
-
         jLabelLunchSubTot.setText("0.00");
         jPanelAllowanceSubTot.add(jLabelLunchSubTot);
-        jLabelLunchSubTot.setBounds(140, 60, 60, 25);
+        jLabelLunchSubTot.setBounds(140, 30, 60, 25);
 
         jLabelDinnerSubTot.setText("0.00");
         jPanelAllowanceSubTot.add(jLabelDinnerSubTot);
-        jLabelDinnerSubTot.setBounds(140, 90, 60, 25);
+        jLabelDinnerSubTot.setBounds(140, 60, 60, 25);
+
+        jLabelBreakFastSub.setText("Breakfast");
+        jPanelAllowanceSubTot.add(jLabelBreakFastSub);
+        jLabelBreakFastSub.setBounds(10, 120, 60, 25);
+
+        jLabelBreakFastSubTot.setText("0.00");
+        jPanelAllowanceSubTot.add(jLabelBreakFastSubTot);
+        jLabelBreakFastSubTot.setBounds(140, 120, 60, 25);
 
         jPanelGen.add(jPanelAllowanceSubTot);
         jPanelAllowanceSubTot.setBounds(20, 430, 320, 150);
@@ -3994,6 +4060,14 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
         jLabelMscSub.setText("Miscellaneous");
         jPanelMiscSubTot.add(jLabelMscSub);
         jLabelMscSub.setBounds(8, 30, 80, 25);
+
+        jLabelBankChgSub.setText("Bank Charges");
+        jPanelMiscSubTot.add(jLabelBankChgSub);
+        jLabelBankChgSub.setBounds(10, 55, 80, 25);
+
+        jLabelBankChgSubTot.setText("0.00");
+        jPanelMiscSubTot.add(jLabelBankChgSubTot);
+        jLabelBankChgSubTot.setBounds(100, 55, 70, 25);
 
         jPanelGen.add(jPanelMiscSubTot);
         jPanelMiscSubTot.setBounds(400, 430, 210, 150);
@@ -5546,6 +5620,8 @@ public class JFrameMnthRequest extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAppTotReq;
     private javax.swing.JLabel jLabelAppTotReqCost;
     private javax.swing.JLabel jLabelBank;
+    private javax.swing.JLabel jLabelBankChgSub;
+    private javax.swing.JLabel jLabelBankChgSubTot;
     private javax.swing.JLabel jLabelBankName;
     private javax.swing.JLabel jLabelBreakFastSub;
     private javax.swing.JLabel jLabelBreakFastSubTot;

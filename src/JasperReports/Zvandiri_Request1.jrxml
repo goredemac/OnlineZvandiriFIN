@@ -3,6 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="ImageURL" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select  x.SERIAL, x.REF_NUM ,Format(REF_DAT, 'dd MMM yyyy') REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT ,
 x.Breakfast, x.Lunch,x.Dinner,x.[Proven Acc],x.[Unproven Acc],x.Incidental,x.[Misc Amt],y.Creator,y.Supervisor,y.Finance,y.HOD,'Gore' GENUSER from 
@@ -87,10 +88,6 @@ on x.REF_NUM=y.REF_NUM]]>
 				</textElement>
 				<text><![CDATA[Request No]]></text>
 			</staticText>
-			<image>
-				<reportElement x="-20" y="-11" width="151" height="80" uuid="b0ef8b00-1a15-467a-8dd1-4d2442f034de"/>
-				<imageExpression><![CDATA["http://apps.ophid.co.zw:8080/ZvandiriFin/ZvandiriFin/COYLogo.jpg"]]></imageExpression>
-			</image>
 			<textField>
 				<reportElement x="438" y="100" width="30" height="15" uuid="9e09857a-3026-4205-a3a5-29110034f71f"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -106,12 +103,16 @@ on x.REF_NUM=y.REF_NUM]]>
 				<textFieldExpression><![CDATA[$F{SERIAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="473" y="100" width="77" height="15" uuid="53fd216f-6972-4487-ba03-997fbc2e9c6e"/>
+				<reportElement x="473" y="101" width="77" height="15" uuid="53fd216f-6972-4487-ba03-997fbc2e9c6e"/>
 				<textElement textAlignment="Left">
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{REF_DAT}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="7" y="0" width="104" height="65" uuid="849c50c8-bac4-40c8-a06e-cb8822bb1184"/>
+				<imageExpression><![CDATA[$P{ImageURL}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

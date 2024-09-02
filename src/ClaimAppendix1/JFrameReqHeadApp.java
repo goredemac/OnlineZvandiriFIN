@@ -91,6 +91,7 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
     double allTotal = 0;
     double totSeg1 = 0;
     double totSeg2 = 0;
+    double bankChgAmt = 0;
 
     /**
      * Creates new form JFrameTabApp1
@@ -139,6 +140,8 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
         jTableWk3Activities.getTableHeader().setReorderingAllowed(false);
         jTableWk4Activities.getTableHeader().setReorderingAllowed(false);
         jTableWk5Activities.getTableHeader().setReorderingAllowed(false);
+        jLabelBreakFastSub.setVisible(false);
+        jLabelBreakFastSubTot.setVisible(false);
         jLabelRegYear.setVisible(false);
         jLabelEmp.setVisible(false);
         jLabelEmp.setText(usrLogNum);
@@ -146,6 +149,7 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
         findUser();
         findUserGrp();
         fetchGenData();
+        fetchBankChgData();
         fetchdataWk1();
         fetchdataWk2();
         fetchdataWk3();
@@ -309,9 +313,7 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
             }
 
             if ("usrFinReq".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqSupApp.setEnabled(false);
@@ -323,9 +325,7 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
             }
 
             if ("usrFinSup".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanView.setEnabled(false);
@@ -927,9 +927,12 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
 
         double allTotal = unprovedSubTot + miscSubTot + incidentalsubtotal
                 + dinnersubtotal + lunchsubtotal + breakfastsubtotal + provedSubTot;
+        allTotal = allTotal + bankChgAmt;
+
         numFormat.format(allTotal);
 
         jLabelAppTotReqCost.setText(String.format("%.2f", allTotal));
+
 
     }
 
@@ -979,6 +982,36 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
 
         }
     }
+    
+    void fetchBankChgData() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+            System.out.println("ref " + searchRef);
+            try {
+
+                Statement st1 = conn.createStatement();
+
+                st1.executeQuery("SELECT BANK_CHG_AMT "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
+                        + "where  concat(SERIAL,REF_NUM)='" + searchRef + "'");
+
+                ResultSet r1 = st1.getResultSet();
+
+                while (r1.next()) {
+                    bankChgAmt= r1.getDouble(1);
+                    jLabelBankChgSubTot.setText(r1.getString(1));
+
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        } catch (Exception e1) {
+
+        }
+    }
+
 
     void fetchdataWk1() {
         try {
@@ -1825,28 +1858,6 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
         jLabelEmpTitle = new javax.swing.JLabel();
         jLabelFinDetails = new javax.swing.JLabel();
         jLabelMainPurpose = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabelIncidentalSub = new javax.swing.JLabel();
-        jLabelIncidentalSubTot = new javax.swing.JLabel();
-        jLabelLunchSub = new javax.swing.JLabel();
-        jLabelDinnerSub = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabelBreakFastSub = new javax.swing.JLabel();
-        jLabelLunchSubTot = new javax.swing.JLabel();
-        jLabelDinnerSubTot = new javax.swing.JLabel();
-        jLabelBreakFastSubTot = new javax.swing.JLabel();
-        jLabelAllReq = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabelMiscSubTot = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabelMscSub = new javax.swing.JLabel();
-        jLabelMiscReq = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabelAccUnprovedSubTot = new javax.swing.JLabel();
@@ -1876,6 +1887,29 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
         jCheckBoxDisAgree = new javax.swing.JCheckBox();
         jButtonSave = new javax.swing.JButton();
         jLabelHODApp = new javax.swing.JLabel();
+        jPanelAllowanceSubTot = new javax.swing.JPanel();
+        jLabelIncidentalSub = new javax.swing.JLabel();
+        jLabelIncidentalSubTot = new javax.swing.JLabel();
+        jLabelLunchSub = new javax.swing.JLabel();
+        jLabelDinnerSub = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabelLunchSubTot = new javax.swing.JLabel();
+        jLabelDinnerSubTot = new javax.swing.JLabel();
+        jLabelBreakFastSub = new javax.swing.JLabel();
+        jLabelBreakFastSubTot = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabelMiscSubTot = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabelMscSub = new javax.swing.JLabel();
+        jLabelMiscReq = new javax.swing.JLabel();
+        jLabelBankChgSub = new javax.swing.JLabel();
+        jLabelBankChgSubTot = new javax.swing.JLabel();
         jPanelRequestWk1 = new javax.swing.JPanel();
         jLabelLogo1 = new javax.swing.JLabel();
         jLabelHeaderLine = new javax.swing.JLabel();
@@ -2705,112 +2739,6 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
         jPanelGen.add(jLabelMainPurpose);
         jLabelMainPurpose.setBounds(20, 360, 130, 30);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jPanel1FocusGained(evt);
-            }
-        });
-        jPanel1.setLayout(null);
-
-        jLabelIncidentalSub.setText("Incidental");
-        jPanel1.add(jLabelIncidentalSub);
-        jLabelIncidentalSub.setBounds(10, 120, 60, 25);
-
-        jLabelIncidentalSubTot.setText("0.00");
-        jPanel1.add(jLabelIncidentalSubTot);
-        jLabelIncidentalSubTot.setBounds(100, 120, 50, 25);
-
-        jLabelLunchSub.setText("Lunch");
-        jPanel1.add(jLabelLunchSub);
-        jLabelLunchSub.setBounds(10, 60, 60, 25);
-
-        jLabelDinnerSub.setText("Dinner");
-        jPanel1.add(jLabelDinnerSub);
-        jLabelDinnerSub.setBounds(10, 90, 60, 25);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel2.setLayout(null);
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel17.setText("Allowances Totals ");
-        jPanel2.add(jLabel17);
-        jLabel17.setBounds(10, 10, 120, 20);
-
-        jLabel18.setText("Incidental");
-        jPanel2.add(jLabel18);
-        jLabel18.setBounds(10, 130, 60, 20);
-
-        jLabel19.setText("Breakfast");
-        jPanel2.add(jLabel19);
-        jLabel19.setBounds(10, 40, 60, 20);
-
-        jLabel20.setText("Lunch");
-        jPanel2.add(jLabel20);
-        jLabel20.setBounds(10, 70, 60, 20);
-
-        jLabel21.setText("Dinner");
-        jPanel2.add(jLabel21);
-        jLabel21.setBounds(10, 100, 60, 20);
-
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(20, 410, 320, 160);
-
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel22.setText("Allowances ");
-        jPanel1.add(jLabel22);
-        jLabel22.setBounds(8, 5, 80, 25);
-
-        jLabelBreakFastSub.setText("Breakfast");
-        jPanel1.add(jLabelBreakFastSub);
-        jLabelBreakFastSub.setBounds(10, 30, 60, 25);
-
-        jLabelLunchSubTot.setText("0.00");
-        jPanel1.add(jLabelLunchSubTot);
-        jLabelLunchSubTot.setBounds(100, 60, 50, 25);
-
-        jLabelDinnerSubTot.setText("0.00");
-        jPanel1.add(jLabelDinnerSubTot);
-        jLabelDinnerSubTot.setBounds(100, 90, 50, 25);
-
-        jLabelBreakFastSubTot.setText("0.00");
-        jPanel1.add(jLabelBreakFastSubTot);
-        jLabelBreakFastSubTot.setBounds(100, 30, 50, 25);
-
-        jLabelAllReq.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelAllReq.setForeground(new java.awt.Color(0, 102, 0));
-        jLabelAllReq.setText("Req");
-        jPanel1.add(jLabelAllReq);
-        jLabelAllReq.setBounds(100, 5, 22, 25);
-
-        jPanelGen.add(jPanel1);
-        jPanel1.setBounds(20, 400, 250, 150);
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(null);
-
-        jLabelMiscSubTot.setText("0.00");
-        jPanel3.add(jLabelMiscSubTot);
-        jLabelMiscSubTot.setBounds(110, 30, 50, 25);
-
-        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel29.setText("Miscellaneous ");
-        jPanel3.add(jLabel29);
-        jLabel29.setBounds(8, 5, 90, 25);
-
-        jLabelMscSub.setText("Miscellaneous");
-        jPanel3.add(jLabelMscSub);
-        jLabelMscSub.setBounds(8, 30, 80, 25);
-
-        jLabelMiscReq.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelMiscReq.setForeground(new java.awt.Color(0, 102, 0));
-        jLabelMiscReq.setText("Req");
-        jPanel3.add(jLabelMiscReq);
-        jLabelMiscReq.setBounds(110, 5, 22, 25);
-
-        jPanelGen.add(jPanel3);
-        jPanel3.setBounds(360, 400, 250, 150);
-
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(null);
 
@@ -2969,6 +2897,114 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
         jLabelHODApp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jPanelGen.add(jLabelHODApp);
         jLabelHODApp.setBounds(560, 90, 220, 20);
+
+        jPanelAllowanceSubTot.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelAllowanceSubTot.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPanelAllowanceSubTotFocusGained(evt);
+            }
+        });
+        jPanelAllowanceSubTot.setLayout(null);
+
+        jLabelIncidentalSub.setText("Incidental");
+        jPanelAllowanceSubTot.add(jLabelIncidentalSub);
+        jLabelIncidentalSub.setBounds(10, 90, 60, 25);
+
+        jLabelIncidentalSubTot.setText("0.00");
+        jPanelAllowanceSubTot.add(jLabelIncidentalSubTot);
+        jLabelIncidentalSubTot.setBounds(140, 90, 60, 25);
+
+        jLabelLunchSub.setText("Lunch");
+        jPanelAllowanceSubTot.add(jLabelLunchSub);
+        jLabelLunchSub.setBounds(10, 30, 60, 25);
+
+        jLabelDinnerSub.setText("Dinner");
+        jPanelAllowanceSubTot.add(jLabelDinnerSub);
+        jLabelDinnerSub.setBounds(10, 60, 60, 25);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel5.setLayout(null);
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel18.setText("Allowances Totals ");
+        jPanel5.add(jLabel18);
+        jLabel18.setBounds(10, 10, 120, 20);
+
+        jLabel19.setText("Incidental");
+        jPanel5.add(jLabel19);
+        jLabel19.setBounds(10, 130, 60, 20);
+
+        jLabel20.setText("Breakfast");
+        jPanel5.add(jLabel20);
+        jLabel20.setBounds(10, 40, 60, 20);
+
+        jLabel21.setText("Lunch");
+        jPanel5.add(jLabel21);
+        jLabel21.setBounds(10, 70, 60, 20);
+
+        jLabel22.setText("Dinner");
+        jPanel5.add(jLabel22);
+        jLabel22.setBounds(10, 100, 60, 20);
+
+        jPanelAllowanceSubTot.add(jPanel5);
+        jPanel5.setBounds(20, 410, 320, 160);
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel23.setText("Allowances Totals ");
+        jPanelAllowanceSubTot.add(jLabel23);
+        jLabel23.setBounds(8, 5, 120, 25);
+
+        jLabelLunchSubTot.setText("0.00");
+        jPanelAllowanceSubTot.add(jLabelLunchSubTot);
+        jLabelLunchSubTot.setBounds(140, 30, 60, 25);
+
+        jLabelDinnerSubTot.setText("0.00");
+        jPanelAllowanceSubTot.add(jLabelDinnerSubTot);
+        jLabelDinnerSubTot.setBounds(140, 60, 60, 25);
+
+        jLabelBreakFastSub.setText("Breakfast");
+        jPanelAllowanceSubTot.add(jLabelBreakFastSub);
+        jLabelBreakFastSub.setBounds(10, 120, 60, 25);
+
+        jLabelBreakFastSubTot.setText("0.00");
+        jPanelAllowanceSubTot.add(jLabelBreakFastSubTot);
+        jLabelBreakFastSubTot.setBounds(140, 120, 60, 25);
+
+        jPanelGen.add(jPanelAllowanceSubTot);
+        jPanelAllowanceSubTot.setBounds(20, 400, 290, 150);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(null);
+
+        jLabelMiscSubTot.setText("0.00");
+        jPanel3.add(jLabelMiscSubTot);
+        jLabelMiscSubTot.setBounds(110, 30, 50, 25);
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel29.setText("Miscellaneous ");
+        jPanel3.add(jLabel29);
+        jLabel29.setBounds(8, 5, 90, 25);
+
+        jLabelMscSub.setText("Miscellaneous");
+        jPanel3.add(jLabelMscSub);
+        jLabelMscSub.setBounds(8, 30, 80, 25);
+
+        jLabelMiscReq.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelMiscReq.setForeground(new java.awt.Color(0, 102, 0));
+        jLabelMiscReq.setText("Req");
+        jPanel3.add(jLabelMiscReq);
+        jLabelMiscReq.setBounds(110, 5, 22, 25);
+
+        jLabelBankChgSub.setText("Bank Charges");
+        jPanel3.add(jLabelBankChgSub);
+        jLabelBankChgSub.setBounds(10, 55, 80, 25);
+
+        jLabelBankChgSubTot.setText("0.00");
+        jPanel3.add(jLabelBankChgSubTot);
+        jLabelBankChgSubTot.setBounds(110, 55, 70, 25);
+
+        jPanelGen.add(jPanel3);
+        jPanel3.setBounds(360, 400, 250, 150);
 
         jTabbedPaneAppSys.addTab("User and Accounting Details", jPanelGen);
 
@@ -3682,10 +3718,6 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jPanelGenKeyPressed
 
-    private void jPanel1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel1FocusGained
-
-    }//GEN-LAST:event_jPanel1FocusGained
-
 
     private void jComboBudgetCodeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBudgetCodeFocusGained
 
@@ -4024,6 +4056,10 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jMenuItemUserProfUpdActionPerformed
 
+    private void jPanelAllowanceSubTotFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanelAllowanceSubTotFocusGained
+
+    }//GEN-LAST:event_jPanelAllowanceSubTotFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -4225,13 +4261,13 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
     private javax.swing.JDialog jDialogWk3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -4244,10 +4280,11 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAccUnprovedSubTot;
     private javax.swing.JLabel jLabelActMainPurpose;
     private javax.swing.JLabel jLabelActMainPurpose1;
-    private javax.swing.JLabel jLabelAllReq;
     private javax.swing.JLabel jLabelAppTotReq;
     private javax.swing.JLabel jLabelAppTotReqCost;
     private javax.swing.JLabel jLabelBank;
+    private javax.swing.JLabel jLabelBankChgSub;
+    private javax.swing.JLabel jLabelBankChgSubTot;
     private javax.swing.JLabel jLabelBankName;
     private javax.swing.JLabel jLabelBreakFastSub;
     private javax.swing.JLabel jLabelBreakFastSubTot;
@@ -4406,14 +4443,14 @@ public class JFrameReqHeadApp extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuPlanApproval;
     private javax.swing.JMenu jMenuReports;
     private javax.swing.JMenu jMenuRequest;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelAllowanceSubTot;
     private javax.swing.JPanel jPanelDetUpd;
     private javax.swing.JPanel jPanelDetUpd1;
     private javax.swing.JPanel jPanelDocAttach;

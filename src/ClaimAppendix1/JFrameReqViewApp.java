@@ -106,6 +106,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
     double allTotal = 0;
     double totSeg1 = 0;
     double totSeg2 = 0;
+    double bankChgAmt = 0;
 
     /**
      * Creates new form JFrameTabApp1
@@ -484,128 +485,86 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver:"
                     + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
-
-            String query = "select  x.SERIAL, x.REF_NUM ,Format(REF_DAT, 'dd MMM yyyy') REF_DAT ,EMP_NUM ,"
-                    + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT , "
-                    + "x.Breakfast, x.Lunch,x.Dinner,x.[Proven Acc],x.[Unproven Acc],x.Incidental,x.[Misc Amt],"
-                    + "y.Creator,y.Supervisor,y.Finance,y.HOD,'" + jLabelGenLogNam.getText() + "' GENUSER from (SELECT  a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,"
-                    + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT , "
-                    + "SUM(b.BRK_AMT) 'Breakfast',SUM(b.LNC_AMT) 'Lunch',SUM(b.DIN_AMT) 'Dinner',SUM(b.ACC_PROV_AMT) 'Proven Acc',"
-                    + "SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',SUM(b.INC_AMT) 'Incidental' ,SUM(b.MSC_AMT) 'Misc Amt' "
-                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b "
-                    + "on a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA "
-                    + "WHERE a.REF_NUM = " + jTextRegNum.getText() + " AND a.SERIAL = 'R' AND a.ACT_REC_STA = 'A' and a.DOC_VER =4 GROUP BY a.SERIAL, a.REF_NUM ,"
-                    + "REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT) x "
-                    + "join (select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',"
-                    + "' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  "
-                    + "where DOC_STATUS ='Registered' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R') a join (SELECT distinct REF_NUM,'' 'Creator',"
-                    + "ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  "
-                    + "where DOC_STATUS ='SupApprove' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R' ) b on a.REF_NUM = b.REF_NUM join "
-                    + "(SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD' "
-                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinApprove' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R') c "
-                    + "on b.REF_NUM = c.REF_NUM join (SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',"
-                    + "ACTIONED_BY_NAM 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODApprove' and REF_NUM = " + jTextRegNum.getText() + "  and SERIAL = 'R') d "
-                    + "on c.REF_NUM = d.REF_NUM) y on x.REF_NUM=y.REF_NUM";
+            String query = null;
+            if ("R".equals(jLabelSerial.getText()) && Integer.parseInt(jTextRegNum.getText()) <= 2) {
+                query = "select  x.SERIAL, x.REF_NUM ,Format(REF_DAT, 'dd MMM yyyy') REF_DAT ,EMP_NUM ,"
+                        + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT , "
+                        + "x.Breakfast, x.Lunch,x.Dinner,x.[Proven Acc],x.[Unproven Acc],x.Incidental,x.[Misc Amt],x.[Bank Chg],"
+                        + "y.Creator,y.Supervisor,y.Finance,y.HOD,'" + jLabelGenLogNam.getText() + "' GENUSER from (SELECT  a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.EMP_NUM ,"
+                        + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT , "
+                        + "SUM(b.BRK_AMT) 'Breakfast',SUM(b.LNC_AMT) 'Lunch',SUM(b.DIN_AMT) 'Dinner',SUM(b.ACC_PROV_AMT) 'Proven Acc',"
+                        + "SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',SUM(b.INC_AMT) 'Incidental' ,SUM(b.MSC_AMT) 'Misc Amt','0.00' 'Bank Chg' "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b "
+                        + "on a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA "
+                        + "WHERE a.REF_NUM = " + jTextRegNum.getText() + " AND a.SERIAL = 'R' AND a.ACT_REC_STA = 'A' and a.DOC_VER =4 GROUP BY a.SERIAL, a.REF_NUM ,"
+                        + "a.REF_DAT ,a.EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT) x "
+                        + "join (select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',"
+                        + "' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  "
+                        + "where DOC_STATUS ='Registered' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R') a join (SELECT distinct REF_NUM,'' 'Creator',"
+                        + "ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  "
+                        + "where DOC_STATUS ='SupApprove' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R' ) b on a.REF_NUM = b.REF_NUM join "
+                        + "(SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD' "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinApprove' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R') c "
+                        + "on b.REF_NUM = c.REF_NUM join (SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',"
+                        + "ACTIONED_BY_NAM 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODApprove' and REF_NUM = " + jTextRegNum.getText() + "  and SERIAL = 'R') d "
+                        + "on c.REF_NUM = d.REF_NUM) y on x.REF_NUM=y.REF_NUM";
+            } else {
+                query = "select  x.SERIAL, x.REF_NUM ,Format(REF_DAT, 'dd MMM yyyy') REF_DAT ,EMP_NUM ,"
+                        + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT , "
+                        + "x.Breakfast, x.Lunch,x.Dinner,x.[Proven Acc],x.[Unproven Acc],x.Incidental,x.[Misc Amt],x.[Bank Chg],"
+                        + "y.Creator,y.Supervisor,y.Finance,y.HOD,'" + jLabelGenLogNam.getText() + "' GENUSER from (SELECT  a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.EMP_NUM ,"
+                        + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT , "
+                        + "SUM(b.BRK_AMT) 'Breakfast',SUM(b.LNC_AMT) 'Lunch',SUM(b.DIN_AMT) 'Dinner',SUM(b.ACC_PROV_AMT) 'Proven Acc',"
+                        + "SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',SUM(b.INC_AMT) 'Incidental' ,SUM(b.MSC_AMT) 'Misc Amt',c.BANK_CHG_AMT 'Bank Chg' "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b "
+                        + "on a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA JOIN "
+                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] c on a.SERIAL = c.SERIAL AND a.REF_NUM =c.REF_NUM "
+                        + "WHERE a.REF_NUM = " + jTextRegNum.getText() + " AND a.SERIAL = 'R' AND a.ACT_REC_STA = 'A' and a.DOC_VER =4 GROUP BY a.SERIAL, a.REF_NUM ,"
+                        + "a.REF_DAT ,a.EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,BANK_CHG_AMT) x "
+                        + "join (select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',"
+                        + "' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  "
+                        + "where DOC_STATUS ='Registered' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R') a join (SELECT distinct REF_NUM,'' 'Creator',"
+                        + "ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  "
+                        + "where DOC_STATUS ='SupApprove' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R' ) b on a.REF_NUM = b.REF_NUM join "
+                        + "(SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD' "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinApprove' and REF_NUM = " + jTextRegNum.getText() + "   and SERIAL = 'R') c "
+                        + "on b.REF_NUM = c.REF_NUM join (SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',"
+                        + "ACTIONED_BY_NAM 'HOD' FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODApprove' and REF_NUM = " + jTextRegNum.getText() + "  and SERIAL = 'R') d "
+                        + "on c.REF_NUM = d.REF_NUM) y on x.REF_NUM=y.REF_NUM";
+            }
 
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-//            preparedStatement.setString(1, employeeNumber);
             ResultSet r = preparedStatement.executeQuery();
-//            ResultSet r = st.getResultSet();
-//
             while (r.next()) {
                 System.out.println(" ff " + r.getString(1));
 
             }
             folderCreate();
 
-//            InputStream input = new FileInputStream(new File("src/JasperReports/ZimTTECH_Request.jrxml"));
-//            JasperDesign jdesign = JRXmlLoader.load(input);
-//
-//            JRDesignQuery updateQuery = new JRDesignQuery();
-//
-//            updateQuery.setText(query);
-//
-//            jdesign.setQuery(updateQuery);
-//
-//            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
-//
-//            JasperPrint jprint = JasperFillManager.fillReport(jreport, null, conn);
-//
-//            JasperExportManager.exportReportToPdfFile(jprint, "C:\\Finance System Reports\\Request PDF\\Request Report " + jLabelSerial.getText() + " " + jTextRegNum.getText() + ".pdf");
-//            JasperViewer jv = new JasperViewer(jprint, false);
-//            jv.setTitle("ZimTTECH Request ");
-//            jv.setVisible(true);
-//            JasperViewer.viewReport(jprint);
-//            JRViewer viewer = new JRViewer(jprint);
-//            JFrame frame = new JFrame("ZimTTECH Request");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.getContentPane().add(viewer);
-//            frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-////            frame.setAlwaysOnTop(true); 
-//            frame.pack();
-//            frame.setVisible(true);
-//            InputStream input = new FileInputStream(new File("http://apps.ophid.co.zw:8080/hr/ZimTTECH_Request.jrxml"));
-//            Date today = new Date();
-//
-//            URL url = new URL("http://service.zimttech.org:8080/zimttech/zimttechfin/ZimTTECH_Request.jrxml");
-//            URLConnection connection = url.openConnection();
-//            InputStream input = connection.getInputStream();
-////            JasperDesign jdesign = JRXmlLoader.load(input);
-//
-//            JasperDesign jdesign = JRXmlLoader.load(input);
-//
-//            JRDesignQuery updateQuery = new JRDesignQuery();
-//
-//            updateQuery.setText(query);
-//
-//            jdesign.setQuery(updateQuery);
-//
-//            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
-//
-//            JasperPrint jprint = JasperFillManager.fillReport(jreport, null, conn);
-//
-//            JasperExportManager.exportReportToPdfFile(jprint, "C:\\Finance System Reports\\Request PDF\\Request Report " + jLabelSerial.getText() + " " + jTextRegNum.getText() + " - Generated " + sDateTime.format(today) + ".pdf");
-//
-//            JRViewer viewer = new JRViewer(jprint);
-//            JFrame frame = new JFrame("ZimTTECH Acquittal");
-//            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//            frame.getContentPane().add(viewer);
-//            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-////            frame.setAlwaysOnTop(true); 
-//            frame.pack();
-//            frame.setVisible(true);
             Date today = new Date();
 
-            // Load the JRXML from URL
-            URL url = new URL("http://apps.ophid.co.zw:8080/ZvandiriFin/ZvandiriFin/Zvandiri_Request.jrxml");
-            URLConnection connection = url.openConnection();
-            InputStream input = connection.getInputStream();
+//              URL url = new URL("http://apps.ophid.co.zw:8080/ZvandiriFin/ZvandiriFin/Zvandiri_Request.jrxml");
+//            URLConnection connection = url.openConnection();
+//            InputStream input = connection.getInputStream();
+            InputStream input = getClass().getResourceAsStream("/JasperReports/Zvandiri_Request.jrxml");
 
-            // URL for the image
-            String imageURL = "http://apps.ophid.co.zw:8080/ZvandiriFin/ZvandiriFin/COYLogo.jpg";
-
-            // Set parameters
+//             String imageURL = "http://apps.ophid.co.zw:8080/ZvandiriFin/ZvandiriFin/COYLogo.jpg";
+            String imageURL = getClass().getResource("/img/COYlogo.jpg").toString();
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("ImageURL", imageURL);
 
-            // Load the design
             JasperDesign jdesign = JRXmlLoader.load(input);
 
-            // Update the query (assuming 'query' is a valid SQL query string defined elsewhere)
             JRDesignQuery updateQuery = new JRDesignQuery();
             updateQuery.setText(query);
             jdesign.setQuery(updateQuery);
 
-            // Compile the report
             JasperReport jreport = JasperCompileManager.compileReport(jdesign);
 
-            // Fill the report
             JasperPrint jprint = JasperFillManager.fillReport(jreport, parameters, conn);
 
-            // Export the report to a PDF file
             JasperExportManager.exportReportToPdfFile(jprint, "C:\\Finance System Reports\\Request PDF\\Request Report " + jLabelSerial.getText() + " " + jTextRegNum.getText() + " - Generated " + sDateTime.format(today) + ".pdf");
 
-            // View the report
             JRViewer viewer = new JRViewer(jprint);
             JFrame frame = new JFrame("ZimTTECH Acquittal");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -616,6 +575,35 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    void fetchBankChgData() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            try {
+
+                Statement st1 = conn.createStatement();
+
+                st1.executeQuery("SELECT BANK_CHG_AMT "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
+                        + "where  concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextRegNum.getText() + "'");
+
+                ResultSet r1 = st1.getResultSet();
+
+                while (r1.next()) {
+                    bankChgAmt = r1.getDouble(1);
+                    jLabelBankChgSubTot.setText(r1.getString(1));
+
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        } catch (Exception e1) {
+
         }
     }
 
@@ -1211,6 +1199,8 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
         double allTotal = unprovedSubTot + miscSubTot + incidentalsubtotal
                 + dinnersubtotal + lunchsubtotal + breakfastsubtotal + provedSubTot;
+        allTotal = allTotal + bankChgAmt;
+
         numFormat.format(allTotal);
 
         jLabelAppTotReqCost.setText(String.format("%.2f", allTotal));
@@ -1270,6 +1260,8 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jLabelMscSub = new javax.swing.JLabel();
         jLabelMiscReq = new javax.swing.JLabel();
+        jLabelBankChgSub = new javax.swing.JLabel();
+        jLabelBankChgSubTot = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabelAccUnprovedSubTot = new javax.swing.JLabel();
@@ -1681,6 +1673,14 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
         jLabelMiscReq.setText("Req");
         jPanel3.add(jLabelMiscReq);
         jLabelMiscReq.setBounds(110, 5, 22, 25);
+
+        jLabelBankChgSub.setText("Bank Charges");
+        jPanel3.add(jLabelBankChgSub);
+        jLabelBankChgSub.setBounds(10, 55, 80, 25);
+
+        jLabelBankChgSubTot.setText("0.00");
+        jPanel3.add(jLabelBankChgSubTot);
+        jLabelBankChgSubTot.setBounds(110, 55, 70, 25);
 
         jPanelGen.add(jPanel3);
         jPanel3.setBounds(360, 430, 250, 150);
@@ -2671,9 +2671,19 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             jLabelActMainPurpose.setText("");
             jLabelImg.setIcon(null);
             jLabelReject.setVisible(false);
+            jLabelLunchSubTot.setText("0.00");
+            jLabelDinnerSubTot.setText("0.00");
+            jLabelIncidentalSubTot.setText("0.00");
+            jLabelBreakFastSubTot.setText("0.00");
+            jLabelMiscSubTot.setText("0.00");
+            jLabelBankChgSubTot.setText("0.00");
+            jLabelAccUnprovedSubTot.setText("0.00");
+            jLabelAccProvedSubTot.setText("0.00");
             jLabelRejectComments.setVisible(false);
+            jButtonGenerateReport.setVisible(false);
             SearchRef = jLabelSerial.getText() + jTextRegNum.getText();
             fetchGenData();
+            fetchBankChgData();
             fetchdataWk1();
             fetchdataWk2();
             fetchdataWk3();
@@ -3067,6 +3077,8 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAuthNam2;
     private javax.swing.JLabel jLabelAuthoriser;
     private javax.swing.JLabel jLabelBank;
+    private javax.swing.JLabel jLabelBankChgSub;
+    private javax.swing.JLabel jLabelBankChgSubTot;
     private javax.swing.JLabel jLabelBankName;
     private javax.swing.JLabel jLabelBreakFastSub;
     private javax.swing.JLabel jLabelBreakFastSubTot;

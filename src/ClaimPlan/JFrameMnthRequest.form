@@ -2427,7 +2427,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="120" width="60" height="25"/>
+                      <AbsoluteConstraints x="10" y="90" width="60" height="25"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -2437,7 +2437,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="140" y="120" width="60" height="25"/>
+                      <AbsoluteConstraints x="140" y="90" width="60" height="25"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -2447,7 +2447,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="60" width="60" height="25"/>
+                      <AbsoluteConstraints x="10" y="30" width="60" height="25"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -2457,7 +2457,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="90" width="60" height="25"/>
+                      <AbsoluteConstraints x="10" y="60" width="60" height="25"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -2547,17 +2547,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabelBreakFastSub">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Breakfast"/>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="30" width="60" height="25"/>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabelBreakFastSubTot">
+                <Component class="javax.swing.JLabel" name="jLabelLunchSubTot">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="0.00"/>
                   </Properties>
@@ -2567,7 +2557,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabelLunchSubTot">
+                <Component class="javax.swing.JLabel" name="jLabelDinnerSubTot">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="0.00"/>
                   </Properties>
@@ -2577,13 +2567,23 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabelDinnerSubTot">
+                <Component class="javax.swing.JLabel" name="jLabelBreakFastSub">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Breakfast"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="10" y="120" width="60" height="25"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelBreakFastSubTot">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="0.00"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="140" y="90" width="60" height="25"/>
+                      <AbsoluteConstraints x="140" y="120" width="60" height="25"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -2635,6 +2635,26 @@
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="8" y="30" width="80" height="25"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelBankChgSub">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Bank Charges"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="10" y="55" width="80" height="25"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelBankChgSubTot">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="0.00"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="100" y="55" width="70" height="25"/>
                     </Constraint>
                   </Constraints>
                 </Component>

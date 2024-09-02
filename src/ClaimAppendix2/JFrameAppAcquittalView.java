@@ -65,11 +65,36 @@ import java.util.Locale;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import utils.timeHost;
 import utils.connCred;
 import utils.connSaveFile;
 import utils.savePDFToDB;
 import utils.StockVehicleMgt;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.view.JRViewer;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -98,6 +123,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
     int existCountWkNum = 0;
     int countWkNum = 0;
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
+    SimpleDateFormat sDateTime = new SimpleDateFormat("ddMMyyyy_HHMMSS");
     DefaultTableModel model;
     DefaultTableModel modelAcq;
     DefaultTableModel modelTrip;
@@ -160,7 +186,10 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         model = (DefaultTableModel) jTableActivityReqAcq.getModel();
         modelAcq = (DefaultTableModel) jTableActivityAcq.getModel();
         modelMonAttRep = (DefaultTableModel) jTableMonDistAcquitalAttRep.getModel();
-
+        jLabelBreakFastSub.setVisible(false);
+        jLabelBreakFastSubTot.setVisible(false);
+        jLabelAcqBreakFastSubTot.setVisible(false);
+        jLabelAcqBreakFastSubTotBal.setVisible(false);
     }
 
     public JFrameAppAcquittalView(String usrLogNum) {
@@ -182,14 +211,18 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jTableTripDetails.getColumnModel().getColumn(1).setMinWidth(0);
         jTableTripDetails.getColumnModel().getColumn(1).setMaxWidth(0);
         jLabelEmp.setText(usrLogNum);
-        
+        jLabelBreakFastSub.setVisible(false);
+        jLabelBreakFastSubTot.setVisible(false);
+        jLabelAcqBreakFastSubTot.setVisible(false);
+        jLabelAcqBreakFastSubTotBal.setVisible(false);
+
         jLabelEmp.setVisible(false);
         jMenuItemAcqSchGen.setEnabled(false);
         jTextAreaNamTravel.setLineWrap(true);
         jTextAreaNamTravel.setWrapStyleWord(true);
         jTextAreaNamTravel.setEditable(false);
 //        jLabelAcqAppTotPlannedCost.setVisible(false);
-       // jLabelAppTotPlannedReq.setVisible(false);
+        // jLabelAppTotPlannedReq.setVisible(false);
         jTabbedPaneAcqAtt.setEnabledAt(0, true);
         jTabbedPaneAcqAtt.setEnabledAt(1, false);
         jTabbedPaneAcqAtt.setEnabledAt(2, true);
@@ -221,6 +254,8 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jLabelLineDate5.setText(tH.internetDate);
         jLabelLineDate6.setText(tH.internetDate);
         jLabelLineDate7.setText(tH.internetDate);
+        jButtonGenerateReport.setVisible(false);
+        jButtonGenerateReport.setBounds(970, 120, 270, 30);
 
         findUser();
         findUserGrp();
@@ -412,9 +447,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             }
 
             if ("usrFinReq".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqSupApp.setEnabled(false);
@@ -426,9 +459,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             }
 
             if ("usrFinSup".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanView.setEnabled(false);
@@ -467,6 +498,25 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         } catch (Exception e) {
             //  JOptionPane.showMessageDialog(null, "Failed to Connect to Database (Province).Try Again", "Error Connection", JOptionPane.WARNING_MESSAGE);
             System.out.println(e);
+        }
+    }
+
+    void folderCreate() {
+        File tmpDir = new File("C:\\Finance System Reports\\Acquittal PDF");
+        boolean exists = tmpDir.exists();
+        if (exists) {
+
+            System.out.println("Folder exists");
+
+        } else {
+            try {
+                Path path = Paths.get("C:\\Finance System Reports\\Acquittal PDF");
+
+                Files.createDirectories(path);
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
     }
 
@@ -534,6 +584,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jLabelAcqAccUnprovedSubTotBal.setText("0.00");
         jLabelAcqAccProvedSubTotBal.setText("0.00");
         jLabelAcqAppTotReqCostCleared.setText("0.00");
+        jButtonGenerateReport.setVisible(false);
     }
 
     void getMonEnvSet() {
@@ -751,7 +802,6 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     mainPageTotUpdateAcq();
                     fetchImgCount();
                     imgCount();
-                   
 
                 }
             } else {
@@ -1034,6 +1084,217 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         }
     }
 
+    void generateView() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver:"
+                    + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZimTTECH;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+            System.out.println("dddf " + jLabelAcqSerial.getText() + " 1. " + jLabelGenLogNam.getText() + " 2. "
+                    + jLabelAcqRefNum.getText() + " 3 . " + jLabelAcqSerial.getText() + " 4 . " + jTextAcqRegNum.getText() + " 5. " + jLabelSerial.getText() + " "
+            );
+            folderCreate();
+            String query = null;
+            if (("MA".equals(jLabelAcqSerial.getText())) || ("S".equals(jLabelAcqSerial.getText()))) {
+                query = "select  x.SERIAL, x.REF_NUM ,Format(x.REF_DAT, 'dd MMM yyyy') REF_DAT, x.PREV_SERIAL,x.PREV_REF_NUM,Format(x.PREV_REF_DAT, 'dd MMM yyyy') ACQ_DAT,"
+                        + "x.EMP_NUM ,x.EMP_NAM ,x.EMP_TTL ,x.EMP_PROV ,x.EMP_OFF ,x.EMP_BNK_NAM ,x.ACC_NUM ,x.ACT_MAIN_PUR ,x.ACT_TOT_AMT TOTACQ,z.ACT_TOT_AMT REQACQ,"
+                        + "x.Breakfast BREAKACQ, z.Breakfast BREAKREQ, z.Breakfast BREAKBAL,"
+                        + "x.Lunch LUNCHACQ,z.Lunch LUNCHREQ,z.Lunch LUNBAL,"
+                        + "x.Dinner DINACQ,z.Dinner DINREQ,z.Dinner DINBAL,"
+                        + "x.[Proven Acc] PROVACQ,z.[Proven Acc] PROVREQ,z.[Proven Acc] PROVBAL,"
+                        + "x.[Unproven Acc] UNPROVACQ,z.[Unproven Acc] UNPROVREQ,z.[Unproven Acc] UNPROVBAL,"
+                        + "x.Incidental INCACQ,z.Incidental INCREQ,z.Incidental INCBAL,"
+                        + "x.[Misc Amt] MISCACQ,x.[Misc Amt] MISCREQ,z.[Misc Amt]-x.[Misc Amt] MISCBAL,y.Creator,y.Supervisor,y.Finance,y.HOD, "
+                        + "'Total Liquidation Amt' LIQAMT,  'Actual - Amt' ACTAMT,'" + jLabelGenLogNam.getText() + "' GENUSER from "
+                        + "(SELECT  a.SERIAL, a.REF_NUM ,REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,' ' REQTOT,ACT_TOT_AMT ,"
+                        + "' ' REQBREAK,SUM(b.BRK_AMT) 'Breakfast',' ' REQLUNCH,SUM(b.LNC_AMT) 'Lunch',' ' REQDINNER,SUM(b.DIN_AMT) 'Dinner',' ' REQPROVACC,SUM(b.ACC_PROV_AMT) 'Proven Acc',"
+                        + "' ' REQUNPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQINC,SUM(b.INC_AMT) 'Incidental'"
+                        + ",' ' REQMISC ,SUM(b.MSC_AMT) 'Misc Amt' "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN "
+                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on "
+                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM "
+                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA "
+                        + "WHERE a.REF_NUM = " + jLabelAcqRefNum.getText() + " AND a.SERIAL = '" + jLabelAcqSerial.getText() + "' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =1 "
+                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) x "
+                        + "join "
+                        + "(SELECT  a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT ,' ' ACQTO,"
+                        + "'0.00' 'Breakfast',' ' ACQBREAK,'0.00' 'Lunch',' ' ACQLUNCH,'0.00' 'Dinner',' ' ACQDINNER,'0.00' 'Proven Acc',"
+                        + "' ' REQPROVACC,'0.00' 'Unproven Acc',' ' REQUNPROVACC,'0.00' 'Incidental'"
+                        + ",' ' REQINC,'0.00' 'Misc Amt',' ' REQMISC "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN "
+                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on "
+                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM "
+                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA "
+                        + "WHERE a.REF_NUM = " + jLabelAcqRefNum.getText() + " AND a.SERIAL = '" + jLabelAcqSerial.getText() + "' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =1 "
+                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) z "
+                        + "on z.REF_NUM=x.PREV_REF_NUM and x.PREV_SERIAL=z.SERIAL "
+                        + "join "
+                        + "(select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='AcqRegistered' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = '" + jLabelAcqSerial.getText() + "') a "
+                        + "join "
+                        + "(SELECT distinct REF_NUM,'' 'Creator',ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='SupAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = '" + jLabelAcqSerial.getText() + "' "
+                        + ") b on a.REF_NUM = b.REF_NUM "
+                        + "join "
+                        + "(SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD' "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = '" + jLabelAcqSerial.getText() + "') c on b.REF_NUM = c.REF_NUM "
+                        + "join "
+                        + "(SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',ACTIONED_BY_NAM 'HOD' "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = '" + jLabelAcqSerial.getText() + "') d on c.REF_NUM = d.REF_NUM) y "
+                        + "on x.REF_NUM=y.REF_NUM";
+
+            } else {
+                query = "select  x.SERIAL, x.REF_NUM ,Format(x.REF_DAT, 'dd MMM yyyy') REF_DAT, x.PREV_SERIAL,x.PREV_REF_NUM,Format(x.PREV_REF_DAT, 'dd MMM yyyy') ACQ_DAT,\n"
+                        + "x.EMP_NUM ,x.EMP_NAM ,x.EMP_TTL ,x.EMP_PROV ,x.EMP_OFF ,x.EMP_BNK_NAM ,x.ACC_NUM ,x.ACT_MAIN_PUR ,x.ACT_TOT_AMT TOTACQ,z.ACT_TOT_AMT REQACQ,\n"
+                        + "x.Breakfast BREAKACQ, z.Breakfast BREAKREQ, z.Breakfast- x.Breakfast BREAKBAL,\n"
+                        + "x.Lunch LUNCHACQ,z.Lunch LUNCHREQ,z.Lunch-x.Lunch LUNBAL,\n"
+                        + "x.Dinner DINACQ,z.Dinner DINREQ,z.Dinner-x.Dinner DINBAL,\n"
+                        + "x.[Proven Acc] PROVACQ,z.[Proven Acc] PROVREQ,z.[Proven Acc]-x.[Proven Acc] PROVBAL,\n"
+                        + "x.[Unproven Acc] UNPROVACQ,z.[Unproven Acc] UNPROVREQ,z.[Unproven Acc]-x.[Unproven Acc] UNPROVBAL,\n"
+                        + "x.Incidental INCACQ,z.Incidental INCREQ,z.Incidental-x.Incidental INCBAL,\n"
+                        + "x.[Misc Amt] MISCACQ,x.[Misc Amt] MISCREQ,z.[Misc Amt]-x.[Misc Amt] MISCBAL,y.Creator,y.Supervisor,y.Finance,y.HOD, \n"
+                        + "'Total Liquidation Amt' LIQAMT,  'Actual - Amt' ACTAMT,'" + jLabelGenLogNam.getText() + "' GENUSER  from \n"
+                        + "-- acq\n"
+                        + "(SELECT  a.SERIAL, a.REF_NUM ,REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,' ' REQTOT,ACT_TOT_AMT ,\n"
+                        + "' ' REQBREAK,SUM(b.BRK_AMT) 'Breakfast',' ' REQLUNCH,SUM(b.LNC_AMT) 'Lunch',' ' REQDINNER,SUM(b.DIN_AMT) 'Dinner',' ' REQPROVACC,SUM(b.ACC_PROV_AMT) 'Proven Acc',\n"
+                        + "' ' REQUNPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQINC,SUM(b.INC_AMT) 'Incidental'\n"
+                        + ",' ' REQMISC ,SUM(b.MSC_AMT) 'Misc Amt'\n"
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN \n"
+                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on \n"
+                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM \n"
+                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA \n"
+                        + "WHERE a.REF_NUM = " + jLabelAcqRefNum.getText() + "AND a.SERIAL = 'A' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =1\n"
+                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) x\n"
+                        + "join\n"
+                        + "-- Request\n"
+                        + "(SELECT  a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT ,' ' ACQTO,\n"
+                        + "SUM(b.BRK_AMT) 'Breakfast',' ' ACQBREAK,SUM(b.LNC_AMT) 'Lunch',' ' ACQLUNCH,SUM(b.DIN_AMT) 'Dinner',' ' ACQDINNER,SUM(b.ACC_PROV_AMT) 'Proven Acc',\n"
+                        + "' ' REQPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQUNPROVACC,SUM(b.INC_AMT) 'Incidental'\n"
+                        + ",' ' REQINC,SUM(b.MSC_AMT) 'Misc Amt',' ' REQMISC\n"
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN \n"
+                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on \n"
+                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM \n"
+                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA \n"
+                        + "WHERE a.REF_NUM = " + jTextAcqRegNum.getText() + " AND a.SERIAL = 'R' AND a.ACT_REC_STA = 'A' and a.DOC_VER =4 and b.PLAN_WK =1\n"
+                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) z\n"
+                        + "on z.REF_NUM=x.PREV_REF_NUM and x.PREV_SERIAL=z.SERIAL\n"
+                        + "join\n"
+                        + "(select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD'\n"
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='AcqRegistered' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = 'A') a\n"
+                        + "join\n"
+                        + "(SELECT distinct REF_NUM,'' 'Creator',ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD'\n"
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='SupAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = 'A' \n"
+                        + ") b on a.REF_NUM = b.REF_NUM\n"
+                        + "join \n"
+                        + "(SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD'\n"
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = 'A') c on b.REF_NUM = c.REF_NUM\n"
+                        + "join\n"
+                        + "(SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',ACTIONED_BY_NAM 'HOD'\n"
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + "and SERIAL = 'A') d on c.REF_NUM = d.REF_NUM) y\n"
+                        + "on x.REF_NUM=y.REF_NUM";
+            }
+
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+//            preparedStatement.setString(1, employeeNumber);
+            ResultSet r = preparedStatement.executeQuery();
+//            ResultSet r = st.getResultSet();
+//
+            while (r.next()) {
+                System.out.println(" ff " + r.getString(1));
+
+            }
+            folderCreate();
+
+            Date today = new Date();
+
+//            URL url = new URL("E:\\OPHID Development Backup\\11 March 2024\\Zvandiri HR-Fin Systems\\ZvandiriFinSys\\src\\JasperReports\\Zvandiri_Acquittal.jrxml");
+//            URLConnection connection = url.openConnection();
+//            InputStream input = connection.getInputStream();
+            InputStream input = getClass().getResourceAsStream("/JasperReports/Zvandiri_Acquittal.jrxml");
+
+//            String imageURL = "E:\\OPHID Development Backup\\11 March 2024\\Zvandiri HR-Fin Systems\\ZvandiriFinSys\\src\\img\\COYlogo.jpg";
+            String imageURL = getClass().getResource("/img/COYlogo.jpg").toString();
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("ImageURL", imageURL);
+
+            JasperDesign jdesign = JRXmlLoader.load(input);
+
+            JRDesignQuery updateQuery = new JRDesignQuery();
+            updateQuery.setText(query);
+            jdesign.setQuery(updateQuery);
+
+            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
+
+            JasperPrint jprint = JasperFillManager.fillReport(jreport, parameters, conn);
+
+            JasperExportManager.exportReportToPdfFile(jprint, "C:\\Finance System Reports\\Acquittal PDF\\Acquittal Report " + jLabelAcqSerial.getText() + " " + jLabelAcqRefNum.getText() + " - Generated " + sDateTime.format(today) + ".pdf");
+
+            JRViewer viewer = new JRViewer(jprint);
+            JFrame frame = new JFrame("ZimTTECH Acquittal");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.getContentPane().add(viewer);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.pack();
+            frame.setVisible(true);
+
+////            InputStream input = new FileInputStream(new File("http://apps.ophid.co.zw:8080/img/ZimTTECH_Acquittal.jrxml"));
+//            URL url = new URL("http://apps.ophid.co.zw:8080/img/ZimTTECH_Acquittal.jrxml");
+//            URLConnection connection = url.openConnection();
+//            InputStream input = connection.getInputStream();
+//            JasperDesign jdesign = JRXmlLoader.load(input);
+//
+//            JRDesignQuery updateQuery = new JRDesignQuery();
+//
+//            updateQuery.setText(query);
+//
+//            jdesign.setQuery(updateQuery);
+//
+//            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
+//
+////                 JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile("src/JasperReports/ZimTTECH_Acquittal.jrxml");
+//            JasperPrint jprint = JasperFillManager.fillReport(jreport, null, conn);
+////JasperPrint jasperPrint = JasperFillManager.fillReport(jprint, new HashMap<>(), new JREmptyDataSource());
+//
+//            // Create a JRViewer to display the report
+////            JRViewer viewer = new JRViewer(jasperPrint);
+//            // Create a JDialog to host the JRViewer
+////            ClaimAppendix2.JFrameAppAcquittalView parentFrame= new ClaimAppendix2.JFrameAppAcquittalView();
+////            JDialog reportDialog = new JDialog(parentFrame, "Report Viewer", Dialog.ModalityType.APPLICATION_MODAL);
+////            reportDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+////            reportDialog.setSize(800, 600);
+////            reportDialog.setLayout(new BorderLayout());
+////            reportDialog.add(viewer, BorderLayout.CENTER);
+////            InputStream input = new FileInputStream(new File("src/JasperReports/ZimTTECH_Acquittal.jrxml"));
+////            JasperDesign jdesign = JRXmlLoader.load(input);
+////
+////            JRDesignQuery updateQuery = new JRDesignQuery();
+////
+////            updateQuery.setText(query);
+////
+////            jdesign.setQuery(updateQuery);
+////
+////            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
+////
+////            JasperPrint jprint = JasperFillManager.fillReport(jreport, null, conn);
+////
+//            JasperExportManager.exportReportToPdfFile(jprint, "C:\\Finance System Reports\\Acquittal PDF\\Acquittal Report "
+//                    + " " + jLabelAcqSerial.getText() + "  " + jLabelAcqRefNum.getText() + ".pdf");
+////            JasperViewer jv = new JasperViewer(jprint, false);
+////            jv.setTitle("ZimTTECH Request ");
+////            jv.setVisible(true);
+////            JasperViewer.viewReport(jprint);
+////
+//            JRViewer viewer = new JRViewer(jprint);
+//            JFrame frame = new JFrame("ZimTTECH Acquittal");
+//            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//            frame.getContentPane().add(viewer);
+//            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+////            frame.setAlwaysOnTop(true); 
+//            frame.pack();
+//            frame.setVisible(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     void fetchdata() {
         try {
 
@@ -1201,7 +1462,6 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 //            System.out.println(e);
 //        }
 //    }
-    
     void fetchMonDistAttDocRep() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
@@ -1209,7 +1469,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             System.out.println("run " + checkRef);
             Statement st = conn.createStatement();
             st.executeQuery("SELECT ACT_ITM,fileName ,attDesc  FROM [ClaimsAppSysZvandiri].[dbo].[ClaimReportAttDocTab] "
-                    + " where concat(SERIAL,REF_NUM) ='" +jLabelAcqSerial.getText()+jLabelAcqRefNum.getText() + "'  and ACT_REC_STA = 'Q' ");
+                    + " where concat(SERIAL,REF_NUM) ='" + jLabelAcqSerial.getText() + jLabelAcqRefNum.getText() + "'  and ACT_REC_STA = 'Q' ");
 
             ResultSet r = st.getResultSet();
             while (r.next()) {
@@ -1372,10 +1632,19 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                 jLabelStatusView.setText(r.getString(1));
                 rejStatus = r.getString(1);
 
-                if ("Acquittal- HOD Approved".equals(jLabelStatusView.getText())) {
+                if (("Acquittal- HOD Approved".equals(jLabelStatusView.getText())) && (("usrProvMgr".equals(usrGrp)
+                        || ("usrAccMgr".equals(usrGrp)) || ("usrFinReq".equals(usrGrp)) || ("usrFinSup".equals(usrGrp)))
+                        || ("usrFinAcq".equals(usrGrp)) || ("Administrator".equals(usrGrp)))) {
+                    jLabelStatusView.setVisible(false);
+                    jPanelStatusView.setVisible(false);
+                    jLabelStatusView.setForeground(new java.awt.Color(0, 153, 0));
+                    jPanelStatusView.setVisible(false);
+                    jButtonGenerateReport.setVisible(true);
+                    jButtonGenerateReport.setBounds(970, 160, 270, 30);
+                } else if ("Acquittal- HOD Approved".equals(jLabelStatusView.getText())) {
                     jLabelStatusView.setVisible(true);
                     jPanelStatusView.setVisible(true);
-                    jLabelStatusView.setForeground(new java.awt.Color(255, 255, 255));
+                    jLabelStatusView.setForeground(new java.awt.Color(0, 153, 0));
                     jPanelStatusView.setVisible(true);
                 } else {
                     jLabelStatusView.setVisible(true);
@@ -1771,6 +2040,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jComboWk = new javax.swing.JComboBox<>();
         jLabelBankAccNo = new javax.swing.JLabel();
         buttonGroupSpecial = new javax.swing.ButtonGroup();
+        jDialogPleaseWaitReport = new javax.swing.JDialog();
         jTabbedPaneAppSys = new javax.swing.JTabbedPane();
         jPanelGen = new javax.swing.JPanel();
         jLabelLogo = new javax.swing.JLabel();
@@ -1802,12 +2072,9 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabelBreakFastSub = new javax.swing.JLabel();
-        jLabelAcqBreakFastSubTot = new javax.swing.JLabel();
         jLabelLunchSubTot = new javax.swing.JLabel();
         jLabelDinnerSubTot = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabelBreakFastSubTot = new javax.swing.JLabel();
         jLabelAcqLunchSubTot = new javax.swing.JLabel();
         jLabelAcqDinnerSubTot = new javax.swing.JLabel();
         jLabelAcqIncidentalSubTot = new javax.swing.JLabel();
@@ -1815,10 +2082,13 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jLabelAllAcq = new javax.swing.JLabel();
         jLabelAllBal = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
-        jLabelAcqBreakFastSubTotBal = new javax.swing.JLabel();
         jLabelAcqLunchSubTotBal = new javax.swing.JLabel();
         jLabelAcqDinnerSubTotBal = new javax.swing.JLabel();
         jLabelAcqIncidentalSubTotBal = new javax.swing.JLabel();
+        jLabelBreakFastSub = new javax.swing.JLabel();
+        jLabelBreakFastSubTot = new javax.swing.JLabel();
+        jLabelAcqBreakFastSubTot = new javax.swing.JLabel();
+        jLabelAcqBreakFastSubTotBal = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabelMiscSubTot = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
@@ -1878,6 +2148,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jRadioParticpant = new javax.swing.JRadioButton();
         jLabelAppTotPlannedReq = new javax.swing.JLabel();
         jLabelAcqAppTotPlannedCost = new javax.swing.JLabel();
+        jButtonGenerateReport = new javax.swing.JButton();
         jPanelRequest = new javax.swing.JPanel();
         jLabelLogo1 = new javax.swing.JLabel();
         jLabelHeaderLine = new javax.swing.JLabel();
@@ -2071,7 +2342,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             }
         });
         jPanel7.add(jButtonAuthOk);
-        jButtonAuthOk.setBounds(180, 190, 80, 25);
+        jButtonAuthOk.setBounds(180, 190, 80, 21);
 
         jButtonAuthCancel.setText("Cancel");
         jButtonAuthCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -2080,7 +2351,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             }
         });
         jPanel7.add(jButtonAuthCancel);
-        jButtonAuthCancel.setBounds(300, 190, 80, 25);
+        jButtonAuthCancel.setBounds(300, 190, 80, 21);
 
         jPanel7.add(jComboAuthNam);
         jComboAuthNam.setBounds(160, 140, 320, 30);
@@ -2131,7 +2402,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             }
         });
         jPanel8.add(jButtonAuthAllOk);
-        jButtonAuthAllOk.setBounds(180, 190, 80, 25);
+        jButtonAuthAllOk.setBounds(180, 190, 80, 21);
 
         jButtonAuthAllCancel.setText("Cancel");
         jButtonAuthAllCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -2140,7 +2411,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             }
         });
         jPanel8.add(jButtonAuthAllCancel);
-        jButtonAuthAllCancel.setBounds(300, 190, 80, 25);
+        jButtonAuthAllCancel.setBounds(300, 190, 80, 21);
 
         jPanel8.add(jComboAuthNamAll);
         jComboAuthNamAll.setBounds(160, 140, 320, 30);
@@ -2189,7 +2460,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             }
         });
         jPanel10.add(jButtonBankOk);
-        jButtonBankOk.setBounds(30, 100, 80, 25);
+        jButtonBankOk.setBounds(30, 100, 80, 21);
 
         jButtonBankCancel.setText("Cancel");
         jButtonBankCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -2198,7 +2469,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             }
         });
         jPanel10.add(jButtonBankCancel);
-        jButtonBankCancel.setBounds(150, 100, 80, 25);
+        jButtonBankCancel.setBounds(150, 100, 80, 21);
 
         jComboWk.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jComboWk.addActionListener(new java.awt.event.ActionListener() {
@@ -2220,6 +2491,29 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jDialogWkDisplayLayout.setVerticalGroup(
             jDialogWkDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jDialogPleaseWaitReport.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        jDialogPleaseWaitReport.setTitle("                    Generating report.  Please Wait.....");
+        jDialogPleaseWaitReport.setAlwaysOnTop(true);
+        jDialogPleaseWaitReport.setBackground(new java.awt.Color(51, 255, 51));
+        jDialogPleaseWaitReport.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jDialogPleaseWaitReport.setFont(new java.awt.Font("Agency FB", 1, 14)); // NOI18N
+        jDialogPleaseWaitReport.setForeground(new java.awt.Color(255, 0, 0));
+        jDialogPleaseWaitReport.setIconImages(null);
+        jDialogPleaseWaitReport.setLocation(new java.awt.Point(650, 375));
+        jDialogPleaseWaitReport.setMinimumSize(new java.awt.Dimension(500, 50));
+        jDialogPleaseWaitReport.setResizable(false);
+
+        javax.swing.GroupLayout jDialogPleaseWaitReportLayout = new javax.swing.GroupLayout(jDialogPleaseWaitReport.getContentPane());
+        jDialogPleaseWaitReport.getContentPane().setLayout(jDialogPleaseWaitReportLayout);
+        jDialogPleaseWaitReportLayout.setHorizontalGroup(
+            jDialogPleaseWaitReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 453, Short.MAX_VALUE)
+        );
+        jDialogPleaseWaitReportLayout.setVerticalGroup(
+            jDialogPleaseWaitReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -2331,22 +2625,22 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jLabelIncidentalSub.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jLabelIncidentalSub.setText("Incidental");
         jPanel1.add(jLabelIncidentalSub);
-        jLabelIncidentalSub.setBounds(10, 120, 60, 25);
+        jLabelIncidentalSub.setBounds(10, 90, 60, 25);
 
         jLabelIncidentalSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelIncidentalSubTot.setText("0.00");
         jPanel1.add(jLabelIncidentalSubTot);
-        jLabelIncidentalSubTot.setBounds(100, 120, 50, 25);
+        jLabelIncidentalSubTot.setBounds(100, 90, 50, 25);
 
         jLabelLunchSub.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jLabelLunchSub.setText("Lunch");
         jPanel1.add(jLabelLunchSub);
-        jLabelLunchSub.setBounds(10, 60, 60, 25);
+        jLabelLunchSub.setBounds(10, 30, 60, 25);
 
         jLabelDinnerSub.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jLabelDinnerSub.setText("Dinner");
         jPanel1.add(jLabelDinnerSub);
-        jLabelDinnerSub.setBounds(10, 90, 60, 25);
+        jLabelDinnerSub.setBounds(10, 60, 60, 25);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel2.setLayout(null);
@@ -2380,53 +2674,37 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jPanel1.add(jLabel22);
         jLabel22.setBounds(8, 5, 80, 25);
 
-        jLabelBreakFastSub.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        jLabelBreakFastSub.setText("Breakfast");
-        jPanel1.add(jLabelBreakFastSub);
-        jLabelBreakFastSub.setBounds(10, 30, 60, 25);
-
-        jLabelAcqBreakFastSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelAcqBreakFastSubTot.setForeground(new java.awt.Color(255, 0, 0));
-        jLabelAcqBreakFastSubTot.setText("0.00");
-        jPanel1.add(jLabelAcqBreakFastSubTot);
-        jLabelAcqBreakFastSubTot.setBounds(170, 30, 50, 25);
-
         jLabelLunchSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelLunchSubTot.setText("0.00");
         jPanel1.add(jLabelLunchSubTot);
-        jLabelLunchSubTot.setBounds(100, 60, 50, 25);
+        jLabelLunchSubTot.setBounds(100, 30, 50, 25);
 
         jLabelDinnerSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelDinnerSubTot.setText("0.00");
         jPanel1.add(jLabelDinnerSubTot);
-        jLabelDinnerSubTot.setBounds(100, 90, 50, 25);
+        jLabelDinnerSubTot.setBounds(100, 60, 50, 25);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel1.add(jSeparator3);
         jSeparator3.setBounds(150, 20, 5, 120);
 
-        jLabelBreakFastSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelBreakFastSubTot.setText("0.00");
-        jPanel1.add(jLabelBreakFastSubTot);
-        jLabelBreakFastSubTot.setBounds(100, 30, 50, 25);
-
         jLabelAcqLunchSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelAcqLunchSubTot.setForeground(new java.awt.Color(255, 51, 51));
         jLabelAcqLunchSubTot.setText("0.00");
         jPanel1.add(jLabelAcqLunchSubTot);
-        jLabelAcqLunchSubTot.setBounds(170, 60, 50, 25);
+        jLabelAcqLunchSubTot.setBounds(170, 30, 50, 25);
 
         jLabelAcqDinnerSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelAcqDinnerSubTot.setForeground(new java.awt.Color(255, 51, 51));
         jLabelAcqDinnerSubTot.setText("0.00");
         jPanel1.add(jLabelAcqDinnerSubTot);
-        jLabelAcqDinnerSubTot.setBounds(170, 90, 50, 25);
+        jLabelAcqDinnerSubTot.setBounds(170, 60, 50, 25);
 
         jLabelAcqIncidentalSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelAcqIncidentalSubTot.setForeground(new java.awt.Color(255, 51, 51));
         jLabelAcqIncidentalSubTot.setText("0.00");
         jPanel1.add(jLabelAcqIncidentalSubTot);
-        jLabelAcqIncidentalSubTot.setBounds(170, 120, 50, 25);
+        jLabelAcqIncidentalSubTot.setBounds(170, 90, 50, 25);
 
         jLabelAllReq.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelAllReq.setForeground(new java.awt.Color(0, 102, 0));
@@ -2451,25 +2729,41 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jPanel1.add(jSeparator6);
         jSeparator6.setBounds(220, 20, 2, 120);
 
-        jLabelAcqBreakFastSubTotBal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelAcqBreakFastSubTotBal.setText("0.00");
-        jPanel1.add(jLabelAcqBreakFastSubTotBal);
-        jLabelAcqBreakFastSubTotBal.setBounds(230, 30, 50, 25);
-
         jLabelAcqLunchSubTotBal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelAcqLunchSubTotBal.setText("0.00");
         jPanel1.add(jLabelAcqLunchSubTotBal);
-        jLabelAcqLunchSubTotBal.setBounds(230, 60, 50, 25);
+        jLabelAcqLunchSubTotBal.setBounds(230, 30, 50, 25);
 
         jLabelAcqDinnerSubTotBal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelAcqDinnerSubTotBal.setText("0.00");
         jPanel1.add(jLabelAcqDinnerSubTotBal);
-        jLabelAcqDinnerSubTotBal.setBounds(230, 90, 50, 25);
+        jLabelAcqDinnerSubTotBal.setBounds(230, 60, 50, 25);
 
         jLabelAcqIncidentalSubTotBal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelAcqIncidentalSubTotBal.setText("0.00");
         jPanel1.add(jLabelAcqIncidentalSubTotBal);
-        jLabelAcqIncidentalSubTotBal.setBounds(230, 120, 50, 25);
+        jLabelAcqIncidentalSubTotBal.setBounds(230, 90, 50, 25);
+
+        jLabelBreakFastSub.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        jLabelBreakFastSub.setText("Breakfast");
+        jPanel1.add(jLabelBreakFastSub);
+        jLabelBreakFastSub.setBounds(10, 120, 60, 25);
+
+        jLabelBreakFastSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelBreakFastSubTot.setText("0.00");
+        jPanel1.add(jLabelBreakFastSubTot);
+        jLabelBreakFastSubTot.setBounds(100, 120, 50, 25);
+
+        jLabelAcqBreakFastSubTot.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelAcqBreakFastSubTot.setForeground(new java.awt.Color(255, 0, 0));
+        jLabelAcqBreakFastSubTot.setText("0.00");
+        jPanel1.add(jLabelAcqBreakFastSubTot);
+        jLabelAcqBreakFastSubTot.setBounds(170, 120, 50, 25);
+
+        jLabelAcqBreakFastSubTotBal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelAcqBreakFastSubTotBal.setText("0.00");
+        jPanel1.add(jLabelAcqBreakFastSubTotBal);
+        jLabelAcqBreakFastSubTotBal.setBounds(230, 120, 50, 25);
 
         jPanelGen.add(jPanel1);
         jPanel1.setBounds(10, 420, 320, 150);
@@ -2775,7 +3069,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jLabelActNam.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabelActNam.setForeground(new java.awt.Color(255, 255, 255));
         jPanelGen.add(jLabelActNam);
-        jLabelActNam.setBounds(1080, 118, 270, 30);
+        jLabelActNam.setBounds(880, 90, 270, 30);
 
         jLabelAct.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
         jLabelAct.setForeground(new java.awt.Color(255, 255, 255));
@@ -2784,7 +3078,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
         jLabelAcqRegDate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jPanelGen.add(jLabelAcqRegDate);
-        jLabelAcqRegDate.setBounds(920, 125, 120, 30);
+        jLabelAcqRegDate.setBounds(720, 100, 120, 30);
 
         jLabelAppTotCleared.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelAppTotCleared.setForeground(new java.awt.Color(255, 255, 255));
@@ -2822,6 +3116,15 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         jLabelAcqAppTotPlannedCost.setText("0");
         jPanelGen.add(jLabelAcqAppTotPlannedCost);
         jLabelAcqAppTotPlannedCost.setBounds(1230, 500, 90, 30);
+
+        jButtonGenerateReport.setText("HOD Approved - Click to Generate Report");
+        jButtonGenerateReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenerateReportActionPerformed(evt);
+            }
+        });
+        jPanelGen.add(jButtonGenerateReport);
+        jButtonGenerateReport.setBounds(970, 120, 270, 30);
 
         jTabbedPaneAppSys.addTab("User and Accounting Details", jPanelGen);
 
@@ -3684,7 +3987,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPaneAppSys, javax.swing.GroupLayout.PREFERRED_SIZE, 720, Short.MAX_VALUE)
+            .addComponent(jTabbedPaneAppSys, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
 
         setSize(new java.awt.Dimension(1376, 739));
@@ -4262,6 +4565,13 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableMonDistAcquitalAttRepMouseClicked
 
+    private void jButtonGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateReportActionPerformed
+        jDialogPleaseWaitReport.setVisible(true);
+        generateView();
+        jDialogPleaseWaitReport.setVisible(false);
+        setState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_jButtonGenerateReportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -4377,11 +4687,13 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAuthOk;
     private javax.swing.JButton jButtonBankCancel;
     private javax.swing.JButton jButtonBankOk;
+    private javax.swing.JButton jButtonGenerateReport;
     private javax.swing.JComboBox<String> jComboAuthNam;
     private javax.swing.JComboBox<String> jComboAuthNamAll;
     private javax.swing.JComboBox<String> jComboWk;
     private javax.swing.JDialog jDialogAuthority;
     private javax.swing.JDialog jDialogAuthorityAll;
+    private javax.swing.JDialog jDialogPleaseWaitReport;
     private javax.swing.JDialog jDialogWaiting;
     private javax.swing.JDialog jDialogWkDisplay;
     private javax.swing.JLabel jLabel11;
