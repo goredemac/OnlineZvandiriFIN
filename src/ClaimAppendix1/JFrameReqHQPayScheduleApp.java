@@ -255,9 +255,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
             }
 
             if ("usrFinReq".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqSupApp.setEnabled(false);
@@ -269,9 +267,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
             }
 
             if ("usrFinSup".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanView.setEnabled(false);
@@ -456,17 +452,18 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
             Statement st1 = conn.createStatement();
             st.executeQuery("SELECT a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),"
                     + "a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,'Refer to activity detail sheet',"
-                    + "a.ACT_MAIN_PUR, sum(b.ACC_UNPROV_AMT),SUM(b.LNC_AMT) ,SUM(b.DIN_AMT),SUM(b.INC_AMT),"
-                    + "SUM(b.MSC_AMT), (sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT)+  sum(b.INC_AMT) + "
-                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "a.ACT_MAIN_PUR, sum(b.ACC_UNPROV_AMT),SUM(b.LNC_AMT),SUM(b.DIN_AMT),SUM(b.INC_AMT) ,"
+                    + "SUM(b.MSC_AMT),BANK_CHG_AMT, (sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT)+  sum(b.INC_AMT) + "
+                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT) + BANK_CHG_AMT) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
                     + "inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and "
                     + "a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA  inner "
                     + "join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM "
-                    + "and b.ACT_REC_STA = c.ACT_REC_STA where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' "
+                    + "and b.ACT_REC_STA = c.ACT_REC_STA JOIN  [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] d on "
+                    + "a.SERIAL=d.SERIAL and  a.REF_NUM=d.REF_NUM where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' "
                     + "and a.SERIAL = 'R' and a.REF_NUM not in (SELECT distinct  REF_NUM "
                     + "FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS in ('Paid','Not Paid')) "
                     + "group by a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM,"
-                    + "a.ACC_NUM,a.EMP_PROV,a.BUD_COD,a.ACT_MAIN_PUR");
+                    + "a.ACC_NUM,a.EMP_PROV,a.BUD_COD,a.ACT_MAIN_PUR,BANK_CHG_AMT");
 
             ResultSet r = st.getResultSet();
 
@@ -474,7 +471,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
                 modelSummary.insertRow(modelSummary.getRowCount(), new Object[]{r.getString(1), r.getString(2), r.getString(3),
                     r.getString(4), r.getString(5), r.getString(6), r.getString(7), r.getString(8), r.getString(9),
                     r.getString(10), r.getString(11), r.getString(12), r.getString(13), r.getString(14),
-                    r.getString(15), r.getString(16), r.getString(17)});
+                    r.getString(15), r.getString(16), r.getString(17), r.getString(18)});
 
             }
 
@@ -523,16 +520,17 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
             st.executeQuery("SELECT a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),"
                     + "a.EMP_NAM,a.EMP_BNK_NAM,a.ACC_NUM,a.EMP_PROV,'Refer to activity detail sheet',"
                     + "a.ACT_MAIN_PUR, sum(b.ACC_UNPROV_AMT),SUM(b.LNC_AMT) ,SUM(b.DIN_AMT),SUM(b.INC_AMT),"
-                    + "SUM(b.MSC_AMT), (sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT)+  sum(b.INC_AMT) + "
-                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "SUM(b.MSC_AMT),BANK_CHG_AMT, (sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT)+  sum(b.INC_AMT) + "
+                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)+BANK_CHG_AMT) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
                     + "inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and "
                     + "a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA  inner "
                     + "join [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM "
-                    + "and b.ACT_REC_STA = c.ACT_REC_STA where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' "
+                    + "and b.ACT_REC_STA = c.ACT_REC_STA JOIN  [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] d on "
+                    + "a.SERIAL=d.SERIAL and  a.REF_NUM=d.REF_NUM where c.DOC_STATUS='HODApprove' and a.ACT_REC_STA = 'A' "
                     + "and a.SERIAL = 'R' and a.REF_NUM not in (SELECT distinct  REF_NUM "
                     + "FROM [ClaimsAppSysZvandiri].[dbo].[BatRunTab] where SERIAL = 'R' and STATUS in ('Paid','Not Paid')) "
                     + "group by a.SERIAL,a.REF_NUM,a.REF_DAT,a.EMP_NUM,concat('E',a.EMP_NUM),a.EMP_NAM,a.EMP_BNK_NAM,"
-                    + "a.ACC_NUM,a.EMP_PROV,a.BUD_COD,a.ACT_MAIN_PUR");
+                    + "a.ACC_NUM,a.EMP_PROV,a.BUD_COD,a.ACT_MAIN_PUR,BANK_CHG_AMT");
 
             ResultSet rs = st.getResultSet();
 
@@ -540,7 +538,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
                     + "d.BNK_CODE ,a.ACC_NUM,a.EMP_PROV,b.ACT_DATE, b.[BUD_CODE] ,b.ACT_DESC,"
                     + "b.ACC_UNPROV_AMT, SUM(b.LNC_AMT) ,SUM(b.DIN_AMT),SUM(b.INC_AMT),b.MSC_ACT,SUM(b.MSC_AMT), "
                     + "(sum(b.BRK_AMT) + sum(b.LNC_AMT)+ sum(b.DIN_AMT) + sum(b.INC_AMT) + "
-                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT)) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+                    + "sum(b.MSC_AMT) + sum(b.ACC_UNPROV_AMT) ) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
                     + "inner join [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL=b.SERIAL and "
                     + "a.REF_NUM=b.REF_NUM and a.ACT_REC_STA = b.ACT_REC_STA  inner join "
                     + "[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] c on b.SERIAL=c.SERIAL and b.REF_NUM=c.REF_NUM and "
@@ -583,7 +581,8 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
             rowhead.createCell((short) 13).setCellValue("Dinner ");
             rowhead.createCell((short) 14).setCellValue("Incidental");
             rowhead.createCell((short) 15).setCellValue("Misc Amt");
-            rowhead.createCell((short) 16).setCellValue("Total");
+             rowhead.createCell((short) 16).setCellValue("Bank Charges");
+            rowhead.createCell((short) 17).setCellValue("Total");
 
             rowhead2.createCell((short) 0).setCellValue("Serial.");
             rowhead2.createCell((short) 1).setCellValue("Reference No.");
@@ -627,6 +626,7 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
                 row.createCell((short) 14).setCellValue(rs.getString(15));
                 row.createCell((short) 15).setCellValue(rs.getString(16));
                 row.createCell((short) 16).setCellValue(rs.getString(17));
+                 row.createCell((short) 17).setCellValue(rs.getString(18));
 
                 i++;
             }
@@ -952,11 +952,11 @@ public class JFrameReqHQPayScheduleApp extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Serial", "Reference No.", "Reference Date", "Employee Number", "Prog Adv Acc", "Employee Name", "Bank Name", "Account Number", "Province", "Budget Code", "Main Activity Purpose", "Accomodation", "Lunch", "Dinner", "Incidental", "Misc Amt", "Total"
+                "Serial", "Reference No.", "Reference Date", "Employee Number", "Prog Adv Acc", "Employee Name", "Bank Name", "Account Number", "Province", "Budget Code", "Main Activity Purpose", "Accomodation", "Lunch", "Dinner", "Incidental", "Misc Amt", "Bank Charges", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

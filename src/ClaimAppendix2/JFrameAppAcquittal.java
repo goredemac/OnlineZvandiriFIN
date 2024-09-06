@@ -94,6 +94,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     double wk2Amt = 0;
     double wk3Amt = 0;
     double wk4Amt = 0;
+    double bankChgAmt = 0;
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -220,8 +221,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelEmp.setText(usrLogNum);
         jLabelEmp.setVisible(false);
         jTextAttDocFilePath.setVisible(false);
-        jPanel12.setVisible(false);
-        jToggleButtonNoActivity.setText("All Activities Not Done");
+              jToggleButtonNoActivity.setText("All Activities Not Done");
         jToggleButtonAllActivities.setText("All Activities Done As Per Request");
         jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
         jTabbedPaneAcqAtt.setTitleAt(1, "E-Log Book");
@@ -236,7 +236,10 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jButtonDeleteAtt3.setText("Delete Other Documents");
         jLabelVehReg.setText("<html>Vehicle Reg No. </html>");
         jTabbedPaneAcqAtt.setEnabledAt(1, false);
-
+        jLabelBreakFastSub.setVisible(false);
+        jLabelBreakFastSubTot.setVisible(false);
+        jLabelAcqBreakFastSubTot.setVisible(false);
+        jLabelAcqBreakFastSubTotBal.setVisible(false);
 //        jTableTripDetails.getColumnModel().getColumn(1).setMinWidth(0);
 //        jTableTripDetails.getColumnModel().getColumn(1).setMaxWidth(0);
         disableField();
@@ -433,9 +436,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
 
             if ("usrFinReq".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemSupApp.setEnabled(false);
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqSupApp.setEnabled(false);
@@ -447,9 +448,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             }
 
             if ("usrFinSup".equals(usrGrp)) {
-                
-                
-            
+
                 jMenuItemHeadApp.setEnabled(false);
                 jMenuItemAcqHeadApp.setEnabled(false);
                 jMenuItemPlanView.setEnabled(false);
@@ -1330,6 +1329,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
                 recMinMax();
                 fetchdata();
+                fetchBankChgData();
                 mainPageTotUpdate();
                 findAccCode();
                 findDonorCode();
@@ -1612,9 +1612,10 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelAccProvedSubTot.setText(String.format("%.2f", provedSubTot));
 
         allTotal = 0;
+
         allTotal = unprovedSubTot + provedSubTot + miscSubTot + incidentalsubtotal
                 + dinnersubtotal + lunchsubtotal + breakfastsubtotal;
-
+        allTotal = allTotal + bankChgAmt;
         System.out.println("req amt " + allTotal + " main tot " + allActTot);
 
     }
@@ -1685,11 +1686,22 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelAcqAccProvedSubTotBal.setText(Double.toString(provedSubTot - provedSubTotAcq));
         // jLabelAcqAppTotReqCost.setText(Integer.toString(allActTot));
 
-        double totDiff = allTotal - allTotalAcq;
-
+//        double totDiff = allTotal - allTotalAcq;
 //        double subTotDiff = allActTot - (abs(allTotalAcq) + abs(Double.parseDouble(jLabelAcqAppWk1TotReqCost.getText()))
 //                + abs(Double.parseDouble(jLabelAcqAppWk2TotReqCost.getText())) + +abs(Double.parseDouble(jLabelAcqAppWk3TotReqCost.getText()))
 //                + abs(Double.parseDouble(jLabelAcqAppWk4TotReqCost.getText())));
+        //allTotalAcq = allActTot + bankChgAmt;
+        
+        if ((jToggleButtonAllActivities.isSelected()) &&"All Activities Done As Per Request".equals(jToggleButtonAllActivities.getText())) {
+            allTotalAcq=allTotalAcq+bankChgAmt;
+            System.out.println("dlkld");
+        }
+        
+           if ((jToggleButtonNoActivity.isSelected()) && "All Activities Not Done".equals(jToggleButtonAllActivities.getText())) {
+            allActTot=allActTot;
+        
+            System.out.println("dlkld");
+        }
         double subTotDiff = allTotalAcq - allActTot;
 
         System.out.println("alltotacq " + allTotalAcq + " allacttot " + allActTot + " alltotal" + allTotal);
@@ -1772,6 +1784,10 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         } else {
             if (Double.parseDouble(jLabelAcqAppTotReqCost.getText()) < 0) {
                 jLabelAppTotReq.setText("Total (Change)");
+//                if (bankChgAmt>0){
+//                    jLabelBankChgComment.setText("NB: Bank charges of "+bankChgAmt+" to be liquidated from the change.");
+//                }
+                
             } else if (Double.parseDouble(jLabelAcqAppTotReqCost.getText()) > 0) {
                 jLabelAppTotReq.setText("Total (Shortfall)");
             } else if (Double.parseDouble(jLabelAcqAppTotReqCost.getText()) == 0) {
@@ -1852,6 +1868,38 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         }
     }
 
+    void fetchBankChgData() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+            System.out.println("ref " + searchRef);
+            try {
+
+                Statement st1 = conn.createStatement();
+
+                st1.executeQuery("SELECT BANK_CHG_AMT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
+                        + "where  concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "'"
+                        + " and concat(PREV_SERIAL,PREV_REF_NUM) not in "
+                        + "( SELECT concat(PREV_SERIAL,PREV_REF_NUM) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
+                        + "where  concat(PREV_SERIAL,PREV_REF_NUM) ='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "' and ACT_REC_STA = 'A')");
+
+                ResultSet r1 = st1.getResultSet();
+
+                while (r1.next()) {
+                    bankChgAmt = r1.getDouble(1);
+                    jLabelBankChgSubTot.setText(r1.getString(1));
+                    jLabelAcqBankChgSubTot.setText(r1.getString(1));
+                    jLabelAcqBankChgSubTotBal.setText("0.00");
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        } catch (Exception e1) {
+
+        }
+    }
+
     void fetchdata() {
         try {
 
@@ -1890,9 +1938,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 jLabelAcqWk1.setText("Acquitting Week " + minWkNum + " of Week " + maxWkNum);
                 jLabelAcqWk2.setText("Acquitting Week " + minWkNum + " of Week " + maxWkNum);
                 jLabelAcqWk3.setText("Acquitting Week " + minWkNum + " of Week " + maxWkNum);
-                if ((minWkNum == 1) && (existCountWkNum == 0)) {
-                    jDialogPayRec.setVisible(true);
-                }
+//                if ((minWkNum == 1) && (existCountWkNum == 0)) {
+//                    jDialogPayRec.setVisible(true);
+//                }
                 try {
 
                     st.executeQuery("SELECT  b.ITM_NUM,b.ACT_DATE,b.ACC_CODE,b.DONOR ,b.PRJ_CODE_GL , b.PRJ_CODE_PROG ,"
@@ -2083,7 +2131,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         try {
 
             jMenuItemSubmit.setEnabled(false);
-            jButtonSave.setEnabled(false);
+         
             SerialCheck();
 
             RefNumAllocation();
@@ -2096,7 +2144,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 //                jLabelRegNum.setText("");
 //                jLabelRegYear.setText("");
                 jMenuItemSubmit.setEnabled(true);
-                jButtonSave.setEnabled(true);
+               
             } else {
 
                 insGenTab();
@@ -2107,9 +2155,10 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 createAction();
                 createReport();
                 createAttDoc();
+                insBankChgTab();
                 wkUpdate();
                 wkClearedUpdate();
-                payRecAck();
+//                payRecAck();
 
                 if (!("".equals(jLabelAcqPayBack.getText()))) {
                     chgBank();
@@ -2568,6 +2617,35 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         }
     }
 
+    void insBankChgTab() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
+                    + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
+
+            String sql = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
+                    + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?,?, ?,?)";
+
+            pst = conn.prepareStatement(sql);
+
+            pst.setString(1, String.valueOf(jLabelRegYear.getText()));
+            pst.setString(2, jLabelSerialAcq.getText());
+            pst.setString(3, String.valueOf(jLabelRegNum.getText()));
+            pst.setString(4, jLabelGenDate.getText());
+            pst.setString(5, jLabelEmpNum.getText());
+            pst.setString(6, String.valueOf(bankChgAmt));
+            pst.setString(7, jLabelSerial.getText());
+            pst.setString(8, String.valueOf(jTextAcqRegNum.getText()));
+            pst.setString(9, jLabelRegDateAcq.getText());
+            pst.setString(10, "1");
+            pst.setString(11, "1");
+            pst.setString(12, "A");
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     void insGenTab() {
         try {
             String sql = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] "
@@ -3020,6 +3098,11 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             pst = conn.prepareStatement(sqlDeletePayRec);
             pst.executeUpdate();
 
+            String sqlDeleteBankChg = "delete [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] where "
+                    + "concat(SERIAL,REF_NUM) ='" + jLabelSerialAcq.getText() + jLabelRegNum.getText() + "'";
+            pst = conn.prepareStatement(sqlDeleteBankChg);
+            pst.executeUpdate();
+
             String sqlwkUpdateA = "update [ClaimsAppSysZvandiri].[dbo].[ClaimWkReqAcqTab] set "
                     + "ACQ_STA ='A' where "
                     + "concat(SERIAL,REF_NUM) ='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "' and PLAN_WK =" + minWkNum;
@@ -3133,12 +3216,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabelBreakFastSub = new javax.swing.JLabel();
-        jLabelAcqBreakFastSubTot = new javax.swing.JLabel();
         jLabelLunchSubTot = new javax.swing.JLabel();
         jLabelDinnerSubTot = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabelBreakFastSubTot = new javax.swing.JLabel();
         jLabelAcqLunchSubTot = new javax.swing.JLabel();
         jLabelAcqDinnerSubTot = new javax.swing.JLabel();
         jLabelAcqIncidentalSubTot = new javax.swing.JLabel();
@@ -3146,10 +3226,13 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelAllAcq = new javax.swing.JLabel();
         jLabelAllBal = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
-        jLabelAcqBreakFastSubTotBal = new javax.swing.JLabel();
         jLabelAcqLunchSubTotBal = new javax.swing.JLabel();
         jLabelAcqDinnerSubTotBal = new javax.swing.JLabel();
         jLabelAcqIncidentalSubTotBal = new javax.swing.JLabel();
+        jLabelBreakFastSub = new javax.swing.JLabel();
+        jLabelBreakFastSubTot = new javax.swing.JLabel();
+        jLabelAcqBreakFastSubTot = new javax.swing.JLabel();
+        jLabelAcqBreakFastSubTotBal = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabelMiscSubTot = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
@@ -3161,6 +3244,10 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JSeparator();
         jLabelMscBal = new javax.swing.JLabel();
         jLabelAcqMiscSubTotBal = new javax.swing.JLabel();
+        jLabelBankChgSub = new javax.swing.JLabel();
+        jLabelBankChgSubTot = new javax.swing.JLabel();
+        jLabelAcqBankChgSubTot = new javax.swing.JLabel();
+        jLabelAcqBankChgSubTotBal = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabelAccUnprovedSubTot = new javax.swing.JLabel();
@@ -3210,9 +3297,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelAcqAppWk5TotReqCost = new javax.swing.JLabel();
         jLabelNum2 = new javax.swing.JLabel();
         jLabelRegYear1 = new javax.swing.JLabel();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jButtonSave = new javax.swing.JButton();
+        jLabelBankChgComment = new javax.swing.JLabel();
         jPanelRequest = new javax.swing.JPanel();
         jLabelLogo1 = new javax.swing.JLabel();
         jLabelHeaderLine = new javax.swing.JLabel();
@@ -3982,19 +4067,19 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         jLabelIncidentalSub.setText("Incidental");
         jPanel1.add(jLabelIncidentalSub);
-        jLabelIncidentalSub.setBounds(10, 120, 60, 25);
+        jLabelIncidentalSub.setBounds(10, 90, 60, 25);
 
         jLabelIncidentalSubTot.setText("0.00");
         jPanel1.add(jLabelIncidentalSubTot);
-        jLabelIncidentalSubTot.setBounds(100, 120, 50, 25);
+        jLabelIncidentalSubTot.setBounds(100, 90, 50, 25);
 
         jLabelLunchSub.setText("Lunch");
         jPanel1.add(jLabelLunchSub);
-        jLabelLunchSub.setBounds(10, 60, 60, 25);
+        jLabelLunchSub.setBounds(10, 30, 60, 25);
 
         jLabelDinnerSub.setText("Dinner");
         jPanel1.add(jLabelDinnerSub);
-        jLabelDinnerSub.setBounds(10, 90, 60, 25);
+        jLabelDinnerSub.setBounds(10, 60, 60, 25);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel2.setLayout(null);
@@ -4028,45 +4113,32 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jPanel1.add(jLabel22);
         jLabel22.setBounds(8, 5, 80, 25);
 
-        jLabelBreakFastSub.setText("Breakfast");
-        jPanel1.add(jLabelBreakFastSub);
-        jLabelBreakFastSub.setBounds(10, 30, 60, 25);
-
-        jLabelAcqBreakFastSubTot.setForeground(new java.awt.Color(255, 0, 0));
-        jLabelAcqBreakFastSubTot.setText("0.00");
-        jPanel1.add(jLabelAcqBreakFastSubTot);
-        jLabelAcqBreakFastSubTot.setBounds(170, 30, 50, 25);
-
         jLabelLunchSubTot.setText("0.00");
         jPanel1.add(jLabelLunchSubTot);
-        jLabelLunchSubTot.setBounds(100, 60, 50, 25);
+        jLabelLunchSubTot.setBounds(100, 30, 50, 25);
 
         jLabelDinnerSubTot.setText("0.00");
         jPanel1.add(jLabelDinnerSubTot);
-        jLabelDinnerSubTot.setBounds(100, 90, 50, 25);
+        jLabelDinnerSubTot.setBounds(100, 60, 50, 25);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel1.add(jSeparator3);
         jSeparator3.setBounds(150, 20, 5, 120);
 
-        jLabelBreakFastSubTot.setText("0.00");
-        jPanel1.add(jLabelBreakFastSubTot);
-        jLabelBreakFastSubTot.setBounds(100, 30, 50, 25);
-
         jLabelAcqLunchSubTot.setForeground(new java.awt.Color(255, 51, 51));
         jLabelAcqLunchSubTot.setText("0.00");
         jPanel1.add(jLabelAcqLunchSubTot);
-        jLabelAcqLunchSubTot.setBounds(170, 60, 50, 25);
+        jLabelAcqLunchSubTot.setBounds(170, 30, 50, 25);
 
         jLabelAcqDinnerSubTot.setForeground(new java.awt.Color(255, 51, 51));
         jLabelAcqDinnerSubTot.setText("0.00");
         jPanel1.add(jLabelAcqDinnerSubTot);
-        jLabelAcqDinnerSubTot.setBounds(170, 90, 50, 25);
+        jLabelAcqDinnerSubTot.setBounds(170, 60, 50, 25);
 
         jLabelAcqIncidentalSubTot.setForeground(new java.awt.Color(255, 51, 51));
         jLabelAcqIncidentalSubTot.setText("0.00");
         jPanel1.add(jLabelAcqIncidentalSubTot);
-        jLabelAcqIncidentalSubTot.setBounds(170, 120, 50, 25);
+        jLabelAcqIncidentalSubTot.setBounds(170, 90, 50, 25);
 
         jLabelAllReq.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelAllReq.setForeground(new java.awt.Color(0, 102, 0));
@@ -4089,21 +4161,34 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jPanel1.add(jSeparator6);
         jSeparator6.setBounds(220, 20, 2, 120);
 
-        jLabelAcqBreakFastSubTotBal.setText("0.00");
-        jPanel1.add(jLabelAcqBreakFastSubTotBal);
-        jLabelAcqBreakFastSubTotBal.setBounds(230, 30, 50, 25);
-
         jLabelAcqLunchSubTotBal.setText("0.00");
         jPanel1.add(jLabelAcqLunchSubTotBal);
-        jLabelAcqLunchSubTotBal.setBounds(230, 60, 50, 25);
+        jLabelAcqLunchSubTotBal.setBounds(230, 30, 50, 25);
 
         jLabelAcqDinnerSubTotBal.setText("0.00");
         jPanel1.add(jLabelAcqDinnerSubTotBal);
-        jLabelAcqDinnerSubTotBal.setBounds(230, 90, 50, 25);
+        jLabelAcqDinnerSubTotBal.setBounds(230, 60, 50, 25);
 
         jLabelAcqIncidentalSubTotBal.setText("0.00");
         jPanel1.add(jLabelAcqIncidentalSubTotBal);
-        jLabelAcqIncidentalSubTotBal.setBounds(230, 120, 50, 25);
+        jLabelAcqIncidentalSubTotBal.setBounds(230, 90, 50, 25);
+
+        jLabelBreakFastSub.setText("Breakfast");
+        jPanel1.add(jLabelBreakFastSub);
+        jLabelBreakFastSub.setBounds(10, 120, 60, 25);
+
+        jLabelBreakFastSubTot.setText("0.00");
+        jPanel1.add(jLabelBreakFastSubTot);
+        jLabelBreakFastSubTot.setBounds(100, 120, 50, 25);
+
+        jLabelAcqBreakFastSubTot.setForeground(new java.awt.Color(255, 0, 0));
+        jLabelAcqBreakFastSubTot.setText("0.00");
+        jPanel1.add(jLabelAcqBreakFastSubTot);
+        jLabelAcqBreakFastSubTot.setBounds(170, 120, 50, 25);
+
+        jLabelAcqBreakFastSubTotBal.setText("0.00");
+        jPanel1.add(jLabelAcqBreakFastSubTotBal);
+        jLabelAcqBreakFastSubTotBal.setBounds(230, 120, 50, 25);
 
         jPanelGen.add(jPanel1);
         jPanel1.setBounds(20, 360, 320, 150);
@@ -4158,6 +4243,24 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelAcqMiscSubTotBal.setText("0.00");
         jPanel3.add(jLabelAcqMiscSubTotBal);
         jLabelAcqMiscSubTotBal.setBounds(250, 30, 50, 25);
+
+        jLabelBankChgSub.setText("Bank Charges");
+        jPanel3.add(jLabelBankChgSub);
+        jLabelBankChgSub.setBounds(10, 60, 80, 25);
+
+        jLabelBankChgSubTot.setText("0.00");
+        jPanel3.add(jLabelBankChgSubTot);
+        jLabelBankChgSubTot.setBounds(110, 60, 50, 25);
+
+        jLabelAcqBankChgSubTot.setForeground(new java.awt.Color(255, 51, 51));
+        jLabelAcqBankChgSubTot.setText("0.00");
+        jPanel3.add(jLabelAcqBankChgSubTot);
+        jLabelAcqBankChgSubTot.setBounds(180, 60, 50, 25);
+
+        jLabelAcqBankChgSubTotBal.setForeground(new java.awt.Color(51, 51, 51));
+        jLabelAcqBankChgSubTotBal.setText("0.00");
+        jPanel3.add(jLabelAcqBankChgSubTotBal);
+        jLabelAcqBankChgSubTotBal.setBounds(250, 60, 50, 25);
 
         jPanelGen.add(jPanel3);
         jPanel3.setBounds(360, 360, 320, 150);
@@ -4422,34 +4525,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jPanelGen.add(jLabelRegYear1);
         jLabelRegYear1.setBounds(1200, 80, 30, 30);
 
-        jPanel12.setBackground(new java.awt.Color(100, 100, 247));
-        jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        jPanel12.setForeground(new java.awt.Color(0, 153, 0));
-        jPanel12.setLayout(null);
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Record Validation");
-        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel12.add(jLabel5);
-        jLabel5.setBounds(520, 10, 190, 25);
-
-        jButtonSave.setBackground(new java.awt.Color(255, 255, 255));
-        jButtonSave.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonSave.setForeground(new java.awt.Color(0, 153, 0));
-        jButtonSave.setText("Submit");
-        jButtonSave.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSaveActionPerformed(evt);
-            }
-        });
-        jPanel12.add(jButtonSave);
-        jButtonSave.setBounds(420, 40, 380, 50);
-
-        jPanelGen.add(jPanel12);
-        jPanel12.setBounds(20, 540, 1320, 100);
+        jLabelBankChgComment.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelGen.add(jLabelBankChgComment);
+        jLabelBankChgComment.setBounds(920, 540, 400, 30);
 
         jTabbedPaneAppSys.addTab("User and Accounting Details", jPanelGen);
 
@@ -5979,7 +6057,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
             if (minWkNum == 1) {
                 jLabelAcqAppWk1TotReqCost.setText("0.00");
-                jLabelAcqAppTotReqCost.setText(String.format("%.2f", allTotalAcq));
+                jLabelAcqAppTotReqCost.setText(String.format("%.2f", allTotalAcq + bankChgAmt));
             } else if (minWkNum == 2) {
                 jLabelAcqAppWk2TotReqCost.setText("0.00");
                 double cleredAmtBal = allActTot - Double.parseDouble(jLabelAcqAppWk1TotReqCost.getText());
@@ -6307,16 +6385,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         deleteFileAttReport();
     }//GEN-LAST:event_jButtonDeleteActionPerformed
-
-    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        try {
-
-            saveAcqRegisterCheck();
-
-        } catch (Exception e1) {
-            System.out.println(e1);
-        }
-    }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jComboAccountCodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboAccountCodeMouseClicked
 
@@ -6656,7 +6724,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonGetDetails1;
     private javax.swing.JButton jButtonOkFacility;
     private javax.swing.JButton jButtonPayRecCont;
-    private javax.swing.JButton jButtonSave;
     private javax.swing.JButton jButtonSelectFile;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccProved;
     private javax.swing.JCheckBox jCheckBoxDialogWk1AccUnProved;
@@ -6704,7 +6771,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelACC;
     private javax.swing.JLabel jLabelAccAcq;
     private javax.swing.JLabel jLabelAccBal;
@@ -6726,6 +6792,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAcqAppWk3TotReqCost;
     private javax.swing.JLabel jLabelAcqAppWk4TotReqCost;
     private javax.swing.JLabel jLabelAcqAppWk5TotReqCost;
+    private javax.swing.JLabel jLabelAcqBankChgSubTot;
+    private javax.swing.JLabel jLabelAcqBankChgSubTotBal;
     private javax.swing.JLabel jLabelAcqBankName;
     private javax.swing.JLabel jLabelAcqBreakFastSubTot;
     private javax.swing.JLabel jLabelAcqBreakFastSubTotBal;
@@ -6765,6 +6833,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelBank;
     private javax.swing.JLabel jLabelBankAcc;
     private javax.swing.JLabel jLabelBankAccNo;
+    private javax.swing.JLabel jLabelBankChgComment;
+    private javax.swing.JLabel jLabelBankChgSub;
+    private javax.swing.JLabel jLabelBankChgSubTot;
     private javax.swing.JLabel jLabelBankHeader;
     private javax.swing.JLabel jLabelBankMsg;
     private javax.swing.JLabel jLabelBankName;
@@ -6906,7 +6977,6 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel19;
