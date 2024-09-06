@@ -1879,7 +1879,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
                 st1.executeQuery("SELECT BANK_CHG_AMT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
                         + "where  concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "'"
-                        + " and concat(PREV_SERIAL,PREV_REF_NUM) not in "
+                        + " and concat(SERIAL,REF_NUM) not in "
                         + "( SELECT concat(PREV_SERIAL,PREV_REF_NUM) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
                         + "where  concat(PREV_SERIAL,PREV_REF_NUM) ='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "' and ACT_REC_STA = 'A')");
 
@@ -2618,20 +2618,21 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     }
 
     void insBankChgTab() {
+        System.out.println("one");
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             String sql = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
                     + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?,?, ?,?)";
-
+System.out.println("two");
             pst = conn.prepareStatement(sql);
 
             pst.setString(1, String.valueOf(jLabelRegYear.getText()));
             pst.setString(2, jLabelSerialAcq.getText());
             pst.setString(3, String.valueOf(jLabelRegNum.getText()));
             pst.setString(4, jLabelGenDate.getText());
-            pst.setString(5, jLabelEmpNum.getText());
+            pst.setString(5, jLabelAcqEmpNum.getText());
             pst.setString(6, String.valueOf(bankChgAmt));
             pst.setString(7, jLabelSerial.getText());
             pst.setString(8, String.valueOf(jTextAcqRegNum.getText()));
@@ -2639,10 +2640,12 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
             pst.setString(10, "1");
             pst.setString(11, "1");
             pst.setString(12, "A");
-
+System.out.println("three");
             pst.executeUpdate();
+            System.out.println("four");
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("five");
         }
     }
 

@@ -2195,9 +2195,9 @@ public class JFrameAppSupAcquittal extends javax.swing.JFrame {
         jPanelDetUpd1.add(jTextReasonReject);
         jTextReasonReject.setBounds(150, 140, 690, 30);
 
-        jButtonReasonDialogOk.setBackground(new java.awt.Color(0, 51, 51));
+        jButtonReasonDialogOk.setBackground(new java.awt.Color(0, 0, 0));
         jButtonReasonDialogOk.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonReasonDialogOk.setForeground(new java.awt.Color(51, 153, 0));
+        jButtonReasonDialogOk.setForeground(new java.awt.Color(255, 255, 255));
         jButtonReasonDialogOk.setText("Continue");
         jButtonReasonDialogOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
