@@ -1392,7 +1392,7 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
                 pst1.setString(21, jTableWk2Activities.getValueAt(i, 17).toString());
                 pst1.setString(22, jTableWk2Activities.getValueAt(i, 18).toString());
                 pst1.setString(23, jTableWk2Activities.getValueAt(i, 19).toString());
-                pst1.setString(24, "1");
+                pst1.setString(24, "2");
                 pst1.setString(25, "1");
                 pst1.setString(26, docVersion);
                 pst1.setString(27, "A");
@@ -1442,7 +1442,7 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
                 pst1.setString(21, jTableWk3Activities.getValueAt(i, 17).toString());
                 pst1.setString(22, jTableWk3Activities.getValueAt(i, 18).toString());
                 pst1.setString(23, jTableWk3Activities.getValueAt(i, 19).toString());
-                pst1.setString(24, "1");
+                pst1.setString(24, "3");
                 pst1.setString(25, "1");
                 pst1.setString(26, docVersion);
                 pst1.setString(27, "A");
@@ -1492,7 +1492,7 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
                 pst1.setString(21, jTableWk4Activities.getValueAt(i, 17).toString());
                 pst1.setString(22, jTableWk4Activities.getValueAt(i, 18).toString());
                 pst1.setString(23, jTableWk4Activities.getValueAt(i, 19).toString());
-                pst1.setString(24, "1");
+                pst1.setString(24, "4");
                 pst1.setString(25, "1");
                 pst1.setString(26, docVersion);
                 pst1.setString(27, "A");
@@ -1542,7 +1542,7 @@ public class JFrameReqSupApp extends javax.swing.JFrame {
                 pst1.setString(21, jTableWk5Activities.getValueAt(i, 17).toString());
                 pst1.setString(22, jTableWk5Activities.getValueAt(i, 18).toString());
                 pst1.setString(23, jTableWk5Activities.getValueAt(i, 19).toString());
-                pst1.setString(24, "1");
+                pst1.setString(24, "5");
                 pst1.setString(25, "1");
                 pst1.setString(26, docVersion);
                 pst1.setString(27, "A");

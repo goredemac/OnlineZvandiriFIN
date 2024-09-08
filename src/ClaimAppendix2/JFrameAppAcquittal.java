@@ -94,6 +94,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     double wk2Amt = 0;
     double wk3Amt = 0;
     double wk4Amt = 0;
+    double clearAmt = 0;
     double bankChgAmt = 0;
     SimpleDateFormat df = new SimpleDateFormat("yyyy");
     SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -221,7 +222,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jLabelEmp.setText(usrLogNum);
         jLabelEmp.setVisible(false);
         jTextAttDocFilePath.setVisible(false);
-              jToggleButtonNoActivity.setText("All Activities Not Done");
+        jToggleButtonNoActivity.setText("All Activities Not Done");
         jToggleButtonAllActivities.setText("All Activities Done As Per Request");
         jTabbedPaneAcqAtt.setTitleAt(0, "Activity Summary Report");
         jTabbedPaneAcqAtt.setTitleAt(1, "E-Log Book");
@@ -1157,8 +1158,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
             Statement st1 = conn.createStatement();
             Statement st2 = conn.createStatement();
-
-            st1.executeQuery("SELECT ACT_TOT_AMT - b.CLEAR FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
+            System.out.println("dkjk " + jLabelSerial.getText() + jTextAcqRegNum.getText() + " fjkj " + jLabelSerial.getText() + jTextAcqRegNum.getText());
+            st1.executeQuery("SELECT ACT_TOT_AMT - b.CLEAR,b.CLEAR FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a "
                     + "join (SELECT PREV_SERIAL,PREV_REF_NUM,sum(CLEARED_AMT) 'CLEAR' "
                     + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimWkReqAcqTab] where concat(PREV_SERIAL,PREV_REF_NUM) ="
                     + "  '" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "' "
@@ -1171,6 +1172,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
             while (rs1.next()) {
                 balAmt = rs1.getDouble(1);
+                clearAmt = rs1.getDouble(2);
 
             }
 
@@ -1691,17 +1693,21 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 //                + abs(Double.parseDouble(jLabelAcqAppWk2TotReqCost.getText())) + +abs(Double.parseDouble(jLabelAcqAppWk3TotReqCost.getText()))
 //                + abs(Double.parseDouble(jLabelAcqAppWk4TotReqCost.getText())));
         //allTotalAcq = allActTot + bankChgAmt;
-        
-        if ((jToggleButtonAllActivities.isSelected()) &&"All Activities Done As Per Request".equals(jToggleButtonAllActivities.getText())) {
-            allTotalAcq=allTotalAcq+bankChgAmt;
+        System.out.println("out alltot " + allActTot);
+        if ((jToggleButtonAllActivities.isSelected()) && "All Activities Done As Per Request".equals(jToggleButtonAllActivities.getText())) {
+            allTotalAcq = allTotalAcq + bankChgAmt;
             System.out.println("dlkld");
+            System.out.println("out alltot in 1 " + allActTot);
         }
-        
-           if ((jToggleButtonNoActivity.isSelected()) && "All Activities Not Done".equals(jToggleButtonAllActivities.getText())) {
-            allActTot=allActTot;
-        
+
+        if ((jToggleButtonNoActivity.isSelected()) && "All Activities Not Done".equals(jToggleButtonAllActivities.getText())) {
+            allActTot = allActTot;
+
             System.out.println("dlkld");
+            System.out.println("out alltot in 2 " + allActTot);
         }
+
+        System.out.println("out alltot in 3 " + allActTot);
         double subTotDiff = allTotalAcq - allActTot;
 
         System.out.println("alltotacq " + allTotalAcq + " allacttot " + allActTot + " alltotal" + allTotal);
@@ -1721,11 +1727,13 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 
         if (minWkNum == 1) {
             jLabelAcqAppWk1TotReqCost.setText(String.format("%.2f", allTotalAcq));
+            jLabelAcqAppTotReqCost.setText(Double.toString(allActTot - (allTotalAcq + clearAmt)));
             jLabelAppWk1TotReq.setVisible(true);
             jLabelAcqAppWk1TotReqCost.setVisible(true);
             jLabelAppWk1TotReq.setText("Total Cleared Week " + minWkNum);
         } else if (minWkNum == 2) {
             jLabelAcqAppWk2TotReqCost.setText(String.format("%.2f", allTotalAcq));
+            jLabelAcqAppTotReqCost.setText(Double.toString(allActTot - (allTotalAcq + Double.parseDouble(jLabelAcqAppWk1TotReqCost.getText()))));
             jLabelAppWk1TotReq.setVisible(true);
             jLabelAcqAppWk1TotReqCost.setVisible(true);
             jLabelAppWk2TotReq.setVisible(true);
@@ -1787,7 +1795,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 //                if (bankChgAmt>0){
 //                    jLabelBankChgComment.setText("NB: Bank charges of "+bankChgAmt+" to be liquidated from the change.");
 //                }
-                
+
             } else if (Double.parseDouble(jLabelAcqAppTotReqCost.getText()) > 0) {
                 jLabelAppTotReq.setText("Total (Shortfall)");
             } else if (Double.parseDouble(jLabelAcqAppTotReqCost.getText()) == 0) {
@@ -1881,7 +1889,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                         + "where  concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "'"
                         + " and concat(SERIAL,REF_NUM) not in "
                         + "( SELECT concat(PREV_SERIAL,PREV_REF_NUM) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
-                        + "where  concat(PREV_SERIAL,PREV_REF_NUM) ='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "' and ACT_REC_STA = 'A')");
+                        + "where  concat(PREV_SERIAL,PREV_REF_NUM) ='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "' and ACT_REC_STA = 'Q')");
 
                 ResultSet r1 = st1.getResultSet();
 
@@ -2131,7 +2139,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         try {
 
             jMenuItemSubmit.setEnabled(false);
-         
+
             SerialCheck();
 
             RefNumAllocation();
@@ -2144,7 +2152,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
 //                jLabelRegNum.setText("");
 //                jLabelRegYear.setText("");
                 jMenuItemSubmit.setEnabled(true);
-               
+
             } else {
 
                 insGenTab();
@@ -2155,7 +2163,9 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 createAction();
                 createReport();
                 createAttDoc();
+                if (bankChgAmt>0){
                 insBankChgTab();
+                }
                 wkUpdate();
                 wkClearedUpdate();
 //                payRecAck();
@@ -2292,6 +2302,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
         jCheckBoxDialogWk1BrkFast.setEnabled(false);
         jCheckBoxDialogWk1AccProved.setEnabled(false);
         jCheckBoxNoAcc.setEnabled(false);
+        jTextAttAcqDocName.setEditable(false);
     }
 
     void addTrips() {
@@ -2618,14 +2629,14 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
     }
 
     void insBankChgTab() {
-        System.out.println("one");
+      
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             String sql = "INSERT INTO [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
                     + " VALUES (?,?, ?,?, ?, ?, ?, ?, ?,?, ?,?)";
-System.out.println("two");
+        
             pst = conn.prepareStatement(sql);
 
             pst.setString(1, String.valueOf(jLabelRegYear.getText()));
@@ -2639,13 +2650,13 @@ System.out.println("two");
             pst.setString(9, jLabelRegDateAcq.getText());
             pst.setString(10, "1");
             pst.setString(11, "1");
-            pst.setString(12, "A");
-System.out.println("three");
+            pst.setString(12, "Q");
+         
             pst.executeUpdate();
-            System.out.println("four");
+         
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("five");
+         
         }
     }
 
@@ -2733,7 +2744,7 @@ System.out.println("three");
                 pst1.setString(21, jTableActivityAcq.getValueAt(i, 16).toString());
                 pst1.setString(22, jTableActivityAcq.getValueAt(i, 17).toString());
                 pst1.setString(23, jTableActivityAcq.getValueAt(i, 18).toString());
-                pst1.setString(24, "1");
+                pst1.setString(24, String.valueOf(minWkNum));
                 pst1.setString(25, "1");
                 pst1.setString(26, "1");
                 pst1.setString(27, "Q");
@@ -6378,7 +6389,12 @@ System.out.println("three");
             JOptionPane.showMessageDialog(this, "Please note that no file has been selected.");
             jTextAttAcqDocName.requestFocusInWindow();
             jTextAttAcqDocName.setFocusable(true);
-        } else {
+        } else if (jTextAttDocFilePath.getText().trim().length()==0){
+                JOptionPane.showMessageDialog(this, "Please select file to attach.");
+            jTextAttAcqDocName.requestFocusInWindow();
+            jTextAttAcqDocName.setFocusable(true);
+        }
+        else {
             addFileAtt();
             refreshAttFields();
 
