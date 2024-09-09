@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZimTTECH Request" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="910a08cf-ae82-4d6f-9201-df01794d0a00">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="519"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="ImageURL" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select  x.SERIAL, x.REF_NUM ,Format(x.REF_DAT, 'dd MMM yyyy') REF_DAT, x.PREV_SERIAL,x.PREV_REF_NUM,Format(x.PREV_REF_DAT, 'dd MMM yyyy') ACQ_DAT,
@@ -13,49 +13,45 @@ x.Dinner DINACQ,z.Dinner DINREQ,z.Dinner-x.Dinner DINBAL,
 x.[Proven Acc] PROVACQ,z.[Proven Acc] PROVREQ,z.[Proven Acc]-x.[Proven Acc] PROVBAL,
 x.[Unproven Acc] UNPROVACQ,z.[Unproven Acc] UNPROVREQ,z.[Unproven Acc]-x.[Unproven Acc] UNPROVBAL,
 x.Incidental INCACQ,z.Incidental INCREQ,z.Incidental-x.Incidental INCBAL,
-x.[Misc Amt] MISCACQ,x.[Misc Amt] MISCREQ,z.[Misc Amt]-x.[Misc Amt] MISCBAL,x.BANK_CHG_AMT [Bank Chg],x.BANK_CHG_AMT-x.BANK_CHG_AMT [Bal Bank Chg],y.Creator,y.Supervisor,y.Finance,y.HOD, 
+x.[Misc Amt] MISCACQ,x.[Misc Amt] MISCREQ,z.[Misc Amt]-x.[Misc Amt] MISCBAL,y.Creator,y.Supervisor,y.Finance,y.HOD, 
 'Total Liquidation Amt' LIQAMT,  'Actual - Amt' ACTAMT,'Can' GENUSER from 
 -- acq
-(SELECT  a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, a.EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,' ' REQTOT,ACT_TOT_AMT ,
-' ' REQBREAK,SUM(b.BRK_AMT) 'Breakfast',' ' REQLUNCH,SUM(b.LNC_AMT) 'Lunch',' ' REQDINNER,SUM(b.DIN_AMT) 'Dinner',' ' REQPROVACC,SUM(b.ACC_PROV_AMT) 'Proven Acc',
+(SELECT  a.SERIAL, a.REF_NUM ,REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,' ' REQTOT,ACT_TOT_AMT ,
+' ' REQBREAK,SUM(b.BRK_AMT) 'Breakfast',' ' REQLUNCH,SUM(b.LNC_AMT) 'Lunch',' ' REQDINNER,SUM(b.DIN_AMT) 'Dinner',' ' REQPROVACC,SUM(b.ACC_PRO_AMT) 'Proven Acc',
 ' ' REQUNPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQINC,SUM(b.INC_AMT) 'Incidental'
-,' ' REQMISC ,SUM(b.MSC_AMT) 'Misc Amt',c.BANK_CHG_AMT
-FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN 
-[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on 
+,' ' REQMISC ,SUM(b.MSC_AMT) 'Misc Amt'
+FROM [ClaimsAppSysZimTTECH].[dbo].[ClaimAppGenTab] a JOIN 
+[ClaimsAppSysZimTTECH].[dbo].[ClaimAppItmTab] b on 
 a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM 
-AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA JOIN
-[ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] c on
-a.SERIAL = c.SERIAL AND a.REF_NUM =c.REF_NUM 
-WHERE a.REF_NUM = 24 AND a.SERIAL = 'A' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =2
-GROUP BY a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,BANK_CHG_AMT) x
+AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA 
+WHERE a.REF_NUM = 127 AND a.SERIAL = 'A' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =1
+GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) x
 join
 -- Request
-(SELECT  a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT ,' ' ACQTO,
-SUM(b.BRK_AMT) 'Breakfast',' ' ACQBREAK,SUM(b.LNC_AMT) 'Lunch',' ' ACQLUNCH,SUM(b.DIN_AMT) 'Dinner',' ' ACQDINNER,SUM(b.ACC_PROV_AMT) 'Proven Acc',
+(SELECT  a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT ,' ' ACQTO,
+SUM(b.BRK_AMT) 'Breakfast',' ' ACQBREAK,SUM(b.LNC_AMT) 'Lunch',' ' ACQLUNCH,SUM(b.DIN_AMT) 'Dinner',' ' ACQDINNER,SUM(b.ACC_PRO_AMT) 'Proven Acc',
 ' ' REQPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQUNPROVACC,SUM(b.INC_AMT) 'Incidental'
 ,' ' REQINC,SUM(b.MSC_AMT) 'Misc Amt',' ' REQMISC
-FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN 
-[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on 
+FROM [ClaimsAppSysZimTTECH].[dbo].[ClaimAppGenTab] a JOIN 
+[ClaimsAppSysZimTTECH].[dbo].[ClaimAppItmTab] b on 
 a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM 
-AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA JOIN
-[ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] c on
-a.SERIAL = c.SERIAL AND a.REF_NUM =c.REF_NUM 
-WHERE a.REF_NUM = 8 AND a.SERIAL = 'R' AND a.ACT_REC_STA = 'A' and a.DOC_VER =4 and b.PLAN_WK =1
-GROUP BY a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) z
+AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA 
+WHERE a.REF_NUM = 101 AND a.SERIAL = 'R' AND a.ACT_REC_STA = 'A' and a.DOC_VER =4 and b.PLAN_WK =1
+GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) z
 on z.REF_NUM=x.PREV_REF_NUM and x.PREV_SERIAL=z.SERIAL
 join
 (select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD'
-FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='AcqRegistered' and REF_NUM = 24  and SERIAL = 'A') a
+FROM [ClaimsAppSysZimTTECH].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='AcqRegistered' and REF_NUM = 127  and SERIAL = 'A') a
 join
 (SELECT distinct REF_NUM,'' 'Creator',ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD'
-FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='SupAcqApprove' and REF_NUM = 24  and SERIAL = 'A' 
+FROM [ClaimsAppSysZimTTECH].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='SupAcqApprove' and REF_NUM = 127  and SERIAL = 'A' 
 ) b on a.REF_NUM = b.REF_NUM
 join 
 (SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD'
-FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinAcqApprove' and REF_NUM = 24  and SERIAL = 'A') c on b.REF_NUM = c.REF_NUM
+FROM [ClaimsAppSysZimTTECH].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinAcqApprove' and REF_NUM = 127  and SERIAL = 'A') c on b.REF_NUM = c.REF_NUM
 join
 (SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',ACTIONED_BY_NAM 'HOD'
-FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODAcqApprove' and REF_NUM = 24 and SERIAL = 'A') d on c.REF_NUM = d.REF_NUM) y
+FROM [ClaimsAppSysZimTTECH].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODAcqApprove' and REF_NUM = 127 and SERIAL = 'A') d on c.REF_NUM = d.REF_NUM) y
 on x.REF_NUM=y.REF_NUM]]>
 	</queryString>
 	<field name="SERIAL" class="java.lang.String"/>
@@ -64,7 +60,7 @@ on x.REF_NUM=y.REF_NUM]]>
 	<field name="PREV_SERIAL" class="java.lang.String"/>
 	<field name="PREV_REF_NUM" class="java.lang.Integer"/>
 	<field name="ACQ_DAT" class="java.lang.String"/>
-	<field name="EMP_NUM" class="java.lang.Long"/>
+	<field name="EMP_NUM" class="java.lang.String"/>
 	<field name="EMP_NAM" class="java.lang.String"/>
 	<field name="EMP_TTL" class="java.lang.String"/>
 	<field name="EMP_PROV" class="java.lang.String"/>
@@ -95,8 +91,6 @@ on x.REF_NUM=y.REF_NUM]]>
 	<field name="MISCACQ" class="java.math.BigDecimal"/>
 	<field name="MISCREQ" class="java.math.BigDecimal"/>
 	<field name="MISCBAL" class="java.math.BigDecimal"/>
-	<field name="Bank Chg" class="java.math.BigDecimal"/>
-	<field name="Bal Bank Chg" class="java.math.BigDecimal"/>
 	<field name="Creator" class="java.lang.String"/>
 	<field name="Supervisor" class="java.lang.String"/>
 	<field name="Finance" class="java.lang.String"/>
@@ -327,7 +321,7 @@ on x.REF_NUM=y.REF_NUM]]>
 				<reportElement x="295" y="56" width="85" height="87" uuid="44809ac5-c1c5-499a-8120-69bca2b824bb"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="295" y="160" width="85" height="66" uuid="431f77e9-4646-4e31-a217-0d5984a9f983"/>
+				<reportElement x="295" y="179" width="85" height="40" uuid="431f77e9-4646-4e31-a217-0d5984a9f983"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="295" y="242" width="85" height="60" uuid="d8b02921-144f-4e26-82c9-2f4fa9b5d5f7"/>
@@ -336,7 +330,7 @@ on x.REF_NUM=y.REF_NUM]]>
 				<reportElement x="210" y="56" width="85" height="87" uuid="f58d7b2e-2414-43d8-b3ca-6e6d21d332af"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="210" y="160" width="85" height="66" uuid="93a0d0fd-46a2-421c-b137-2044f5dabce0"/>
+				<reportElement x="210" y="179" width="85" height="40" uuid="93a0d0fd-46a2-421c-b137-2044f5dabce0"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="210" y="242" width="85" height="60" uuid="953bb6b5-5b91-4ca3-852d-951cc9e61d50"/>
@@ -345,7 +339,7 @@ on x.REF_NUM=y.REF_NUM]]>
 				<reportElement x="125" y="56" width="85" height="87" uuid="feebc71a-d4f8-4dee-b619-0fbd791f01fc"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="125" y="160" width="85" height="66" uuid="5b129414-e958-4eb9-bb00-b54faae17057"/>
+				<reportElement x="125" y="179" width="85" height="40" uuid="5b129414-e958-4eb9-bb00-b54faae17057"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="125" y="242" width="85" height="60" uuid="e6a71518-a9bf-4562-b302-b38e2a57f675"/>
@@ -410,14 +404,14 @@ on x.REF_NUM=y.REF_NUM]]>
 				<text><![CDATA[Incidental]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="165" width="100" height="20" uuid="47d7308a-fe34-4675-b1fe-2731a5d0a562"/>
+				<reportElement x="13" y="181" width="100" height="20" uuid="47d7308a-fe34-4675-b1fe-2731a5d0a562"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Times New Roman" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Miscellaneous]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="183" width="100" height="20" uuid="f3dda7bd-0d05-488e-a864-0e133fefff0d"/>
+				<reportElement x="13" y="199" width="100" height="20" uuid="f3dda7bd-0d05-488e-a864-0e133fefff0d"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Times New Roman"/>
 				</textElement>
@@ -544,7 +538,7 @@ on x.REF_NUM=y.REF_NUM]]>
 				<textFieldExpression><![CDATA[$F{PROVREQ}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="125" y="183" width="75" height="20" uuid="0b392f21-095c-4a79-84e2-2f9159df97db"/>
+				<reportElement x="125" y="199" width="75" height="20" uuid="0b392f21-095c-4a79-84e2-2f9159df97db"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{MISCREQ}]]></textFieldExpression>
 			</textField>
@@ -570,7 +564,7 @@ on x.REF_NUM=y.REF_NUM]]>
 				<text><![CDATA[Request - Amt]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="125" y="163" width="75" height="20" uuid="28bbb244-1e61-497f-b705-9f2a1e4dcaf1"/>
+				<reportElement x="125" y="179" width="75" height="20" uuid="28bbb244-1e61-497f-b705-9f2a1e4dcaf1"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -605,7 +599,7 @@ on x.REF_NUM=y.REF_NUM]]>
 				<textFieldExpression><![CDATA[$F{LUNCHACQ}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="210" y="183" width="75" height="20" uuid="e17d5529-3f2d-4f30-91cd-6fb76d438188"/>
+				<reportElement x="210" y="199" width="75" height="20" uuid="e17d5529-3f2d-4f30-91cd-6fb76d438188"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{MISCACQ}]]></textFieldExpression>
 			</textField>
@@ -643,7 +637,7 @@ on x.REF_NUM=y.REF_NUM]]>
 				<textFieldExpression><![CDATA[$F{LUNBAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="300" y="183" width="75" height="20" uuid="25eb6452-8fc6-45b9-9771-60e6717e09db"/>
+				<reportElement x="300" y="199" width="75" height="20" uuid="25eb6452-8fc6-45b9-9771-60e6717e09db"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{MISCBAL}]]></textFieldExpression>
 			</textField>
@@ -688,7 +682,7 @@ on x.REF_NUM=y.REF_NUM]]>
 				<textFieldExpression><![CDATA[$F{UNPROVBAL}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="300" y="163" width="75" height="20" uuid="99b7dc9f-ec90-48fa-a8d1-72964f9e5fbd"/>
+				<reportElement x="300" y="179" width="75" height="20" uuid="99b7dc9f-ec90-48fa-a8d1-72964f9e5fbd"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -730,7 +724,7 @@ on x.REF_NUM=y.REF_NUM]]>
 				<textFieldExpression><![CDATA[$F{LIQAMT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="210" y="163" width="78" height="20" uuid="67cda823-e418-4175-afaa-ce4a0a695c3a"/>
+				<reportElement x="210" y="179" width="78" height="20" uuid="67cda823-e418-4175-afaa-ce4a0a695c3a"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -742,28 +736,6 @@ on x.REF_NUM=y.REF_NUM]]>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ACTAMT}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="127" y="203" width="75" height="20" uuid="8fbbbbbd-adca-460b-b12a-fb1a38285c7b"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{Bank Chg}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="212" y="203" width="75" height="20" uuid="8fdec392-ce14-441e-b429-92a43c90cc85"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{Bank Chg}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="13" y="203" width="100" height="20" uuid="e7f55276-5640-4dd4-83bd-46279866135f"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Times New Roman"/>
-				</textElement>
-				<text><![CDATA[Bank Charges]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="303" y="203" width="75" height="20" uuid="2ee4bee0-67ed-42e3-8ced-c45709a74ad8"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{Bal Bank Chg}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

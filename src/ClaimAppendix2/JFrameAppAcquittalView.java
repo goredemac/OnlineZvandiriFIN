@@ -152,7 +152,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
     double totSeg1 = 0;
     double totSeg2 = 0;
     double balAmt = 0;
-    double    bankChgAmt=0;
+    double bankChgAmt = 0;
     String filename = null;
     byte[] person_image = null;
     String filename2 = null;
@@ -890,7 +890,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         allTotal = 0;
         allTotal = unprovedSubTot + provedSubTot + miscSubTot + incidentalsubtotal
                 + dinnersubtotal + lunchsubtotal + breakfastsubtotal;
-
+        allTotal=allTotal+bankChgAmt;
         jLabelAcqAppTotPlannedCost.setText(String.format("%.2f", allTotal));
 
     }
@@ -1095,105 +1095,88 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             );
             folderCreate();
             String query = null;
-            if (("MA".equals(jLabelAcqSerial.getText())) || ("S".equals(jLabelAcqSerial.getText()))) {
-                query = "select  x.SERIAL, x.REF_NUM ,Format(x.REF_DAT, 'dd MMM yyyy') REF_DAT, x.PREV_SERIAL,x.PREV_REF_NUM,Format(x.PREV_REF_DAT, 'dd MMM yyyy') ACQ_DAT,"
-                        + "x.EMP_NUM ,x.EMP_NAM ,x.EMP_TTL ,x.EMP_PROV ,x.EMP_OFF ,x.EMP_BNK_NAM ,x.ACC_NUM ,x.ACT_MAIN_PUR ,x.ACT_TOT_AMT TOTACQ,z.ACT_TOT_AMT REQACQ,"
-                        + "x.Breakfast BREAKACQ, z.Breakfast BREAKREQ, z.Breakfast BREAKBAL,"
-                        + "x.Lunch LUNCHACQ,z.Lunch LUNCHREQ,z.Lunch LUNBAL,"
-                        + "x.Dinner DINACQ,z.Dinner DINREQ,z.Dinner DINBAL,"
-                        + "x.[Proven Acc] PROVACQ,z.[Proven Acc] PROVREQ,z.[Proven Acc] PROVBAL,"
-                        + "x.[Unproven Acc] UNPROVACQ,z.[Unproven Acc] UNPROVREQ,z.[Unproven Acc] UNPROVBAL,"
-                        + "x.Incidental INCACQ,z.Incidental INCREQ,z.Incidental INCBAL,"
-                        + "x.[Misc Amt] MISCACQ,x.[Misc Amt] MISCREQ,z.[Misc Amt]-x.[Misc Amt] MISCBAL,y.Creator,y.Supervisor,y.Finance,y.HOD, "
-                        + "'Total Liquidation Amt' LIQAMT,  'Actual - Amt' ACTAMT,'" + jLabelGenLogNam.getText() + "' GENUSER from "
-                        + "(SELECT  a.SERIAL, a.REF_NUM ,REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,' ' REQTOT,ACT_TOT_AMT ,"
-                        + "' ' REQBREAK,SUM(b.BRK_AMT) 'Breakfast',' ' REQLUNCH,SUM(b.LNC_AMT) 'Lunch',' ' REQDINNER,SUM(b.DIN_AMT) 'Dinner',' ' REQPROVACC,SUM(b.ACC_PROV_AMT) 'Proven Acc',"
-                        + "' ' REQUNPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQINC,SUM(b.INC_AMT) 'Incidental'"
-                        + ",' ' REQMISC ,SUM(b.MSC_AMT) 'Misc Amt' "
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN "
-                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on "
-                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM "
-                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA "
-                        + "WHERE a.REF_NUM = " + jLabelAcqRefNum.getText() + " AND a.SERIAL = '" + jLabelAcqSerial.getText() + "' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =1 "
-                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) x "
-                        + "join "
-                        + "(SELECT  a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT ,' ' ACQTO,"
-                        + "'0.00' 'Breakfast',' ' ACQBREAK,'0.00' 'Lunch',' ' ACQLUNCH,'0.00' 'Dinner',' ' ACQDINNER,'0.00' 'Proven Acc',"
-                        + "' ' REQPROVACC,'0.00' 'Unproven Acc',' ' REQUNPROVACC,'0.00' 'Incidental'"
-                        + ",' ' REQINC,'0.00' 'Misc Amt',' ' REQMISC "
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN "
-                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on "
-                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM "
-                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA "
-                        + "WHERE a.REF_NUM = " + jLabelAcqRefNum.getText() + " AND a.SERIAL = '" + jLabelAcqSerial.getText() + "' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =1 "
-                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) z "
-                        + "on z.REF_NUM=x.PREV_REF_NUM and x.PREV_SERIAL=z.SERIAL "
-                        + "join "
-                        + "(select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' "
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='AcqRegistered' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = '" + jLabelAcqSerial.getText() + "') a "
-                        + "join "
-                        + "(SELECT distinct REF_NUM,'' 'Creator',ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' "
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='SupAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = '" + jLabelAcqSerial.getText() + "' "
-                        + ") b on a.REF_NUM = b.REF_NUM "
-                        + "join "
-                        + "(SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD' "
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = '" + jLabelAcqSerial.getText() + "') c on b.REF_NUM = c.REF_NUM "
-                        + "join "
-                        + "(SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',ACTIONED_BY_NAM 'HOD' "
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = '" + jLabelAcqSerial.getText() + "') d on c.REF_NUM = d.REF_NUM) y "
-                        + "on x.REF_NUM=y.REF_NUM";
 
-            } else {
-                query = "select  x.SERIAL, x.REF_NUM ,Format(x.REF_DAT, 'dd MMM yyyy') REF_DAT, x.PREV_SERIAL,x.PREV_REF_NUM,Format(x.PREV_REF_DAT, 'dd MMM yyyy') ACQ_DAT,\n"
-                        + "x.EMP_NUM ,x.EMP_NAM ,x.EMP_TTL ,x.EMP_PROV ,x.EMP_OFF ,x.EMP_BNK_NAM ,x.ACC_NUM ,x.ACT_MAIN_PUR ,x.ACT_TOT_AMT TOTACQ,z.ACT_TOT_AMT REQACQ,\n"
-                        + "x.Breakfast BREAKACQ, z.Breakfast BREAKREQ, z.Breakfast- x.Breakfast BREAKBAL,\n"
-                        + "x.Lunch LUNCHACQ,z.Lunch LUNCHREQ,z.Lunch-x.Lunch LUNBAL,\n"
-                        + "x.Dinner DINACQ,z.Dinner DINREQ,z.Dinner-x.Dinner DINBAL,\n"
-                        + "x.[Proven Acc] PROVACQ,z.[Proven Acc] PROVREQ,z.[Proven Acc]-x.[Proven Acc] PROVBAL,\n"
-                        + "x.[Unproven Acc] UNPROVACQ,z.[Unproven Acc] UNPROVREQ,z.[Unproven Acc]-x.[Unproven Acc] UNPROVBAL,\n"
-                        + "x.Incidental INCACQ,z.Incidental INCREQ,z.Incidental-x.Incidental INCBAL,\n"
-                        + "x.[Misc Amt] MISCACQ,x.[Misc Amt] MISCREQ,z.[Misc Amt]-x.[Misc Amt] MISCBAL,y.Creator,y.Supervisor,y.Finance,y.HOD, \n"
-                        + "'Total Liquidation Amt' LIQAMT,  'Actual - Amt' ACTAMT,'" + jLabelGenLogNam.getText() + "' GENUSER  from \n"
-                        + "-- acq\n"
-                        + "(SELECT  a.SERIAL, a.REF_NUM ,REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,' ' REQTOT,ACT_TOT_AMT ,\n"
-                        + "' ' REQBREAK,SUM(b.BRK_AMT) 'Breakfast',' ' REQLUNCH,SUM(b.LNC_AMT) 'Lunch',' ' REQDINNER,SUM(b.DIN_AMT) 'Dinner',' ' REQPROVACC,SUM(b.ACC_PROV_AMT) 'Proven Acc',\n"
-                        + "' ' REQUNPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQINC,SUM(b.INC_AMT) 'Incidental'\n"
-                        + ",' ' REQMISC ,SUM(b.MSC_AMT) 'Misc Amt'\n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN \n"
-                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on \n"
-                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM \n"
-                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA \n"
-                        + "WHERE a.REF_NUM = " + jLabelAcqRefNum.getText() + "AND a.SERIAL = 'A' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =1\n"
-                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) x\n"
-                        + "join\n"
-                        + "-- Request\n"
-                        + "(SELECT  a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT ,' ' ACQTO,\n"
-                        + "SUM(b.BRK_AMT) 'Breakfast',' ' ACQBREAK,SUM(b.LNC_AMT) 'Lunch',' ' ACQLUNCH,SUM(b.DIN_AMT) 'Dinner',' ' ACQDINNER,SUM(b.ACC_PROV_AMT) 'Proven Acc',\n"
-                        + "' ' REQPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQUNPROVACC,SUM(b.INC_AMT) 'Incidental'\n"
-                        + ",' ' REQINC,SUM(b.MSC_AMT) 'Misc Amt',' ' REQMISC\n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN \n"
-                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on \n"
-                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM \n"
-                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA \n"
-                        + "WHERE a.REF_NUM = " + jTextAcqRegNum.getText() + " AND a.SERIAL = 'R' AND a.ACT_REC_STA = 'A' and a.DOC_VER =4 and b.PLAN_WK =1\n"
-                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) z\n"
-                        + "on z.REF_NUM=x.PREV_REF_NUM and x.PREV_SERIAL=z.SERIAL\n"
-                        + "join\n"
-                        + "(select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD'\n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='AcqRegistered' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = 'A') a\n"
-                        + "join\n"
-                        + "(SELECT distinct REF_NUM,'' 'Creator',ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD'\n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='SupAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = 'A' \n"
-                        + ") b on a.REF_NUM = b.REF_NUM\n"
-                        + "join \n"
-                        + "(SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD'\n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = 'A') c on b.REF_NUM = c.REF_NUM\n"
-                        + "join\n"
-                        + "(SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',ACTIONED_BY_NAM 'HOD'\n"
-                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + "and SERIAL = 'A') d on c.REF_NUM = d.REF_NUM) y\n"
-                        + "on x.REF_NUM=y.REF_NUM";
-            }
-
+//                query = "select  x.SERIAL, x.REF_NUM ,Format(x.REF_DAT, 'dd MMM yyyy') REF_DAT, x.PREV_SERIAL,x.PREV_REF_NUM,Format(x.PREV_REF_DAT, 'dd MMM yyyy') ACQ_DAT,"
+//                        + "x.EMP_NUM ,x.EMP_NAM ,x.EMP_TTL ,x.EMP_PROV ,x.EMP_OFF ,x.EMP_BNK_NAM ,x.ACC_NUM ,x.ACT_MAIN_PUR ,x.ACT_TOT_AMT TOTACQ,z.ACT_TOT_AMT REQACQ,"
+//                        + "x.Breakfast BREAKACQ, z.Breakfast BREAKREQ, z.Breakfast BREAKBAL,"
+//                        + "x.Lunch LUNCHACQ,z.Lunch LUNCHREQ,z.Lunch LUNBAL,"
+//                        + "x.Dinner DINACQ,z.Dinner DINREQ,z.Dinner DINBAL,"
+//                        + "x.[Proven Acc] PROVACQ,z.[Proven Acc] PROVREQ,z.[Proven Acc] PROVBAL,"
+//                        + "x.[Unproven Acc] UNPROVACQ,z.[Unproven Acc] UNPROVREQ,z.[Unproven Acc] UNPROVBAL,"
+//                        + "x.Incidental INCACQ,z.Incidental INCREQ,z.Incidental INCBAL,"
+//                        + "x.[Misc Amt] MISCACQ,x.[Misc Amt] MISCREQ,z.[Misc Amt]-x.[Misc Amt] MISCBAL,y.Creator,y.Supervisor,y.Finance,y.HOD, "
+//                        + "'Total Liquidation Amt' LIQAMT,  'Actual - Amt' ACTAMT,'" + jLabelGenLogNam.getText() + "' GENUSER from "
+//                        + "(SELECT  a.SERIAL, a.REF_NUM ,REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,' ' REQTOT,ACT_TOT_AMT ,"
+//                        + "' ' REQBREAK,SUM(b.BRK_AMT) 'Breakfast',' ' REQLUNCH,SUM(b.LNC_AMT) 'Lunch',' ' REQDINNER,SUM(b.DIN_AMT) 'Dinner',' ' REQPROVACC,SUM(b.ACC_PROV_AMT) 'Proven Acc',"
+//                        + "' ' REQUNPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQINC,SUM(b.INC_AMT) 'Incidental'"
+//                        + ",' ' REQMISC ,SUM(b.MSC_AMT) 'Misc Amt' "
+//                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN "
+//                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on "
+//                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM "
+//                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA "
+//                        + "WHERE a.REF_NUM = " + jLabelAcqRefNum.getText() + " AND a.SERIAL = '" + jLabelAcqSerial.getText() + "' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =1 "
+//                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) x "
+//                        + "join "
+//                        + "(SELECT  a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT ,' ' ACQTO,"
+//                        + "'0.00' 'Breakfast',' ' ACQBREAK,'0.00' 'Lunch',' ' ACQLUNCH,'0.00' 'Dinner',' ' ACQDINNER,'0.00' 'Proven Acc',"
+//                        + "' ' REQPROVACC,'0.00' 'Unproven Acc',' ' REQUNPROVACC,'0.00' 'Incidental'"
+//                        + ",' ' REQINC,'0.00' 'Misc Amt',' ' REQMISC "
+//                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN "
+//                        + "[ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on "
+//                        + "a.SERIAL = b.SERIAL AND a.REF_NUM = b.REF_NUM "
+//                        + "AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA "
+//                        + "WHERE a.REF_NUM = " + jLabelAcqRefNum.getText() + " AND a.SERIAL = '" + jLabelAcqSerial.getText() + "' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK =1 "
+//                        + "GROUP BY a.SERIAL, a.REF_NUM ,REF_DAT ,EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) z "
+//                        + "on z.REF_NUM=x.PREV_REF_NUM and x.PREV_SERIAL=z.SERIAL "
+//                        + "join "
+//                        + "(select a.REF_NUM,a.creator,b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' "
+//                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='AcqRegistered' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = '" + jLabelAcqSerial.getText() + "') a "
+//                        + "join "
+//                        + "(SELECT distinct REF_NUM,'' 'Creator',ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' "
+//                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='SupAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = '" + jLabelAcqSerial.getText() + "' "
+//                        + ") b on a.REF_NUM = b.REF_NUM "
+//                        + "join "
+//                        + "(SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD' "
+//                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = '" + jLabelAcqSerial.getText() + "') c on b.REF_NUM = c.REF_NUM "
+//                        + "join "
+//                        + "(SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',ACTIONED_BY_NAM 'HOD' "
+//                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = '" + jLabelAcqSerial.getText() + "') d on c.REF_NUM = d.REF_NUM) y "
+//                        + "on x.REF_NUM=y.REF_NUM";
+            query = "select  x.SERIAL, x.REF_NUM ,Format(x.REF_DAT, 'dd MMM yyyy') REF_DAT, x.PREV_SERIAL,x.PREV_REF_NUM,"
+                    + "Format(x.PREV_REF_DAT, 'dd MMM yyyy') ACQ_DAT, x.EMP_NUM ,x.EMP_NAM ,x.EMP_TTL ,x.EMP_PROV ,x.EMP_OFF ,"
+                    + "x.EMP_BNK_NAM ,x.ACC_NUM ,x.ACT_MAIN_PUR ,x.ACT_TOT_AMT TOTACQ,z.ACT_TOT_AMT REQACQ, x.Breakfast BREAKACQ, "
+                    + "z.Breakfast BREAKREQ, z.Breakfast- x.Breakfast BREAKBAL, x.Lunch LUNCHACQ,z.Lunch LUNCHREQ,z.Lunch-x.Lunch LUNBAL, "
+                    + "x.Dinner DINACQ,z.Dinner DINREQ,z.Dinner-x.Dinner DINBAL, x.[Proven Acc] PROVACQ,z.[Proven Acc] PROVREQ,z.[Proven Acc]-x.[Proven Acc] PROVBAL, "
+                    + "x.[Unproven Acc] UNPROVACQ,z.[Unproven Acc] UNPROVREQ,z.[Unproven Acc]-x.[Unproven Acc] UNPROVBAL, "
+                    + "x.Incidental INCACQ,z.Incidental INCREQ,z.Incidental-x.Incidental INCBAL, x.[Misc Amt] MISCACQ,x.[Misc Amt] MISCREQ,z.[Misc Amt]-x.[Misc Amt] MISCBAL,"
+                    + "x.BANK_CHG_AMT [Bank Chg],x.BANK_CHG_AMT-x.BANK_CHG_AMT [Bal Bank Chg],y.Creator,y.Supervisor,y.Finance,y.HOD, 'Total Liquidation Amt' LIQAMT, "
+                    + " 'Actual - Amt' ACTAMT,'Can' GENUSER from  (SELECT  a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, a.EMP_NUM ,"
+                    + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,' ' REQTOT,ACT_TOT_AMT , ' ' REQBREAK,SUM(b.BRK_AMT) 'Breakfast',"
+                    + "' ' REQLUNCH,SUM(b.LNC_AMT) 'Lunch',' ' REQDINNER,SUM(b.DIN_AMT) 'Dinner',' ' REQPROVACC,SUM(b.ACC_PROV_AMT) 'Proven Acc', "
+                    + "' ' REQUNPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQINC,SUM(b.INC_AMT) 'Incidental' ,' ' REQMISC ,SUM(b.MSC_AMT) 'Misc Amt',"
+                    + "c.BANK_CHG_AMT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL = b.SERIAL "
+                    + "AND a.REF_NUM = b.REF_NUM AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA JOIN [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] c "
+                    + "on a.SERIAL = c.SERIAL AND a.REF_NUM =c.REF_NUM WHERE a.REF_NUM = " + jLabelAcqRefNum.getText() + " AND a.SERIAL = 'A' AND a.ACT_REC_STA = 'Q' and a.DOC_VER =4 and b.PLAN_WK ="+wkNum+"  "
+                    + "GROUP BY a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,"
+                    + "a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,BANK_CHG_AMT) x join (SELECT  a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT,a.SERIAL, a.REF_NUM ,a.REF_DAT ,"
+                    + "a.EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT ,' ' ACQTO, SUM(b.BRK_AMT) 'Breakfast',"
+                    + "' ' ACQBREAK,SUM(b.LNC_AMT) 'Lunch',' ' ACQLUNCH,SUM(b.DIN_AMT) 'Dinner',' ' ACQDINNER,SUM(b.ACC_PROV_AMT) 'Proven Acc', ' ' REQPROVACC,"
+                    + "SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQUNPROVACC,SUM(b.INC_AMT) 'Incidental' ,' ' REQINC,SUM(b.MSC_AMT) 'Misc Amt',' ' REQMISC "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppGenTab] a JOIN [ClaimsAppSysZvandiri].[dbo].[ClaimAppItmTab] b on a.SERIAL = b.SERIAL "
+                    + "AND a.REF_NUM = b.REF_NUM AND a.DOC_VER = b.DOC_VER AND a.ACT_REC_STA = b.ACT_REC_STA JOIN [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] c "
+                    + "on a.SERIAL = c.SERIAL AND a.REF_NUM =c.REF_NUM WHERE a.REF_NUM = "+jTextAcqRegNum.getText()+" AND a.SERIAL = 'R' AND a.ACT_REC_STA = 'A' and a.DOC_VER =4 and b.PLAN_WK ="+wkNum+" "
+                    + "GROUP BY a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.EMP_NUM ,EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT,"
+                    + "a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT) z on z.REF_NUM=x.PREV_REF_NUM and x.PREV_SERIAL=z.SERIAL join (select a.REF_NUM,a.creator,"
+                    + "b.supervisor,c.Finance, d.HOD from (SELECT distinct REF_NUM,ACTIONED_BY_NAM 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='AcqRegistered' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = 'A') a "
+                    + "join (SELECT distinct REF_NUM,'' 'Creator',ACTIONED_BY_NAM 'Supervisor',' ' 'Finance',' ' 'Account Manager',' ' 'HOD' "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='SupAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = 'A' ) b on a.REF_NUM = b.REF_NUM "
+                    + "join (SELECT distinct REF_NUM,'' 'Creator','' 'Supervisor',ACTIONED_BY_NAM 'Finance',' ' 'Account Manager',' ' 'HOD' "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='FinAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + "  and SERIAL = 'A') c on b.REF_NUM = c.REF_NUM "
+                    + "join (SELECT distinct REF_NUM,'' 'Creator',' ' 'Supervisor',' ' 'Finance',' ' 'Account Manager',ACTIONED_BY_NAM 'HOD' "
+                    + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab]  where DOC_STATUS ='HODAcqApprove' and REF_NUM = " + jLabelAcqRefNum.getText() + " and SERIAL = 'A') d on c.REF_NUM = d.REF_NUM) y "
+                    + "on x.REF_NUM=y.REF_NUM";
+            
             PreparedStatement preparedStatement = conn.prepareStatement(query);
 //            preparedStatement.setString(1, employeeNumber);
             ResultSet r = preparedStatement.executeQuery();
@@ -1297,7 +1280,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
         }
     }
 
-        void fetchBankChgData() {
+ void fetchBankChgData() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://" + c.ipAdd + ";"
                     + "DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
@@ -1306,19 +1289,17 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
                 Statement st1 = conn.createStatement();
 
-                st1.executeQuery("SELECT BANK_CHG_AMT FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
-                        + "where  concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "'"
-                        + " and concat(SERIAL,REF_NUM) not in "
-                        + "( SELECT concat(PREV_SERIAL,PREV_REF_NUM) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
-                        + "where  concat(PREV_SERIAL,PREV_REF_NUM) ='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "' and ACT_REC_STA = 'Q')");
+                st1.executeQuery("SELECT BANK_CHG_AMT "
+                        + "FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
+                        + "where  concat(SERIAL,REF_NUM)='" + jLabelAcqSerial.getText() + jLabelAcqRefNum.getText() + "'");
 
                 ResultSet r1 = st1.getResultSet();
 
                 while (r1.next()) {
                     bankChgAmt = r1.getDouble(1);
-                    jLabelBankChgSubTot.setText(r1.getString(1));
-                    jLabelAcqBankChgSubTot.setText(r1.getString(1));
-                    jLabelAcqBankChgSubTotBal.setText("0.00");
+                    jLabelBankChgSubTot.setText(String.valueOf(bankChgAmt));
+                     jLabelAcqBankChgSubTot.setText(String.valueOf(bankChgAmt));
+
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -1328,7 +1309,8 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
         }
     }
-        
+    
+
     void fetchdata() {
         try {
 
@@ -1652,9 +1634,9 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
 
             Statement st = conn.createStatement();
-            st.executeQuery("SELECT distinct b.USR_ACTION,b.REJECT_COMMENTS FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab a,[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b\n"
-                    + "where  ( a.serial=b.serial and a.REF_NUM = b.REF_NUM and a.DOC_VER=b.DOC_VER) and\n"
-                    + "concat(a.SERIAL,a.REF_NUM)='" + refNo + "' \n"
+            st.executeQuery("SELECT distinct b.USR_ACTION,b.REJECT_COMMENTS FROM ClaimsAppSysZvandiri.dbo.ClaimAppGenTab a,[ClaimsAppSysZvandiri].[dbo].[ClaimsWFActTab] b "
+                    + "where  ( a.serial=b.serial and a.REF_NUM = b.REF_NUM and a.DOC_VER=b.DOC_VER) and "
+                    + "concat(a.SERIAL,a.REF_NUM)='" + refNo + "'  "
                     + "and a.ACT_REC_STA = 'Q' ");
 
             ResultSet r = st.getResultSet();
@@ -4429,6 +4411,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
             } else {
                 countWk();
                 fetchdataWk();
+                fetchBankChgData();
                 mainPageTotUpdate();
                 mainPageTotUpdateAcq();
                 fetchImgCount();

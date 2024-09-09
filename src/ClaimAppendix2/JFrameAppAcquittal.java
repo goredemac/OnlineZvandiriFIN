@@ -1889,7 +1889,8 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                         + "where  concat(SERIAL,REF_NUM)='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "'"
                         + " and concat(SERIAL,REF_NUM) not in "
                         + "( SELECT concat(PREV_SERIAL,PREV_REF_NUM) FROM [ClaimsAppSysZvandiri].[dbo].[ClaimAppBankChgTab] "
-                        + "where  concat(PREV_SERIAL,PREV_REF_NUM) ='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "' and ACT_REC_STA = 'Q')");
+                        + "where  concat(PREV_SERIAL,PREV_REF_NUM) ='" + jLabelSerial.getText() + jTextAcqRegNum.getText() + "' and ACT_REC_STA = 'Q' "
+                                + "and BANK_CHG_AMT > 0)");
 
                 ResultSet r1 = st1.getResultSet();
 
@@ -2163,9 +2164,7 @@ public class JFrameAppAcquittal extends javax.swing.JFrame {
                 createAction();
                 createReport();
                 createAttDoc();
-                if (bankChgAmt>0){
                 insBankChgTab();
-                }
                 wkUpdate();
                 wkClearedUpdate();
 //                payRecAck();
