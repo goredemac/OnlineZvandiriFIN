@@ -1150,7 +1150,7 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
                     + "x.[Unproven Acc] UNPROVACQ,z.[Unproven Acc] UNPROVREQ,z.[Unproven Acc]-x.[Unproven Acc] UNPROVBAL, "
                     + "x.Incidental INCACQ,z.Incidental INCREQ,z.Incidental-x.Incidental INCBAL, x.[Misc Amt] MISCACQ,x.[Misc Amt] MISCREQ,z.[Misc Amt]-x.[Misc Amt] MISCBAL,"
                     + "x.BANK_CHG_AMT [Bank Chg],x.BANK_CHG_AMT-x.BANK_CHG_AMT [Bal Bank Chg],y.Creator,y.Supervisor,y.Finance,y.HOD, 'Total Liquidation Amt' LIQAMT, "
-                    + " 'Actual - Amt' ACTAMT,'Can' GENUSER from  (SELECT  a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, a.EMP_NUM ,"
+                    + " 'Actual - Amt' ACTAMT,'" + jLabelGenLogNam.getText() + "'  GENUSER from  (SELECT  a.SERIAL, a.REF_NUM ,a.REF_DAT ,a.PREV_SERIAL,a.PREV_REF_NUM,a.PREV_REF_DAT, a.EMP_NUM ,"
                     + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,' ' REQTOT,ACT_TOT_AMT , ' ' REQBREAK,SUM(b.BRK_AMT) 'Breakfast',"
                     + "' ' REQLUNCH,SUM(b.LNC_AMT) 'Lunch',' ' REQDINNER,SUM(b.DIN_AMT) 'Dinner',' ' REQPROVACC,SUM(b.ACC_PROV_AMT) 'Proven Acc', "
                     + "' ' REQUNPROVACC,SUM(b.ACC_UNPROV_AMT) 'Unproven Acc',' ' REQINC,SUM(b.INC_AMT) 'Incidental' ,' ' REQMISC ,SUM(b.MSC_AMT) 'Misc Amt',"
