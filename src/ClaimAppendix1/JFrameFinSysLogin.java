@@ -519,7 +519,7 @@ public class JFrameFinSysLogin extends javax.swing.JFrame {
         setTitle("Log In");
         setIconImages(null);
 
-        jPanel1.setBackground(new java.awt.Color(0, 204, 153));
+        jPanel1.setBackground(new java.awt.Color(0, 153, 204));
         jPanel1.setAlignmentX(30.5F);
         jPanel1.setAutoscrolls(true);
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -586,10 +586,10 @@ public class JFrameFinSysLogin extends javax.swing.JFrame {
         jPanel1.add(jLabelTime);
         jLabelTime.setBounds(710, 0, 90, 30);
 
-        jLabelHeading1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jLabelHeading1.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
         jLabelHeading1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelHeading1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelHeading1.setText("Zvandiri Expense and Planning System ");
+        jLabelHeading1.setText("Zvandiri Expense and Planning System (TEST) ");
         jPanel1.add(jLabelHeading1);
         jLabelHeading1.setBounds(40, 30, 660, 50);
 

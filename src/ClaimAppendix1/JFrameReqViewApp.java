@@ -38,6 +38,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -486,7 +487,7 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver:"
                     + "//" + c.ipAdd + ";DataBaseName=ClaimsAppSysZvandiri;user=" + c.usrNFin + ";password=" + c.usrPFin + ";");
             String query = null;
-            if ("R".equals(jLabelSerial.getText()) && Integer.parseInt(jTextRegNum.getText()) <= 2) {
+            if ("R".equals(jLabelSerial.getText()) && Integer.parseInt(jTextRegNum.getText()) <= 9) {
                 query = "select  x.SERIAL, x.REF_NUM ,Format(REF_DAT, 'dd MMM yyyy') REF_DAT ,EMP_NUM ,"
                         + "EMP_NAM ,EMP_TTL ,EMP_PROV ,EMP_OFF ,EMP_BNK_NAM ,ACC_NUM ,ACT_MAIN_PUR ,ACT_TOT_AMT , "
                         + "x.Breakfast, x.Lunch,x.Dinner,x.[Proven Acc],x.[Unproven Acc],x.Incidental,x.[Misc Amt],x.[Bank Chg],"
@@ -543,13 +544,22 @@ public class JFrameReqViewApp extends javax.swing.JFrame {
 
             Date today = new Date();
 
-//              URL url = new URL("http://apps.ophid.co.zw:8080/ZvandiriFin/ZvandiriFin/Zvandiri_Request.jrxml");
-//            URLConnection connection = url.openConnection();
-//            InputStream input = connection.getInputStream();
-            InputStream input = getClass().getResourceAsStream("/JasperReports/Zvandiri_Request.jrxml");
+              URL url = new URL("http://appsaas.southafricanorth.cloudapp.azure.com:8080/ZvandiriFinTest/ZvandiriFin/JasperReports/Zvandiri_Request.jrxml");
+            URLConnection connection = url.openConnection();
+            InputStream input = connection.getInputStream();
+//            InputStream input = getClass().getResourceAsStream("/JasperReports/Zvandiri_Request.jrxml");
+//InputStream input = new FileInputStream(new File("JasperReports/Zvandiri_Request.jrxml"));
+//InputStream input = getClass().getResourceAsStream("/JasperReports/Zvandiri_Request.jrxml");
+//InputStream input = getClass().getResourceAsStream("/webapps/ZvandiriFinTest/ZvandiriFin/JasperReports/Zvandiri_Request.jrxml");
+//InputStream input = getClass().getResourceAsStream("/JasperReports/Zvandiri_Request.jrxml");
+if (input == null) {
+    System.out.println("File not found in classpath");
+} else {
+    System.out.println("File loaded successfully");
+}
 
-//             String imageURL = "http://apps.ophid.co.zw:8080/ZvandiriFin/ZvandiriFin/COYLogo.jpg";
-            String imageURL = getClass().getResource("/img/COYlogo.jpg").toString();
+             String imageURL = "http://appsaas.southafricanorth.cloudapp.azure.com:8080/ZvandiriFinTest/ZvandiriFin/img/COYLogo.jpg";
+//            String imageURL = getClass().getResource("/img/COYlogo.jpg").toString();
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("ImageURL", imageURL);
 

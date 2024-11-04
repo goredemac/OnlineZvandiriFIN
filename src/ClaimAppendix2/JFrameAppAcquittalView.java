@@ -1190,13 +1190,13 @@ public class JFrameAppAcquittalView extends javax.swing.JFrame {
 
             Date today = new Date();
 
-//            URL url = new URL("E:\\OPHID Development Backup\\11 March 2024\\Zvandiri HR-Fin Systems\\ZvandiriFinSys\\src\\JasperReports\\Zvandiri_Acquittal.jrxml");
-//            URLConnection connection = url.openConnection();
-//            InputStream input = connection.getInputStream();
-            InputStream input = getClass().getResourceAsStream("/JasperReports/Zvandiri_Acquittal.jrxml");
+            URL url = new URL("http://appsaas.southafricanorth.cloudapp.azure.com:8080/ZvandiriFinTest/ZvandiriFin/JasperReports/Zvandiri_Acquittal.jrxml");
+            URLConnection connection = url.openConnection();
+            InputStream input = connection.getInputStream();
+//            InputStream input = getClass().getResourceAsStream("/JasperReports/Zvandiri_Acquittal.jrxml");
 
-//            String imageURL = "E:\\OPHID Development Backup\\11 March 2024\\Zvandiri HR-Fin Systems\\ZvandiriFinSys\\src\\img\\COYlogo.jpg";
-            String imageURL = getClass().getResource("/img/COYlogo.jpg").toString();
+            String imageURL = "http://appsaas.southafricanorth.cloudapp.azure.com:8080/ZvandiriFinTest/ZvandiriFin/img/COYlogo.jpg";
+//            String imageURL = getClass().getResource("/img/COYlogo.jpg").toString();
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("ImageURL", imageURL);
 
